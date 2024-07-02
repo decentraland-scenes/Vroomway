@@ -1,0 +1,72 @@
+{
+  "ecs7": true,
+  "runtimeVersion": "7",
+  "display": {
+    "title": "Vroomway® SDK7",
+    "description": "VROOMWAY® is a P2E game in Decentraland, where you can race and battle against your friends — as you collect materials, forge vehicles, and craft upgrades in the Metaverse. An inclusive space for all car lovers to connect and find community!",
+    "navmapThumbnail": "assets/images/Aug23-Scene-Thumbnail.png",
+    "favicon": "favicon_asset"
+  },
+  "owner": "",
+  "contact": {
+    "name": "Vroomway Team",
+    "email": ""
+  },
+  "main": "bin/index.js",
+  "tags": [],
+  "scene": {
+    "parcels": [
+      "-64,-68",
+      "-63,-68",
+      "-62,-68",
+      "-61,-68",
+      "-60,-68",
+      "-59,-68",
+      "-64,-69",
+      "-63,-69",
+      "-62,-69",
+      "-61,-69",
+      "-60,-69",
+      "-59,-69",
+      "-64,-70",
+      "-63,-70",
+      "-62,-70",
+      "-61,-70",
+      "-60,-70",
+      "-59,-70",
+      "-64,-71",
+      "-63,-71",
+      "-62,-71",
+      "-61,-71",
+      "-60,-71",
+      "-59,-71"
+    ],
+    "base": "-64,-71"
+  },
+  "spawnPoints": [
+    {
+      "name": "spawn1",
+      "default": true,
+      "position": {
+        "x": [
+          40, 50
+        ],
+        "y": [
+          0.89, 0.89
+        ],
+        "z": [
+          62, 63
+        ]
+      },
+      "cameraTarget": {
+        "x": 47,
+        "y": 1.06,
+        "z": 32
+      }
+    }
+  ],
+  "featureToggles": {
+    "voiceChat": "enabled",
+    "portableExperiences": "enabled"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "knight-of-antrom",
+  "version": "1.0.0",
+  "description": "Knight of Antrom RPG Game migration from SDK6",
+  "scripts": {
+    "start": "sdk-commands start",
+    "deploy": "sdk-commands deploy",
+    "build": "sdk-commands build",
+    "export-static": "sdk-commands export-static --destination static/ --realmName Antrom-RPG --baseUrl https://decentraland-scenes.github.io/Antrom-RPG/ --commsAdapter ws-room:ws-room-service.decentraland.org/rooms/Antrom-RPG",
+    "lint": "eslint ./**/*.{ts,tsx}",
+    "lint:fix": "eslint --fix ./**/*.{ts,tsx}",
+    "format": "prettier --config .prettierrc -c ./**/*.{ts,tsx}",
+    "format:fix": "prettier -w --config .prettierrc -c ./**/*.{ts,tsx}"
+  },
+  "devDependencies": {
+    "@dcl/asset-packs": "^1.19.0",
+    "@dcl/js-runtime": "7.5.1-9299912306.commit-7629bda",
+    "@dcl/sdk": "latest",
+    "@dcl/sdk-commands": "latest",
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/parser": "^6.10.0",
+    "dcl-npc-toolkit": "^1.2.2",
+    "eslint": "^8.53.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-config-standard-with-typescript": "^39.1.1",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-react": "^7.33.2",
+    "prettier": "3.0.3"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=6.0.0"
+  }
+}

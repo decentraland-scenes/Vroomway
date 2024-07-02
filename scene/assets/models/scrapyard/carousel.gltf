@@ -1,0 +1,351 @@
+{
+  "asset": {
+    "generator": "Khronos glTF Blender I/O v1.7.33",
+    "version": "2.0"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [2]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "Carousel_collider",
+      "scale": [0.995842456817627, 0.995842456817627, 0.995842456817627],
+      "translation": [-0.0022149085998535156, 0, 0.0003490447998046875]
+    },
+    {
+      "children": [0],
+      "mesh": 1,
+      "name": "Carousel",
+      "scale": [0.8208100199699402, 0.8208100199699402, 0.8208100199699402],
+      "translation": [3.047901153564453, 0.01612304337322712, 4.596646785736084]
+    },
+    {
+      "children": [1],
+      "name": "static",
+      "scale": [5.752391338348389, 5.752391338348389, 5.752391338348389],
+      "translation": [-32, 0, 32]
+    }
+  ],
+  "animations": [
+    {
+      "channels": [
+        {
+          "sampler": 0,
+          "target": {
+            "node": 1,
+            "path": "rotation"
+          }
+        }
+      ],
+      "name": "CarouselAction",
+      "samplers": [
+        {
+          "input": 12,
+          "interpolation": "LINEAR",
+          "output": 13
+        }
+      ]
+    },
+    {
+      "channels": [
+        {
+          "sampler": 0,
+          "target": {
+            "node": 0,
+            "path": "rotation"
+          }
+        }
+      ],
+      "name": "CarouselAction.001",
+      "samplers": [
+        {
+          "input": 12,
+          "interpolation": "LINEAR",
+          "output": 14
+        }
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "emissiveFactor": [9.10571325221099e-5, 0.0002124683087458834, 0.001298302784562111],
+      "name": "glTF_black",
+      "normalTexture": {
+        "index": 0,
+        "scale": 0.33000001311302185
+      },
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [0.0009105713106691837, 0.0021246830001473427, 0.012983027845621109, 1],
+        "metallicFactor": 0,
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      }
+    },
+    {
+      "doubleSided": true,
+      "emissiveFactor": [0.019117841354618914, 1, 0],
+      "name": "Light Power",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [0.003648576559498906, 0.8000000715255737, 0, 1],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.5
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Circle.001",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3
+        }
+      ]
+    },
+    {
+      "name": "Circle",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 4,
+            "NORMAL": 5,
+            "TEXCOORD_0": 6
+          },
+          "indices": 7,
+          "material": 0
+        },
+        {
+          "attributes": {
+            "POSITION": 8,
+            "NORMAL": 9,
+            "TEXCOORD_0": 10
+          },
+          "indices": 11,
+          "material": 1
+        }
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    }
+  ],
+  "images": [
+    {
+      "mimeType": "image/jpeg",
+      "name": "GrungeWall002_NRM_6K",
+      "uri": "tex/GrungeWall002_NRM_6K.jpg"
+    },
+    {
+      "mimeType": "image/jpeg",
+      "name": "GrungeWall002_GLOSS_1K",
+      "uri": "tex/GrungeWall002_GLOSS_1K.jpg"
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 1486,
+      "max": [1, 0.2992898225784302, 1],
+      "min": [-1, 0, -1],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 1486,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 1486,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5123,
+      "count": 4596,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5126,
+      "count": 600,
+      "max": [1, 0.29361382126808167, 1],
+      "min": [-1, 0, -1],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5126,
+      "count": 600,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 6,
+      "componentType": 5126,
+      "count": 600,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 7,
+      "componentType": 5123,
+      "count": 2112,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 8,
+      "componentType": 5126,
+      "count": 916,
+      "max": [1, 0.2992898225784302, 1],
+      "min": [-1, 0, -1],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 9,
+      "componentType": 5126,
+      "count": 916,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 10,
+      "componentType": 5126,
+      "count": 916,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 11,
+      "componentType": 5123,
+      "count": 2484,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 12,
+      "componentType": 5126,
+      "count": 181,
+      "max": [7.2],
+      "min": [0],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 13,
+      "componentType": 5126,
+      "count": 181,
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 14,
+      "componentType": 5126,
+      "count": 181,
+      "type": "VEC4"
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 17832,
+      "byteOffset": 0
+    },
+    {
+      "buffer": 0,
+      "byteLength": 17832,
+      "byteOffset": 17832
+    },
+    {
+      "buffer": 0,
+      "byteLength": 11888,
+      "byteOffset": 35664
+    },
+    {
+      "buffer": 0,
+      "byteLength": 9192,
+      "byteOffset": 47552
+    },
+    {
+      "buffer": 0,
+      "byteLength": 7200,
+      "byteOffset": 56744
+    },
+    {
+      "buffer": 0,
+      "byteLength": 7200,
+      "byteOffset": 63944
+    },
+    {
+      "buffer": 0,
+      "byteLength": 4800,
+      "byteOffset": 71144
+    },
+    {
+      "buffer": 0,
+      "byteLength": 4224,
+      "byteOffset": 75944
+    },
+    {
+      "buffer": 0,
+      "byteLength": 10992,
+      "byteOffset": 80168
+    },
+    {
+      "buffer": 0,
+      "byteLength": 10992,
+      "byteOffset": 91160
+    },
+    {
+      "buffer": 0,
+      "byteLength": 7328,
+      "byteOffset": 102152
+    },
+    {
+      "buffer": 0,
+      "byteLength": 4968,
+      "byteOffset": 109480
+    },
+    {
+      "buffer": 0,
+      "byteLength": 724,
+      "byteOffset": 114448
+    },
+    {
+      "buffer": 0,
+      "byteLength": 2896,
+      "byteOffset": 115172
+    },
+    {
+      "buffer": 0,
+      "byteLength": 2896,
+      "byteOffset": 118068
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 120964,
+      "uri": "carousel.bin"
+    }
+  ]
+}

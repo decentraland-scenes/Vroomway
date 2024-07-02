@@ -1,0 +1,428 @@
+{
+  "asset": {
+    "generator": "Khronos glTF Blender I/O v1.7.33",
+    "version": "2.0"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [2]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "Crafting Table",
+      "rotation": [0, 0.7071068286895752, 0, 0.7071068286895752],
+      "scale": [0.19631926715373993, 0.01834634132683277, 0.19631926715373993],
+      "translation": [4.782347202301025, 2.2119693756103516, -0.5857720375061035]
+    },
+    {
+      "mesh": 1,
+      "name": "Crafting Table_collider",
+      "scale": [0.1521325707435608, 0.15267975628376007, 0.1310926079750061],
+      "translation": [4.790582180023193, 2.2811222076416016, -0.5843367576599121]
+    },
+    {
+      "children": [0, 1],
+      "name": "static",
+      "scale": [5.752391338348389, 5.752391338348389, 5.752391338348389],
+      "translation": [-32, 0, 32]
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "emissiveFactor": [9.10571325221099e-5, 0.0002124683087458834, 0.001298302784562111],
+      "name": "glTF_black",
+      "normalTexture": {
+        "index": 0,
+        "scale": 0.33000001311302185
+      },
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [0.0009105713106691837, 0.0021246830001473427, 0.012983027845621109, 1],
+        "metallicFactor": 0,
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      }
+    },
+    {
+      "doubleSided": true,
+      "name": "glTF_purple",
+      "normalTexture": {
+        "index": 2,
+        "scale": 0.33000001311302185
+      },
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [0.5270617008209229, 0.009191935881972313, 1, 1],
+        "metallicRoughnessTexture": {
+          "index": 3
+        }
+      }
+    },
+    {
+      "alphaMode": "BLEND",
+      "doubleSided": true,
+      "name": "glass",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [0.800000011920929, 0.800000011920929, 0.800000011920929, 0.15027323365211487],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.5
+      }
+    },
+    {
+      "doubleSided": true,
+      "emissiveFactor": [0.019117841354618914, 1, 0],
+      "name": "Light Power",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [0.003648576559498906, 0.8000000715255737, 0, 1],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.5
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Cube.012",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3,
+          "material": 0
+        },
+        {
+          "attributes": {
+            "POSITION": 4,
+            "NORMAL": 5,
+            "TEXCOORD_0": 6
+          },
+          "indices": 7,
+          "material": 1
+        },
+        {
+          "attributes": {
+            "POSITION": 8,
+            "NORMAL": 9,
+            "TEXCOORD_0": 10
+          },
+          "indices": 11,
+          "material": 2
+        },
+        {
+          "attributes": {
+            "POSITION": 12,
+            "NORMAL": 13,
+            "TEXCOORD_0": 14
+          },
+          "indices": 15,
+          "material": 3
+        }
+      ]
+    },
+    {
+      "name": "Cube.143",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 16,
+            "NORMAL": 17,
+            "TEXCOORD_0": 18
+          },
+          "indices": 19
+        }
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    },
+    {
+      "sampler": 0,
+      "source": 3
+    }
+  ],
+  "images": [
+    {
+      "mimeType": "image/jpeg",
+      "name": "GrungeWall002_NRM_6K",
+      "uri": "tex/GrungeWall002_NRM_6K.jpg"
+    },
+    {
+      "mimeType": "image/jpeg",
+      "name": "GrungeWall002_GLOSS_1K",
+      "uri": "tex/GrungeWall002_GLOSS_1K.jpg"
+    },
+    {
+      "mimeType": "image/jpeg",
+      "name": "MetalGrime014_NRM_HIRES",
+      "uri": "tex/MetalGrime014_NRM_HIRES.jpg"
+    },
+    {
+      "mimeType": "image/jpeg",
+      "name": "MetalGrime014_GLOSS_HIRES",
+      "uri": "tex/MetalGrime014_GLOSS_HIRES.jpg"
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 263,
+      "max": [1.009068489074707, 5.537017822265625, 0.8930888175964355],
+      "min": [-1.0090670585632324, -8.73164176940918, -0.8930850028991699],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 263,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 263,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5123,
+      "count": 588,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5126,
+      "count": 672,
+      "max": [0.7771365642547607, 16.166337966918945, 0.7771365642547607],
+      "min": [-0.7771365642547607, 1.0034878253936768, -0.7771365642547607],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5126,
+      "count": 672,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 6,
+      "componentType": 5126,
+      "count": 672,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 7,
+      "componentType": 5123,
+      "count": 2562,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 8,
+      "componentType": 5126,
+      "count": 64,
+      "max": [0.6975123882293701, 9.40218734741211, 0.5522681474685669],
+      "min": [-0.6975123882293701, 3.7119319438934326, -0.7161651849746704],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 9,
+      "componentType": 5126,
+      "count": 64,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 10,
+      "componentType": 5126,
+      "count": 64,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 11,
+      "componentType": 5123,
+      "count": 168,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 12,
+      "componentType": 5126,
+      "count": 176,
+      "max": [0.9576709270477295, 15.983463287353516, 0.84759920835495],
+      "min": [-0.9576694965362549, 0.12136462330818176, -0.8475946187973022],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 13,
+      "componentType": 5126,
+      "count": 176,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 14,
+      "componentType": 5126,
+      "count": 176,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 15,
+      "componentType": 5123,
+      "count": 444,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 16,
+      "componentType": 5126,
+      "count": 24,
+      "max": [1, 1, 1],
+      "min": [-1, -1, -1],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 17,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 18,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 19,
+      "componentType": 5123,
+      "count": 36,
+      "type": "SCALAR"
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 3156,
+      "byteOffset": 0
+    },
+    {
+      "buffer": 0,
+      "byteLength": 3156,
+      "byteOffset": 3156
+    },
+    {
+      "buffer": 0,
+      "byteLength": 2104,
+      "byteOffset": 6312
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1176,
+      "byteOffset": 8416
+    },
+    {
+      "buffer": 0,
+      "byteLength": 8064,
+      "byteOffset": 9592
+    },
+    {
+      "buffer": 0,
+      "byteLength": 8064,
+      "byteOffset": 17656
+    },
+    {
+      "buffer": 0,
+      "byteLength": 5376,
+      "byteOffset": 25720
+    },
+    {
+      "buffer": 0,
+      "byteLength": 5124,
+      "byteOffset": 31096
+    },
+    {
+      "buffer": 0,
+      "byteLength": 768,
+      "byteOffset": 36220
+    },
+    {
+      "buffer": 0,
+      "byteLength": 768,
+      "byteOffset": 36988
+    },
+    {
+      "buffer": 0,
+      "byteLength": 512,
+      "byteOffset": 37756
+    },
+    {
+      "buffer": 0,
+      "byteLength": 336,
+      "byteOffset": 38268
+    },
+    {
+      "buffer": 0,
+      "byteLength": 2112,
+      "byteOffset": 38604
+    },
+    {
+      "buffer": 0,
+      "byteLength": 2112,
+      "byteOffset": 40716
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1408,
+      "byteOffset": 42828
+    },
+    {
+      "buffer": 0,
+      "byteLength": 888,
+      "byteOffset": 44236
+    },
+    {
+      "buffer": 0,
+      "byteLength": 288,
+      "byteOffset": 45124
+    },
+    {
+      "buffer": 0,
+      "byteLength": 288,
+      "byteOffset": 45412
+    },
+    {
+      "buffer": 0,
+      "byteLength": 192,
+      "byteOffset": 45700
+    },
+    {
+      "buffer": 0,
+      "byteLength": 72,
+      "byteOffset": 45892
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 45964,
+      "uri": "craftingTable.bin"
+    }
+  ]
+}

@@ -19,7 +19,6 @@ export const TESTERS = [
   '0xd1413203a673ad13a88e2cf5a8105ced53f350db'.toLowerCase()
 ]
 export const SAVE_TESTERS: Record<string, boolean> = {}
-
 ;[
   // no one in this test group for now so can merge main branch
   /* "x0xbd5b79d53d75497673e699a571afa85492a2cc74",

@@ -1,11 +1,14 @@
 import { executeTask } from '@dcl/sdk/ecs'
 import * as utils from '@dcl-sdk/utils'
 import { renderMainInstance } from './instances/main/mainInstance'
+import { UIController } from './ui/ui.controller'
 
 export function main(): void {
   executeTask(async () => {
     // prepare entry scene
     void renderMainInstance()
+    const UI = new UIController()
+    UI.render()
 
     // prepare social display
     // renderSocials();

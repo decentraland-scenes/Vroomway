@@ -84,12 +84,12 @@ export const renderMainInstance = async (): Promise<void> => {
           )
         ) {
           if (entity.includes('SS')) {
-            // if (instance.getInstance() !== 'main') return
+            if (instance.getInstance() !== 'main') return
             // if (Player.getFuel() < SOLO_SPRINT_COST) return renderOutOfFuel()
             // soloSprintBoard.show()
           }
           if (entity.includes('DD')) {
-            // if (instance.getInstance() !== 'main') return
+            if (instance.getInstance() !== 'main') return
             // if (Player.getFuel() >= DEMO_DERBY_COST) {
             //   demoDerbyBoard.show()
             // } else {
@@ -97,7 +97,7 @@ export const renderMainInstance = async (): Promise<void> => {
             // }
           }
           if (entity.includes('FC')) {
-            // if (instance.getInstance() !== 'main') return
+            if (instance.getInstance() !== 'main') return
             // if (Player.getFuel() >= FUEGO_CIRCUIT_COST) {
             //   decentrallyBoard.show()
             // } else {

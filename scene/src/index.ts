@@ -10,9 +10,6 @@ export function main(): void {
     const UI = new UIController()
     UI.render()
 
-    // prepare social display
-    // renderSocials();
-
     // prepare solo sprint track
     // const Tracks = new spawn_Tracks();
     // Tracks.spawnFloor1();

@@ -2,60 +2,77 @@ import ReactEcs, { ReactEcsRenderer, UiEntity } from '@dcl/sdk/react-ecs'
 import { getUvs } from './utils/utils'
 import { joinDiscord, joinTwitter } from './buttons'
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
+import { openExternalUrl } from '~system/RestrictedActions'
+import { SideBar } from './sidebar'
 
 export class UIController {
+  public socialsVisible: boolean = true
   public canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
+  public sideBar = new SideBar()
   constructor() {
-    const uiComponent = (): ReactEcs.JSX.Element => [
-      this.joinDiscord(),
-      this.joinTwitter()
-    ]
+    const uiComponent = (): ReactEcs.JSX.Element => [this.renderSocials(),this.sideBar.createSideBarIcons()]
     ReactEcsRenderer.setUiRenderer(uiComponent)
   }
 
   render(): void {}
 
-  joinDiscord(): ReactEcs.JSX.Element | null {
+  renderSocials(): ReactEcs.JSX.Element | null {
     if (this.canvasInfo === null) return null
     return (
       <UiEntity
         uiTransform={{
-          flexDirection: 'row',
+          flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
           positionType: 'absolute',
-          position: { left: '1%', top: '30%' },
-          width: (this.canvasInfo.height * 0.06) / 0.67,
-          height: this.canvasInfo.height * 0.06
+          position: { left: '0%', top: '30%' },
+          width: (this.canvasInfo.height * 0.055) / 0.67,
+          height: this.canvasInfo.height * 0.055,
+          display: this.socialsVisible ? 'flex' : 'none'
         }}
         uiBackground={{
           textureMode: 'stretch',
           uvs: getUvs(joinDiscord),
           texture: { src: joinDiscord.atlasSrc }
         }}
-      />
-    )
-  } 
-
-  joinTwitter(): ReactEcs.JSX.Element | null {
-    if (this.canvasInfo === null) return null
-    return (
-      <UiEntity
-        uiTransform={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-          positionType: 'absolute',
-          position: { left: '4.5%', top: '30%' },
-          width: (this.canvasInfo.height * 0.06) / 0.67,
-          height: this.canvasInfo.height * 0.06
+        onMouseDown={() => {
+          void openExternalUrl({ url: 'https://discord.gg/2E9AwrgssP' })
+          // dailyMission.checkMission("sprintCompleteThree");
         }}
-        uiBackground={{
-          textureMode: 'stretch',
-          uvs: getUvs(joinTwitter),
-          texture: { src: joinTwitter.atlasSrc }
-        }}
-      />
+      >
+        <UiEntity
+          uiTransform={{
+            flexDirection: 'column',
+            alignItems: 'center', 
+            justifyContent: 'center',
+            positionType: 'absolute',
+            position: { left: '90%', top: '0%' },
+            width: (this.canvasInfo.height * 0.055) / 0.67,
+            height: this.canvasInfo.height * 0.055
+          }}
+          uiBackground={{
+            textureMode: 'stretch',
+            uvs: getUvs(joinTwitter),
+            texture: { src: joinTwitter.atlasSrc }
+          }}
+          onMouseDown={() => {
+            const getTweetText = (text: string): string => {
+              return text.split(' ').join('%20')
+            }
+            void openExternalUrl({
+              url: `https://twitter.com/intent/tweet?text=${getTweetText(
+                `Come join me at @Vroomwayio to race, collect and craft your vehicle in @decentraland ${encodeURIComponent(
+                  '\n\n'
+                )}https://play.decentraland.org/?position=-104%2C-148 ${encodeURIComponent(
+                  '\n\n'
+                )}`
+              )}&hashtags=Decentraland,DCL,P2E,Vroomway`
+            })
+          }}
+        />
+      </UiEntity>
     )
   }
+
+
 }

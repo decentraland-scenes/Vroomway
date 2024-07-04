@@ -19,7 +19,7 @@ export class UIController {
     const uiComponent = (): ReactEcs.JSX.Element => [
       this.renderSocials(),
       this.sideBar.createSideBarIcons(),
-      this.announcementUI(),
+      this.announcementUI()
     ]
     ReactEcsRenderer.setUiRenderer(uiComponent)
   }
@@ -84,7 +84,7 @@ export class UIController {
     )
   }
 
-  announcementUI():ReactEcs.JSX.Element {
+  announcementUI(): ReactEcs.JSX.Element {
     return (
       <Announcement
         visible={this.announcement_visible}

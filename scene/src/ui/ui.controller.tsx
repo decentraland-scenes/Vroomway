@@ -1,16 +1,26 @@
 import ReactEcs, { ReactEcsRenderer, UiEntity } from '@dcl/sdk/react-ecs'
 import { getUvs } from './utils/utils'
+import * as utils from '@dcl-sdk/utils'
 import { joinDiscord, joinTwitter } from './buttons'
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
 import { openExternalUrl } from '~system/RestrictedActions'
 import { SideBar } from './sidebar'
+import Announcement from './Announcement'
+import { Color4 } from '@dcl/sdk/math'
 
 export class UIController {
   public socialsVisible: boolean = true
   public canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
-  public sideBar = new SideBar()
+  public sideBar = new SideBar(this)
+  announcement_visible: boolean = false
+  announcement: string = ''
+  announcement_color: Color4 = Color4.White()
   constructor() {
-    const uiComponent = (): ReactEcs.JSX.Element => [this.renderSocials(),this.sideBar.createSideBarIcons()]
+    const uiComponent = (): ReactEcs.JSX.Element => [
+      this.renderSocials(),
+      this.sideBar.createSideBarIcons(),
+      this.announcementUI(),
+    ]
     ReactEcsRenderer.setUiRenderer(uiComponent)
   }
 
@@ -43,7 +53,7 @@ export class UIController {
         <UiEntity
           uiTransform={{
             flexDirection: 'column',
-            alignItems: 'center', 
+            alignItems: 'center',
             justifyContent: 'center',
             positionType: 'absolute',
             position: { left: '90%', top: '0%' },
@@ -74,5 +84,28 @@ export class UIController {
     )
   }
 
+  announcementUI():ReactEcs.JSX.Element {
+    return (
+      <Announcement
+        visible={this.announcement_visible}
+        text={this.announcement}
+        color={this.announcement_color}
+      />
+    )
+  }
 
+  displayAnnouncement(
+    announcement: string,
+    color: Color4,
+    duration: number
+  ): void {
+    utils.timers.clearInterval(duration)
+    console.log('OPEN ANNOUNCEMENT')
+    this.announcement = announcement
+    this.announcement_visible = true
+    this.announcement_color = color
+    utils.timers.setTimeout(() => {
+      this.announcement_visible = false
+    }, duration)
+  }
 }

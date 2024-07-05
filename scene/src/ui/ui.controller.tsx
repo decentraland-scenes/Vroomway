@@ -7,11 +7,13 @@ import { openExternalUrl } from '~system/RestrictedActions'
 import { SideBar } from './sidebar'
 import Announcement from './Announcement'
 import { Color4 } from '@dcl/sdk/math'
+import { Profile } from './profile'
 
 export class UIController {
   public socialsVisible: boolean = true
   public canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
   public sideBar = new SideBar(this)
+  public profile = new Profile(this)
   announcement_visible: boolean = false
   announcement: string = ''
   announcement_color: Color4 = Color4.White()
@@ -19,7 +21,8 @@ export class UIController {
     const uiComponent = (): ReactEcs.JSX.Element => [
       this.renderSocials(),
       this.sideBar.createSideBarIcons(),
-      this.announcementUI()
+      this.announcementUI(),
+      this.profile.initialize()
     ]
     ReactEcsRenderer.setUiRenderer(uiComponent)
   }

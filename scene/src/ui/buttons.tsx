@@ -61,3 +61,11 @@ export const inventoryButtons: Record<string, Sprite> = {
     h: 160
   }
 }
+export const refuelIcon: Sprite = {
+  atlasSrc: board1Atlas,
+  atlasSize: { x: 2048, y: 2048 },
+  x: 0,
+  y: 348.3,
+  w: 150.9,
+  h: 105.8
+};

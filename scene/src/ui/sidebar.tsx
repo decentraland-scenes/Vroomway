@@ -9,7 +9,6 @@ import { type UIController } from './ui.controller'
 import { instance, type InstanceId } from '../utils/currentInstance'
 
 export class SideBar {
-  private readonly canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
   public isVisible: boolean = true
   public missionsButtonVisible: boolean = true
   public backpackButtonVisible: boolean = true
@@ -25,26 +24,29 @@ export class SideBar {
   }
 
   createSideBarIcons(): ReactEcs.JSX.Element | null {
-    if (this.canvasInfo === null) return null
+    const canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
+    if (canvasInfo === null) return null
     return (
       <UiEntity
         uiTransform={{
           flexDirection: 'column',
-          width: '100%',
-          height: '100%',
+          width: canvasInfo.width * 0.2,
+          height: canvasInfo.height * 0.5,
+          alignItems: 'flex-end',
+          justifyContent: 'flex-end',
           positionType: 'absolute',
-          position: { bottom: '2%', right: '2%' },
+          position: { bottom: '2%', right: '0%' },
           display: this.isVisible ? 'flex' : 'none'
         }}
       >
         {/* Inventory */}
         <UiEntity
           uiTransform={{
-            positionType: 'absolute',
-            position: { right: '0.5%', bottom: '20%' },
-            width: (this.canvasInfo.height * 0.24) / 1.75,
-            height: this.canvasInfo.height * 0.077,
-            display: this.backpackButtonVisible ? 'flex' : 'none'
+            positionType: 'relative',
+            width: canvasInfo.height * 0.077 * 1.75,
+            height: canvasInfo.height * 0.077,
+            display: this.backpackButtonVisible ? 'flex' : 'none',
+            margin: '2%'
           }}
           uiBackground={{
             textureMode: 'stretch',
@@ -77,11 +79,11 @@ export class SideBar {
         {/* Missions */}
         <UiEntity
           uiTransform={{
-            positionType: 'absolute',
-            position: { right: '0.5%', bottom: '10%' },
-            width: (this.canvasInfo.height * 0.24) / 1.75,
-            height: this.canvasInfo.height * 0.077,
-            display: this.missionsButtonVisible ? 'flex' : 'none'
+            positionType: 'relative',
+            width: canvasInfo.height * 0.077 * 1.75,
+            height: canvasInfo.height * 0.077,
+            display: this.missionsButtonVisible ? 'flex' : 'none',
+            margin: '2%'
           }}
           uiBackground={{
             textureMode: 'stretch',
@@ -95,11 +97,11 @@ export class SideBar {
         {/* Teleport */}
         <UiEntity
           uiTransform={{
-            positionType: 'absolute',
-            position: { right: '0.5%', bottom: '0%' },
-            width: (this.canvasInfo.height * 0.24) / 1.75,
-            height: this.canvasInfo.height * 0.077,
-            display: this.isVisible ? 'flex' : 'none'
+            positionType: 'relative',
+            width: canvasInfo.height * 0.077 * 1.75,
+            height: canvasInfo.height * 0.077,
+            display: this.isVisible ? 'flex' : 'none',
+            margin: '2%'
           }}
           uiBackground={{
             textureMode: 'stretch',

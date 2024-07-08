@@ -12,6 +12,11 @@ export class Profile {
   public board2Atlas = 'assets/images/uiAtlas/board2Atlas.png'
   uiController: UIController
   public refuelTimer: string = ''
+  public exp: string = '-'
+  public lvl: string = '-'
+  public coins: string = '-'
+  public fuel: string = '-'
+  public compPoints: string = '-'
   constructor(uiController: UIController) {
     this.uiController = uiController
     this.profile = {
@@ -28,6 +33,11 @@ export class Profile {
   }
 
   initialize(): ReactEcs.JSX.Element | null {
+    this.updateExp();
+    this.updateLvl();
+    this.updateCoins();
+    this.updateFuel();
+    this.updateCompPoints();
     const canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
     if (canvasInfo === null) return null
     return (
@@ -175,5 +185,30 @@ export class Profile {
       .map((v) => (Number(v) < 10 ? '0' + v : v))
       .filter((v, i) => v !== '00' || i > 0)
       .join(':')
+  }
+
+
+  updateExp():void {
+    //   this.exp = LevelManager.Instance.CallbackGetExperienceNext() + " TO NEXT LVL";
+  }
+
+
+  updateLvl():void {
+    //   this.lvl = LevelManager.Instance.GetLevelDisplayValue();
+  }
+
+
+  updateCoins():void {
+    //   this.coins = InventoryManager.Instance.GetItemCountByID(ItemNameResource.coins);
+  }
+
+
+  updateFuel():void {
+    //   this.fuel = InventoryManager.Instance.GetItemCountByID(ItemNameResource.fuel);
+  }
+
+
+  updateCompPoints():void {
+    //   this.compPoints= PlayerScoreManager.Instance.GetEntryByID(PLAYER_SCORE_NAMES.COMP_POINTS).Value;
   }
 }

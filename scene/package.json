@@ -6,7 +6,7 @@
     "start": "sdk-commands start",
     "deploy": "sdk-commands deploy",
     "build": "sdk-commands build",
-    "export-static": "sdk-commands export-static --destination static/ --realmName Vroomway --baseUrl https://github.com/decentraland-scenes/Vroomway/ --commsAdapter ws-room:ws-room-service.decentraland.org/rooms/Vroomway",
+    "export-static": "sdk-commands export-static --destination static/ --realmName Vroomway --baseUrl https://decentraland-scenes.github.io/Vroomway/ --commsAdapter ws-room:ws-room-service.decentraland.org/rooms/Vroomway",
     "lint": "eslint ./**/*.{ts,tsx}",
     "lint:fix": "eslint --fix ./**/*.{ts,tsx}",
     "format": "prettier --config .prettierrc -c ./**/*.{ts,tsx}",

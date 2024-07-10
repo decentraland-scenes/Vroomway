@@ -5,6 +5,11 @@ import { type UIController } from './ui.controller'
 import { Color4 } from '@dcl/sdk/math'
 import { refuelIcon } from './buttons'
 import * as utils from '@dcl-sdk/utils'
+import { LevelManager } from '../leveling/level-manager'
+import { ItemNameResource } from '../inventory/inventory-data'
+import { InventoryManager } from '../inventory/inventory-manager'
+import { PLAYER_SCORE_NAMES } from '../player-scores/player-score-data'
+import { PlayerScoreManager } from '../player-scores/player-score-manager'
 
 export class Profile {
   public profile: Sprite
@@ -13,10 +18,10 @@ export class Profile {
   uiController: UIController
   public refuelTimer: string = ''
   public exp: string = '-'
-  public lvl: string = '-'
-  public coins: string = '-'
-  public fuel: string = '-'
-  public compPoints: string = '-'
+  public lvl: number = 0
+  public coins: number = 0
+  public fuel: number = 0
+  public compPoints: number = 0
   constructor(uiController: UIController) {
     this.uiController = uiController
     this.profile = {
@@ -28,16 +33,16 @@ export class Profile {
       h: 249
     }
     utils.timers.setTimeout(() => {
-        this.initRefuelTimer()
-      }, 2000)
+      this.initRefuelTimer()
+    }, 2000)
   }
 
   initialize(): ReactEcs.JSX.Element | null {
-    this.updateExp();
-    this.updateLvl();
-    this.updateCoins();
-    this.updateFuel();
-    this.updateCompPoints();
+    this.updateExp()
+    this.updateLvl()
+    this.updateCoins()
+    this.updateFuel()
+    this.updateCompPoints()
     const canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
     if (canvasInfo === null) return null
     return (
@@ -98,7 +103,7 @@ export class Profile {
               positionType: 'absolute',
               position: { right: '34%', top: '15%' }
             }}
-            value={'-'}
+            value={this.lvl.toString()}
             fontSize={20}
             font="sans-serif"
             color={Color4.Yellow()}
@@ -107,12 +112,13 @@ export class Profile {
           <Label
             uiTransform={{
               positionType: 'absolute',
-              position: { right: '47%', top: '34%' }
+              position: { right: '49%', top: '35%' }
             }}
-            value={'-'}
-            fontSize={20}
+            value={this.exp}
+            fontSize={11}
             font="sans-serif"
             color={Color4.Yellow()}
+            textAlign="middle-left"
           />
           {/* Fuel */}
           <Label
@@ -120,7 +126,7 @@ export class Profile {
               positionType: 'absolute',
               position: { right: '87%', top: '20%' }
             }}
-            value={'-'}
+            value={this.fuel.toString()}
             fontSize={20}
             font="sans-serif"
             color={Color4.Yellow()}
@@ -131,7 +137,7 @@ export class Profile {
               positionType: 'absolute',
               position: { right: '55%', top: '64%' }
             }}
-            value={'-'}
+            value={this.compPoints.toString()}
             fontSize={20}
             font="sans-serif"
             color={Color4.Yellow()}
@@ -142,7 +148,7 @@ export class Profile {
               positionType: 'absolute',
               position: { right: '87%', top: '64%' }
             }}
-            value={'-'}
+            value={this.coins.toString()}
             fontSize={20}
             font="sans-serif"
             color={Color4.Yellow()}
@@ -152,19 +158,20 @@ export class Profile {
     )
   }
 
-  initRefuelTimer():void{
+  initRefuelTimer(): void {
     // Update time since last login
     utils.timers.setInterval(() => {
-        const nextMidnight = new Date()
-        nextMidnight.setUTCHours(24, 0, 0, 0)
-        const now = new Date()
-        const remainingTimeInSeconds =
-          (nextMidnight.getTime() - now.getTime()) / 1000
-        if (remainingTimeInSeconds <= 1) {
-          this.setRefuelTimer(0); return;
-        }
-        this.setRefuelTimer(remainingTimeInSeconds)
-      }, 200)
+      const nextMidnight = new Date()
+      nextMidnight.setUTCHours(24, 0, 0, 0)
+      const now = new Date()
+      const remainingTimeInSeconds =
+        (nextMidnight.getTime() - now.getTime()) / 1000
+      if (remainingTimeInSeconds <= 1) {
+        this.setRefuelTimer(0)
+        return
+      }
+      this.setRefuelTimer(remainingTimeInSeconds)
+    }, 200)
   }
 
   setRefuelTimer(seconds: number): void {
@@ -173,7 +180,7 @@ export class Profile {
     this.refuelTimer = time
   }
 
-  format = (secs:number):string => {
+  format = (secs: number): string => {
     const auxSec = secs.toString()
     const secNum = parseFloat(auxSec)
     const hours = Math.floor(secNum / 3600)
@@ -186,28 +193,24 @@ export class Profile {
       .join(':')
   }
 
-
-  updateExp():void {
-    //   this.exp = LevelManager.Instance.CallbackGetExperienceNext() + " TO NEXT LVL";
+  updateExp(): void {
+    this.exp =
+      LevelManager.Instance.CallbackGetExperienceNext() + ' TO NEXT LVL'
   }
 
-
-  updateLvl():void {
-    //   this.lvl = LevelManager.Instance.GetLevelDisplayValue();
+  updateLvl(): void {
+    this.lvl = LevelManager.Instance.GetLevelDisplayValue()
   }
 
-
-  updateCoins():void {
-    //   this.coins = InventoryManager.Instance.GetItemCountByID(ItemNameResource.coins);
+  updateCoins(): void {
+      this.coins = InventoryManager.Instance.GetItemCountByID(ItemNameResource.coins);
   }
 
-
-  updateFuel():void {
-    //   this.fuel = InventoryManager.Instance.GetItemCountByID(ItemNameResource.fuel);
+  updateFuel(): void {
+      this.fuel = InventoryManager.Instance.GetItemCountByID(ItemNameResource.fuel);
   }
 
-
-  updateCompPoints():void {
-    //   this.compPoints= PlayerScoreManager.Instance.GetEntryByID(PLAYER_SCORE_NAMES.COMP_POINTS).Value;
+  updateCompPoints(): void {
+    this.compPoints= PlayerScoreManager.Instance.GetEntryByID(PLAYER_SCORE_NAMES.COMP_POINTS).Value;
   }
 }

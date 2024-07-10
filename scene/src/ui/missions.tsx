@@ -138,13 +138,13 @@ export class MissionsBoard {
           <Label
             uiTransform={{
               positionType: 'absolute',
-              position: { left: '37%', top: '30%' },
-              alignContent:'center'
+              position: { left: '15%', top: '30%' },
             }}
             value={this.campaignMission}
             fontSize={20}
             font="sans-serif"
             color={Color4.Yellow()}
+            textAlign='middle-left'
           />
           {/* Mission Number */}
           <Label

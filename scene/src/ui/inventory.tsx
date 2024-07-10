@@ -5,9 +5,11 @@ import { ATLAS_SHEET_ITEM } from '../inventory/inventory-data'
 import { ATLAS_SHEET_VEHICLE } from '../vehicle/vehicle-data'
 import { ATLAS_SHEET_ACCESSORY } from '../vehicle/accessory-data'
 import { type UIController } from './ui.controller'
-import { ReactEcs, UiEntity } from '@dcl/sdk/react-ecs'
+import { Label, ReactEcs, UiEntity } from '@dcl/sdk/react-ecs'
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
 import { getUvs, type Sprite } from './utils/utils'
+import { Color4 } from '@dcl/sdk/math'
+import { LevelManager } from '../leveling/level-manager'
 
 const DEBUGGING_UI_INVENTORY: boolean = true
 const DEBUGGING_UI_INVENTORY_VERBOSE: boolean = false
@@ -146,8 +148,21 @@ class UIInteractable {
 export class UIInventoryManager {
   uiParent: Sprite
   uiParentVisible: boolean = false
-  uiController: UIController
-  constructor(uiController: UIController) {
+  uiTextExperience: string = '999999'
+  uiTextLevel: string = '999'
+  uiController: UIController | undefined
+  private static instance: undefined | UIInventoryManager
+  public static get Instance(): UIInventoryManager {
+    //ensure instance is set
+    if (UIInventoryManager.instance === undefined) {
+      UIInventoryManager.instance = new UIInventoryManager()
+    }
+
+    return UIInventoryManager.instance
+  }
+
+  constructor(uiController?: UIController) {
+    this.uiController = uiController
     this.uiParent = {
       atlasSrc: INVENTORY_TEXTURE_BACKGROUND,
       atlasSize: { x: 2048, y: 2048 },
@@ -156,7 +171,23 @@ export class UIInventoryManager {
       w: 1000,
       h: 550
     }
-    this.uiController = uiController
+    LevelManager.Instance.RegisterUICallbackExperience(
+      this.CallbackUpdateExpDisplay
+    )
+    LevelManager.Instance.RegisterUICallbackLevel(
+      this.CallbackUpdateLevelDisplay
+    )
+  }
+
+  public DisplayInventory(type: number): void {
+    if (DEBUGGING_UI_INVENTORY)
+      console.log('UI Inventory Manager: redrawing inventory type=' + type)
+
+    //redraw progression display
+    this.updateExpDisplay()
+    this.updateLevelDisplay()
+    if (DEBUGGING_UI_INVENTORY)
+      console.log('UI Inventory Manager: redrew inventory type=' + type)
   }
 
   createUI(): ReactEcs.JSX.Element | null {
@@ -187,13 +218,56 @@ export class UIInventoryManager {
             texture: { src: this.uiParent.atlasSrc }
           }}
           onMouseDown={() => {}}
-        ></UiEntity>
+        >
+          {/* Experience */}
+          <Label
+            uiTransform={{
+              positionType: 'absolute',
+              position: { left: '11.3%', bottom: '13.3%' }
+            }}
+            value={this.uiTextExperience}
+            fontSize={13}
+            font="sans-serif"
+            color={Color4.Yellow()}
+            textAlign="bottom-left"
+          />
+          {/* Level */}
+          <Label
+            uiTransform={{
+              positionType: 'absolute',
+              position: { left: '21%', bottom: '19%' }
+            }}
+            value={this.uiTextLevel}
+            fontSize={20}
+            font="sans-serif"
+            color={Color4.Yellow()}
+            textAlign="bottom-left"
+          />
+        </UiEntity>
       </UiEntity>
     )
   }
 
+  public CallbackUpdateExpDisplay(): void {
+    this.updateExpDisplay()
+  }
+
+  public updateExpDisplay(): void {
+    this.uiTextExperience =
+      LevelManager.Instance.CallbackGetExperienceNext().toString() +
+      ' TO NEXT LVL'
+  }
+
+  public CallbackUpdateLevelDisplay(): void {
+    UIInventoryManager.Instance.updateLevelDisplay()
+  }
+
+  public updateLevelDisplay(): void {
+    this.uiTextLevel = LevelManager.Instance.GetLevelDisplayValue().toString()
+  }
+
   init = (): void => {
-    // this.DisplayInventory(0)
+    this.DisplayInventory(0)
     this.uiParentVisible = true
   }
 

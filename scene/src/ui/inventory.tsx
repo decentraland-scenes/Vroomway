@@ -174,7 +174,7 @@ export class UIInventoryManager {
           display: this.uiParentVisible ? 'flex' : 'none'
         }}
       >
-        {/* Campaign Board */}
+        {/* Ui Parent */}
         <UiEntity
           uiTransform={{
             positionType: 'relative',

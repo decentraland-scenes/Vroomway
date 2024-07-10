@@ -9,6 +9,7 @@ import Announcement from './Announcement'
 import { Color4 } from '@dcl/sdk/math'
 import { Profile } from './profile'
 import { MissionsBoard } from './missions'
+import { UIInventoryManager } from './inventory'
 
 export class UIController {
   public socialsVisible: boolean = true
@@ -16,6 +17,7 @@ export class UIController {
   public sideBar = new SideBar(this)
   public profile = new Profile(this)
   public missionsBoard = new MissionsBoard(this)
+  public inventory = new UIInventoryManager(this)
   announcement_visible: boolean = false
   announcement: string = ''
   announcement_color: Color4 = Color4.White()
@@ -25,7 +27,8 @@ export class UIController {
       this.sideBar.createSideBarIcons(),
       this.announcementUI(),
       this.profile.initialize(),
-      this.missionsBoard.createMissionBoard()
+      this.missionsBoard.createMissionBoard(),
+      this.inventory.createUI()
     ]
     ReactEcsRenderer.setUiRenderer(uiComponent)
   }

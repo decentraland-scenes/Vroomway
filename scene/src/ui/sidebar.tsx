@@ -151,6 +151,11 @@ export class SideBar {
           ? inventoryButtons.active
           : inventoryButtons.inactive
       )
+      if (this.inventoryButtonActive) {
+        this.uiController.inventory.init()
+      } else {
+        this.uiController.inventory.hide()
+      }
     } else if (button === 'Missions') {
       console.log('Missions clicked')
       this.missionsButtonActive = !this.missionsButtonActive

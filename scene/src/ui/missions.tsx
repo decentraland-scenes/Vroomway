@@ -138,7 +138,8 @@ export class MissionsBoard {
           <Label
             uiTransform={{
               positionType: 'absolute',
-              position: { left: '37%', top: '30%' }
+              position: { left: '37%', top: '30%' },
+              alignContent:'center'
             }}
             value={this.campaignMission}
             fontSize={20}

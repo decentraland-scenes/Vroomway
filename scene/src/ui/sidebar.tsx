@@ -92,7 +92,6 @@ export class SideBar {
           }}
           onMouseDown={() => {
             this.switchButtonState('Missions')
-            this.uiController.missionsBoard.show()
           }}
         />
         {/* Teleport */}
@@ -160,14 +159,18 @@ export class SideBar {
           ? missionsButtons.active
           : missionsButtons.inactive
       )
-      this.uiController.missionsBoard.isVisible = !this.uiController.missionsBoard.isVisible
+      if (this.missionsButtonActive) {
+        this.uiController.missionsBoard.show()
+      } else {
+        this.uiController.missionsBoard.hide()
+      }
     } else {
       console.log('Unknown button clicked:', button)
     }
   }
 
   hideMissionBoard = (): void => {
-    // missionBoard.hide();
+    this.uiController.missionsBoard.hide()
   }
 
   teleport = (): void => {

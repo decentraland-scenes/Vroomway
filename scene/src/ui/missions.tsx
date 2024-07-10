@@ -173,12 +173,16 @@ export class MissionsBoard {
   }
 
   getDailyMissionDescription(): void {
+    console.log('entro al daily')
     const missions = dailyMission.randomMissions.sort()
+    console.log('sorteo missiones',missions)
     missions.forEach((mission: any, i) => {
       if (i === 0) {
         const missionComplete = dailyMission.checkIfMissionComplete(mission)
+        console.log('se fijo si entraron',missionComplete)
         if (missionComplete) this.dailyCheck1Visible = true
         return (this.dailyMission1 = mission)
+        
       }
       if (i === 1) {
         const missionComplete = dailyMission.checkIfMissionComplete(mission)

@@ -1,6 +1,11 @@
 // CHANGE THIS FLAG TO TRUE IF YOURE TESTING
 // const TESTING = false;
 
+import { getUserData } from '~system/UserIdentity'
+import { missions } from './missions'
+import { LAMBDA_URL } from './constants'
+
+const TESTING = false
 export type DailyMissions =
   | 'sprintCompleteFast'
   | 'sprintCompleteThree'
@@ -135,39 +140,43 @@ class DailyMission {
   }
 
   async checkMission(missionToUpdate: DailyMissions): Promise<void> {
-    // const multiAttemptMissions = [
-    //   "sprintCompleteThree",
-    //   "circuitsFifteenLaps",
-    //   "circuitsCollectTenCoins",
-    //   "rechargeCompleteTwoSupercharage",
-    //   "rechargeExchangeMaterialsThreeTimes",
-    //   "scrapyardTwentyFiveBarrels",
-    //   "scrapyardTwoBlueBarrels"
-    // ];
-    // const { userId } = await getUserData();
+    const multiAttemptMissions = [
+      'sprintCompleteThree',
+      'circuitsFifteenLaps',
+      'circuitsCollectTenCoins',
+      'rechargeCompleteTwoSupercharage',
+      'rechargeExchangeMaterialsThreeTimes',
+      'scrapyardTwentyFiveBarrels',
+      'scrapyardTwoBlueBarrels'
+    ]
+    const userId = (await getUserData({})).data?.userId
     // Make sure campaign missions are complete
-    // if (!TESTING && !missions.campaignMissionsComplete) return;
+    if (!TESTING && !missions.campaignMissionsComplete) return
     // If theyve already met requirements for a mission end here
     if (
       this.multiMissionRequirementsMet(missionToUpdate) ||
-      // (this.dailyMissionsData[missionToUpdate] > 0 && !multiAttemptMissions.includes(missionToUpdate)) ||
+      (this.dailyMissionsData[missionToUpdate] > 0 &&
+        !multiAttemptMissions.includes(missionToUpdate)) ||
       //   If all missions are complete end here
       this.checkAllMissionsComplete(this.randomMissions as DailyMissions[])
-    )
-      return
-
+    ) return
     // Make sure daily missions havent been reset
     // Handle updated data in case client doesnt match server
-    // const result = await fetch(`${LAMBDA_URL}/dailymissions?uuid=${userId}`);
-    // const userData = (await result?.json()) || null;
-    // if (userData?.updated) {
-    //   const keys = Object.keys(this.dailyMissionsData);
-    //   const randomKeys = keys.sort(() => 0.5 - Math.random()).slice(0, 3);
-    //   const randomMissions = randomKeys.sort();
-    //   void this.writeMissionsData(randomMissions[0], true);
-    //   missionBoard.hide();
-    //   return ui.displayAnnouncement("Daily Missions have been reset.\n\nCheck the menu for updated missions.", 5);
-    // }
+    const result = await fetch(`${LAMBDA_URL}/dailymissions?uuid=${userId}`)
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+    const userData = (await result?.json()) || null;
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+    if (userData?.updated) {
+      const keys = Object.keys(this.dailyMissionsData)
+      const randomKeys = keys.sort(() => 0.5 - Math.random()).slice(0, 3)
+      const randomMissions = randomKeys.sort()
+      void this.writeMissionsData(randomMissions[0], true)
+      // missionBoard.hide()
+      // return ui.displayAnnouncement(
+      //   'Daily Missions have been reset.\n\nCheck the menu for updated missions.',
+      //   5
+      // )
+    }
     // Move on to rewards
     void this.awardUserForMission(missionToUpdate)
   }

@@ -171,7 +171,6 @@ export class Profile {
     const time = this.format(seconds)
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     this.refuelTimer = time
-    console.log(this.refuelTimer,'acaa')
   }
 
   format = (secs:number):string => {

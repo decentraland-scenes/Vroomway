@@ -92,6 +92,7 @@ export class SideBar {
           }}
           onMouseDown={() => {
             this.switchButtonState('Missions')
+            this.uiController.missionsBoard.show()
           }}
         />
         {/* Teleport */}

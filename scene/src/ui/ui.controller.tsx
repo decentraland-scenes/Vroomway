@@ -8,12 +8,14 @@ import { SideBar } from './sidebar'
 import Announcement from './Announcement'
 import { Color4 } from '@dcl/sdk/math'
 import { Profile } from './profile'
+import { MissionsBoard } from './missions'
 
 export class UIController {
   public socialsVisible: boolean = true
   public canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
   public sideBar = new SideBar(this)
   public profile = new Profile(this)
+  public missionsBoard = new MissionsBoard(this)
   announcement_visible: boolean = false
   announcement: string = ''
   announcement_color: Color4 = Color4.White()
@@ -22,7 +24,8 @@ export class UIController {
       this.renderSocials(),
       this.sideBar.createSideBarIcons(),
       this.announcementUI(),
-      this.profile.initialize()
+      this.profile.initialize(),
+      this.missionsBoard.createMissionBoard()
     ]
     ReactEcsRenderer.setUiRenderer(uiComponent)
   }

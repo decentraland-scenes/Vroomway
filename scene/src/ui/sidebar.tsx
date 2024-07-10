@@ -159,6 +159,7 @@ export class SideBar {
           ? missionsButtons.active
           : missionsButtons.inactive
       )
+      this.uiController.missionsBoard.isVisible = !this.uiController.missionsBoard.isVisible
     } else {
       console.log('Unknown button clicked:', button)
     }

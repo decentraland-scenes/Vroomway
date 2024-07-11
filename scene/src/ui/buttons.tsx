@@ -68,4 +68,4 @@ export const refuelIcon: Sprite = {
   y: 348.3,
   w: 150.9,
   h: 105.8
-};
+}

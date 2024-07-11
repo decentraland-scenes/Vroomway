@@ -159,12 +159,13 @@ class DailyMission {
         !multiAttemptMissions.includes(missionToUpdate)) ||
       //   If all missions are complete end here
       this.checkAllMissionsComplete(this.randomMissions as DailyMissions[])
-    ) return
+    )
+      return
     // Make sure daily missions havent been reset
     // Handle updated data in case client doesnt match server
     const result = await fetch(`${LAMBDA_URL}/dailymissions?uuid=${userId}`)
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-    const userData = (await result?.json()) || null;
+    const userData = (await result?.json()) || null
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     if (userData?.updated) {
       const keys = Object.keys(this.dailyMissionsData)

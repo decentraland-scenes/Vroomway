@@ -22,25 +22,25 @@ import { BLACKLIST } from '../../utils/constants'
 import { instance } from '../../utils/currentInstance'
 
 export const renderMainInstance = async (): Promise<void> => {
-    //   if (Constants.SCENE_MGR && (!Constants.SCENE_MGR.lastRaceType || Constants.SCENE_MGR.lastRaceType != "lobby")) {
-    //     //workaround to assign this here. all sets should take place in raceSceneManager but fall back when not
-    //     log(
-    //         "renderMainInstance",
-    //         "WORKAROUND setting Constants.SCENE_MGR.lastRaceType",
-    //         Constants.SCENE_MGR.lastRaceType,
-    //         "to",
-    //         "lobby"
-    //     );
-    //     Constants.SCENE_MGR.lastRaceType = "lobby";
-    // } else if (!Constants.SCENE_MGR) {
-    //     log("renderMainInstance", "WARNING Constants.SCENE_MGR was null, could not set Constants.SCENE_MGR.lastRaceType");
-    // }
-    // if (powerUpBarUI) powerUpBarUI.hide();
-    // Player.updateUI();
-    // PowerUpsInv.powerUpMgr.reset();
+  //   if (Constants.SCENE_MGR && (!Constants.SCENE_MGR.lastRaceType || Constants.SCENE_MGR.lastRaceType != "lobby")) {
+  //     //workaround to assign this here. all sets should take place in raceSceneManager but fall back when not
+  //     log(
+  //         "renderMainInstance",
+  //         "WORKAROUND setting Constants.SCENE_MGR.lastRaceType",
+  //         Constants.SCENE_MGR.lastRaceType,
+  //         "to",
+  //         "lobby"
+  //     );
+  //     Constants.SCENE_MGR.lastRaceType = "lobby";
+  // } else if (!Constants.SCENE_MGR) {
+  //     log("renderMainInstance", "WARNING Constants.SCENE_MGR was null, could not set Constants.SCENE_MGR.lastRaceType");
+  // }
+  // if (powerUpBarUI) powerUpBarUI.hide();
+  // Player.updateUI();
+  // PowerUpsInv.powerUpMgr.reset();
 
-    // Constants.SCENE_MGR?.lobbyScene?.init();
-    // Constants.SCENE_MGR?.lobbyScene?.show();
+  // Constants.SCENE_MGR?.lobbyScene?.init();
+  // Constants.SCENE_MGR?.lobbyScene?.show();
   const _scene = engine.addEntity()
   Transform.createOrReplace(_scene, {
     position: Vector3.create(96, 0, 64),

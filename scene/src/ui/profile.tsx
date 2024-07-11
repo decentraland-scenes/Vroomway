@@ -203,14 +203,20 @@ export class Profile {
   }
 
   updateCoins(): void {
-      this.coins = InventoryManager.Instance.GetItemCountByID(ItemNameResource.coins);
+    this.coins = InventoryManager.Instance.GetItemCountByID(
+      ItemNameResource.coins
+    )
   }
 
   updateFuel(): void {
-      this.fuel = InventoryManager.Instance.GetItemCountByID(ItemNameResource.fuel);
+    this.fuel = InventoryManager.Instance.GetItemCountByID(
+      ItemNameResource.fuel
+    )
   }
 
   updateCompPoints(): void {
-    this.compPoints= PlayerScoreManager.Instance.GetEntryByID(PLAYER_SCORE_NAMES.COMP_POINTS).Value;
+    this.compPoints = PlayerScoreManager.Instance.GetEntryByID(
+      PLAYER_SCORE_NAMES.COMP_POINTS
+    ).Value
   }
 }

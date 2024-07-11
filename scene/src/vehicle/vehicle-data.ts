@@ -45,6 +45,7 @@ export type PlayerBonusDataObject = {
  * on the server table)
  */
 export enum VEHICLE_ID {
+  NONE = 'none',
   // ###   TIER 1
   SPEED_BOOTS_L1 = 'speedBoots1',
   SPEED_BOOTS_L2 = 'speedBoots2',

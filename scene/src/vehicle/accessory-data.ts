@@ -25,6 +25,7 @@ export const ATLAS_SHEET_ACCESSORY = [
  * on the server table)
  */
 export enum ACCESSORY_ID {
+  NONE = 'none',
   // ###   TIER 1
   WINGS_BETA = 'betaWings',
   WINGS_MASTER = 'masterWings',

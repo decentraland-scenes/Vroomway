@@ -22,7 +22,7 @@ export class UIController {
   announcement: string = ''
   announcement_color: Color4 = Color4.White()
   constructor() {
-    const uiComponent = (): ReactEcs.JSX.Element[] | null => [
+    const uiComponent = (): Array<ReactEcs.JSX.Element | null> => [
       this.renderSocials(),
       this.sideBar.createSideBarIcons(),
       this.announcementUI(),

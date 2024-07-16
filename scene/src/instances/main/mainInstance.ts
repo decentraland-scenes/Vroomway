@@ -154,7 +154,7 @@ export class MainInstance {
             if (entity.includes('FC')) {
               if (instance.getInstance() !== 'main') return
               if (this.gameController.Player.getFuel() >= FUEGO_CIRCUIT_COST) {
-                // decentrallyBoard.show()
+                this.gameController.decentrallyBoard.show()
               } else {
                 this.gameController.uiController.outOfFuel.show()
                 return

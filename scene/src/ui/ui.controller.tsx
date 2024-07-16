@@ -35,7 +35,8 @@ export class UIController {
       this.missionsBoard.createMissionBoard(),
       this.inventory.createUI(),
       this.gameController.soloSprint.createUI(),
-      this.gameController.dragRaceBoard.createUI()
+      this.gameController.dragRaceBoard.createUI(),
+      this.gameController.decentrallyBoard.createUI()
     ]
     ReactEcsRenderer.setUiRenderer(uiComponent)
   }

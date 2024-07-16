@@ -1,5 +1,6 @@
 import { MainInstance } from './instances/main/mainInstance'
 import { VehicleOwnership } from './instances/main/vehicleOwnership'
+import { DecentrallyBoard } from './ui/decentrally'
 import { DragRaceBoard } from './ui/dragRace'
 import { SoloSprintBoard } from './ui/soloSprint'
 import { UIController } from './ui/ui.controller'
@@ -14,6 +15,7 @@ export class GameController {
   public soloSprint: SoloSprintBoard
   public loader: Loader
   public dragRaceBoard: DragRaceBoard
+  public decentrallyBoard: DecentrallyBoard 
   constructor() {
     this.uiController = new UIController(this)
     this.Player = new PlayerStats(this)
@@ -23,5 +25,6 @@ export class GameController {
     this.soloSprint = new SoloSprintBoard(this)
     this.loader = new Loader(this)
     this.dragRaceBoard = new DragRaceBoard(this)
+    this.decentrallyBoard = new DecentrallyBoard(this)
   }
 }

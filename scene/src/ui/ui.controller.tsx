@@ -10,6 +10,8 @@ import { Color4 } from '@dcl/sdk/math'
 import { Profile } from './profile'
 import { MissionsBoard } from './missions'
 import { UIInventoryManager } from './inventory'
+import { type GameController } from '../game.controller'
+import { RenderOutOfFuel } from './outOfFuel'
 
 export class UIController {
   public socialsVisible: boolean = true
@@ -18,17 +20,22 @@ export class UIController {
   public profile = new Profile(this)
   public missionsBoard = new MissionsBoard(this)
   public inventory = new UIInventoryManager(this)
+  public outOfFuel = new RenderOutOfFuel(this)
   announcement_visible: boolean = false
   announcement: string = ''
   announcement_color: Color4 = Color4.White()
-  constructor() {
+  gameController: GameController
+  constructor(gameController: GameController) {
+    this.gameController = gameController
     const uiComponent = (): Array<ReactEcs.JSX.Element | null> => [
       this.renderSocials(),
       this.sideBar.createSideBarIcons(),
       this.announcementUI(),
       this.profile.initialize(),
       this.missionsBoard.createMissionBoard(),
-      this.inventory.createUI()
+      this.inventory.createUI(),
+      this.gameController.soloSprint.createUI(),
+      this.gameController.dragRaceBoard.createUI()
     ]
     ReactEcsRenderer.setUiRenderer(uiComponent)
   }

@@ -69,3 +69,75 @@ export const refuelIcon: Sprite = {
   w: 150.9,
   h: 105.8
 }
+export const closeButton: Sprite = {
+  atlasSrc: board1Atlas,
+  atlasSize: { x: 2048, y: 2048 },
+  x: 1550.1,
+  y: 137.5,
+  w: 229,
+  h: 91.4
+};
+export const startButton: Sprite = {
+  atlasSrc: board1Atlas,
+  atlasSize: { x: 2048, y: 2048 },
+  x: 792.5,
+  y: 137.5,
+  w: 229,
+  h: 91.4
+};
+export const startCapitalButton: Sprite = {
+  atlasSrc: board1Atlas,
+  atlasSize: { x: 2048, y: 2048 },
+  x: 541.7,
+  y: 137.5,
+  w: 235,
+  h: 100
+};
+export const startCloudlandsButton: Sprite = {
+  atlasSrc: board1Atlas,
+  atlasSize: { x: 2048, y: 2048 },
+  x: 290.7,
+  y: 137.5,
+  w: 235,
+  h: 100
+};
+export const startObelisqueButton: Sprite = {
+  atlasSrc: board1Atlas,
+  atlasSize: { x: 2048, y: 2048 },
+  x: 35.4,
+  y: 239.5,
+  w: 235,
+  h: 100
+};
+export const startFungalButton: Sprite = {
+  atlasSrc: board1Atlas,
+  atlasSize: { x: 2048, y: 2048 },
+  x: 35.4,
+  y: 137.5,
+  w: 235,
+  h: 100
+};
+export const startWinterButton: Sprite = {
+  atlasSrc: board1Atlas,
+  atlasSize: { x: 2048, y: 2048 },
+  x: 290.7,
+  y: 239.5,
+  w: 235,
+  h: 100
+};
+export const startWAGMIButton: Sprite = {
+  atlasSrc: board1Atlas,
+  atlasSize: { x: 2048, y: 2048 },
+  x: 792.5,
+  y: 239.5,
+  w: 235,
+  h: 100
+};
+export const startAtlantisButton: Sprite = {
+  atlasSrc: board1Atlas,
+  atlasSize: { x: 2048, y: 2048 },
+  x: 1292.5,
+  y: 341.5,
+  w: 235,
+  h: 100
+};

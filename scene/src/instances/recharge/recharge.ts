@@ -82,7 +82,7 @@ export const renderLeaderBoard = (): void => {
 
 export const renderRecharge = (): void => {
   // createDanceAreas();
-  missions.checkAndUnlockCampaignMission("visitRecharge");
+  missions.checkAndUnlockCampaignMission('visitRecharge')
   for (const [index, asset] of (assets as any).entries()) {
     const entity = engine.addEntity()
     Transform.create(entity)
@@ -313,7 +313,7 @@ export const renderRecharge = (): void => {
       src: 'https://bafybeibkf7e5cxz7ck4pfg3oyzjh3owmu44vgboyimmampktjwkm6oizje.ipfs.nftstorage.link/'
     })
   })
-    crystals.updateCrystals();
+  crystals.updateCrystals()
 
   // SPAWN SPOTLIGHTS
   const spotLights = engine.addEntity()

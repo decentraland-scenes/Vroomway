@@ -57,19 +57,19 @@ export class AudioManager {
     console.log('Audio Manager: initialized!')
   }
 
-  AddSound(key: string, location: string):void {
+  AddSound(key: string, location: string): void {
     // ensure key is not empty
     if (key === '') return
     // entity
     const soundEntity = engine.addEntity()
     OmitFromCleanUpFlag.create(soundEntity)
-    Transform.create(soundEntity,{parent: this.parentEntity})
+    Transform.create(soundEntity, { parent: this.parentEntity })
     // audio clip
     AudioSource.createOrReplace(soundEntity, {
-        audioClipUrl: location,
-        loop: false,
-        playing: false,
-        volume:1 
+      audioClipUrl: location,
+      loop: false,
+      playing: false,
+      volume: 1
     })
     // add to collection
     this.audioDict.addItem(key, soundEntity)
@@ -78,7 +78,7 @@ export class AudioManager {
     )
   }
 
-  PlaySound(key: string):void {
+  PlaySound(key: string): void {
     // ensure key exists in dict
     if (!this.audioDict.containsKey(key)) return
     console.log('Audio Manager: play sound key=' + key)

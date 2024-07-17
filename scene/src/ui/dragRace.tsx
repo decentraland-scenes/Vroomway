@@ -77,7 +77,7 @@ export class DragRaceBoard {
               texture: { src: closeButton.atlasSrc }
             }}
             onMouseDown={() => {
-                this.hide()
+              this.hide()
             }}
           />
           {/* START BUTTON #1 */}
@@ -190,15 +190,15 @@ export class DragRaceBoard {
     )
   }
 
-  hide():void {
+  hide(): void {
     // Unsubscribe from buttons
     // removeKeyBindings(this.eButtonAction, this.fButtonAction)
     this.boardVisible = false
   }
 
-  show():void {
+  show(): void {
     // Subscribe to keys
     // if (!Input.instance) attachKeyBindings(this.eButtonAction, this.fButtonAction);
-    this.boardVisible = true;
+    this.boardVisible = true
   }
 }

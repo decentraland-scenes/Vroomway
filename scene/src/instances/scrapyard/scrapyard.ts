@@ -35,7 +35,7 @@ const assets = [
 
 export const renderScrapyard = async (): Promise<void> => {
   void movePlayerTo({ newRelativePosition: Vector3.create(31.38, 1.55, 47) })
-  missions.checkAndUnlockCampaignMission("scrapyard");
+  missions.checkAndUnlockCampaignMission('scrapyard')
 
   for (const [index, asset] of (assets as any).entries()) {
     const entity = engine.addEntity()
@@ -76,7 +76,10 @@ export const renderScrapyard = async (): Promise<void> => {
       faceUser: true,
       darkUI: true,
       coolDownDuration: 3,
-      hoverText: missions.getCurrentMissionName() === "assidMary" ? "Talk to Assid Mary" : "Claim crates",
+      hoverText:
+        missions.getCurrentMissionName() === 'assidMary'
+          ? 'Talk to Assid Mary'
+          : 'Claim crates',
       onlyClickTrigger: true,
       onlyExternalTrigger: false,
       reactDistance: 3,
@@ -100,12 +103,12 @@ export const renderScrapyard = async (): Promise<void> => {
   // BarrelHandler.Instance.SetParent(_scene);
   // BarrelHandler.Instance.PlaceAllBarrels();
   // MUSIC TRACK
-    const publicKey = await getUserData({})
-    const cube = engine.addEntity()
-    AvatarAttach.createOrReplace(cube, {
-      avatarId: publicKey.data?.userId,
-      anchorPointId: AvatarAnchorPointType.AAPT_NAME_TAG
-    })
+  const publicKey = await getUserData({})
+  const cube = engine.addEntity()
+  AvatarAttach.createOrReplace(cube, {
+    avatarId: publicKey.data?.userId,
+    anchorPointId: AvatarAnchorPointType.AAPT_NAME_TAG
+  })
 
   // atlasAnalytics.updateBranchName("Scrapyard");
 
@@ -598,7 +601,7 @@ export const renderScrapyard = async (): Promise<void> => {
         speedBootClaimBox
       )
     ) {
-      missions.checkAndUnlockCampaignMission("visitSpeedBoots");
+      missions.checkAndUnlockCampaignMission('visitSpeedBoots')
       // speedBootClaim.show();
     }
   })
@@ -632,7 +635,7 @@ export const renderScrapyard = async (): Promise<void> => {
         hoverBikeClaimBox
       )
     ) {
-      missions.checkAndUnlockCampaignMission("visitHoverBike");
+      missions.checkAndUnlockCampaignMission('visitHoverBike')
       // hoverBikeClaim.show();
     }
   })
@@ -666,7 +669,7 @@ export const renderScrapyard = async (): Promise<void> => {
         hoverCarClaimBox
       )
     ) {
-      missions.checkAndUnlockCampaignMission("visitHoverCar");
+      missions.checkAndUnlockCampaignMission('visitHoverCar')
       // hoverCarClaim.show();
     }
   })
@@ -780,5 +783,5 @@ export const renderScrapyard = async (): Promise<void> => {
       })
     }
   })
-    crystals.updateCrystals();
+  crystals.updateCrystals()
 }

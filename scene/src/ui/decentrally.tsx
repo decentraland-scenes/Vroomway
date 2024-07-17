@@ -1,7 +1,16 @@
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
 import ReactEcs, { UiEntity } from '@dcl/sdk/react-ecs'
 import { type GameController } from '../game.controller'
-import { closeButton, startCapitalButton, startCloudlandsButton, startObelisqueButton, startFungalButton, startWinterButton, startWAGMIButton, startAtlantisButton } from './buttons'
+import {
+  closeButton,
+  startCapitalButton,
+  startCloudlandsButton,
+  startObelisqueButton,
+  startFungalButton,
+  startWinterButton,
+  startWAGMIButton,
+  startAtlantisButton
+} from './buttons'
 import { getUvs, type Sprite } from './utils/utils'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -181,15 +190,15 @@ export class DecentrallyBoard {
     )
   }
 
-  hide():void {
+  hide(): void {
     // Unsubscribe from buttons
     // removeKeyBindings(this.eButtonAction, this.fButtonAction)
     this.boardVisible = false
   }
 
-  show():void {
+  show(): void {
     // Subscribe to keys
     // if (!Input.instance) attachKeyBindings(this.eButtonAction, this.fButtonAction);
-    this.boardVisible = true;
+    this.boardVisible = true
   }
 }

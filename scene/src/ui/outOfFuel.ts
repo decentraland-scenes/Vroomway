@@ -7,7 +7,7 @@ export class RenderOutOfFuel {
     this.uiController = uiController
   }
 
-  show():void {
+  show(): void {
     this.uiController.displayAnnouncement(
       'You need more FUEL!\n\nHit the Recharge to dance for more.',
       Color4.Yellow(),

@@ -76,7 +76,7 @@ export const closeButton: Sprite = {
   y: 137.5,
   w: 229,
   h: 91.4
-};
+}
 export const startButton: Sprite = {
   atlasSrc: board1Atlas,
   atlasSize: { x: 2048, y: 2048 },
@@ -84,7 +84,7 @@ export const startButton: Sprite = {
   y: 137.5,
   w: 229,
   h: 91.4
-};
+}
 export const startCapitalButton: Sprite = {
   atlasSrc: board1Atlas,
   atlasSize: { x: 2048, y: 2048 },
@@ -92,7 +92,7 @@ export const startCapitalButton: Sprite = {
   y: 137.5,
   w: 235,
   h: 100
-};
+}
 export const startCloudlandsButton: Sprite = {
   atlasSrc: board1Atlas,
   atlasSize: { x: 2048, y: 2048 },
@@ -100,7 +100,7 @@ export const startCloudlandsButton: Sprite = {
   y: 137.5,
   w: 235,
   h: 100
-};
+}
 export const startObelisqueButton: Sprite = {
   atlasSrc: board1Atlas,
   atlasSize: { x: 2048, y: 2048 },
@@ -108,7 +108,7 @@ export const startObelisqueButton: Sprite = {
   y: 239.5,
   w: 235,
   h: 100
-};
+}
 export const startFungalButton: Sprite = {
   atlasSrc: board1Atlas,
   atlasSize: { x: 2048, y: 2048 },
@@ -116,7 +116,7 @@ export const startFungalButton: Sprite = {
   y: 137.5,
   w: 235,
   h: 100
-};
+}
 export const startWinterButton: Sprite = {
   atlasSrc: board1Atlas,
   atlasSize: { x: 2048, y: 2048 },
@@ -124,7 +124,7 @@ export const startWinterButton: Sprite = {
   y: 239.5,
   w: 235,
   h: 100
-};
+}
 export const startWAGMIButton: Sprite = {
   atlasSrc: board1Atlas,
   atlasSize: { x: 2048, y: 2048 },
@@ -132,7 +132,7 @@ export const startWAGMIButton: Sprite = {
   y: 239.5,
   w: 235,
   h: 100
-};
+}
 export const startAtlantisButton: Sprite = {
   atlasSrc: board1Atlas,
   atlasSize: { x: 2048, y: 2048 },
@@ -140,4 +140,4 @@ export const startAtlantisButton: Sprite = {
   y: 341.5,
   w: 235,
   h: 100
-};
+}

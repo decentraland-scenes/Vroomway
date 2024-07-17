@@ -55,9 +55,9 @@ export class MainInstance {
     // }
     // if (powerUpBarUI) powerUpBarUI.hide();
     this.gameController.Player.updateUI()
-    // PowerUpsInv.powerUpMgr.reset(); 
+    // PowerUpsInv.powerUpMgr.reset();
 
-    // Constants.SCENE_MGR?.lobbyScene?.init(); 
+    // Constants.SCENE_MGR?.lobbyScene?.init();
     // Constants.SCENE_MGR?.lobbyScene?.show();
     const _scene = engine.addEntity()
     Transform.createOrReplace(_scene, {
@@ -290,19 +290,19 @@ export class MainInstance {
 
     // SCRAPYARD PORTAL
     const scrapYardPortal = engine.addEntity()
-    Transform.createOrReplace(scrapYardPortal, { 
+    Transform.createOrReplace(scrapYardPortal, {
       position: Vector3.create(88.29, 2.0, 31.26),
       scale: Vector3.create(2.2, 8.0, 7.0),
       rotation: Quaternion.fromEulerDegrees(0.0, 0.0, 0.0)
     })
-    MeshRenderer.setBox(scrapYardPortal) 
+    MeshRenderer.setBox(scrapYardPortal)
     Material.setPbrMaterial(scrapYardPortal, {
       albedoColor: Color4.create(0, 0, 0, 0)
     })
     utils.triggers.addTrigger(
       scrapYardPortal,
       1,
-      1, 
+      1,
       [{ type: 'box', scale: Vector3.create(3, 9, 10) }],
       () => {
         instance.setInstance('scrapyard')

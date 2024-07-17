@@ -15,7 +15,7 @@ export class GameController {
   public soloSprint: SoloSprintBoard
   public loader: Loader
   public dragRaceBoard: DragRaceBoard
-  public decentrallyBoard: DecentrallyBoard 
+  public decentrallyBoard: DecentrallyBoard
   constructor() {
     this.uiController = new UIController(this)
     this.Player = new PlayerStats(this)

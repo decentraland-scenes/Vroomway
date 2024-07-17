@@ -48,7 +48,7 @@ export class UIController {
     if (this.canvasInfo === null) return null
     return (
       <UiEntity
-        uiTransform={{ 
+        uiTransform={{
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
@@ -65,7 +65,7 @@ export class UIController {
         }}
         onMouseDown={() => {
           void openExternalUrl({ url: 'https://discord.gg/2E9AwrgssP' })
-          void dailyMission.checkMission("sprintCompleteThree");
+          void dailyMission.checkMission('sprintCompleteThree')
         }}
       >
         <UiEntity

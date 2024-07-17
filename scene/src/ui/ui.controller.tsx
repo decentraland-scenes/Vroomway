@@ -12,6 +12,7 @@ import { MissionsBoard } from './missions'
 import { UIInventoryManager } from './inventory'
 import { type GameController } from '../game.controller'
 import { RenderOutOfFuel } from './outOfFuel'
+import { dailyMission } from '../utils/dailyMissions'
 
 export class UIController {
   public socialsVisible: boolean = true
@@ -47,7 +48,7 @@ export class UIController {
     if (this.canvasInfo === null) return null
     return (
       <UiEntity
-        uiTransform={{
+        uiTransform={{ 
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
@@ -64,7 +65,7 @@ export class UIController {
         }}
         onMouseDown={() => {
           void openExternalUrl({ url: 'https://discord.gg/2E9AwrgssP' })
-          // dailyMission.checkMission("sprintCompleteThree");
+          void dailyMission.checkMission("sprintCompleteThree");
         }}
       >
         <UiEntity

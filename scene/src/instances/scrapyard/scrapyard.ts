@@ -1,5 +1,3 @@
-// initVWRegistry();
-
 import {
   engine,
   Transform,
@@ -11,11 +9,18 @@ import {
   PointerEventType,
   PointerEvents,
   inputSystem,
-  MeshCollider
+  MeshCollider,
+  AvatarAttach,
+  AvatarAnchorPointType
 } from '@dcl/sdk/ecs'
 import { Color4, Quaternion, Vector3 } from '@dcl/sdk/math'
 import { movePlayerTo, openExternalUrl } from '~system/RestrictedActions'
 import * as npc from 'dcl-npc-toolkit'
+import { missions } from '../../utils/missions'
+import { getUserData } from '~system/UserIdentity'
+import { crystals } from '../../crystals'
+
+// initVWRegistry();
 
 const assets = [
   'scrapyard/scrapyardStatic.gltf',
@@ -30,7 +35,7 @@ const assets = [
 
 export const renderScrapyard = async (): Promise<void> => {
   void movePlayerTo({ newRelativePosition: Vector3.create(31.38, 1.55, 47) })
-  // missions.checkAndUnlockCampaignMission("scrapyard");
+  missions.checkAndUnlockCampaignMission("scrapyard");
 
   for (const [index, asset] of (assets as any).entries()) {
     const entity = engine.addEntity()
@@ -64,14 +69,14 @@ export const renderScrapyard = async (): Promise<void> => {
       model: 'assets/models/npcs/assidmaryNPC.glb',
       onActivate: () => {
         //             missions.getCurrentMissionName() === "assidMary"
-        // ? assidMary.talk(AssidMaryDialog1, 0)
+        // ? assidMary.(AssidMaryDialog1, 0)
         // : cargoClaim.toggleCargoClaim();
       },
       idleAnim: `idle`,
       faceUser: true,
       darkUI: true,
       coolDownDuration: 3,
-      // missions.getCurrentMissionName() === "assidMary" ? "Talk to Assid Mary" : "Claim crates",
+      hoverText: missions.getCurrentMissionName() === "assidMary" ? "Talk to Assid Mary" : "Claim crates",
       onlyClickTrigger: true,
       onlyExternalTrigger: false,
       reactDistance: 3,
@@ -95,14 +100,12 @@ export const renderScrapyard = async (): Promise<void> => {
   // BarrelHandler.Instance.SetParent(_scene);
   // BarrelHandler.Instance.PlaceAllBarrels();
   // MUSIC TRACK
-  //   const { publicKey } = await getUserData()
-  //   const cube = new Entity()
-  //   cube.addComponentOrReplace(
-  //     new AttachToAvatar({
-  //       avatarId: publicKey,
-  //       anchorPointId: AttachToAvatarAnchorPointId.NameTag
-  //     })
-  //   )
+    const publicKey = await getUserData({})
+    const cube = engine.addEntity()
+    AvatarAttach.createOrReplace(cube, {
+      avatarId: publicKey.data?.userId,
+      anchorPointId: AvatarAnchorPointType.AAPT_NAME_TAG
+    })
 
   // atlasAnalytics.updateBranchName("Scrapyard");
 
@@ -595,7 +598,7 @@ export const renderScrapyard = async (): Promise<void> => {
         speedBootClaimBox
       )
     ) {
-      // missions.checkAndUnlockCampaignMission("visitSpeedBoots");
+      missions.checkAndUnlockCampaignMission("visitSpeedBoots");
       // speedBootClaim.show();
     }
   })
@@ -629,7 +632,7 @@ export const renderScrapyard = async (): Promise<void> => {
         hoverBikeClaimBox
       )
     ) {
-      // missions.checkAndUnlockCampaignMission("visitHoverBike");
+      missions.checkAndUnlockCampaignMission("visitHoverBike");
       // hoverBikeClaim.show();
     }
   })
@@ -663,7 +666,7 @@ export const renderScrapyard = async (): Promise<void> => {
         hoverCarClaimBox
       )
     ) {
-      // missions.checkAndUnlockCampaignMission("visitHoverCar");
+      missions.checkAndUnlockCampaignMission("visitHoverCar");
       // hoverCarClaim.show();
     }
   })
@@ -777,5 +780,5 @@ export const renderScrapyard = async (): Promise<void> => {
       })
     }
   })
-  //   crystals.updateCrystals();
+    crystals.updateCrystals();
 }

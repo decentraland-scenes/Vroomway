@@ -19,6 +19,8 @@ import {
   PLAYER_SCORE_SORTING_TYPES
 } from '../../player-scores/player-score-data'
 import { ScoreboardDisplayObject } from '../../player-scores/scoreboard-display-object'
+import { missions } from '../../utils/missions'
+import { crystals } from '../../crystals'
 
 const assets = [
   'the-recharge/flagGORL1.glb',
@@ -80,7 +82,7 @@ export const renderLeaderBoard = (): void => {
 
 export const renderRecharge = (): void => {
   // createDanceAreas();
-  // missions.checkAndUnlockCampaignMission("visitRecharge");
+  missions.checkAndUnlockCampaignMission("visitRecharge");
   for (const [index, asset] of (assets as any).entries()) {
     const entity = engine.addEntity()
     Transform.create(entity)
@@ -311,7 +313,7 @@ export const renderRecharge = (): void => {
       src: 'https://bafybeibkf7e5cxz7ck4pfg3oyzjh3owmu44vgboyimmampktjwkm6oizje.ipfs.nftstorage.link/'
     })
   })
-  //   crystals.updateCrystals();
+    crystals.updateCrystals();
 
   // SPAWN SPOTLIGHTS
   const spotLights = engine.addEntity()

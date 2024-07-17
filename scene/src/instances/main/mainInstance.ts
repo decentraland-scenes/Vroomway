@@ -27,6 +27,11 @@ import {
 } from '../../utils/constants'
 import { instance } from '../../utils/currentInstance'
 import { type GameController } from '../../game.controller'
+import { TulioDialog1, YoYoDialog1 } from '../../utils/dialog'
+import { missions } from '../../utils/missions'
+import { cleanUpScene } from '../../utils/cleanupScene'
+import { renderRecharge } from '../recharge/recharge'
+import { renderScrapyard } from '../scrapyard/scrapyard'
 
 export class MainInstance {
   gameController: GameController
@@ -49,10 +54,10 @@ export class MainInstance {
     //     log("renderMainInstance", "WARNING Constants.SCENE_MGR was null, could not set Constants.SCENE_MGR.lastRaceType");
     // }
     // if (powerUpBarUI) powerUpBarUI.hide();
-    // Player.updateUI();
-    // PowerUpsInv.powerUpMgr.reset();
+    this.gameController.Player.updateUI()
+    // PowerUpsInv.powerUpMgr.reset(); 
 
-    // Constants.SCENE_MGR?.lobbyScene?.init();
+    // Constants.SCENE_MGR?.lobbyScene?.init(); 
     // Constants.SCENE_MGR?.lobbyScene?.show();
     const _scene = engine.addEntity()
     Transform.createOrReplace(_scene, {
@@ -225,13 +230,17 @@ export class MainInstance {
         type: npc.NPCType.CUSTOM,
         model: 'assets/models/npcs/yoyoNPC.glb',
         onActivate: () => {
-          // missions.getCurrentMissionName() === 'yoyo' ? yoyo.talk(YoYoDialog1, 0) : null
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+          missions.getCurrentMissionName() === 'yoyo'
+            ? npc.openDialogWindow(yoyo, YoYoDialog1, 0)
+            : null
         },
         idleAnim: `idle`,
         faceUser: true,
         darkUI: true,
         coolDownDuration: 3,
-        // hoverText: missions.getCurrentMissionName() === 'yoyo' ? 'Talk to YoYo' : null,
+        hoverText:
+          missions.getCurrentMissionName() === 'yoyo' ? 'Talk to YoYo' : '',
         onlyClickTrigger: true,
         onlyExternalTrigger: false,
         reactDistance: 3,
@@ -266,12 +275,14 @@ export class MainInstance {
       1,
       [{ type: 'box', scale: Vector3.create(3, 9, 10) }],
       () => {
-        console.log('enter zone')
         instance.setInstance('recharge')
-        // cleanupScene();
+        cleanUpScene()
         utils.timers.setTimeout(() => {
-          //   renderRecharge();
-          //   movePlayerTo({ x: 48, y: 6.29, z: 32 }, { x: 48, y: 8.29, z: 32 });
+          renderRecharge()
+          void movePlayerTo({
+            newRelativePosition: Vector3.create(48, 6.29, 32),
+            cameraTarget: Vector3.create(48, 8.29, 32)
+          })
           //   loader.showLoader(5000);
         }, 50)
       }
@@ -279,26 +290,25 @@ export class MainInstance {
 
     // SCRAPYARD PORTAL
     const scrapYardPortal = engine.addEntity()
-    Transform.createOrReplace(scrapYardPortal, {
+    Transform.createOrReplace(scrapYardPortal, { 
       position: Vector3.create(88.29, 2.0, 31.26),
       scale: Vector3.create(2.2, 8.0, 7.0),
       rotation: Quaternion.fromEulerDegrees(0.0, 0.0, 0.0)
     })
-    MeshRenderer.setBox(scrapYardPortal)
+    MeshRenderer.setBox(scrapYardPortal) 
     Material.setPbrMaterial(scrapYardPortal, {
       albedoColor: Color4.create(0, 0, 0, 0)
     })
     utils.triggers.addTrigger(
       scrapYardPortal,
       1,
-      1,
+      1, 
       [{ type: 'box', scale: Vector3.create(3, 9, 10) }],
       () => {
-        console.log('enter zone')
         instance.setInstance('scrapyard')
-        // cleanupScene();
+        cleanUpScene()
+        void renderScrapyard()
         utils.timers.setTimeout(() => {
-          // renderScrapyard();
           // loader.showLoader(7000);
         }, 50)
       }
@@ -308,7 +318,8 @@ export class MainInstance {
     const publicKey = userData.data?.publicKey
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     if ((BLACKLIST as any).includes(publicKey?.toLowerCase())) {
-      // return cleanupScene();
+      cleanUpScene()
+      return
     }
 
     // FUEL Purchase Sign
@@ -369,7 +380,7 @@ export class MainInstance {
           termsAndCondPoster
         )
       ) {
-        // missions.checkAndUnlockCampaignMission("discord");
+        missions.checkAndUnlockCampaignMission('discord')
         void openExternalUrl({
           url: 'https://discord.gg/vk4kcpkgre'
         })
@@ -415,7 +426,7 @@ export class MainInstance {
           termsAndCondPoster
         )
       ) {
-        // missions.checkAndUnlockCampaignMission("discord");
+        missions.checkAndUnlockCampaignMission('discord')
         void openExternalUrl({
           url: 'https://vimeo.com/762813555/71d29cedd5'
         })
@@ -534,13 +545,19 @@ export class MainInstance {
         type: npc.NPCType.CUSTOM,
         model: 'assets/models/npcs/tulioNPC.glb',
         onActivate: () => {
-          // missions.getCurrentMissionName() === "visitRacehub" ? tulio.talk(TulioDialog1, 0) : null;
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+          missions.getCurrentMissionName() === 'visitRacehub'
+            ? npc.openDialogWindow(tulio, TulioDialog1, 0)
+            : null
         },
         idleAnim: `idle`,
         faceUser: true,
         darkUI: true,
         coolDownDuration: 3,
-        // hoverText: missions.getCurrentMissionName() === "visitRacehub" ? "Talk to Tulio" : null,
+        hoverText:
+          missions.getCurrentMissionName() === 'visitRacehub'
+            ? 'Talk to Tulio'
+            : '',
         onlyClickTrigger: true,
         onlyExternalTrigger: false,
         reactDistance: 3,
@@ -758,8 +775,8 @@ export class MainInstance {
       ) {
         void openExternalUrl({
           url: 'https://hyperfy.io/vroomway'
-          //  missions.checkAndUnlockCampaignMission("visitHyperfy");
         })
+        missions.checkAndUnlockCampaignMission('visitHyperfy')
       }
     })
 

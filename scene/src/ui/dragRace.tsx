@@ -44,7 +44,7 @@ export class DragRaceBoard {
           height: canvasInfo.height,
           justifyContent: 'center',
           positionType: 'absolute',
-          position: { top: '25%', right: '0%' },
+          position: { top: '25%', right: '0%' }
         }}
       >
         {/* Drag Race Board */}

@@ -200,7 +200,7 @@ export class UIInventoryManager {
           height: canvasInfo.height,
           justifyContent: 'center',
           positionType: 'absolute',
-          position: { top: '25%', right: '0%' },
+          position: { top: '25%', right: '0%' }
         }}
       >
         {/* Ui Parent */}

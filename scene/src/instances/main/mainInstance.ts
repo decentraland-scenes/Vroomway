@@ -90,8 +90,8 @@ export class MainInstance {
 
     const startCoinPositions = [
       Vector3.create(62.89, 2.06, 10.69),
-      Vector3.create(53.09, 2.05, 7.27),
-      Vector3.create(45.28, 1.98, 7.48)
+      Vector3.create(45.28, 1.98, 7.48),
+      Vector3.create(53.09, 2.05, 7.27)
     ]
 
     let startCoinIndex = 0

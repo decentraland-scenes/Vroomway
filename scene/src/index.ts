@@ -6,8 +6,6 @@ import { movePlayerTo } from '~system/RestrictedActions'
 export function main(): void {
   // prepare entry scene
   const game = new GameController()
-  game.uiController.render()
-
   // prepare solo sprint track
   // const Tracks = new spawn_Tracks();
   // Tracks.spawnFloor1();
@@ -21,9 +19,9 @@ export function main(): void {
     void game.vehicleOwnership.init()
   }, 200)
   // attempt initialization of player profile
-  // utils.timers.setTimeout(() => {
-  //   // profile.initialize();
-  // }, 500)
+  utils.timers.setTimeout(() => {
+    game.uiController.profile.initialize()
+  }, 500)
 
   // initialize debugging menu
   //  NOTE: debug menus will only appear in the first render of the main scene

@@ -105,9 +105,8 @@ export class MissionsBoard {
     }
   }
 
-  createMissionBoard(): ReactEcs.JSX.Element | null {
-    const canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
-    if (canvasInfo === null) return null
+  createMissionBoard(): ReactEcs.JSX.Element {
+    const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
     return (
       <UiEntity
         uiTransform={{
@@ -116,8 +115,7 @@ export class MissionsBoard {
           height: canvasInfo.height,
           justifyContent: 'center',
           positionType: 'absolute',
-          position: { top: '25%', right: '0%' },
-          display: this.isVisible ? 'flex' : 'none'
+          position: { top: '25%', right: '0%' }
         }}
       >
         {/* Campaign Board */}

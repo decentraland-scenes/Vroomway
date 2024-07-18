@@ -37,14 +37,13 @@ export class Profile {
     }, 2000)
   }
 
-  initialize(): ReactEcs.JSX.Element | null {
+  initialize(): ReactEcs.JSX.Element {
     this.updateExp()
     this.updateLvl()
     this.updateCoins()
     this.updateFuel()
     this.updateCompPoints()
-    const canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
-    if (canvasInfo === null) return null
+    const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
     return (
       <UiEntity
         uiTransform={{
@@ -53,8 +52,7 @@ export class Profile {
           height: canvasInfo.height * 0.1,
           justifyContent: 'flex-end',
           positionType: 'absolute',
-          position: { top: '0%', right: '0%' },
-          display: this.isVisible ? 'flex' : 'none'
+          position: { top: '0%', right: '0%' }
         }}
       >
         {/* Refuel Timer */}

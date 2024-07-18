@@ -34,9 +34,8 @@ export class DragRaceBoard {
     }
   }
 
-  createUI(): ReactEcs.JSX.Element | null {
-    const canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
-    if (canvasInfo === null) return null
+  createUI(): ReactEcs.JSX.Element {
+    const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
     return (
       <UiEntity
         uiTransform={{
@@ -46,7 +45,6 @@ export class DragRaceBoard {
           justifyContent: 'center',
           positionType: 'absolute',
           position: { top: '25%', right: '0%' },
-          display: this.boardVisible ? 'flex' : 'none'
         }}
       >
         {/* Drag Race Board */}

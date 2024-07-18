@@ -23,9 +23,8 @@ export class SideBar {
     this.missionsButton = getUvs(missionsButtons.inactive)
   }
 
-  createSideBarIcons(): ReactEcs.JSX.Element | null {
-    const canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
-    if (canvasInfo === null) return null
+  createSideBarIcons(): ReactEcs.JSX.Element {
+    const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
     return (
       <UiEntity
         uiTransform={{
@@ -35,8 +34,7 @@ export class SideBar {
           alignItems: 'flex-end',
           justifyContent: 'flex-end',
           positionType: 'absolute',
-          position: { bottom: '2%', right: '0%' },
-          display: this.isVisible ? 'flex' : 'none'
+          position: { bottom: '2%', right: '0%' }
         }}
       >
         {/* Inventory */}

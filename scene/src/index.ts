@@ -9,7 +9,6 @@ export function main(): void {
   // prepare solo sprint track
   // const Tracks = new spawn_Tracks();
   // Tracks.spawnFloor1();
-
   // attempt initialization of player vehicle ownership
   utils.timers.setTimeout(() => {
     void movePlayerTo({

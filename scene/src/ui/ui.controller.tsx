@@ -33,26 +33,41 @@ export class UIController {
   }
 
   ui(): ReactEcs.JSX.Element | null {
-    const canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
-    if (canvasInfo === null) return null
+    if (this.canvasInfo === null) return null
     return (
       <UiEntity>
-        <Canvas>{this.sideBar.isVisible && this.sideBar.createSideBarIcons()}</Canvas>
+        <Canvas>
+          {this.sideBar.isVisible && this.sideBar.createSideBarIcons()}
+        </Canvas>
         <Canvas>{this.profile.isVisible && this.profile.initialize()}</Canvas>
         {this.socialsVisible && this.renderSocials()}
         <Canvas>{this.announcement_visible && this.announcementUI()}</Canvas>
-        <Canvas>{this.missionsBoard.isVisible && this.missionsBoard.createMissionBoard()}</Canvas>
-        <Canvas>{this.inventory.uiParentVisible &&  this.inventory.createUI()}</Canvas>
-        <Canvas>{this.gameController.soloSprint.soloSprintBoardVisible &&  this.gameController.soloSprint.createUI()}</Canvas>
-        <Canvas>{this.gameController.dragRaceBoard.boardVisible &&  this.gameController.dragRaceBoard.createUI()}</Canvas>
-        <Canvas>{this.gameController.decentrallyBoard.boardVisible &&  this.gameController.decentrallyBoard.createUI()}</Canvas>
+        <Canvas>
+          {this.missionsBoard.isVisible &&
+            this.missionsBoard.createMissionBoard()}
+        </Canvas>
+        <Canvas>
+          {this.inventory.uiParentVisible && this.inventory.createUI()}
+        </Canvas>
+        <Canvas>
+          {this.gameController.soloSprint.soloSprintBoardVisible &&
+            this.gameController.soloSprint.createUI()}
+        </Canvas>
+        <Canvas>
+          {this.gameController.dragRaceBoard.boardVisible &&
+            this.gameController.dragRaceBoard.createUI()}
+        </Canvas>
+        <Canvas>
+          {this.gameController.decentrallyBoard.boardVisible &&
+            this.gameController.decentrallyBoard.createUI()}
+        </Canvas>
       </UiEntity>
     )
   }
 
   render(): void {}
 
-  renderSocials(): ReactEcs.JSX.Element {
+  renderSocials(): ReactEcs.JSX.Element | null {
     if (this.canvasInfo === null) return null
     return (
       <UiEntity

@@ -42,7 +42,7 @@ class Instance {
     this.Instance = name
   }
 
-  getInstance(): string {
+  getInstance(): InstanceId {
     return this.Instance
   }
 }

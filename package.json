@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@dcl/sdk": "7.5.6"
+  }
+}

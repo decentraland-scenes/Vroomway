@@ -24,7 +24,7 @@ import { WILL, LAMBDA_URL } from './constants'
 import { Color4 } from '@dcl/sdk/math'
 import * as eth from 'eth-connect'
 import { VehicleAttachmentManager } from '../vehicle/vehicle-attachment-manager'
-import { type GameController } from '../game.controller'
+import { type GameController } from '../controllers/game.controller'
 
 /**
  * primary controller for player's details (leveling, inventory, power-up, etc)

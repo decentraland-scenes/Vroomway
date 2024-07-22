@@ -8,6 +8,7 @@ export const OmitFromCleanUpFlag = engine.defineComponent(
 )
 
 export function cleanUpScene(): void {
+  console.log('scene cleaned')
   for (const component of engine.componentsIter()) {
     for (const [entity] of engine.getEntitiesWith(component)) {
       engine.removeEntity(entity)

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { getUserData } from '~system/UserIdentity'
-import { type GameController } from '../../game.controller'
+import { type GameController } from '../../controllers/game.controller'
 
 export type EquippedAccessory =
   | 'none'

@@ -1,11 +1,11 @@
-import { MainInstance } from './instances/main/mainInstance'
-import { VehicleOwnership } from './instances/main/vehicleOwnership'
-import { DecentrallyBoard } from './ui/decentrally'
-import { DragRaceBoard } from './ui/dragRace'
-import { SoloSprintBoard } from './ui/soloSprint'
-import { UIController } from './ui/ui.controller'
-import { Loader } from './utils/loader'
-import { PlayerStats } from './utils/player'
+import { MainInstance } from '../instances/main/mainInstance'
+import { VehicleOwnership } from '../instances/main/vehicleOwnership'
+import { DecentrallyBoard } from '../ui/decentrally'
+import { DragRaceBoard } from '../ui/dragRace'
+import { SoloSprintBoard } from '../ui/soloSprint'
+import { Loader } from '../utils/loader'
+import { PlayerStats } from '../utils/player'
+import { UIController } from './ui.controller'
 
 export class GameController {
   public Player: PlayerStats

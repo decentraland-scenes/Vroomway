@@ -1,5 +1,5 @@
 import { engine, UiCanvasInformation } from '@dcl/sdk/ecs'
-import { type UIController } from './ui.controller'
+import { type UIController } from '../controllers/ui.controller'
 import { getUvs, type Sprite } from './utils/utils'
 import ReactEcs, { Label, UiEntity } from '@dcl/sdk/react-ecs'
 import { Color4 } from '@dcl/sdk/math'

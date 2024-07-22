@@ -26,7 +26,7 @@ import {
   SOLO_SPRINT_COST
 } from '../../utils/constants'
 import { instance } from '../../utils/currentInstance'
-import { type GameController } from '../../game.controller'
+import { type GameController } from '../../controllers/game.controller'
 import { TulioDialog1, YoYoDialog1 } from '../../utils/dialog'
 import { missions } from '../../utils/missions'
 import { cleanUpScene } from '../../utils/cleanupScene'

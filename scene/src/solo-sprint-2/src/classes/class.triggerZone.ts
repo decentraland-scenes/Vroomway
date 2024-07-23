@@ -6,17 +6,17 @@
 //    ╚═╝   ╚═╝  ╚═╝╚═╝ ╚═════╝  ╚═════╝ ╚══════╝╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝
 //
 
+import * as utils from '@dcl-sdk/utils'
 import {
-  engine,
   type Entity,
   Material,
   MeshRenderer,
   Transform
 } from '@dcl/sdk/ecs'
-import { CONFIG } from '../_config'
-import { type Vector3, type Quaternion } from '~system/EngineApi'
-import * as utils from '@dcl-sdk/utils'
 import { Color4 } from '@dcl/sdk/math'
+import { type Quaternion, type Vector3 } from '~system/EngineApi'
+import { entityController } from '../../../utils/entity-controller'
+import { CONFIG } from '../_config'
 
 // Got sick of the Dash Utils causing the scene to reload every damned file at random, so wrote a simplified trigger class
 
@@ -37,7 +37,7 @@ export class TriggerZone {
     // eslint-disable-next-line @typescript-eslint/ban-types
     onExit: Function = function (): void {}
   ) {
-    this.entity = engine.addEntity()
+    this.entity = entityController.addEntity()
     // Add the transform for the trigger zone
     position.y += scale.y / 2
     Transform.createOrReplace(this.entity, {

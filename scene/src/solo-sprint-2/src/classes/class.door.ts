@@ -7,18 +7,18 @@
 //
 // Note the 180 rotation, this is so that position in Blender align with positions in DCL (with Y and Z swapped)
 
+import * as utils from '@dcl-sdk/utils'
 import {
-  Transform,
   Animator,
+  AudioSource,
   type Entity,
-  engine,
-  AudioSource
+  Transform
 } from '@dcl/sdk/ecs'
-import { Vector3, Quaternion } from '@dcl/sdk/math'
+import { Quaternion, Vector3 } from '@dcl/sdk/math'
+import { entityController } from '../../../utils/entity-controller'
 import { CONFIG } from '../_config'
 import { GLTFEntity } from './class.gltfEntity'
 import { TriggerZone } from './class.triggerZone'
-import * as utils from '@dcl-sdk/utils'
 
 export class Door {
   entity: Entity
@@ -59,8 +59,8 @@ export class Door {
     _triggerTransformR = Quaternion.fromEulerDegrees(0, 0, 0),
     isLocked: boolean = false
   ) {
-    this.entity = engine.addEntity()
-    this.foo = engine.addEntity()
+    this.entity = entityController.addEntity()
+    this.foo = entityController.addEntity()
     // Add the basic components
     Transform.create(this.entity, {
       position,

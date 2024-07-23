@@ -32,6 +32,7 @@ import { missions } from '../../utils/missions'
 import { cleanUpScene } from '../../utils/cleanupScene'
 import { renderRecharge } from '../recharge/recharge'
 import { renderScrapyard } from '../scrapyard/scrapyard'
+import { entityController } from '../../utils/entity-controller'
 
 export class MainInstance {
   gameController: GameController
@@ -59,7 +60,7 @@ export class MainInstance {
 
     // Constants.SCENE_MGR?.lobbyScene?.init();
     // Constants.SCENE_MGR?.lobbyScene?.show();
-    const _scene = engine.addEntity()
+    const _scene = entityController.addEntity()
     Transform.createOrReplace(_scene, {
       position: Vector3.create(96, 0, 64),
       rotation: Quaternion.create(0, 180, 0, 1),
@@ -97,7 +98,7 @@ export class MainInstance {
     let startCoinIndex = 0
 
     staticEntities.forEach((entity) => {
-      const newEntity = engine.addEntity()
+      const newEntity = entityController.addEntity()
       Transform.create(newEntity, {
         position: Vector3.create(96, 0, 64),
         rotation: Quaternion.create(0, 90, 0, 0)
@@ -111,7 +112,7 @@ export class MainInstance {
           'assets/models/main-entrance/startCoinFC.glb'
         ].includes(entity)
       ) {
-        const collider = engine.addEntity()
+        const collider = entityController.addEntity()
         MeshCollider.setBox(collider)
         Transform.create(collider, {
           position: startCoinPositions[startCoinIndex],
@@ -179,7 +180,7 @@ export class MainInstance {
     })
 
     //  race times scoreboard parent
-    const parentRaceScores = engine.addEntity()
+    const parentRaceScores = entityController.addEntity()
     Transform.createOrReplace(parentRaceScores, {
       position: Vector3.create(32.15, 9.3, 7.72),
       rotation: Quaternion.fromEulerDegrees(0, 225.0, 0)
@@ -218,7 +219,7 @@ export class MainInstance {
       Vector3.create(11.1, 1.75, 0)
     scoreboardDragRace.UpdateScoreDisplay()
 
-    let yoyo = engine.addEntity()
+    let yoyo = entityController.addEntity()
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     yoyo = npc.create(
       {
@@ -247,7 +248,7 @@ export class MainInstance {
         continueOnWalkAway: false
       }
     )
-    const yoyoText = engine.addEntity()
+    const yoyoText = entityController.addEntity()
     TextShape.create(yoyoText)
     Transform.create(yoyoText, {
       position: Vector3.create(49.94, 4.5, 50.45),
@@ -259,7 +260,7 @@ export class MainInstance {
     TextShape.getMutable(yoyoText).text = 'YoYo'
 
     // SOCIAL PORTAL
-    const socialPortal = engine.addEntity()
+    const socialPortal = entityController.addEntity()
     Transform.createOrReplace(socialPortal, {
       position: Vector3.create(10.23, 1.99, 31.84),
       scale: Vector3.create(3.0, 7.0, 6.0),
@@ -289,7 +290,7 @@ export class MainInstance {
     )
 
     // SCRAPYARD PORTAL
-    const scrapYardPortal = engine.addEntity()
+    const scrapYardPortal = entityController.addEntity()
     Transform.createOrReplace(scrapYardPortal, {
       position: Vector3.create(88.29, 2.0, 31.26),
       scale: Vector3.create(2.2, 8.0, 7.0),
@@ -323,7 +324,7 @@ export class MainInstance {
     }
 
     // FUEL Purchase Sign
-    const fuelPurchase = engine.addEntity()
+    const fuelPurchase = entityController.addEntity()
     Transform.create(fuelPurchase, {
       position: Vector3.create(30.5, 9.2, 52.7),
       scale: Vector3.create(-15.0, -4.0, -1.0),
@@ -342,7 +343,7 @@ export class MainInstance {
     })
 
     // T&C Poster
-    const termsAndCondPoster = engine.addEntity()
+    const termsAndCondPoster = entityController.addEntity()
     Transform.create(termsAndCondPoster, {
       position: Vector3.create(64.2, 7.45, 56.68),
       scale: Vector3.create(-7.5, -7.5, -1.0),
@@ -388,7 +389,7 @@ export class MainInstance {
     })
 
     // FUEL Infographic
-    const fuelInfoPoster = engine.addEntity()
+    const fuelInfoPoster = entityController.addEntity()
     Transform.create(fuelInfoPoster, {
       position: Vector3.create(47.66, 2.8, 49.54),
       scale: Vector3.create(-4.6, -4.6, -3.6),
@@ -434,7 +435,7 @@ export class MainInstance {
     })
 
     // Solo Sprint Sign
-    const soloSprintSign = engine.addEntity()
+    const soloSprintSign = entityController.addEntity()
     Transform.create(soloSprintSign, {
       position: Vector3.create(64, 5.25, 9.54),
       scale: Vector3.create(-8.75, -8.75, -8.0),
@@ -454,7 +455,7 @@ export class MainInstance {
     })
 
     // Drag Race Sign
-    const dragRaceSign = engine.addEntity()
+    const dragRaceSign = entityController.addEntity()
     Transform.create(dragRaceSign, {
       position: Vector3.create(45.31, 6, 5.92),
       scale: Vector3.create(-8.75, -8.75, -8.0),
@@ -474,7 +475,7 @@ export class MainInstance {
     })
 
     // Fuego Circuits Sign
-    const fuegoCircuitsSign = engine.addEntity()
+    const fuegoCircuitsSign = entityController.addEntity()
     Transform.create(fuegoCircuitsSign, {
       position: Vector3.create(53.16, 6, 5.72),
       scale: Vector3.create(-8.75, -8.75, -8.0),
@@ -494,7 +495,7 @@ export class MainInstance {
     })
 
     // Scrapyard Sign
-    const scrapyardSign = engine.addEntity()
+    const scrapyardSign = entityController.addEntity()
     Transform.create(scrapyardSign, {
       position: Vector3.create(89.08, 12.65, 31.43),
       scale: Vector3.create(-12.75, -12.75, -12.0),
@@ -514,7 +515,7 @@ export class MainInstance {
     })
 
     // Recharge Sign
-    const rechargeSign = engine.addEntity()
+    const rechargeSign = entityController.addEntity()
     Transform.create(rechargeSign, {
       position: Vector3.create(9.58, 12.65, 32.43),
       scale: Vector3.create(-12.75, -12.75, -12.0),
@@ -533,7 +534,7 @@ export class MainInstance {
       })
     })
 
-    let tulio = engine.addEntity()
+    let tulio = entityController.addEntity()
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     tulio = npc.create(
       {
@@ -564,7 +565,7 @@ export class MainInstance {
         continueOnWalkAway: false
       }
     )
-    const tulioText = engine.addEntity()
+    const tulioText = entityController.addEntity()
     TextShape.create(tulioText)
     Transform.create(tulioText, {
       position: Vector3.create(63.92, 2.9, 17.92),
@@ -576,7 +577,7 @@ export class MainInstance {
     TextShape.getMutable(tulioText).text = 'Tulio'
 
     // Assid Mary Poster
-    const aMaryPosterText = engine.addEntity()
+    const aMaryPosterText = entityController.addEntity()
     Transform.create(aMaryPosterText, {
       position: Vector3.create(72.14, 9.0, 15.58),
       scale: Vector3.create(8.5, 13.0, 4.0),
@@ -595,7 +596,7 @@ export class MainInstance {
     })
 
     // Krystal Koin Poster
-    const kKoinPosterText = engine.addEntity()
+    const kKoinPosterText = entityController.addEntity()
     Transform.create(kKoinPosterText, {
       position: Vector3.create(21.6, 9.0, 46.1),
       scale: Vector3.create(8.5, 13.0, 4.0),
@@ -614,7 +615,7 @@ export class MainInstance {
     })
 
     // Power Up Sign
-    const puSign = engine.addEntity()
+    const puSign = entityController.addEntity()
     Transform.create(puSign, {
       position: Vector3.create(72.15, 1.85, 44.0),
       scale: Vector3.create(-3.75, -3.75, -13.0),
@@ -634,7 +635,7 @@ export class MainInstance {
     })
 
     // Season Winner 1
-    const seasonWinner1 = engine.addEntity()
+    const seasonWinner1 = entityController.addEntity()
     Transform.create(seasonWinner1, {
       position: Vector3.create(48.05, 44.55, 18.8),
       scale: Vector3.create(-5.75, -9.75, -13.0),
@@ -654,7 +655,7 @@ export class MainInstance {
     })
 
     // Season Winner 2
-    const seasonWinner2 = engine.addEntity()
+    const seasonWinner2 = entityController.addEntity()
     Transform.create(seasonWinner2, {
       position: Vector3.create(42.25, 44.55, 20.1),
       scale: Vector3.create(-5.75, -9.75, -13.0),
@@ -674,7 +675,7 @@ export class MainInstance {
     })
 
     // Season Winner 3
-    const seasonWinner3 = engine.addEntity()
+    const seasonWinner3 = entityController.addEntity()
     Transform.create(seasonWinner3, {
       position: Vector3.create(37.35, 44.55, 23.9),
       scale: Vector3.create(-5.75, -9.75, -13.0),
@@ -694,7 +695,7 @@ export class MainInstance {
     })
 
     // Season Winner 4
-    const seasonWinner4 = engine.addEntity()
+    const seasonWinner4 = entityController.addEntity()
     Transform.create(seasonWinner4, {
       position: Vector3.create(34.45, 44.55, 29.5),
       scale: Vector3.create(-5.75, -9.75, -13.0),
@@ -714,7 +715,7 @@ export class MainInstance {
     })
 
     // Season Winner 5
-    const seasonWinner5 = engine.addEntity()
+    const seasonWinner5 = entityController.addEntity()
     Transform.create(seasonWinner5, {
       position: Vector3.create(34.35, 44.55, 35.8),
       scale: Vector3.create(-5.75, -9.75, -13.0),
@@ -734,7 +735,7 @@ export class MainInstance {
     })
 
     // Hyperfy Portal Sign
-    const hyperfy = engine.addEntity()
+    const hyperfy = entityController.addEntity()
     Transform.create(hyperfy, {
       position: Vector3.create(56.85, 1.85, 58.2),
       scale: Vector3.create(-3.75, -3.75, -13.0),
@@ -781,7 +782,7 @@ export class MainInstance {
     })
 
     // Drag Race How to Play
-    const howToPlay1 = engine.addEntity()
+    const howToPlay1 = entityController.addEntity()
     Transform.create(howToPlay1, {
       position: Vector3.create(43.15, 2.25, 7.8),
       scale: Vector3.create(-2.75, -1.75, -13.0),
@@ -800,7 +801,7 @@ export class MainInstance {
       })
     })
     // Fuego Circuits How to Play
-    const howToPlay2 = engine.addEntity()
+    const howToPlay2 = entityController.addEntity()
     Transform.create(howToPlay2, {
       position: Vector3.create(56.15, 2.25, 7.8),
       scale: Vector3.create(-2.75, -1.75, -13.0),
@@ -819,7 +820,7 @@ export class MainInstance {
       })
     })
     // Solo-Sprint How to Play
-    const howToPlay3 = engine.addEntity()
+    const howToPlay3 = entityController.addEntity()
     Transform.create(howToPlay3, {
       position: Vector3.create(64.15, 2.25, 13.8),
       scale: Vector3.create(-2.75, -1.75, -13.0),
@@ -838,7 +839,7 @@ export class MainInstance {
       })
     })
     // New Here board
-    const newHere = engine.addEntity()
+    const newHere = entityController.addEntity()
     Transform.create(newHere, {
       position: Vector3.create(52.15, 2.25, 50.5),
       scale: Vector3.create(-2.75, -2.75, -13.0),
@@ -858,7 +859,7 @@ export class MainInstance {
     })
 
     // Tulio Title
-    const hofText = engine.addEntity()
+    const hofText = entityController.addEntity()
     Transform.create(hofText, {
       position: Vector3.create(24.0, 2.0, 21.0),
       scale: Vector3.create(1.0, 1.0, 1.0),
@@ -869,14 +870,14 @@ export class MainInstance {
     TextShape.getMutable(hofText).textColor = Color4.White()
     TextShape.getMutable(hofText).text = 'Visit Hall of Fame'
 
-    const hofButton = engine.addEntity()
+    const hofButton = entityController.addEntity()
     MeshCollider.setBox(hofButton)
     Transform.create(hofButton, {
       position: Vector3.create(23.83, 1.35, 21),
       rotation: Quaternion.fromEulerDegrees(0, 90, 0),
       scale: Vector3.create(0.25, 0.25, 0.25)
     })
-    const hofButton2 = engine.addEntity()
+    const hofButton2 = entityController.addEntity()
     MeshCollider.setBox(hofButton2)
     Transform.create(hofButton2, {
       position: Vector3.create(45.0, 40.95, 29.96),

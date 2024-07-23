@@ -6,6 +6,7 @@
 //  ╚═════╝╚══════╝╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝    ╚══════╝ ╚═════╝  ╚═════╝╚═╝  ╚═╝
 //
 
+import * as utils from '@dcl-sdk/utils'
 import {
   AudioSource,
   engine,
@@ -18,10 +19,10 @@ import {
   TextShape,
   Transform
 } from '@dcl/sdk/ecs'
-import { Vector3, Quaternion, Color4 } from '@dcl/sdk/math'
-import { CONFIG } from '../_config'
-import * as utils from '@dcl-sdk/utils'
+import { Color4, Quaternion, Vector3 } from '@dcl/sdk/math'
 import { clamp } from '../../../utils/clamp'
+import { entityController } from '../../../utils/entity-controller'
+import { CONFIG } from '../_config'
 import { GLTFEntity } from './class.gltfEntity'
 
 export class LockClicker {
@@ -34,10 +35,10 @@ export class LockClicker {
   current_value = 0
 
   // The text and their pivot point
-  text_current_value_pivot: Entity = engine.addEntity()
+  text_current_value_pivot: Entity = entityController.addEntity()
   text_current_value: string = ''
 
-  text_target_value_pivot: Entity = engine.addEntity()
+  text_target_value_pivot: Entity = entityController.addEntity()
   text_target_value: string = ''
 
   // GLTF Shape
@@ -62,8 +63,8 @@ export class LockClicker {
     min?: number,
     max?: number
   ) {
-    this.entity = engine.addEntity()
-    this.foo = engine.addEntity()
+    this.entity = entityController.addEntity()
+    this.foo = entityController.addEntity()
 
     // sanitise the inputs
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions, @typescript-eslint/prefer-nullish-coalescing

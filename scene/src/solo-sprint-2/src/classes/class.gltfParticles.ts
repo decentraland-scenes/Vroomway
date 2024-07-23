@@ -1,12 +1,12 @@
 import {
   Animator,
-  engine,
   type Entity,
   GltfContainer,
   Transform
 } from '@dcl/sdk/ecs'
-import { Vector3, Quaternion } from '@dcl/sdk/math'
+import { Quaternion, Vector3 } from '@dcl/sdk/math'
 import { type ECS6ComponentGltfShape } from '~system/EngineApi'
+import { entityController } from '../../../utils/entity-controller'
 import { CONFIG } from '../_config'
 
 export class GLTFParticles {
@@ -25,7 +25,7 @@ export class GLTFParticles {
     animationLayer: number = 0,
     animationSpeed: number = 1.0
   ) {
-    this.entity = engine.addEntity()
+    this.entity = entityController.addEntity()
     // Add the transform
     if (position != null && rotation != null && scale != null) {
       Transform.createOrReplace(this.entity, {

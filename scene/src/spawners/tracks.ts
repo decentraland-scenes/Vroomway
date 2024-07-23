@@ -6,11 +6,12 @@
 //    ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝
 //
 
-import { engine, type Entity, GltfContainer, Transform } from '@dcl/sdk/ecs'
-import { Quaternion, Vector3 } from '@dcl/sdk/math'
-import { instance } from '../utils/currentInstance'
 import * as utils from '@dcl-sdk/utils'
+import { type Entity, GltfContainer, Transform } from '@dcl/sdk/ecs'
+import { Quaternion, Vector3 } from '@dcl/sdk/math'
 import { Settings } from '../_settings'
+import { instance } from '../utils/currentInstance'
+import { entityController } from '../utils/entity-controller'
 
 class Track {
   public enabled: boolean = false
@@ -28,7 +29,7 @@ class Track {
     scale: Vector3,
     rotation: Quaternion
   ) {
-    this.entity = engine.addEntity()
+    this.entity = entityController.addEntity()
     this.gltf = gltf
     this.name = name
     this.position = position
@@ -141,7 +142,7 @@ export class Spawn_Tracks {
   private readonly enabled = true
 
   // Scene parent
-  private readonly _scene: Entity = engine.addEntity()
+  private readonly _scene: Entity = entityController.addEntity()
 
   // Constructor
   constructor() {

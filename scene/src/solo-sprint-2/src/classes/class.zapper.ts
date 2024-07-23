@@ -14,6 +14,7 @@ import { CONFIG } from '../_config'
 import { GLTFEntity } from './class.gltfEntity'
 import { TriggerZone } from './class.triggerZone'
 import * as utils from '@dcl-sdk/utils'
+import { entityController } from '../../../utils/entity-controller'
 
 export class Zapper {
   entity :Entity
@@ -45,7 +46,7 @@ export class Zapper {
     rotation: Quaternion,
     duration?: number
   ) {
-    this.entity = engine.addEntity()  // Add the basic components
+    this.entity = entityController.addEntity()  // Add the basic components
     Transform.createOrReplace(this.entity, {
       position,
       scale,
@@ -68,7 +69,7 @@ export class Zapper {
 
   addSoundEffects(): void {
     // Add the looping sound effect
-    const childSound1 = engine.addEntity()
+    const childSound1 = entityController.addEntity()
     AudioSource.create(childSound1, { audioClipUrl: this.audioSrc_idle })
     Transform.create(childSound1, { parent: this.entity })
     AudioSource.getMutable(childSound1).loop = true
@@ -76,7 +77,7 @@ export class Zapper {
 
     // Add the triggered zap effects
     for (let i = 0; i < this.audioSrcs_zaps.length; i++) {
-      const foo = engine.addEntity()
+      const foo = entityController.addEntity()
       Transform.create(foo, { parent: this.entity })
       AudioSource.create(foo, { audioClipUrl: this.audioSrcs_zaps[i] })
     }

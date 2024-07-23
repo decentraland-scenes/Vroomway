@@ -15,8 +15,9 @@ import {
   Transform,
   type Entity
 } from '@dcl/sdk/ecs'
+import { Quaternion, Vector3 } from '@dcl/sdk/math'
+import { entityController } from '../../../utils/entity-controller'
 import { GLTFEntity } from './class.gltfEntity'
-import { Vector3, Quaternion } from '@dcl/sdk/math'
 
 export class ButtonSprint {
   gltfEntity: GLTFEntity
@@ -33,7 +34,7 @@ export class ButtonSprint {
     hoverText: string = 'Activate',
     distance: number = 5
   ) {
-    this.entity = engine.addEntity()
+    this.entity = entityController.addEntity()
     this.gltfEntity = new GLTFEntity(gltfSrc)
     Transform.createOrReplace(this.gltfEntity.entity, { parent: this.entity })
 

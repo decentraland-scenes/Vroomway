@@ -12,30 +12,30 @@
 
 import {
   type Entity,
-  engine,
-  Transform,
-  executeTask,
-  Material,
-  MeshRenderer,
   AvatarAnchorPointType,
   AvatarAttach,
-  GltfContainer
+  executeTask,
+  GltfContainer,
+  Material,
+  MeshRenderer,
+  Transform
 } from '@dcl/sdk/ecs'
-import { Vector3, Quaternion } from '@dcl/sdk/math'
+import { Quaternion, Vector3 } from '@dcl/sdk/math'
 import { getUserData } from '~system/UserIdentity'
 import { RARITY_TYPE } from '../inventory/rarity-data'
+import { AudioManager } from '../utils/audio-manager'
+import { OmitFromCleanUpFlag } from '../utils/cleanupScene'
 import Dictionary, { List } from '../utils/collections'
 import { instance, INSTANCE_TYPES } from '../utils/currentInstance'
+import { entityController } from '../utils/entity-controller'
 import {
   type VEHICLE_ATTACHMENT,
   type VehicleAttachmentDataObject,
-  VehicleAttachmentData,
-  VEHICLE_ATTACHMENT_TYPE,
   ATTACHMENT_SCENE_OFFSETS,
-  ATTACHMENT_SCENE_SCALES
+  ATTACHMENT_SCENE_SCALES,
+  VEHICLE_ATTACHMENT_TYPE,
+  VehicleAttachmentData
 } from './vehicle-attachment-data'
-import { OmitFromCleanUpFlag } from '../utils/cleanupScene'
-import { AudioManager } from '../utils/audio-manager'
 
 // button down event (just change 'ActionButton.' to key you want)
 // const input = Input.instance
@@ -56,7 +56,7 @@ export class VehicleAttachmentObject {
   public entity: Entity
 
   constructor(parent: Entity) {
-    this.entity = engine.addEntity()
+    this.entity = entityController.addEntity()
     OmitFromCleanUpFlag.create(this.entity)
     Transform.create(this.entity, { parent })
     Transform.createOrReplace(this.entity)
@@ -149,7 +149,7 @@ export class VehicleAttachmentManager {
     AudioManager.Instance
 
     // prepare parent object
-    this.attachmentParentObject = engine.addEntity()
+    this.attachmentParentObject = entityController.addEntity()
     OmitFromCleanUpFlag.create(this.attachmentParentObject)
     // get player id, required to connect model
     executeTask(async () => {

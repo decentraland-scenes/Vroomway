@@ -432,7 +432,7 @@ export class LevelManager {
         //     LevelPermissionData.PermissionsTeleports[i][1]
         //   ].isAddedToEngine()
         // ) {
-        //   engine.addEntity(
+        //   entityController.addEntity(
         //     this.permObjects_teleports[
         //       LevelPermissionData.PermissionsTeleports[i][1]
         //     ]
@@ -447,7 +447,7 @@ export class LevelManager {
       //         LevelPermissionData.PermissionsTeleports[i][1]
       //       ].isAddedToEngine()
       //     ) {
-      //       engine.removeEntity(
+      //       entityController.removeEntity(
       //         this.permObjects_teleports[
       //           LevelPermissionData.PermissionsTeleports[i][1]
       //         ]
@@ -478,7 +478,7 @@ export class LevelManager {
         //     LevelPermissionData.PermissionsWearables[i][1]
         //   ].isAddedToEngine()
         // ) {
-        //   engine.addEntity(
+        //   entityController.addEntity(
         //     this.permObjects_wearables[
         //       LevelPermissionData.PermissionsWearables[i][1]
         //     ]
@@ -493,7 +493,7 @@ export class LevelManager {
       //         LevelPermissionData.PermissionsWearables[i][1]
       //       ].isAddedToEngine()
       //     ) {
-      //       engine.removeEntity(
+      //       entityController.removeEntity(
       //         this.permObjects_wearables[
       //           LevelPermissionData.PermissionsWearables[i][1]
       //         ]

@@ -10,6 +10,7 @@ import {
 import { Vector3 } from '@dcl/sdk/math'
 import { instance } from './utils/currentInstance'
 import { missions } from './utils/missions'
+import { entityController } from './utils/entity-controller'
 
 class Crystals {
   updateCrystals(): void {
@@ -25,7 +26,7 @@ class Crystals {
       missions.currentMissionIndex === 9 &&
       instance.getInstance() === 'scrapyard'
     ) {
-      const scrapCrystal = engine.addEntity()
+      const scrapCrystal = entityController.addEntity()
       GltfContainer.create(scrapCrystal, {
         src: 'assets/models/missions/scrapyardCrystal.glb'
       })
@@ -53,7 +54,7 @@ class Crystals {
           )
         ) {
           missions.checkAndUnlockCampaignMission('scrapyardCrystal')
-          engine.removeEntity(scrapCrystal)
+          entityController.removeEntity(scrapCrystal)
         }
       })
     }
@@ -65,7 +66,7 @@ class Crystals {
       missions.currentMissionIndex === 13 &&
       instance.getInstance() === 'recharge'
     ) {
-      const rechargeCrystal = engine.addEntity()
+      const rechargeCrystal = entityController.addEntity()
       GltfContainer.create(rechargeCrystal, {
         src: 'assets/models/missions/rechargeCrystal.glb'
       })
@@ -93,7 +94,7 @@ class Crystals {
           )
         ) {
           missions.checkAndUnlockCampaignMission('rechargeCrystal')
-          engine.removeEntity(rechargeCrystal)
+          entityController.removeEntity(rechargeCrystal)
         }
       })
     }
@@ -105,7 +106,7 @@ class Crystals {
       instance.getInstance() === 'main'
     ) {
       // Final Crystal Yoyo
-      const finalCrystal = engine.addEntity()
+      const finalCrystal = entityController.addEntity()
       GltfContainer.create(finalCrystal, {
         src: 'assets/models/missions/finalCrystal.glb'
       })
@@ -133,7 +134,7 @@ class Crystals {
           )
         ) {
           missions.checkAndUnlockCampaignMission('yoyoCrystal')
-          engine.removeEntity(finalCrystal)
+          entityController.removeEntity(finalCrystal)
           missions.campaignMissionsComplete = true
         }
       })
@@ -145,7 +146,7 @@ class Crystals {
       missions.currentMissionIndex === 24 &&
       instance.getInstance() === 'main'
     ) {
-      const mainCrystal = engine.addEntity()
+      const mainCrystal = entityController.addEntity()
       GltfContainer.create(mainCrystal, {
         src: 'assets/models/missions/mainEntranceCrystal.glb'
       })
@@ -173,7 +174,7 @@ class Crystals {
           )
         ) {
           missions.checkAndUnlockCampaignMission('secondFloorCrystal')
-          engine.removeEntity(mainCrystal)
+          entityController.removeEntity(mainCrystal)
         }
       })
     }

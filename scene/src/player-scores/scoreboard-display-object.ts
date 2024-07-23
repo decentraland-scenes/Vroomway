@@ -17,17 +17,17 @@ import {
   TextAlignMode,
   TextShape,
   Transform,
-  engine,
   executeTask
 } from '@dcl/sdk/ecs'
+import { type Color4, Quaternion, Vector3 } from '@dcl/sdk/math'
+import { LAMBDA_URL } from '../utils/constants'
+import { entityController } from '../utils/entity-controller'
 import {
   type PLAYER_SCORE_NAMES,
   PLAYER_SCORE_SORTING_TYPES,
   PLAYER_SCORE_TYPES
 } from './player-score-data'
 import { PlayerScoreManager } from './player-score-manager'
-import { Vector3, Quaternion, type Color4 } from '@dcl/sdk/math'
-import { LAMBDA_URL } from '../utils/constants'
 
 // placement settings for scoreboard frame
 const SCOREBOARD_FRAME_POSITION = { x: 0, y: 0, z: 0 }
@@ -65,10 +65,10 @@ export class ScoreboardDisplayEntry {
 
   constructor(parent: Entity) {
     // parent
-    this.entityParent = engine.addEntity()
+    this.entityParent = entityController.addEntity()
     Transform.createOrReplace(this.entityParent, { parent: parent })
     // player name
-    this.entityPlayerNameText = engine.addEntity()
+    this.entityPlayerNameText = entityController.addEntity()
     Transform.createOrReplace(this.entityPlayerNameText, {
       parent: this.entityParent
     })
@@ -84,7 +84,7 @@ export class ScoreboardDisplayEntry {
     TextShape.getMutable(this.entityPlayerNameText).textAlign =
       TextAlignMode.TAM_MIDDLE_CENTER
     // player score
-    this.entityPlayerScoreText = engine.addEntity()
+    this.entityPlayerScoreText = entityController.addEntity()
     Transform.createOrReplace(this.entityPlayerScoreText, {
       parent: this.entityParent
     })
@@ -209,10 +209,10 @@ export class ScoreboardDisplayObject {
     )
 
     // create parent
-    this.entityParent = engine.addEntity()
+    this.entityParent = entityController.addEntity()
     Transform.createOrReplace(this.entityParent, { parent: parent })
     // create frame
-    this.entityFrame = engine.addEntity()
+    this.entityFrame = entityController.addEntity()
     Transform.createOrReplace(this.entityFrame, { parent: this.entityParent })
     Transform.getMutable(this.entityFrame).position = Vector3.create(
       SCOREBOARD_FRAME_POSITION.x,
@@ -231,7 +231,7 @@ export class ScoreboardDisplayObject {
         SCOREBOARD_FRAME_ROTATION.z
       )
     // create score header
-    this.entityHeader = engine.addEntity()
+    this.entityHeader = entityController.addEntity()
     Transform.createOrReplace(this.entityHeader, { parent: this.entityParent })
     Transform.getMutable(this.entityHeader).position = Vector3.create(
       SCOREBOARD_HEADER_OFFSET.x,
@@ -321,7 +321,7 @@ export class ScoreboardDisplayObject {
       else {
         const entry = this.entryObjects.pop()
         // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-        if (entry) engine.removeEntity(entry.entityParent)
+        if (entry) entityController.removeEntity(entry.entityParent)
       }
     }
   }

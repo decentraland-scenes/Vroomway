@@ -1,15 +1,15 @@
 import {
+  AudioSource,
+  AvatarAnchorPointType,
+  AvatarAttach,
   type Entity,
   executeTask,
-  engine,
-  Transform,
-  AudioSource,
-  AvatarAttach,
-  AvatarAnchorPointType
+  Transform
 } from '@dcl/sdk/ecs'
 import { getUserData } from '~system/UserIdentity'
 import { OmitFromCleanUpFlag } from './cleanupScene'
 import Dictionary from './collections'
+import { entityController } from './entity-controller'
 
 /*      AUDIO MANAGER
     controls audio components in-scene
@@ -40,7 +40,7 @@ export class AudioManager {
     console.log('Audio Manager: initializaing...')
     // create parental object
     //  entity
-    this.parentEntity = engine.addEntity()
+    this.parentEntity = entityController.addEntity()
     OmitFromCleanUpFlag.create(this.parentEntity)
     // get player id & tie sound parent to player
     executeTask(async () => {
@@ -61,7 +61,7 @@ export class AudioManager {
     // ensure key is not empty
     if (key === '') return
     // entity
-    const soundEntity = engine.addEntity()
+    const soundEntity = entityController.addEntity()
     OmitFromCleanUpFlag.create(soundEntity)
     Transform.create(soundEntity, { parent: this.parentEntity })
     // audio clip

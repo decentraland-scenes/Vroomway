@@ -21,6 +21,7 @@ import {
 import { ScoreboardDisplayObject } from '../../player-scores/scoreboard-display-object'
 import { missions } from '../../utils/missions'
 import { crystals } from '../../crystals'
+import { entityController } from '../../utils/entity-controller'
 
 const assets = [
   'the-recharge/flagGORL1.glb',
@@ -42,7 +43,7 @@ const assets = [
 export const renderLeaderBoard = (): void => {
   // ### LEADERBOARD
   //  player levels parent object
-  const parentLevelScores = engine.addEntity()
+  const parentLevelScores = entityController.addEntity()
   Transform.createOrReplace(parentLevelScores, {
     position: Vector3.create(59.5, 27, 5.5),
     rotation: Quaternion.fromEulerDegrees(0, 160, 0)
@@ -84,11 +85,11 @@ export const renderRecharge = (): void => {
   // createDanceAreas();
   missions.checkAndUnlockCampaignMission('visitRecharge')
   for (const [index, asset] of (assets as any).entries()) {
-    const entity = engine.addEntity()
+    const entity = entityController.addEntity()
     Transform.create(entity)
     GltfContainer.create(entity, { src: `assets/models/${asset}` })
     if (index === 7) {
-      const entityBox = engine.addEntity()
+      const entityBox = entityController.addEntity()
       Transform.createOrReplace(entityBox, {
         position: Vector3.create(82.47, 2.5, 32),
         scale: Vector3.create(3, 9, 4)
@@ -97,7 +98,7 @@ export const renderRecharge = (): void => {
     }
 
     if (index === 5) {
-      const entityBox = engine.addEntity()
+      const entityBox = entityController.addEntity()
       Transform.createOrReplace(entityBox, {
         position: Vector3.create(14, 2.5, 32),
         scale: Vector3.create(3, 9, 4)
@@ -105,7 +106,7 @@ export const renderRecharge = (): void => {
       // VW_REGISTRY.triggerBox.rechargeScrapyardTriggerBox(entityBox);
     }
   }
-  const krystalKoinText = engine.addEntity()
+  const krystalKoinText = entityController.addEntity()
   TextShape.create(krystalKoinText)
   Transform.create(krystalKoinText, {
     position: Vector3.create(48.0, 4.1, 53.5),
@@ -125,7 +126,7 @@ export const renderRecharge = (): void => {
   }, 5500)
 
   // Wisher Partner display
-  const wishPartnerObj = engine.addEntity()
+  const wishPartnerObj = entityController.addEntity()
   Transform.create(wishPartnerObj, {
     position: Vector3.create(47.85, 23.8, 2.8),
     scale: Vector3.create(8.5, 8.5, 1.0),
@@ -170,7 +171,7 @@ export const renderRecharge = (): void => {
 
   // Social Posters
   // SocialPoster1 trax
-  const socialPoster1Obj = engine.addEntity()
+  const socialPoster1Obj = entityController.addEntity()
   Transform.create(socialPoster1Obj, {
     position: Vector3.create(16.25, 22.5, 44.8),
     scale: Vector3.create(18.5, 18.5, 1.0),
@@ -188,7 +189,7 @@ export const renderRecharge = (): void => {
     })
   })
   // SocialPoster2
-  const socialPoster2Obj = engine.addEntity()
+  const socialPoster2Obj = entityController.addEntity()
   Transform.create(socialPoster2Obj, {
     position: Vector3.create(16.35, 6.0, 45.4),
     scale: Vector3.create(5.5, 10.0, 2.0),
@@ -206,7 +207,7 @@ export const renderRecharge = (): void => {
     })
   })
   // SocialPoster3 groupy2
-  const socialPoster3Obj = engine.addEntity()
+  const socialPoster3Obj = entityController.addEntity()
   Transform.create(socialPoster3Obj, {
     position: Vector3.create(17.05, 27.5, 17.8),
     scale: Vector3.create(20.5, 20.5, 1.0),
@@ -224,7 +225,7 @@ export const renderRecharge = (): void => {
     })
   })
   // SocialPoster4 Tang
-  const socialPoster4Obj = engine.addEntity()
+  const socialPoster4Obj = entityController.addEntity()
   Transform.create(socialPoster4Obj, {
     position: Vector3.create(78.85, 26.5, 17.7),
     scale: Vector3.create(20.5, 20.5, 1.0),
@@ -242,7 +243,7 @@ export const renderRecharge = (): void => {
     })
   })
   // SocialPoster5 Lemon Man
-  const socialPoster5Obj = engine.addEntity()
+  const socialPoster5Obj = entityController.addEntity()
   Transform.create(socialPoster5Obj, {
     position: Vector3.create(78.45, 4.0, 46.5),
     scale: Vector3.create(4.5, 7.5, 1.0),
@@ -260,7 +261,7 @@ export const renderRecharge = (): void => {
     })
   })
   // SocialPoster6 toxic waifu
-  const socialPoster6Obj = engine.addEntity()
+  const socialPoster6Obj = entityController.addEntity()
   Transform.create(socialPoster6Obj, {
     position: Vector3.create(78.25, 18.6, 46.8),
     scale: Vector3.create(20.5, 20.5, 1.0),
@@ -278,7 +279,7 @@ export const renderRecharge = (): void => {
     })
   })
   // SocialPoster7
-  const socialPoster7Obj = engine.addEntity()
+  const socialPoster7Obj = entityController.addEntity()
   Transform.create(socialPoster7Obj, {
     position: Vector3.create(8.95, 14.5, 48.1),
     scale: Vector3.create(10.5, 7.5, 1.0),
@@ -296,7 +297,7 @@ export const renderRecharge = (): void => {
     })
   })
   // SocialPoster8 groupy1
-  const socialPoster8Obj = engine.addEntity()
+  const socialPoster8Obj = entityController.addEntity()
   Transform.create(socialPoster8Obj, {
     position: Vector3.create(3.25, 12.5, 32.0),
     scale: Vector3.create(6.5, 7.5, 1.0),
@@ -316,7 +317,7 @@ export const renderRecharge = (): void => {
   crystals.updateCrystals()
 
   // SPAWN SPOTLIGHTS
-  const spotLights = engine.addEntity()
+  const spotLights = entityController.addEntity()
   Transform.create(spotLights, {
     position: Vector3.create(0, 0, 0),
     scale: Vector3.create(1, 1, 1),
@@ -326,7 +327,7 @@ export const renderRecharge = (): void => {
     src: 'assets/models/the-recharge/spotlights.glb'
   })
   // SPAWN OFF SWITCH
-  const offSwitch = engine.addEntity()
+  const offSwitch = entityController.addEntity()
   Transform.create(offSwitch, {
     position: Vector3.create(0, 0, 0),
     scale: Vector3.create(1, 1, 1),
@@ -348,7 +349,7 @@ export const renderRecharge = (): void => {
     ]
   })
   // SPAWN ON SWITCH
-  const onSwitch = engine.addEntity()
+  const onSwitch = entityController.addEntity()
   Transform.create(onSwitch, {
     position: Vector3.create(0, 0, 0),
     scale: Vector3.create(1, 1, 1),

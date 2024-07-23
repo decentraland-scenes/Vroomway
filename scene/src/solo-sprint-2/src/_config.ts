@@ -6,8 +6,9 @@
 //  ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝     ╚═╝ ╚═════╝
 //
 
-import { type Entity, Transform, engine } from '@dcl/sdk/ecs'
-import { Vector3, Quaternion, Color4 } from '@dcl/sdk/math'
+import { type Entity, Transform } from '@dcl/sdk/ecs'
+import { Color4, Quaternion, Vector3 } from '@dcl/sdk/math'
+import { entityController } from '../../utils/entity-controller'
 
 export class Config {
   public ROOT_DIR: string = 'src/solo-sprint-2/'
@@ -168,7 +169,7 @@ export class Config {
     console.log('// CONFIG LOAD')
 
     // Add the scene root - used by the SceneManager system
-    this._SCENE_ROOT = engine.addEntity()
+    this._SCENE_ROOT = entityController.addEntity()
     Transform.createOrReplace(this._SCENE_ROOT, {
       position: this.SCENE_TRANSFORM.position,
       scale: this.SCENE_TRANSFORM.scale,
@@ -176,7 +177,7 @@ export class Config {
     })
 
     // Add the scene cache - used by the SceneManager system
-    this._SCENE_CACHE = engine.addEntity()
+    this._SCENE_CACHE = entityController.addEntity()
     Transform.createOrReplace(this._SCENE_CACHE, {
       position: this.SCENE_CACHE_TRANSFORM.position,
       scale: this.SCENE_CACHE_TRANSFORM.scale,

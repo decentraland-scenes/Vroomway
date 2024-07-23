@@ -19,6 +19,7 @@ import * as npc from 'dcl-npc-toolkit'
 import { missions } from '../../utils/missions'
 import { getUserData } from '~system/UserIdentity'
 import { crystals } from '../../crystals'
+import { entityController } from '../../utils/entity-controller'
 
 // initVWRegistry();
 
@@ -38,11 +39,11 @@ export const renderScrapyard = async (): Promise<void> => {
   missions.checkAndUnlockCampaignMission('scrapyard')
 
   for (const [index, asset] of (assets as any).entries()) {
-    const entity = engine.addEntity()
+    const entity = entityController.addEntity()
     Transform.create(entity)
     GltfContainer.create(entity, { src: `assets/models/${asset}` })
     if (index === 7) {
-      const entityBox = engine.addEntity()
+      const entityBox = entityController.addEntity()
       Transform.createOrReplace(entityBox, {
         position: Vector3.create(60, 2.26, 31.53),
         scale: Vector3.create(3, 9, 4)
@@ -51,13 +52,13 @@ export const renderScrapyard = async (): Promise<void> => {
     }
   }
 
-  const _scene = engine.addEntity()
+  const _scene = entityController.addEntity()
   Transform.createOrReplace(_scene, {
     position: Vector3.create(0, 0, 0),
     rotation: Quaternion.create(0, 0, 0, 1),
     scale: Vector3.create(1, 1, 1)
   })
-  let assidMary = engine.addEntity()
+  let assidMary = entityController.addEntity()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   assidMary = npc.create(
     {
@@ -87,7 +88,7 @@ export const renderScrapyard = async (): Promise<void> => {
     }
   )
   // Assid Mary Title
-  const assidMaryText = engine.addEntity()
+  const assidMaryText = entityController.addEntity()
   TextShape.create(assidMaryText)
   Transform.create(assidMaryText, {
     position: Vector3.create(22.9, 2.9, 29.0),
@@ -104,7 +105,7 @@ export const renderScrapyard = async (): Promise<void> => {
   // BarrelHandler.Instance.PlaceAllBarrels();
   // MUSIC TRACK
   const publicKey = await getUserData({})
-  const cube = engine.addEntity()
+  const cube = entityController.addEntity()
   AvatarAttach.createOrReplace(cube, {
     avatarId: publicKey.data?.userId,
     anchorPointId: AvatarAnchorPointType.AAPT_NAME_TAG
@@ -113,7 +114,7 @@ export const renderScrapyard = async (): Promise<void> => {
   // atlasAnalytics.updateBranchName("Scrapyard");
 
   // Ad Poster
-  const adPosterObj = engine.addEntity()
+  const adPosterObj = entityController.addEntity()
   Transform.create(adPosterObj, {
     position: Vector3.create(63.05, 34.5, 35.8),
     scale: Vector3.create(23.5, 23.5, 13.0),
@@ -131,7 +132,7 @@ export const renderScrapyard = async (): Promise<void> => {
     })
   })
   // VW SB Poster
-  const vwPosterObj = engine.addEntity()
+  const vwPosterObj = entityController.addEntity()
   Transform.create(vwPosterObj, {
     position: Vector3.create(14.05, 17.5, 63.8),
     scale: Vector3.create(11.5, 23.5, 13.0),
@@ -149,7 +150,7 @@ export const renderScrapyard = async (): Promise<void> => {
     })
   })
   // Social Poster
-  const communityPosterObj = engine.addEntity()
+  const communityPosterObj = entityController.addEntity()
   Transform.create(communityPosterObj, {
     position: Vector3.create(0.15, 17.5, 50.8),
     scale: Vector3.create(11.5, 11.5, 13.0),
@@ -167,7 +168,7 @@ export const renderScrapyard = async (): Promise<void> => {
     })
   })
   // Vroomway Banner
-  const vwBannerObj = engine.addEntity()
+  const vwBannerObj = entityController.addEntity()
   Transform.create(vwBannerObj, {
     position: Vector3.create(31.05, 49.0, 0.8),
     scale: Vector3.create(33.5, 11.5, 35.0),
@@ -186,7 +187,7 @@ export const renderScrapyard = async (): Promise<void> => {
     transparencyMode: 2
   })
   // Claim Boots
-  const claimBootsObj = engine.addEntity()
+  const claimBootsObj = entityController.addEntity()
   Transform.create(claimBootsObj, {
     position: Vector3.create(7.05, 4.0, 10.8),
     scale: Vector3.create(4.5, 5.5, 31.0),
@@ -206,7 +207,7 @@ export const renderScrapyard = async (): Promise<void> => {
   })
 
   // GWEI warning1
-  const gweiWarning1Obj = engine.addEntity()
+  const gweiWarning1Obj = entityController.addEntity()
   Transform.create(gweiWarning1Obj, {
     position: Vector3.create(7.08, 1.3, 9.26),
     scale: Vector3.create(1.3, 1.3, 26.3),
@@ -250,7 +251,7 @@ export const renderScrapyard = async (): Promise<void> => {
     }
   })
   // Claim Bikes
-  const claimBikesObj = engine.addEntity()
+  const claimBikesObj = entityController.addEntity()
   Transform.create(claimBikesObj, {
     position: Vector3.create(7.05, 4.0, 17.1),
     scale: Vector3.create(4.5, 5.5, 31.0),
@@ -269,7 +270,7 @@ export const renderScrapyard = async (): Promise<void> => {
     transparencyMode: 2
   })
   // GWEI warning2
-  const gweiWarning2Obj = engine.addEntity()
+  const gweiWarning2Obj = entityController.addEntity()
   Transform.create(gweiWarning2Obj, {
     position: Vector3.create(7.08, 1.3, 15.61),
     scale: Vector3.create(1.3, 1.3, 26.3),
@@ -313,7 +314,7 @@ export const renderScrapyard = async (): Promise<void> => {
     }
   })
   // Claim Cars
-  const claimCarsObj = engine.addEntity()
+  const claimCarsObj = entityController.addEntity()
   Transform.create(claimCarsObj, {
     position: Vector3.create(7.05, 4.0, 23.4),
     scale: Vector3.create(4.5, 5.5, 31.0),
@@ -332,7 +333,7 @@ export const renderScrapyard = async (): Promise<void> => {
     transparencyMode: 2
   })
   // GWEI warning3
-  const gweiWarning3Obj = engine.addEntity()
+  const gweiWarning3Obj = entityController.addEntity()
   Transform.create(gweiWarning3Obj, {
     position: Vector3.create(7.08, 1.3, 21.91),
     scale: Vector3.create(1.3, 1.3, 26.3),
@@ -376,7 +377,7 @@ export const renderScrapyard = async (): Promise<void> => {
     }
   })
   // Claim Brutes
-  const claimBrutesObj = engine.addEntity()
+  const claimBrutesObj = entityController.addEntity()
   Transform.create(claimBrutesObj, {
     position: Vector3.create(7.05, 4.0, 29.8),
     scale: Vector3.create(4.5, 5.5, 31.0),
@@ -395,7 +396,7 @@ export const renderScrapyard = async (): Promise<void> => {
     transparencyMode: 2
   })
   // GWEI warning4
-  const gweiWarning4Obj = engine.addEntity()
+  const gweiWarning4Obj = entityController.addEntity()
   Transform.create(gweiWarning4Obj, {
     position: Vector3.create(7.08, 1.3, 28.31),
     scale: Vector3.create(1.3, 1.3, 26.3),
@@ -439,7 +440,7 @@ export const renderScrapyard = async (): Promise<void> => {
     }
   })
   // Claim Mythic
-  const claimMythicObj = engine.addEntity()
+  const claimMythicObj = entityController.addEntity()
   Transform.create(claimMythicObj, {
     position: Vector3.create(18.85, 4.0, 30.3),
     scale: Vector3.create(4.5, 5.5, 31.0),
@@ -458,7 +459,7 @@ export const renderScrapyard = async (): Promise<void> => {
     transparencyMode: 2
   })
   // Claim Cargo
-  const claimCargoObj = engine.addEntity()
+  const claimCargoObj = entityController.addEntity()
   Transform.create(claimCargoObj, {
     position: Vector3.create(21.55, 4.0, 28.8),
     scale: Vector3.create(4.5, 2.5, 31.0),
@@ -477,7 +478,7 @@ export const renderScrapyard = async (): Promise<void> => {
     transparencyMode: 2
   })
   // Claim Machine Boots Graphic
-  const claimMachine1Obj = engine.addEntity()
+  const claimMachine1Obj = entityController.addEntity()
   Transform.create(claimMachine1Obj, {
     position: Vector3.create(6.95, 1.3, 10.67),
     scale: Vector3.create(1.3, 2.0, 26.3),
@@ -496,7 +497,7 @@ export const renderScrapyard = async (): Promise<void> => {
     transparencyMode: 2
   })
   // Claim Machine Bikes Graphic
-  const claimMachine2Obj = engine.addEntity()
+  const claimMachine2Obj = entityController.addEntity()
   Transform.create(claimMachine2Obj, {
     position: Vector3.create(6.95, 1.3, 17.01),
     scale: Vector3.create(1.3, 2.0, 26.3),
@@ -515,7 +516,7 @@ export const renderScrapyard = async (): Promise<void> => {
     transparencyMode: 2
   })
   // Claim Machine Cars Graphic
-  const claimMachine3Obj = engine.addEntity()
+  const claimMachine3Obj = entityController.addEntity()
   Transform.create(claimMachine3Obj, {
     position: Vector3.create(6.95, 1.3, 23.35),
     scale: Vector3.create(1.3, 2.0, 26.3),
@@ -534,7 +535,7 @@ export const renderScrapyard = async (): Promise<void> => {
     transparencyMode: 2
   })
   // Claim Machine Brutes Graphic
-  const claimMachine4Obj = engine.addEntity()
+  const claimMachine4Obj = entityController.addEntity()
   Transform.create(claimMachine4Obj, {
     position: Vector3.create(6.95, 1.3, 29.67),
     scale: Vector3.create(1.3, 2.0, 26.3),
@@ -553,7 +554,7 @@ export const renderScrapyard = async (): Promise<void> => {
     transparencyMode: 2
   })
   // Claim Machine Mythic Graphic
-  const claimMachine5Obj = engine.addEntity()
+  const claimMachine5Obj = entityController.addEntity()
   Transform.create(claimMachine5Obj, {
     position: Vector3.create(19.0, 1.3, 30.16),
     scale: Vector3.create(1.3, 2.0, 26.3),
@@ -572,7 +573,7 @@ export const renderScrapyard = async (): Promise<void> => {
     transparencyMode: 2
   })
   // speed boots claim
-  const speedBootClaimBox = engine.addEntity()
+  const speedBootClaimBox = entityController.addEntity()
   MeshCollider.setBox(speedBootClaimBox)
   Material.setPbrMaterial(speedBootClaimBox, {
     albedoColor: Color4.create(1, 1, 1, 0)
@@ -606,7 +607,7 @@ export const renderScrapyard = async (): Promise<void> => {
     }
   })
   // bike claim
-  const hoverBikeClaimBox = engine.addEntity()
+  const hoverBikeClaimBox = entityController.addEntity()
   MeshCollider.setBox(hoverBikeClaimBox)
   Material.setPbrMaterial(hoverBikeClaimBox, {
     albedoColor: Color4.create(1, 1, 1, 0)
@@ -640,7 +641,7 @@ export const renderScrapyard = async (): Promise<void> => {
     }
   })
   // car claim
-  const hoverCarClaimBox = engine.addEntity()
+  const hoverCarClaimBox = entityController.addEntity()
   MeshCollider.setBox(hoverCarClaimBox)
   Material.setPbrMaterial(hoverCarClaimBox, {
     albedoColor: Color4.create(1, 1, 1, 0)
@@ -674,7 +675,7 @@ export const renderScrapyard = async (): Promise<void> => {
     }
   })
   // brute claim
-  const bruteClaimBox = engine.addEntity()
+  const bruteClaimBox = entityController.addEntity()
   MeshCollider.setBox(bruteClaimBox)
   Material.setPbrMaterial(bruteClaimBox, {
     albedoColor: Color4.create(1, 1, 1, 0)
@@ -707,7 +708,7 @@ export const renderScrapyard = async (): Promise<void> => {
     }
   })
   // Mythic Claim Box
-  const mythicClaimBox = engine.addEntity()
+  const mythicClaimBox = entityController.addEntity()
   MeshCollider.setBox(mythicClaimBox)
   Material.setPbrMaterial(mythicClaimBox, {
     albedoColor: Color4.create(1, 1, 1, 0)
@@ -740,7 +741,7 @@ export const renderScrapyard = async (): Promise<void> => {
     }
   })
   // GWEI warning5
-  const gweiWarning5Obj = engine.addEntity()
+  const gweiWarning5Obj = entityController.addEntity()
   Transform.create(gweiWarning5Obj, {
     position: Vector3.create(20.38, 1.3, 30.36),
     scale: Vector3.create(1.3, 1.3, 26.3),

@@ -1,12 +1,16 @@
-import { ReactEcs, UiEntity } from '@dcl/sdk/react-ecs'
-import { getUvs, type Sprite } from './utils/utils'
-import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
-import { closeButton, startButton } from './buttons'
-import { Color4, Vector3 } from '@dcl/sdk/math'
-import { movePlayerTo } from '~system/RestrictedActions'
-import { instance } from '../utils/currentInstance'
 import * as utils from '@dcl-sdk/utils'
+import { AudioSource, AvatarAnchorPointType, AvatarAttach, Transform, UiCanvasInformation, engine } from '@dcl/sdk/ecs'
+import { Color4, Vector3 } from '@dcl/sdk/math'
+import { ReactEcs, UiEntity } from '@dcl/sdk/react-ecs'
+import { movePlayerTo } from '~system/RestrictedActions'
+import { getUserData } from '~system/UserIdentity'
 import { type GameController } from '../controllers/game.controller'
+import { SceneManager } from '../solo-sprint-2/src/classes/class.sceneManager'
+import { SCENE_BASE_MAIN } from '../solo-sprint-2/src/scenes/scene.main'
+import { instance } from '../utils/currentInstance'
+import { entityController } from '../utils/entity-controller'
+import { closeButton, startButton } from './buttons'
+import { getUvs, type Sprite } from './utils/utils'
 
 
 
@@ -27,7 +31,7 @@ export class SoloSprintBoard {
       w: 975,
       h: 653
     }
-    // this.loadAndEnableSoloSprint2()
+    this.loadAndEnableSoloSprint2()
   }
 
   getFuelCost = (fuelCost: number): number => {
@@ -141,76 +145,78 @@ export class SoloSprintBoard {
     }
   }
 
-  // loadAndEnableSoloSprint2(): void {
-  //   const SCENE_MANAGER = new SceneManager()
+  loadAndEnableSoloSprint2(): void {
+    const SCENE_MANAGER = new SceneManager()
 
-  //   let startClicked = false
-  //   SCENE_BASE_MAIN.onRaceStart = async () => {
-  //     console.log('Race is starting! WOOOOOP')
 
-  //     if (startClicked) return
-  //     startClicked = true
-  //     const publicKey = await getUserData({})
-  //     // Create entity
-  //     const cube = engine.addEntity()
-  //     Transform.createOrReplace(cube, {
-  //       parent: engine.PlayerEntity
-  //     })
-  //     AvatarAttach.createOrReplace(cube, {
-  //       avatarId: publicKey.data?.publicKey,
-  //       anchorPointId: AvatarAnchorPointType.AAPT_NAME_TAG,
-  //     })
-  //     // Create AudioClip object, holding audio file
-  //     AudioSource.create(cube,{audioClipUrl:'sounds/solosprintMusicTrack.mp3'})
-  //     // Add AudioSource component to entity
-  //     // start timer
-  //     // if connected to lobby, lobby will overwrite, but still want this here to enforce expectation
-  //     // Constants.SCENE_MGR.lastRaceType = 'solosprint'
-  //     // powerUpBarUI.show()
-  //     // GAME_STATE.setGameTimeFromServerClock({ serverTime: -2 }) // using local game time since not connected
-  //     // PowerUpsInv.powerUpMgr.reset()
-  //     // PowerUpsInv.powerUpMgr.initPowerUps(options.powerUps)
-  //     // PowerUpsInv.powerUpMgr.updateStatuses()
-  //     // save too??
-  //     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  //     const preFuel = this.gameController.Player.getFuel()
-  //     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  //     const preFuelAdj = this.gameController.Player.getValueAdjuster().fuel
-  //     this.gameController.Player.getValueAdjuster().fuel -= this.getFuelCost(50)
-  //     this.gameController.uiController.profile.updateFuel()
-  //     void this.gameController.Player.writeDataToServer({ onFinish: { updateUI: true } })
-  //     // sprintTimer.startTimer(options) // kicks off rewards
-  //   }
 
-  //   // duplicate definition!!!
-  //   SCENE_BASE_MAIN.onRaceEnd = () => {
-  //     // debugger
-  //     console.log('Race is over. Finished. DONE-ZO!')
-  //     // end timer
-  //     // by setting this the timer should pick up and close race out
-  //     // sprintTimer.sprintComplete = true
-  //   }
+    let startClicked = false
+    SCENE_BASE_MAIN.onRaceStart = async () => {
+      console.log('Race is starting! WOOOOOP')
 
-  //   SCENE_MANAGER.addScene(SCENE_BASE_MAIN)
+      if (startClicked) return
+      startClicked = true
+      const publicKey = await getUserData({})
+      // Create entity
+      const cube = entityController.addEntity()
+      Transform.createOrReplace(cube, {
+        parent: engine.PlayerEntity
+      })
+      AvatarAttach.createOrReplace(cube, {
+        avatarId: publicKey.data?.publicKey,
+        anchorPointId: AvatarAnchorPointType.AAPT_NAME_TAG,
+      })
+      // Create AudioClip object, holding audio file
+      AudioSource.create(cube,{audioClipUrl:'sounds/solosprintMusicTrack.mp3'})
+      // Add AudioSource component to entity
+      // start timer
+      // if connected to lobby, lobby will overwrite, but still want this here to enforce expectation
+      // Constants.SCENE_MGR.lastRaceType = 'solosprint'
+      // powerUpBarUI.show()
+      // GAME_STATE.setGameTimeFromServerClock({ serverTime: -2 }) // using local game time since not connected
+      // PowerUpsInv.powerUpMgr.reset()
+      // PowerUpsInv.powerUpMgr.initPowerUps(options.powerUps)
+      // PowerUpsInv.powerUpMgr.updateStatuses()
+      // save too??
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const preFuel = this.gameController.Player.getFuel()
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const preFuelAdj = this.gameController.Player.getValueAdjuster().fuel
+      this.gameController.Player.getValueAdjuster().fuel -= this.getFuelCost(50)
+      this.gameController.uiController.profile.updateFuel()
+      void this.gameController.Player.writeDataToServer({ onFinish: { updateUI: true } })
+      // sprintTimer.startTimer(options) // kicks off rewards
+    }
 
-  //   // Initialise the SceneManager. Loads the various scene assets & hides them in a cache
-  //   SCENE_MANAGER.init()
+    // duplicate definition!!!
+    SCENE_BASE_MAIN.onRaceEnd = () => {
+      // debugger
+      console.log('Race is over. Finished. DONE-ZO!')
+      // end timer
+      // by setting this the timer should pick up and close race out
+      // sprintTimer.sprintComplete = true
+    }
 
-  //   // Enable the scene
-  //   SCENE_MANAGER.enableScene('base_main')
+    SCENE_MANAGER.addScene(SCENE_BASE_MAIN)
 
-  //   // Reset the scene
-  //   SCENE_MANAGER.resetScene('base_main')
+    // Initialise the SceneManager. Loads the various scene assets & hides them in a cache
+    SCENE_MANAGER.init()
 
-  //   // workaround make sure solo sprint is off
-  //   // sprintTimer.resetTimer()
+    // Enable the scene
+    SCENE_MANAGER.enableScene('base_main')
 
-  //   // Disable the Scene
-  //   SCENE_MANAGER.disableScene("base_main")
+    // Reset the scene
+    SCENE_MANAGER.resetScene('base_main')
 
-  //   // Destroy the scene and unload all objects
-  //   SCENE_MANAGER.destroyScene("base_main")
-  // }
+    // workaround make sure solo sprint is off
+    // sprintTimer.resetTimer()
+
+    // Disable the Scene
+    SCENE_MANAGER.disableScene("base_main")
+
+    // Destroy the scene and unload all objects
+    SCENE_MANAGER.destroyScene("base_main")
+  }
 
   hide(): void {
     // Unsubscribe from buttons

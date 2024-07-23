@@ -9,6 +9,8 @@
 import { type Entity, Transform, engine } from '@dcl/sdk/ecs'
 import { CONFIG } from '../_config'
 import { type SceneManager } from './class.sceneManager'
+import { entityController } from '../../../utils/entity-controller'
+import * as utils from '@dcl-sdk/utils'
 
 export class Scene {
   [index: string]: any
@@ -71,7 +73,7 @@ export class Scene {
       // Check if object is alive, this ensures compatibility with the Vroomway scene management/cleanup
       // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
       if (!engine.getEntityOrNullByName('obj')) {
-        obj = engine.addEntity()
+        obj = entityController.addEntity()
       }
 
       if (this.hasEnableDisableMethod(obj)) {
@@ -101,7 +103,8 @@ export class Scene {
 
   destroy(): void {
     for (let i = 0; i < this.objects.length; i++) {
-      engine.removeEntity(this.objects[i])
+      utils.triggers.removeTrigger(this.objects[i])
+      entityController.removeEntity(this.objects[i])
     }
   }
 

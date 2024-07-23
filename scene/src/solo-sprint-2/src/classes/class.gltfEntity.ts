@@ -1,5 +1,6 @@
-import { engine, GltfContainer, Transform, type Entity } from '@dcl/sdk/ecs'
+import { GltfContainer, Transform, type Entity } from '@dcl/sdk/ecs'
 import { Quaternion, Vector3 } from '@dcl/sdk/math'
+import { entityController } from '../../../utils/entity-controller'
 import { CONFIG } from '../_config'
 
 export class GLTFEntity {
@@ -13,7 +14,7 @@ export class GLTFEntity {
     rotation?: Quaternion,
     enabled: boolean = false
   ) {
-    this.entity = engine.addEntity()
+    this.entity = entityController.addEntity()
     if (position != null && rotation != null && scale != null) {
       Transform.createOrReplace(this.entity, {
         position: Vector3.create(0, 0, 0),

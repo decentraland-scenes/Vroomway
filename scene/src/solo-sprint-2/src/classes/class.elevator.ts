@@ -8,7 +8,7 @@
 
 import { Animator, engine, Transform, type Entity } from '@dcl/sdk/ecs'
 import { GLTFEntity } from './class.gltfEntity'
-import { CONFIG } from '../scenes/_config'
+import { CONFIG } from '../_config'
 
 export class Elevator {
   entity: Entity
@@ -20,7 +20,6 @@ export class Elevator {
   public isDown: boolean = false
   constructor(gltfSrc: string, startDown?: boolean) {
     this.entity = engine.addEntity()
-
     // Remember starting state
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     if (startDown) {

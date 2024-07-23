@@ -7,7 +7,7 @@ import {
 } from '@dcl/sdk/ecs'
 import { Vector3, Quaternion } from '@dcl/sdk/math'
 import { type ECS6ComponentGltfShape } from '~system/EngineApi'
-import { CONFIG } from '../scenes/_config'
+import { CONFIG } from '../_config'
 
 export class GLTFParticles {
   entity: Entity

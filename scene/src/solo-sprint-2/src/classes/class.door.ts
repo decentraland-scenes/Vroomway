@@ -15,7 +15,7 @@ import {
   AudioSource
 } from '@dcl/sdk/ecs'
 import { Vector3, Quaternion } from '@dcl/sdk/math'
-import { CONFIG } from '../scenes/_config'
+import { CONFIG } from '../_config'
 import { GLTFEntity } from './class.gltfEntity'
 import { TriggerZone } from './class.triggerZone'
 import * as utils from '@dcl-sdk/utils'

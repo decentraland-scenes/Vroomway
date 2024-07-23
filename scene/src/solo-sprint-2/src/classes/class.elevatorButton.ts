@@ -16,7 +16,7 @@ import {
   Transform,
   type Entity
 } from '@dcl/sdk/ecs'
-import { CONFIG } from '../scenes/_config'
+import { CONFIG } from '../_config'
 import { type Elevator } from './class.elevator'
 import { GLTFEntity } from './class.gltfEntity'
 
@@ -27,7 +27,6 @@ export class ElevatorButton {
 
   constructor(gltfSrc: string, elevator: Elevator) {
     this.entity = engine.addEntity()
-
     this.gltfEntity = new GLTFEntity(
       gltfSrc,
       CONFIG.SCENE_TRANSFORM_180.position,

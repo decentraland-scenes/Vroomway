@@ -1,6 +1,6 @@
 import { engine, GltfContainer, Transform, type Entity } from '@dcl/sdk/ecs'
 import { Quaternion, Vector3 } from '@dcl/sdk/math'
-import { CONFIG } from '../scenes/_config'
+import { CONFIG } from '../_config'
 
 export class GLTFEntity {
   entity: Entity

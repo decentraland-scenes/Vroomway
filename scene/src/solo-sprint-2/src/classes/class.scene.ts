@@ -7,7 +7,7 @@
 //
 
 import { type Entity, Transform, engine } from '@dcl/sdk/ecs'
-import { CONFIG } from '../scenes/_config'
+import { CONFIG } from '../_config'
 import { type SceneManager } from './class.sceneManager'
 
 export class Scene {
@@ -65,7 +65,6 @@ export class Scene {
 
     for (let i = 0; i < this.objects.length; i++) {
       let obj = this.objects[i]
-
       // Set the correct parent for the entity
       Transform.createOrReplace(obj, { parent: CONFIG._SCENE_ROOT })
 

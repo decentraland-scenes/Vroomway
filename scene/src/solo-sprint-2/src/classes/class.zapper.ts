@@ -7,16 +7,16 @@
 //
 // Note the 180 rotation, this is so that position in Blender align with positions in DCL (with Y and Z swapped)
 
-import { AudioSource, engine, Material, Transform } from '@dcl/sdk/ecs'
+import { AudioSource, engine, type Entity, Material, Transform } from '@dcl/sdk/ecs'
 import { Vector3, Quaternion } from '@dcl/sdk/math'
 import { movePlayerTo } from '~system/RestrictedActions'
-import { CONFIG } from '../scenes/_config'
+import { CONFIG } from '../_config'
 import { GLTFEntity } from './class.gltfEntity'
 import { TriggerZone } from './class.triggerZone'
 import * as utils from '@dcl-sdk/utils'
 
 export class Zapper {
-  entity = engine.addEntity()
+  entity :Entity
   // Internal stuff
   enabled: boolean = false
   gltfEntity: GLTFEntity
@@ -45,9 +45,7 @@ export class Zapper {
     rotation: Quaternion,
     duration?: number
   ) {
-    this.entity = engine.addEntity()
-
-    // Add the basic components
+    this.entity = engine.addEntity()  // Add the basic components
     Transform.createOrReplace(this.entity, {
       position,
       scale,

@@ -8,7 +8,7 @@
 // Note the 180 rotation, this is so that position in Blender align with positions in DCL (with Y and Z swapped)
 
 import { Vector3, Quaternion } from '@dcl/sdk/math'
-import { CONFIG } from '../scenes/_config'
+import { CONFIG } from '../_config'
 import { Door } from './class.door'
 
 export class DoorRegular extends Door {
@@ -44,7 +44,6 @@ export class DoorRegular extends Door {
       _triggerTransformR,
       isLocked
     )
-
     // Must call addSoundFX() again for the correct sound effects to take effect, otherwise there will be no audio
     this.addSoundFX()
   }

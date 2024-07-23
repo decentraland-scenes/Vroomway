@@ -19,7 +19,7 @@ import {
   Transform
 } from '@dcl/sdk/ecs'
 import { Vector3, Quaternion, Color4 } from '@dcl/sdk/math'
-import { CONFIG } from '../scenes/_config'
+import { CONFIG } from '../_config'
 import * as utils from '@dcl-sdk/utils'
 import { clamp } from '../../../utils/clamp'
 import { GLTFEntity } from './class.gltfEntity'
@@ -64,6 +64,7 @@ export class LockClicker {
   ) {
     this.entity = engine.addEntity()
     this.foo = engine.addEntity()
+
     // sanitise the inputs
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions, @typescript-eslint/prefer-nullish-coalescing
     this.min_value = clamp(min || CONFIG.LOCK_CLICKER_MIN, 1, 98)
@@ -77,7 +78,6 @@ export class LockClicker {
       rotation
     })
     Transform.createOrReplace(this.gltfEntity.entity, { parent: this.entity })
-
     this.unlock_function = unlock_function
 
     // An entity can only havea s ingle audio source, and an audio source can only have a single audio clip.

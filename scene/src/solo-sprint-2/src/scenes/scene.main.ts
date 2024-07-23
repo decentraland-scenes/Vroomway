@@ -15,7 +15,7 @@ import { LockClicker } from '../classes/class.lockClicker'
 import { Scene } from '../classes/class.scene'
 import { TriggerZone } from '../classes/class.triggerZone'
 import { Zapper } from '../classes/class.zapper'
-import { CONFIG } from './_config'
+import { CONFIG } from '../_config'
 import * as utils from '@dcl-sdk/utils'
 import { ButtonSprint } from '../classes/class.button'
 

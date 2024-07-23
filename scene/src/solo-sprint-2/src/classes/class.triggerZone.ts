@@ -13,7 +13,7 @@ import {
   MeshRenderer,
   Transform
 } from '@dcl/sdk/ecs'
-import { CONFIG } from '../scenes/_config'
+import { CONFIG } from '../_config'
 import { type Vector3, type Quaternion } from '~system/EngineApi'
 import * as utils from '@dcl-sdk/utils'
 import { Color4 } from '@dcl/sdk/math'

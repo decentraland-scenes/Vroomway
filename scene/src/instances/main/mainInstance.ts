@@ -30,7 +30,6 @@ import { type GameController } from '../../game.controller'
 import { TulioDialog1, YoYoDialog1 } from '../../utils/dialog'
 import { missions } from '../../utils/missions'
 import { cleanUpScene } from '../../utils/cleanupScene'
-import { renderRecharge } from '../recharge/recharge'
 import { renderScrapyard } from '../scrapyard/scrapyard'
 
 export class MainInstance {
@@ -278,7 +277,7 @@ export class MainInstance {
         instance.setInstance('recharge')
         cleanUpScene()
         utils.timers.setTimeout(() => {
-          renderRecharge()
+          this.gameController.rechargeInstance.renderRecharge()
           void movePlayerTo({
             newRelativePosition: Vector3.create(48, 6.29, 32),
             cameraTarget: Vector3.create(48, 8.29, 32)

@@ -1,5 +1,5 @@
 import * as utils from '@dcl-sdk/utils'
-import { type GameController } from '../game.controller'
+import { type GameController } from '../controllers/game.controller'
 import ReactEcs, { UiEntity } from '@dcl/sdk/react-ecs'
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
 

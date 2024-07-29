@@ -1,5 +1,5 @@
 import { ReactEcs, UiEntity } from '@dcl/sdk/react-ecs'
-import { type GameController } from '../game.controller'
+import { type GameController } from '../controllers/game.controller'
 import { getUvs, type Sprite } from './utils/utils'
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
 import {

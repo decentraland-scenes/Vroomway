@@ -1,11 +1,12 @@
 import * as utils from '@dcl-sdk/utils'
-import { GameController } from './game.controller'
+import { GameController } from './controllers/game.controller'
 import { Vector3 } from '@dcl/sdk/math'
 import { movePlayerTo } from '~system/RestrictedActions'
 
 export function main(): void {
   // prepare entry scene
   const game = new GameController()
+  game.realmController.switchRealm('mainInstance')
   // prepare solo sprint track
   // const Tracks = new spawn_Tracks();
   // Tracks.spawnFloor1();

@@ -28,6 +28,7 @@ import {
 import { PlayerScoreManager } from './player-score-manager'
 import { Vector3, Quaternion, type Color4 } from '@dcl/sdk/math'
 import { LAMBDA_URL } from '../utils/constants'
+import { entityController } from '../utils/entityController'
 
 // placement settings for scoreboard frame
 const SCOREBOARD_FRAME_POSITION = { x: 0, y: 0, z: 0 }
@@ -427,5 +428,11 @@ export class ScoreboardDisplayObject {
       .map((v) => (+v < 10 ? '0' + v : v))
       .filter((v, i) => v !== '00' || i > 0)
       .join(':')
+  }
+
+  public destroy(): void {
+    entityController.removeEntity(this.entityParent)
+    entityController.removeEntity(this.entityFrame)
+    entityController.removeEntity(this.entityHeader)
   }
 }

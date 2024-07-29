@@ -1,7 +1,7 @@
 import ReactEcs, { Label, UiEntity } from '@dcl/sdk/react-ecs'
 import { getUvs, type Sprite } from './utils/utils'
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
-import { type UIController } from './ui.controller'
+import { type UIController } from '../controllers/ui.controller'
 import { Color4 } from '@dcl/sdk/math'
 import { refuelIcon } from './buttons'
 import * as utils from '@dcl-sdk/utils'

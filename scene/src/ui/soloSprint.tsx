@@ -6,7 +6,7 @@ import { Color4, Vector3 } from '@dcl/sdk/math'
 import { movePlayerTo } from '~system/RestrictedActions'
 import { instance } from '../utils/currentInstance'
 import * as utils from '@dcl-sdk/utils'
-import { type GameController } from '../game.controller'
+import { type GameController } from '../controllers/game.controller'
 
 export class SoloSprintBoard {
   soloSprintBoard: Sprite

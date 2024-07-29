@@ -1,5 +1,6 @@
 import { MainInstance } from '../instances/main/mainInstance'
 import { RechargeInstance } from '../instances/recharge/recharge'
+import { Scrapyard } from '../instances/scrapyard/scrapyard'
 import { type Realm, type RealmType } from '../instances/types'
 import { entityController } from '../utils/entityController'
 import { type GameController } from './game.controller'
@@ -26,6 +27,7 @@ export class RealmController {
         this.currentRealm = new RechargeInstance(this.gameController)
         break
       case 'scrapyard':
+        this.currentRealm = new Scrapyard(this.gameController)
         break
     }
   }

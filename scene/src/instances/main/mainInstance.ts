@@ -30,7 +30,6 @@ import { instance } from '../../utils/currentInstance'
 import { TulioDialog1, YoYoDialog1 } from '../../utils/dialog'
 import { missions } from '../../utils/missions'
 import { cleanUpScene } from '../../utils/cleanupScene'
-import { renderScrapyard } from '../scrapyard/scrapyard'
 import { type RealmType } from '../types'
 import { type GameController } from '../../controllers/game.controller'
 import { entityController } from '../../utils/entityController'
@@ -352,8 +351,10 @@ export class MainInstance {
       [{ type: 'box', scale: Vector3.create(3, 9, 10) }],
       () => {
         instance.setInstance('scrapyard')
-        cleanUpScene()
-        void renderScrapyard()
+        void movePlayerTo({
+          newRelativePosition: Vector3.create(31.38, 1.55, 47)
+        })
+        this.gameController.realmController.switchRealm('scrapyard')
         utils.timers.setTimeout(() => {
           // loader.showLoader(7000);
         }, 50)

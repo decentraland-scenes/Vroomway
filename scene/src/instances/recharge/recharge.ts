@@ -513,7 +513,7 @@ export class RechargeInstance {
       [{ type: 'box', scale: Vector3.create(3, 9, 10) }],
       () => {
         utils.timers.setTimeout(() => {
-          instance.setInstance('main')
+          instance.setInstance('scrapyard')
           // cleanUpScene();
           utils.timers.setTimeout(() => {
             this.gameController.realmController.switchRealm('scrapyard')

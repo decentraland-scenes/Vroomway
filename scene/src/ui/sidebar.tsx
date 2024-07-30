@@ -5,7 +5,7 @@ import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
 import * as utils from '@dcl-sdk/utils'
 import { movePlayerTo } from '~system/RestrictedActions'
 import { Color4, Vector3 } from '@dcl/sdk/math'
-import { type UIController } from './ui.controller'
+import { type UIController } from '../controllers/ui.controller'
 import { instance, type InstanceId } from '../utils/currentInstance'
 
 export class SideBar {

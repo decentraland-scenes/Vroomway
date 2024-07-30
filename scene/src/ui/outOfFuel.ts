@@ -1,5 +1,5 @@
 import { Color4 } from '@dcl/sdk/math'
-import { type UIController } from './ui.controller'
+import { type UIController } from '../controllers/ui.controller'
 
 export class RenderOutOfFuel {
   uiController: UIController

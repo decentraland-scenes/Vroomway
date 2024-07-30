@@ -4,7 +4,7 @@
 import { ATLAS_SHEET_ITEM } from '../inventory/inventory-data'
 import { ATLAS_SHEET_VEHICLE } from '../vehicle/vehicle-data'
 import { ATLAS_SHEET_ACCESSORY } from '../vehicle/accessory-data'
-import { type UIController } from './ui.controller'
+import { type UIController } from '../controllers/ui.controller'
 import { Label, ReactEcs, UiEntity } from '@dcl/sdk/react-ecs'
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
 import { getUvs, type Sprite } from './utils/utils'

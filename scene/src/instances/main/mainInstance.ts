@@ -1,4 +1,5 @@
 import {
+  type Entity,
   GltfContainer,
   InputAction,
   Material,
@@ -26,17 +27,67 @@ import {
   SOLO_SPRINT_COST
 } from '../../utils/constants'
 import { instance } from '../../utils/currentInstance'
-import { type GameController } from '../../game.controller'
 import { TulioDialog1, YoYoDialog1 } from '../../utils/dialog'
 import { missions } from '../../utils/missions'
 import { cleanUpScene } from '../../utils/cleanupScene'
-import { renderRecharge } from '../recharge/recharge'
-import { renderScrapyard } from '../scrapyard/scrapyard'
+import { type RealmType } from '../types'
+import { type GameController } from '../../controllers/game.controller'
+import { entityController } from '../../utils/entityController'
 
 export class MainInstance {
   gameController: GameController
+  assets: Entity[]
+  parentRaceScores = entityController.addEntity()
+  yoyo = entityController.addEntity()
+  yoyoText = entityController.addEntity()
+  socialPortal = entityController.addEntity()
+  scrapYardPortal = entityController.addEntity()
+  fuelPurchase = entityController.addEntity()
+  termsAndCondPoster = entityController.addEntity()
+  fuelInfoPoster = entityController.addEntity()
+  soloSprintSign = entityController.addEntity()
+  dragRaceSign = entityController.addEntity()
+  fuegoCircuitsSign = entityController.addEntity()
+  scrapyardSign = entityController.addEntity()
+  rechargeSign = entityController.addEntity()
+  tulio = entityController.addEntity()
+  tulioText = entityController.addEntity()
+  aMaryPosterText = entityController.addEntity()
+  kKoinPosterText = entityController.addEntity()
+  puSign = entityController.addEntity()
+  seasonWinner1 = entityController.addEntity()
+  seasonWinner2 = entityController.addEntity()
+  seasonWinner3 = entityController.addEntity()
+  seasonWinner4 = entityController.addEntity()
+  seasonWinner5 = entityController.addEntity()
+  seasonWinner6 = entityController.addEntity()
+  seasonWinner7 = entityController.addEntity()
+  seasonWinner8 = entityController.addEntity()
+  seasonWinner9 = entityController.addEntity()
+  seasonWinner10 = entityController.addEntity()
+  seasonWinner11 = entityController.addEntity()
+  seasonWinner12 = entityController.addEntity()
+  seasonWinner13 = entityController.addEntity()
+  seasonWinner14 = entityController.addEntity()
+  seasonWinner15 = entityController.addEntity()
+  seasonWinner16 = entityController.addEntity()
+  seasonWinner17 = entityController.addEntity()
+  seasonWinner18 = entityController.addEntity()
+  seasonWinner19 = entityController.addEntity()
+  seasonWinner20 = entityController.addEntity()
+  hyperfy = entityController.addEntity()
+  howToPlay1 = entityController.addEntity()
+  howToPlay2 = entityController.addEntity()
+  howToPlay3 = entityController.addEntity()
+  newHere = entityController.addEntity()
+  hofText = entityController.addEntity()
+  hofButton = entityController.addEntity()
+  hofButton2 = entityController.addEntity()
+
   constructor(gameController: GameController) {
     this.gameController = gameController
+    this.assets = []
+    void this.renderMainInstance()
   }
 
   renderMainInstance = async (): Promise<void> => {
@@ -59,12 +110,6 @@ export class MainInstance {
 
     // Constants.SCENE_MGR?.lobbyScene?.init();
     // Constants.SCENE_MGR?.lobbyScene?.show();
-    const _scene = engine.addEntity()
-    Transform.createOrReplace(_scene, {
-      position: Vector3.create(96, 0, 64),
-      rotation: Quaternion.create(0, 180, 0, 1),
-      scale: Vector3.create(1, 1, 1)
-    })
 
     const staticEntities = [
       'assets/models/main-entrance/mainStructure.glb',
@@ -97,7 +142,8 @@ export class MainInstance {
     let startCoinIndex = 0
 
     staticEntities.forEach((entity) => {
-      const newEntity = engine.addEntity()
+      const newEntity = entityController.addEntity()
+      this.assets.push(newEntity)
       Transform.create(newEntity, {
         position: Vector3.create(96, 0, 64),
         rotation: Quaternion.create(0, 90, 0, 0)
@@ -111,7 +157,8 @@ export class MainInstance {
           'assets/models/main-entrance/startCoinFC.glb'
         ].includes(entity)
       ) {
-        const collider = engine.addEntity()
+        const collider = entityController.addEntity()
+        this.assets.push(collider)
         MeshCollider.setBox(collider)
         Transform.create(collider, {
           position: startCoinPositions[startCoinIndex],
@@ -179,8 +226,7 @@ export class MainInstance {
     })
 
     //  race times scoreboard parent
-    const parentRaceScores = engine.addEntity()
-    Transform.createOrReplace(parentRaceScores, {
+    Transform.createOrReplace(this.parentRaceScores, {
       position: Vector3.create(32.15, 9.3, 7.72),
       rotation: Quaternion.fromEulerDegrees(0, 225.0, 0)
     })
@@ -190,7 +236,7 @@ export class MainInstance {
       Color4.Red(),
       Color4.White(),
       Color4.Red(),
-      parentRaceScores
+      this.parentRaceScores
     )
     Transform.getMutable(scoreboardSoloSprint.entityParent).position =
       Vector3.create(1.0, 1.75, 0)
@@ -201,7 +247,7 @@ export class MainInstance {
       Color4.Yellow(),
       Color4.White(),
       Color4.Yellow(),
-      parentRaceScores
+      this.parentRaceScores
     )
     Transform.getMutable(scoreboardCircuit.entityParent).position =
       Vector3.create(6.2, 1.75, 0)
@@ -212,15 +258,14 @@ export class MainInstance {
       Color4.Blue(),
       Color4.White(),
       Color4.Blue(),
-      parentRaceScores
+      this.parentRaceScores
     )
     Transform.getMutable(scoreboardDragRace.entityParent).position =
       Vector3.create(11.1, 1.75, 0)
     scoreboardDragRace.UpdateScoreDisplay()
 
-    let yoyo = engine.addEntity()
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    yoyo = npc.create(
+    this.yoyo = npc.create(
       {
         position: Vector3.create(49.94, 0.0, 50.45),
         scale: Vector3.create(2.0, 2.0, 2.0),
@@ -232,7 +277,7 @@ export class MainInstance {
         onActivate: () => {
           // eslint-disable-next-line @typescript-eslint/no-unused-expressions
           missions.getCurrentMissionName() === 'yoyo'
-            ? npc.openDialogWindow(yoyo, YoYoDialog1, 0)
+            ? npc.openDialogWindow(this.yoyo, YoYoDialog1, 0)
             : null
         },
         idleAnim: `idle`,
@@ -247,38 +292,38 @@ export class MainInstance {
         continueOnWalkAway: false
       }
     )
-    const yoyoText = engine.addEntity()
-    TextShape.create(yoyoText)
-    Transform.create(yoyoText, {
+
+    TextShape.create(this.yoyoText)
+    Transform.create(this.yoyoText, {
       position: Vector3.create(49.94, 4.5, 50.45),
       scale: Vector3.create(1.0, 1.0, 1.0),
       rotation: Quaternion.fromEulerDegrees(0.0, 180.0, 0.0)
     })
-    TextShape.getMutable(yoyoText).fontSize = 6
-    TextShape.getMutable(yoyoText).textColor = Color4.White()
-    TextShape.getMutable(yoyoText).text = 'YoYo'
+    TextShape.getMutable(this.yoyoText).fontSize = 6
+    TextShape.getMutable(this.yoyoText).textColor = Color4.White()
+    TextShape.getMutable(this.yoyoText).text = 'YoYo'
 
     // SOCIAL PORTAL
-    const socialPortal = engine.addEntity()
-    Transform.createOrReplace(socialPortal, {
+
+    Transform.createOrReplace(this.socialPortal, {
       position: Vector3.create(10.23, 1.99, 31.84),
       scale: Vector3.create(3.0, 7.0, 6.0),
       rotation: Quaternion.create(0.0, 0.0, 0.0)
     })
-    MeshRenderer.setBox(socialPortal)
-    Material.setPbrMaterial(socialPortal, {
+    MeshRenderer.setBox(this.socialPortal)
+    Material.setPbrMaterial(this.socialPortal, {
       albedoColor: Color4.create(0, 0, 0, 0)
     })
     utils.triggers.addTrigger(
-      socialPortal,
+      this.socialPortal,
       1,
       1,
       [{ type: 'box', scale: Vector3.create(3, 9, 10) }],
       () => {
         instance.setInstance('recharge')
-        cleanUpScene()
+        // cleanUpScene()
         utils.timers.setTimeout(() => {
-          renderRecharge()
+          this.gameController.realmController.switchRealm('recharge')
           void movePlayerTo({
             newRelativePosition: Vector3.create(48, 6.29, 32),
             cameraTarget: Vector3.create(48, 8.29, 32)
@@ -289,25 +334,27 @@ export class MainInstance {
     )
 
     // SCRAPYARD PORTAL
-    const scrapYardPortal = engine.addEntity()
-    Transform.createOrReplace(scrapYardPortal, {
+
+    Transform.createOrReplace(this.scrapYardPortal, {
       position: Vector3.create(88.29, 2.0, 31.26),
       scale: Vector3.create(2.2, 8.0, 7.0),
       rotation: Quaternion.fromEulerDegrees(0.0, 0.0, 0.0)
     })
-    MeshRenderer.setBox(scrapYardPortal)
-    Material.setPbrMaterial(scrapYardPortal, {
+    MeshRenderer.setBox(this.scrapYardPortal)
+    Material.setPbrMaterial(this.scrapYardPortal, {
       albedoColor: Color4.create(0, 0, 0, 0)
     })
     utils.triggers.addTrigger(
-      scrapYardPortal,
+      this.scrapYardPortal,
       1,
       1,
       [{ type: 'box', scale: Vector3.create(3, 9, 10) }],
       () => {
         instance.setInstance('scrapyard')
-        cleanUpScene()
-        void renderScrapyard()
+        void movePlayerTo({
+          newRelativePosition: Vector3.create(31.38, 1.55, 47)
+        })
+        this.gameController.realmController.switchRealm('scrapyard')
         utils.timers.setTimeout(() => {
           // loader.showLoader(7000);
         }, 50)
@@ -323,14 +370,14 @@ export class MainInstance {
     }
 
     // FUEL Purchase Sign
-    const fuelPurchase = engine.addEntity()
-    Transform.create(fuelPurchase, {
+
+    Transform.create(this.fuelPurchase, {
       position: Vector3.create(30.5, 9.2, 52.7),
       scale: Vector3.create(-15.0, -4.0, -1.0),
       rotation: Quaternion.fromEulerDegrees(0.0, 315.0, 180.0)
     })
-    MeshRenderer.setPlane(fuelPurchase)
-    Material.setPbrMaterial(fuelPurchase, {
+    MeshRenderer.setPlane(this.fuelPurchase)
+    Material.setPbrMaterial(this.fuelPurchase, {
       texture: Material.Texture.Common({
         src: 'https://bafkreigsu33magq5tnyps5fjwcdxbwpyetrrdeowqz4mp2d6sgruvghz44.ipfs.nftstorage.link/'
       }),
@@ -342,15 +389,15 @@ export class MainInstance {
     })
 
     // T&C Poster
-    const termsAndCondPoster = engine.addEntity()
-    Transform.create(termsAndCondPoster, {
+
+    Transform.create(this.termsAndCondPoster, {
       position: Vector3.create(64.2, 7.45, 56.68),
       scale: Vector3.create(-7.5, -7.5, -1.0),
       rotation: Quaternion.fromEulerDegrees(0.0, 39.272, 180.0)
     })
-    MeshRenderer.setPlane(termsAndCondPoster)
-    MeshCollider.setPlane(termsAndCondPoster)
-    Material.setPbrMaterial(termsAndCondPoster, {
+    MeshRenderer.setPlane(this.termsAndCondPoster)
+    MeshCollider.setPlane(this.termsAndCondPoster)
+    Material.setPbrMaterial(this.termsAndCondPoster, {
       texture: Material.Texture.Common({
         src: 'https://bafkreihx7gxctg6oqoblairxd27qvycyug2ouza7trigycyxr6xxgenl4a.ipfs.nftstorage.link/'
       }),
@@ -360,7 +407,7 @@ export class MainInstance {
         src: 'https://bafkreihx7gxctg6oqoblairxd27qvycyug2ouza7trigycyxr6xxgenl4a.ipfs.nftstorage.link/'
       })
     })
-    PointerEvents.createOrReplace(termsAndCondPoster, {
+    PointerEvents.createOrReplace(this.termsAndCondPoster, {
       pointerEvents: [
         {
           eventType: PointerEventType.PET_DOWN,
@@ -377,7 +424,7 @@ export class MainInstance {
         inputSystem.isTriggered(
           InputAction.IA_POINTER,
           PointerEventType.PET_DOWN,
-          termsAndCondPoster
+          this.termsAndCondPoster
         )
       ) {
         missions.checkAndUnlockCampaignMission('discord')
@@ -388,14 +435,14 @@ export class MainInstance {
     })
 
     // FUEL Infographic
-    const fuelInfoPoster = engine.addEntity()
-    Transform.create(fuelInfoPoster, {
+
+    Transform.create(this.fuelInfoPoster, {
       position: Vector3.create(47.66, 2.8, 49.54),
       scale: Vector3.create(-4.6, -4.6, -3.6),
       rotation: Quaternion.fromEulerDegrees(0.0, 179.998, 180.0)
     })
-    MeshRenderer.setPlane(fuelInfoPoster)
-    Material.setPbrMaterial(fuelInfoPoster, {
+    MeshRenderer.setPlane(this.fuelInfoPoster)
+    Material.setPbrMaterial(this.fuelInfoPoster, {
       texture: Material.Texture.Common({
         src: 'https://bafybeibgpc27qayhrp6rnibpqdmbxa3cujflglogwfv53lvm2twt5hpqri.ipfs.nftstorage.link/'
       }),
@@ -406,7 +453,7 @@ export class MainInstance {
         src: 'https://bafybeibgpc27qayhrp6rnibpqdmbxa3cujflglogwfv53lvm2twt5hpqri.ipfs.nftstorage.link/'
       })
     })
-    PointerEvents.createOrReplace(fuelInfoPoster, {
+    PointerEvents.createOrReplace(this.fuelInfoPoster, {
       pointerEvents: [
         {
           eventType: PointerEventType.PET_DOWN,
@@ -423,7 +470,7 @@ export class MainInstance {
         inputSystem.isTriggered(
           InputAction.IA_POINTER,
           PointerEventType.PET_DOWN,
-          termsAndCondPoster
+          this.termsAndCondPoster
         )
       ) {
         missions.checkAndUnlockCampaignMission('discord')
@@ -434,14 +481,14 @@ export class MainInstance {
     })
 
     // Solo Sprint Sign
-    const soloSprintSign = engine.addEntity()
-    Transform.create(soloSprintSign, {
+
+    Transform.create(this.soloSprintSign, {
       position: Vector3.create(64, 5.25, 9.54),
       scale: Vector3.create(-8.75, -8.75, -8.0),
       rotation: Quaternion.fromEulerDegrees(0.0, 135.0, 180.0)
     })
-    MeshRenderer.setPlane(soloSprintSign)
-    Material.setPbrMaterial(soloSprintSign, {
+    MeshRenderer.setPlane(this.soloSprintSign)
+    Material.setPbrMaterial(this.soloSprintSign, {
       texture: Material.Texture.Common({
         src: 'https://bafkreidz7jasew2mjigvh2ja2jm7gd5js6s7mqj5daogwsuerhvrilqmbu.ipfs.nftstorage.link/'
       }),
@@ -454,14 +501,14 @@ export class MainInstance {
     })
 
     // Drag Race Sign
-    const dragRaceSign = engine.addEntity()
-    Transform.create(dragRaceSign, {
+
+    Transform.create(this.dragRaceSign, {
       position: Vector3.create(45.31, 6, 5.92),
       scale: Vector3.create(-8.75, -8.75, -8.0),
       rotation: Quaternion.fromEulerDegrees(0.0, 180.0, 180.0)
     })
-    MeshRenderer.setPlane(dragRaceSign)
-    Material.setPbrMaterial(dragRaceSign, {
+    MeshRenderer.setPlane(this.dragRaceSign)
+    Material.setPbrMaterial(this.dragRaceSign, {
       texture: Material.Texture.Common({
         src: 'https://bafkreid5gmydkzhkyazy5l6uj5frrwdzicwo6igyeypcktaicraqr4ftk4.ipfs.nftstorage.link/'
       }),
@@ -474,14 +521,14 @@ export class MainInstance {
     })
 
     // Fuego Circuits Sign
-    const fuegoCircuitsSign = engine.addEntity()
-    Transform.create(fuegoCircuitsSign, {
+
+    Transform.create(this.fuegoCircuitsSign, {
       position: Vector3.create(53.16, 6, 5.72),
       scale: Vector3.create(-8.75, -8.75, -8.0),
       rotation: Quaternion.fromEulerDegrees(0.0, 180.0, 180.0)
     })
-    MeshRenderer.setPlane(fuegoCircuitsSign)
-    Material.setPbrMaterial(fuegoCircuitsSign, {
+    MeshRenderer.setPlane(this.fuegoCircuitsSign)
+    Material.setPbrMaterial(this.fuegoCircuitsSign, {
       texture: Material.Texture.Common({
         src: 'https://bafkreigehlbdsuxzcljwbps4kzip4qm3suiu36rtinwwdo34ylawkh5pme.ipfs.nftstorage.link/'
       }),
@@ -494,14 +541,14 @@ export class MainInstance {
     })
 
     // Scrapyard Sign
-    const scrapyardSign = engine.addEntity()
-    Transform.create(scrapyardSign, {
+
+    Transform.create(this.scrapyardSign, {
       position: Vector3.create(89.08, 12.65, 31.43),
       scale: Vector3.create(-12.75, -12.75, -12.0),
       rotation: Quaternion.fromEulerDegrees(0.0, 101.0, 180.0)
     })
-    MeshRenderer.setPlane(scrapyardSign)
-    Material.setPbrMaterial(scrapyardSign, {
+    MeshRenderer.setPlane(this.scrapyardSign)
+    Material.setPbrMaterial(this.scrapyardSign, {
       texture: Material.Texture.Common({
         src: 'assets/images/scrapyard_sign.png'
       }),
@@ -514,14 +561,14 @@ export class MainInstance {
     })
 
     // Recharge Sign
-    const rechargeSign = engine.addEntity()
-    Transform.create(rechargeSign, {
+
+    Transform.create(this.rechargeSign, {
       position: Vector3.create(9.58, 12.65, 32.43),
       scale: Vector3.create(-12.75, -12.75, -12.0),
       rotation: Quaternion.fromEulerDegrees(0.0, 267.0, 180.0)
     })
-    MeshRenderer.setPlane(rechargeSign)
-    Material.setPbrMaterial(rechargeSign, {
+    MeshRenderer.setPlane(this.rechargeSign)
+    Material.setPbrMaterial(this.rechargeSign, {
       texture: Material.Texture.Common({
         src: 'assets/images/recharge_sign.png'
       }),
@@ -533,9 +580,8 @@ export class MainInstance {
       })
     })
 
-    let tulio = engine.addEntity()
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    tulio = npc.create(
+    this.tulio = npc.create(
       {
         position: Vector3.create(63.92, 0.0, 17.92),
         scale: Vector3.create(1.25, 1.25, 1.25),
@@ -547,7 +593,7 @@ export class MainInstance {
         onActivate: () => {
           // eslint-disable-next-line @typescript-eslint/no-unused-expressions
           missions.getCurrentMissionName() === 'visitRacehub'
-            ? npc.openDialogWindow(tulio, TulioDialog1, 0)
+            ? npc.openDialogWindow(this.tulio, TulioDialog1, 0)
             : null
         },
         idleAnim: `idle`,
@@ -564,26 +610,26 @@ export class MainInstance {
         continueOnWalkAway: false
       }
     )
-    const tulioText = engine.addEntity()
-    TextShape.create(tulioText)
-    Transform.create(tulioText, {
+
+    TextShape.create(this.tulioText)
+    Transform.create(this.tulioText, {
       position: Vector3.create(63.92, 2.9, 17.92),
       scale: Vector3.create(1.0, 1.0, 1.0),
       rotation: Quaternion.fromEulerDegrees(0.0, 135.0, 0.0)
     })
-    TextShape.getMutable(tulioText).fontSize = 6
-    TextShape.getMutable(tulioText).textColor = Color4.White()
-    TextShape.getMutable(tulioText).text = 'Tulio'
+    TextShape.getMutable(this.tulioText).fontSize = 6
+    TextShape.getMutable(this.tulioText).textColor = Color4.White()
+    TextShape.getMutable(this.tulioText).text = 'Tulio'
 
     // Assid Mary Poster
-    const aMaryPosterText = engine.addEntity()
-    Transform.create(aMaryPosterText, {
+
+    Transform.create(this.aMaryPosterText, {
       position: Vector3.create(72.14, 9.0, 15.58),
       scale: Vector3.create(8.5, 13.0, 4.0),
       rotation: Quaternion.fromEulerDegrees(0.0, 135.0, 0.0)
     })
-    MeshRenderer.setPlane(aMaryPosterText)
-    Material.setPbrMaterial(aMaryPosterText, {
+    MeshRenderer.setPlane(this.aMaryPosterText)
+    Material.setPbrMaterial(this.aMaryPosterText, {
       texture: Material.Texture.Common({
         src: 'https://i.ibb.co/WFcb0hK/Cinematic-Assid-Mary.png'
       }),
@@ -595,14 +641,14 @@ export class MainInstance {
     })
 
     // Krystal Koin Poster
-    const kKoinPosterText = engine.addEntity()
-    Transform.create(kKoinPosterText, {
+
+    Transform.create(this.kKoinPosterText, {
       position: Vector3.create(21.6, 9.0, 46.1),
       scale: Vector3.create(8.5, 13.0, 4.0),
       rotation: Quaternion.fromEulerDegrees(360.0, 305.0, 0.0)
     })
-    MeshRenderer.setPlane(kKoinPosterText)
-    Material.setPbrMaterial(kKoinPosterText, {
+    MeshRenderer.setPlane(this.kKoinPosterText)
+    Material.setPbrMaterial(this.kKoinPosterText, {
       texture: Material.Texture.Common({
         src: 'https://i.ibb.co/7C8f963/Cinematic-Krystal-Koin.png'
       }),
@@ -614,14 +660,14 @@ export class MainInstance {
     })
 
     // Power Up Sign
-    const puSign = engine.addEntity()
-    Transform.create(puSign, {
+
+    Transform.create(this.puSign, {
       position: Vector3.create(72.15, 1.85, 44.0),
       scale: Vector3.create(-3.75, -3.75, -13.0),
       rotation: Quaternion.fromEulerDegrees(0.0, 55.0, 180.0)
     })
-    MeshRenderer.setPlane(puSign)
-    Material.setPbrMaterial(puSign, {
+    MeshRenderer.setPlane(this.puSign)
+    Material.setPbrMaterial(this.puSign, {
       texture: Material.Texture.Common({
         src: 'https://bafybeibyecasmxnmhfo5va7zaam6h4c6if7enmxevwq7ufebpqoivksi3i.ipfs.nftstorage.link/'
       }),
@@ -634,14 +680,14 @@ export class MainInstance {
     })
 
     // Season Winner 1
-    const seasonWinner1 = engine.addEntity()
-    Transform.create(seasonWinner1, {
+
+    Transform.create(this.seasonWinner1, {
       position: Vector3.create(48.05, 44.55, 18.8),
       scale: Vector3.create(-5.75, -9.75, -13.0),
       rotation: Quaternion.fromEulerDegrees(0.0, 180.0, 180.0)
     })
-    MeshRenderer.setPlane(seasonWinner1)
-    Material.setPbrMaterial(seasonWinner1, {
+    MeshRenderer.setPlane(this.seasonWinner1)
+    Material.setPbrMaterial(this.seasonWinner1, {
       texture: Material.Texture.Common({
         src: 'https://bafybeics5wprng67ifpdl7qdtglrhw2ddid74maq6au6tbfoi7r26bz2za.ipfs.nftstorage.link/'
       }),
@@ -654,14 +700,14 @@ export class MainInstance {
     })
 
     // Season Winner 2
-    const seasonWinner2 = engine.addEntity()
-    Transform.create(seasonWinner2, {
+
+    Transform.create(this.seasonWinner2, {
       position: Vector3.create(42.25, 44.55, 20.1),
       scale: Vector3.create(-5.75, -9.75, -13.0),
       rotation: Quaternion.fromEulerDegrees(0.0, 205.0, 180.0)
     })
-    MeshRenderer.setPlane(seasonWinner2)
-    Material.setPbrMaterial(seasonWinner2, {
+    MeshRenderer.setPlane(this.seasonWinner2)
+    Material.setPbrMaterial(this.seasonWinner2, {
       texture: Material.Texture.Common({
         src: 'https://bafybeic7nmnqrekwpuavwowxdrayznkpakp3bn5os22hxcv7zqd45wacbe.ipfs.nftstorage.link/'
       }),
@@ -674,14 +720,14 @@ export class MainInstance {
     })
 
     // Season Winner 3
-    const seasonWinner3 = engine.addEntity()
-    Transform.create(seasonWinner3, {
+
+    Transform.create(this.seasonWinner3, {
       position: Vector3.create(37.35, 44.55, 23.9),
       scale: Vector3.create(-5.75, -9.75, -13.0),
       rotation: Quaternion.fromEulerDegrees(0.0, 230.0, 180.0)
     })
-    MeshRenderer.setPlane(seasonWinner3)
-    Material.setPbrMaterial(seasonWinner3, {
+    MeshRenderer.setPlane(this.seasonWinner3)
+    Material.setPbrMaterial(this.seasonWinner3, {
       texture: Material.Texture.Common({
         src: 'https://bafkreifosg5m4udqza65h443bp4ibdnkehuniw7srlpnqa3biykrrddtre.ipfs.nftstorage.link/'
       }),
@@ -694,14 +740,14 @@ export class MainInstance {
     })
 
     // Season Winner 4
-    const seasonWinner4 = engine.addEntity()
-    Transform.create(seasonWinner4, {
+
+    Transform.create(this.seasonWinner4, {
       position: Vector3.create(34.45, 44.55, 29.5),
       scale: Vector3.create(-5.75, -9.75, -13.0),
       rotation: Quaternion.fromEulerDegrees(0.0, 255.0, 180.0)
     })
-    MeshRenderer.setPlane(seasonWinner4)
-    Material.setPbrMaterial(seasonWinner4, {
+    MeshRenderer.setPlane(this.seasonWinner4)
+    Material.setPbrMaterial(this.seasonWinner4, {
       texture: Material.Texture.Common({
         src: 'https://bafybeibfbnhxd5i3arfoemdk3fn2w6faqe6wn7yki7iliv42dxkxjy4cby.ipfs.nftstorage.link/'
       }),
@@ -714,14 +760,14 @@ export class MainInstance {
     })
 
     // Season Winner 5
-    const seasonWinner5 = engine.addEntity()
-    Transform.create(seasonWinner5, {
+
+    Transform.create(this.seasonWinner5, {
       position: Vector3.create(34.35, 44.55, 35.8),
       scale: Vector3.create(-5.75, -9.75, -13.0),
       rotation: Quaternion.fromEulerDegrees(0.0, 283.0, 180.0)
     })
-    MeshRenderer.setPlane(seasonWinner5)
-    Material.setPbrMaterial(seasonWinner5, {
+    MeshRenderer.setPlane(this.seasonWinner5)
+    Material.setPbrMaterial(this.seasonWinner5, {
       texture: Material.Texture.Common({
         src: 'https://bafybeifchhwy2umyprwvdrkoljpnan4l3cavtyvspxtd73yrqfidgsouiq.ipfs.nftstorage.link/'
       }),
@@ -734,15 +780,15 @@ export class MainInstance {
     })
 
     // Hyperfy Portal Sign
-    const hyperfy = engine.addEntity()
-    Transform.create(hyperfy, {
+
+    Transform.create(this.hyperfy, {
       position: Vector3.create(56.85, 1.85, 58.2),
       scale: Vector3.create(-3.75, -3.75, -13.0),
       rotation: Quaternion.fromEulerDegrees(0.0, 25.0, 180.0)
     })
-    MeshRenderer.setPlane(hyperfy)
-    MeshCollider.setPlane(hyperfy)
-    Material.setPbrMaterial(hyperfy, {
+    MeshRenderer.setPlane(this.hyperfy)
+    MeshCollider.setPlane(this.hyperfy)
+    Material.setPbrMaterial(this.hyperfy, {
       texture: Material.Texture.Common({
         src: 'https://bafkreig6idrtcsdf5dzkrbfekrh2iagwmii42ocpqyeb5h23qq3tcu7ifa.ipfs.nftstorage.link/'
       }),
@@ -753,7 +799,7 @@ export class MainInstance {
         src: 'https://bafkreig6idrtcsdf5dzkrbfekrh2iagwmii42ocpqyeb5h23qq3tcu7ifa.ipfs.nftstorage.link/'
       })
     })
-    PointerEvents.createOrReplace(hyperfy, {
+    PointerEvents.createOrReplace(this.hyperfy, {
       pointerEvents: [
         {
           eventType: PointerEventType.PET_DOWN,
@@ -770,7 +816,7 @@ export class MainInstance {
         inputSystem.isTriggered(
           InputAction.IA_POINTER,
           PointerEventType.PET_DOWN,
-          hyperfy
+          this.hyperfy
         )
       ) {
         void openExternalUrl({
@@ -781,14 +827,14 @@ export class MainInstance {
     })
 
     // Drag Race How to Play
-    const howToPlay1 = engine.addEntity()
-    Transform.create(howToPlay1, {
+
+    Transform.create(this.howToPlay1, {
       position: Vector3.create(43.15, 2.25, 7.8),
       scale: Vector3.create(-2.75, -1.75, -13.0),
       rotation: Quaternion.fromEulerDegrees(0.0, 225.0, 180.0)
     })
-    MeshRenderer.setPlane(howToPlay1)
-    Material.setPbrMaterial(howToPlay1, {
+    MeshRenderer.setPlane(this.howToPlay1)
+    Material.setPbrMaterial(this.howToPlay1, {
       texture: Material.Texture.Common({
         src: 'https://bafkreieofeo7vuexnhhb5o2sg4ak6zytk6geslh5cyszdxgx4lmt6fzkki.ipfs.nftstorage.link/'
       }),
@@ -800,14 +846,14 @@ export class MainInstance {
       })
     })
     // Fuego Circuits How to Play
-    const howToPlay2 = engine.addEntity()
-    Transform.create(howToPlay2, {
+
+    Transform.create(this.howToPlay2, {
       position: Vector3.create(56.15, 2.25, 7.8),
       scale: Vector3.create(-2.75, -1.75, -13.0),
       rotation: Quaternion.fromEulerDegrees(0.0, 160.0, 180.0)
     })
-    MeshRenderer.setPlane(howToPlay2)
-    Material.setPbrMaterial(howToPlay2, {
+    MeshRenderer.setPlane(this.howToPlay2)
+    Material.setPbrMaterial(this.howToPlay2, {
       texture: Material.Texture.Common({
         src: 'https://bafkreih5k3sri5f67i2lvjfvp2t4nski5dqpebzngikgghexakybttxa2e.ipfs.nftstorage.link/'
       }),
@@ -819,14 +865,14 @@ export class MainInstance {
       })
     })
     // Solo-Sprint How to Play
-    const howToPlay3 = engine.addEntity()
-    Transform.create(howToPlay3, {
+
+    Transform.create(this.howToPlay3, {
       position: Vector3.create(64.15, 2.25, 13.8),
       scale: Vector3.create(-2.75, -1.75, -13.0),
       rotation: Quaternion.fromEulerDegrees(0.0, 115.0, 180.0)
     })
-    MeshRenderer.setPlane(howToPlay3)
-    Material.setPbrMaterial(howToPlay3, {
+    MeshRenderer.setPlane(this.howToPlay3)
+    Material.setPbrMaterial(this.howToPlay3, {
       texture: Material.Texture.Common({
         src: 'https://bafkreihrxq2vrthpcphetyryy4erhlw7abffglh5tcxw3donf5pmw4flxm.ipfs.nftstorage.link/'
       }),
@@ -838,14 +884,14 @@ export class MainInstance {
       })
     })
     // New Here board
-    const newHere = engine.addEntity()
-    Transform.create(newHere, {
+
+    Transform.create(this.newHere, {
       position: Vector3.create(52.15, 2.25, 50.5),
       scale: Vector3.create(-2.75, -2.75, -13.0),
       rotation: Quaternion.fromEulerDegrees(360.0, 165.0, 180.0)
     })
-    MeshRenderer.setPlane(newHere)
-    Material.setPbrMaterial(newHere, {
+    MeshRenderer.setPlane(this.newHere)
+    Material.setPbrMaterial(this.newHere, {
       texture: Material.Texture.Common({
         src: 'https://bafkreigmzy4kbncu35ktvh47qox7bk4oae4h5e6gogwnsw5ss7druadtca.ipfs.nftstorage.link/'
       }),
@@ -858,32 +904,31 @@ export class MainInstance {
     })
 
     // Tulio Title
-    const hofText = engine.addEntity()
-    Transform.create(hofText, {
+
+    Transform.create(this.hofText, {
       position: Vector3.create(24.0, 2.0, 21.0),
       scale: Vector3.create(1.0, 1.0, 1.0),
       rotation: Quaternion.fromEulerDegrees(0.0, 225.0, 0.0)
     })
-    TextShape.create(hofText)
-    TextShape.getMutable(hofText).fontSize = 6
-    TextShape.getMutable(hofText).textColor = Color4.White()
-    TextShape.getMutable(hofText).text = 'Visit Hall of Fame'
+    TextShape.create(this.hofText)
+    TextShape.getMutable(this.hofText).fontSize = 6
+    TextShape.getMutable(this.hofText).textColor = Color4.White()
+    TextShape.getMutable(this.hofText).text = 'Visit Hall of Fame'
 
-    const hofButton = engine.addEntity()
-    MeshCollider.setBox(hofButton)
-    Transform.create(hofButton, {
+    MeshCollider.setBox(this.hofButton)
+    Transform.create(this.hofButton, {
       position: Vector3.create(23.83, 1.35, 21),
       rotation: Quaternion.fromEulerDegrees(0, 90, 0),
       scale: Vector3.create(0.25, 0.25, 0.25)
     })
-    const hofButton2 = engine.addEntity()
-    MeshCollider.setBox(hofButton2)
-    Transform.create(hofButton2, {
+
+    MeshCollider.setBox(this.hofButton2)
+    Transform.create(this.hofButton2, {
       position: Vector3.create(45.0, 40.95, 29.96),
       rotation: Quaternion.fromEulerDegrees(0.0, 90.0, 0.0),
       scale: Vector3.create(0.25, 0.25, 0.25)
     })
-    PointerEvents.createOrReplace(hofButton, {
+    PointerEvents.createOrReplace(this.hofButton, {
       pointerEvents: [
         {
           eventType: PointerEventType.PET_DOWN,
@@ -895,7 +940,7 @@ export class MainInstance {
         }
       ]
     })
-    PointerEvents.createOrReplace(hofButton2, {
+    PointerEvents.createOrReplace(this.hofButton2, {
       pointerEvents: [
         {
           eventType: PointerEventType.PET_DOWN,
@@ -912,7 +957,7 @@ export class MainInstance {
         inputSystem.isTriggered(
           InputAction.IA_POINTER,
           PointerEventType.PET_DOWN,
-          hofButton
+          this.hofButton
         )
       ) {
         void movePlayerTo({ newRelativePosition: Vector3.create(47, 45, 32) })
@@ -921,11 +966,75 @@ export class MainInstance {
         inputSystem.isTriggered(
           InputAction.IA_POINTER,
           PointerEventType.PET_DOWN,
-          hofButton2
+          this.hofButton2
         )
       ) {
         void movePlayerTo({ newRelativePosition: Vector3.create(47, 5, 32) })
       }
     })
+  }
+
+  spawnSingleEntity(entityName: string): void {}
+
+  removeSingleEntity(entityName: string): void {}
+
+  removeAllEntities(): void {
+    this.assets.forEach((entity) => {
+      entityController.removeEntity(entity)
+    })
+    entityController.removeEntity(this.parentRaceScores)
+    entityController.removeEntity(this.yoyo)
+    entityController.removeEntity(this.yoyoText)
+    entityController.removeEntity(this.socialPortal)
+    entityController.removeEntity(this.scrapYardPortal)
+    entityController.removeEntity(this.fuelPurchase)
+    entityController.removeEntity(this.termsAndCondPoster)
+    entityController.removeEntity(this.fuelInfoPoster)
+    entityController.removeEntity(this.soloSprintSign)
+    entityController.removeEntity(this.dragRaceSign)
+    entityController.removeEntity(this.fuegoCircuitsSign)
+    entityController.removeEntity(this.scrapyardSign)
+    entityController.removeEntity(this.rechargeSign)
+    entityController.removeEntity(this.tulio)
+    entityController.removeEntity(this.tulioText)
+    entityController.removeEntity(this.aMaryPosterText)
+    entityController.removeEntity(this.kKoinPosterText)
+    entityController.removeEntity(this.puSign)
+    entityController.removeEntity(this.seasonWinner1)
+    entityController.removeEntity(this.seasonWinner2)
+    entityController.removeEntity(this.seasonWinner3)
+    entityController.removeEntity(this.seasonWinner4)
+    entityController.removeEntity(this.seasonWinner5)
+    entityController.removeEntity(this.seasonWinner6)
+    entityController.removeEntity(this.seasonWinner7)
+    entityController.removeEntity(this.seasonWinner8)
+    entityController.removeEntity(this.seasonWinner9)
+    entityController.removeEntity(this.seasonWinner10)
+    entityController.removeEntity(this.seasonWinner11)
+    entityController.removeEntity(this.seasonWinner12)
+    entityController.removeEntity(this.seasonWinner13)
+    entityController.removeEntity(this.seasonWinner14)
+    entityController.removeEntity(this.seasonWinner15)
+    entityController.removeEntity(this.seasonWinner16)
+    entityController.removeEntity(this.seasonWinner17)
+    entityController.removeEntity(this.seasonWinner18)
+    entityController.removeEntity(this.seasonWinner19)
+    entityController.removeEntity(this.seasonWinner20)
+    entityController.removeEntity(this.hyperfy)
+    entityController.removeEntity(this.howToPlay1)
+    entityController.removeEntity(this.howToPlay2)
+    entityController.removeEntity(this.howToPlay3)
+    entityController.removeEntity(this.newHere)
+    entityController.removeEntity(this.hofText)
+    entityController.removeEntity(this.hofButton)
+    entityController.removeEntity(this.hofButton2)
+  }
+
+  getId(): RealmType {
+    return 'mainInstance'
+  }
+
+  deadPosition(): Vector3 {
+    return { x: -38.34, y: 10.43, z: -39.75 }
   }
 }

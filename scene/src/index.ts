@@ -6,7 +6,7 @@ import { movePlayerTo } from '~system/RestrictedActions'
 export function main(): void {
   // prepare entry scene
   const game = new GameController()
-  game.realmController.switchRealm('mainInstance')
+  game.realmController.switchRealm('soloSprint')
   // prepare solo sprint track
   // const Tracks = new spawn_Tracks();
   // Tracks.spawnFloor1();
@@ -28,3 +28,4 @@ export function main(): void {
   // DebugMenuController.Instance.InitDebugMenuInventory();
   // DebugMenuController.Instance.InitDebugMenuLeveling();
 }
+

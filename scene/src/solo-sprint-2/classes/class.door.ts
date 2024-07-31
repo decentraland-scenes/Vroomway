@@ -198,6 +198,7 @@ export class Door {
     // Add the various sound effects by creating a child entity
     // We'll never need to interact with these children directly, so we
     // skip naming them, lest we develop an attachment or feelings.
+    AudioSource.createOrReplace(this.foo)
   }
 
   setBusy(): void {

@@ -7,12 +7,7 @@
 //
 
 import * as utils from '@dcl-sdk/utils'
-import {
-  type Entity,
-  Material,
-  MeshRenderer,
-  Transform
-} from '@dcl/sdk/ecs'
+import { type Entity, Material, MeshRenderer, Transform } from '@dcl/sdk/ecs'
 import { Color4 } from '@dcl/sdk/math'
 import { type Quaternion, type Vector3 } from '~system/EngineApi'
 import { entityController } from '../../utils/entityController'
@@ -35,7 +30,7 @@ export class TriggerZone {
     // eslint-disable-next-line @typescript-eslint/ban-types
     onEnter: Function = function (): void {},
     // eslint-disable-next-line @typescript-eslint/ban-types
-    onExit: Function = function (): void {},
+    onExit: Function = function (): void {}
   ) {
     this.entity = entityController.addEntity()
     // Add the transform for the trigger zone

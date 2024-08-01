@@ -1,9 +1,4 @@
-import {
-  Animator,
-  type Entity,
-  GltfContainer,
-  Transform
-} from '@dcl/sdk/ecs'
+import { Animator, type Entity, GltfContainer, Transform } from '@dcl/sdk/ecs'
 import { Quaternion, Vector3 } from '@dcl/sdk/math'
 import { CONFIG } from '../_config'
 import { entityController } from '../../utils/entityController'
@@ -25,7 +20,7 @@ export class GLTFParticles {
   ) {
     this.entity = entityController.addEntity()
     // Add the transform
-    if (position != null && rotation != null && scale != null) {
+    if (position == null && rotation == null && scale == null) {
       Transform.createOrReplace(this.entity, {
         position: Vector3.create(0, 0, 0),
         scale: Vector3.create(1, 1, 1),

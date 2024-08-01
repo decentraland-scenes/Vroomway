@@ -8,12 +8,7 @@
 // Note the 180 rotation, this is so that position in Blender align with positions in DCL (with Y and Z swapped)
 
 import * as utils from '@dcl-sdk/utils'
-import {
-  Animator,
-  AudioSource,
-  type Entity,
-  Transform
-} from '@dcl/sdk/ecs'
+import { Animator, AudioSource, type Entity, Transform } from '@dcl/sdk/ecs'
 import { Quaternion, Vector3 } from '@dcl/sdk/math'
 import { GLTFEntity } from './class.gltfEntity'
 import { entityController } from '../../utils/entityController'
@@ -81,20 +76,19 @@ export class Door {
       }
 
       // Create a trigger zone placeholder
-      // eslint-disable-next-line @typescript-eslint/no-this-alias
-      const triggerParent = this
-      this.trigger = new TriggerZone(
+      const trigger = new TriggerZone(
         _triggerTransformP,
         _triggerTransformS,
         _triggerTransformR,
-        function () {
-          triggerParent.onEnterTriggerZone()
+        () => {
+          this.onEnterTriggerZone()
         },
-        function () {
-          triggerParent.onExitTriggerZone()
+        () => {
+          this.onExitTriggerZone()
         }
       )
-      Transform.createOrReplace(this.trigger.entity, { parent: this.entity })
+      Transform.getMutable(trigger.entity).parent = this.entity
+      this.trigger = trigger
     }
 
     // Add the gltfShape as a child of self
@@ -136,6 +130,12 @@ export class Door {
 
     // Bug workaround to ensure the correct pose on spawn
     this.resetAnimationState()
+  }
+
+  public removerTriggerEntity():void{
+    if (this.trigger != null){
+      entityController.removeEntity(this.trigger.entity)
+    }
   }
 
   public reset(): void {
@@ -198,7 +198,7 @@ export class Door {
     // Add the various sound effects by creating a child entity
     // We'll never need to interact with these children directly, so we
     // skip naming them, lest we develop an attachment or feelings.
-    AudioSource.createOrReplace(this.foo)
+    // AudioSource.createOrReplace(this.foo)
   }
 
   setBusy(): void {

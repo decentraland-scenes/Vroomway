@@ -78,7 +78,7 @@ export class LockClicker {
       scale,
       rotation
     })
-    Transform.getMutable(this.gltfEntity.entity).parent = this.entity
+    Transform.createOrReplace(this.gltfEntity.entity).parent = this.entity
     this.unlock_function = unlock_function
 
     // An entity can only havea s ingle audio source, and an audio source can only have a single audio clip.

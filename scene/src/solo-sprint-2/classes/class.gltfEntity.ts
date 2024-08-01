@@ -30,7 +30,6 @@ export class GLTFEntity {
         rotation
       })
     }
-    
 
     this.gltfShape = CONFIG.GLTF_DIR + gltfSrc + CONFIG.GLTF_EXT
     GltfContainer.create(this.entity, { src: this.gltfShape })

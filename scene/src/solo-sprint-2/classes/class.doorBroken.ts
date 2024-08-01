@@ -88,8 +88,9 @@ export class DoorBroken extends Door {
     Animator.playSingleAnimation(this.entity, 'broken')
 
     // Trigger the sfx in a loop
-    AudioSource.playSound(this.foo, this.sfx.lock)
-    AudioSource.getMutable(this.foo).loop = true
+    // TODO: Fix sound system
+    // AudioSource.playSound(this.foo, this.sfx.lock)
+    // AudioSource.getMutable(this.foo).loop = true
   }
 
   public stopBrokenDoor(): void {

@@ -132,8 +132,8 @@ export class Door {
     this.resetAnimationState()
   }
 
-  public removerTriggerEntity():void{
-    if (this.trigger != null){
+  public removerTriggerEntity(): void {
+    if (this.trigger != null) {
       entityController.removeEntity(this.trigger.entity)
     }
   }

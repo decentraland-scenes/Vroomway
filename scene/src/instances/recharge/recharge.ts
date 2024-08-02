@@ -526,6 +526,8 @@ export class RechargeInstance {
 
   spawnSingleEntity(entityName: string): void {}
 
+  callAFunction(functionName: string): void {}
+
   removeSingleEntity(entityName: string): void {}
 
   removeAllEntities(): void {

@@ -1,5 +1,5 @@
 import * as utils from '@dcl-sdk/utils'
-import { type GameController } from '../controllers/game.controller'
+import { type UIController } from '../controllers/ui.controller'
 import ReactEcs, { UiEntity } from '@dcl/sdk/react-ecs'
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
 
@@ -13,11 +13,9 @@ export function randomIntFromInterval(
   const randomNumber = getRandomNum()
   console.log(exceptions, randomNumber, 'barrel')
 
-  // Verificar explícitamente si exceptions es null o undefined
   if (exceptions == null) return randomNumber
 
-  // Return number that isn't the same as the exception(s)
-  // E.g. Make sure 1 isn't included in [2, 5, 6] and if so run it back
+  // Ensure randomNumber is not in the exceptions array
   return exceptions.includes(randomNumber)
     ? randomIntFromInterval(min, max, exceptions)
     : randomNumber
@@ -47,19 +45,28 @@ const loadingImages = [
 ]
 
 export class Loader {
-  loader: any
-  profile: string
-  profileVisible: boolean
-  gameController: GameController
-  constructor(gameController: GameController) {
-    this.gameController = gameController
-    this.profile = ''
-    this.profileVisible = false
+  public profileVisible: boolean = false
+  private profileTexture: string = ''
+  uiController: UIController
+  constructor(uiController: UIController) {
+    this.uiController = uiController
   }
 
-  createUI(): ReactEcs.JSX.Element | null {
-    const canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
-    if (canvasInfo === null) return null
+  getProfile(): void {
+    this.profileTexture = this.profileTexture =
+      loadingImages[randomIntFromInterval(1, 10)]
+  }
+
+  showLoader(time = 3200): void {
+    this.getProfile()
+    this.profileVisible = true
+    utils.timers.setTimeout(() => {
+      this.profileVisible = false
+    }, time)
+  }
+
+  mainUi(): ReactEcs.JSX.Element {
+    const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
     return (
       <UiEntity
         uiTransform={{
@@ -71,20 +78,11 @@ export class Loader {
           position: { top: '0%', right: '0%' },
           display: this.profileVisible ? 'flex' : 'none'
         }}
+        uiBackground={{
+          textureMode: 'stretch',
+          texture: { src: this.profileTexture }
+        }}
       ></UiEntity>
     )
-  }
-
-  getProfile(): void {
-    const profileTexture = loadingImages[randomIntFromInterval(1, 10)]
-    this.profile = profileTexture
-  }
-
-  showLoader(time = 3200): void {
-    this.getProfile()
-    this.profileVisible = true
-    utils.timers.setTimeout(() => {
-      this.profileVisible = false
-    }, time)
   }
 }

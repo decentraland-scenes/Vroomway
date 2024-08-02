@@ -7,6 +7,7 @@ export type Realm = {
   removeAllEntities: () => void
   removeSingleEntity?: (entityName: string) => void
   spawnSingleEntity: (entityName: string) => void
+  callAFunction: (functionName: string) => void
   /**
    * @returns the position where the player should be placed when they die
    */

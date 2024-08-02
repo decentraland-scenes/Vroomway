@@ -10,7 +10,15 @@ import * as utils from '@dcl-sdk/utils'
 import { Elevator } from './classes/class.elevator'
 import { ElevatorButton } from './classes/class.elevatorButton'
 import { TriggerZone } from './classes/class.triggerZone'
-import { Animator, type Entity } from '@dcl/sdk/ecs'
+import {
+  Animator,
+  AudioSource,
+  AvatarAnchorPointType,
+  AvatarAttach,
+  engine,
+  Transform,
+  type Entity
+} from '@dcl/sdk/ecs'
 import { DoorRegular } from './classes/class.doorRegular'
 import { LockClicker } from './classes/class.lockClicker'
 import { DoorLarge } from './classes/class.doorLarge'
@@ -18,6 +26,7 @@ import { DoorBroken } from './classes/class.doorBroken'
 import { GLTFParticles } from './classes/class.gltfParticles'
 import { Zapper } from './classes/class.zapper'
 import { entityController } from '../utils/entityController'
+import { getUserData } from '~system/UserIdentity'
 
 export class SoloSprint {
   gameController: GameController
@@ -154,7 +163,7 @@ export class SoloSprint {
       Vector3.create(1, 1, 1),
       Quaternion.fromEulerDegrees(0.0, 30.0, 0.0),
       () => {
-        this.onRaceStart()
+        void this.onRaceStart()
         this.towerTrapdoor.unlockAndOpenDoor()
         utils.timers.setTimeout(() => {
           this.towerTrapdoor.closeDoor(false, true)
@@ -1600,18 +1609,57 @@ export class SoloSprint {
     }
   }
 
-  onRaceStart(): void {
-    // Start the race!
-    // timer = new Timer()
-    // timer.start()
+  async onRaceStart(): Promise<void> {
+    let startClicked = false
+    console.log('Race is starting! WOOOOOP')
+
+    if (startClicked) return
+    startClicked = true
+    const publicKey = await getUserData({})
+    // Create entity
+    const cube = entityController.addEntity()
+    Transform.createOrReplace(cube, {
+      parent: engine.PlayerEntity
+    })
+    AvatarAttach.createOrReplace(cube, {
+      avatarId: publicKey.data?.publicKey,
+      anchorPointId: AvatarAnchorPointType.AAPT_NAME_TAG
+    })
+    // Create AudioClip object, holding audio file
+    AudioSource.create(cube, {
+      audioClipUrl: 'sounds/solosprintMusicTrack.mp3'
+    })
+    // Add AudioSource component to entity
+    // start timer
+    // if connected to lobby, lobby will overwrite, but still want this here to enforce expectation
+    // Constants.SCENE_MGR.lastRaceType = 'solosprint'
+    // powerUpBarUI.show()
+    // GAME_STATE.setGameTimeFromServerClock({ serverTime: -2 }) // using local game time since not connected
+    // PowerUpsInv.powerUpMgr.reset()
+    // PowerUpsInv.powerUpMgr.initPowerUps(options.powerUps)
+    // PowerUpsInv.powerUpMgr.updateStatuses()
+    // save too??
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const preFuel = this.gameController.Player.getFuel()
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const preFuelAdj = this.gameController.Player.getValueAdjuster().fuel
+    this.gameController.Player.getValueAdjuster().fuel -=
+      this.gameController.soloSprint.getFuelCost(50)
+    this.gameController.uiController.profile.updateFuel()
+    void this.gameController.Player.writeDataToServer({
+      onFinish: { updateUI: true }
+    })
+    // sprintTimer.startTimer(options);
   }
 
   onRaceEnd(): void {
-    // Move the player back to the jail
     const respawnPosition = Vector3.create(33.5, 0, 57.5)
     void movePlayerTo({ newRelativePosition: respawnPosition })
-
-    // timer.stop()
+    // debugger
+    console.log('Race is over. Finished. DONE-ZO!')
+    // end timer
+    // by setting this the timer should pick up and close race out
+    // this.gameController.sprintTimer.sprintComplete = true
   }
 
   reset(): void {
@@ -1673,6 +1721,12 @@ export class SoloSprint {
   spawnSingleEntity(entityName: string): void {}
 
   removeSingleEntity(entityName: string): void {}
+
+  callAFunction(functionName: string): void {
+    if (functionName === 'onRaceStart') {
+      void this.onRaceStart()
+    }
+  }
 
   removeAllEntities(): void {
     // triggers

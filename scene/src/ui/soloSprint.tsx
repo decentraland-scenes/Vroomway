@@ -1,21 +1,12 @@
 import { ReactEcs, UiEntity } from '@dcl/sdk/react-ecs'
 import { getUvs, type Sprite } from './utils/utils'
-import {
-  AudioSource,
-  AvatarAnchorPointType,
-  AvatarAttach,
-  Transform,
-  UiCanvasInformation,
-  engine
-} from '@dcl/sdk/ecs'
+import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
 import { closeButton, startButton } from './buttons'
 import { Color4, Vector3 } from '@dcl/sdk/math'
 import { movePlayerTo } from '~system/RestrictedActions'
 import { instance } from '../utils/currentInstance'
 import * as utils from '@dcl-sdk/utils'
 import { type GameController } from '../controllers/game.controller'
-import { getUserData } from '~system/UserIdentity'
-import { entityController } from '../utils/entityController'
 
 export class SoloSprintBoard {
   soloSprintBoard: Sprite
@@ -107,15 +98,13 @@ export class SoloSprintBoard {
       // Hide the scoreboard
       this.hide()
       instance.setInstance('soloSprint')
-      // loader.showLoader(3000)
-      // just copy what is in the powerup utils??
-      //   const powerUps: serverStateSpec.PowerUpSelection =
-      //     PowerUpsInv.toPowerUpSelection()
-
-      //   const options: SceneArgs = {
-      //     mode: { type: 'normal' },
-      //     powerUps: powerUps
-      //   }
+      this.gameController.uiController.loader.showLoader(3000)
+      // const powerUps: serverStateSpec.PowerUpSelection =
+      //   PowerUpsInv.toPowerUpSelection()
+      // const options: SceneArgs = {
+      //   mode: { type: 'normal' },
+      //   powerUps: powerUps
+      // }
       // Renders Solo-Sprint 2
       this.gameController.realmController.switchRealm('soloSprint')
       utils.timers.setTimeout(() => {
@@ -123,7 +112,7 @@ export class SoloSprintBoard {
         utils.timers.setTimeout(() => {
           const raceStartPos = Vector3.create(86.25, 38, 32.9)
           void movePlayerTo({ newRelativePosition: raceStartPos })
-        }, 50)
+        }, 2000)
       }, 50)
     }
     if (this.gameController.Player.getFuel() < 50) {
@@ -136,45 +125,9 @@ export class SoloSprintBoard {
   }
 
   async loadAndEnableSoloSprint2(): Promise<void> {
-    let startClicked = false
-    console.log('Race is starting! WOOOOOP')
-
-    if (startClicked) return
-    startClicked = true
-    const publicKey = await getUserData({})
-    // Create entity
-    const cube = entityController.addEntity()
-    Transform.createOrReplace(cube, {
-      parent: engine.PlayerEntity
-    })
-    AvatarAttach.createOrReplace(cube, {
-      avatarId: publicKey.data?.publicKey,
-      anchorPointId: AvatarAnchorPointType.AAPT_NAME_TAG
-    })
-    // Create AudioClip object, holding audio file
-    AudioSource.create(cube, {
-      audioClipUrl: 'sounds/solosprintMusicTrack.mp3'
-    })
-    // Add AudioSource component to entity
-    // start timer
-    // if connected to lobby, lobby will overwrite, but still want this here to enforce expectation
-    // Constants.SCENE_MGR.lastRaceType = 'solosprint'
-    // powerUpBarUI.show()
-    // GAME_STATE.setGameTimeFromServerClock({ serverTime: -2 }) // using local game time since not connected
-    // PowerUpsInv.powerUpMgr.reset()
-    // PowerUpsInv.powerUpMgr.initPowerUps(options.powerUps)
-    // PowerUpsInv.powerUpMgr.updateStatuses()
-    // save too??
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const preFuel = this.gameController.Player.getFuel()
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const preFuelAdj = this.gameController.Player.getValueAdjuster().fuel
-    this.gameController.Player.getValueAdjuster().fuel -= this.getFuelCost(50)
-    this.gameController.uiController.profile.updateFuel()
-    void this.gameController.Player.writeDataToServer({
-      onFinish: { updateUI: true }
-    })
-    // sprintTimer.startTimer(options) // kicks off rewards
+    this.gameController.realmController.currentRealm?.callAFunction(
+      'onRaceStart'
+    )
   }
 
   getFuelCost = (fuelCost: number): number => {

@@ -14,6 +14,7 @@ import { type GameController } from './game.controller'
 import { RenderOutOfFuel } from '../ui/outOfFuel'
 import { dailyMission } from '../utils/dailyMissions'
 import Canvas from '../ui/canvas/Canvas'
+import { Loader } from '../ui/loader'
 
 export class UIController {
   public socialsVisible: boolean = true
@@ -23,6 +24,7 @@ export class UIController {
   public missionsBoard = new MissionsBoard(this)
   public inventory = new UIInventoryManager(this)
   public outOfFuel = new RenderOutOfFuel(this)
+  public loader = new Loader(this)
   announcement_visible: boolean = false
   announcement: string = ''
   announcement_color: Color4 = Color4.White()
@@ -30,6 +32,7 @@ export class UIController {
   constructor(gameController: GameController) {
     this.gameController = gameController
     ReactEcsRenderer.setUiRenderer(this.ui.bind(this))
+    this.loader.showLoader()
   }
 
   ui(): ReactEcs.JSX.Element | null {
@@ -65,6 +68,7 @@ export class UIController {
           {this.gameController.danceAreaUI.isVisible &&
             this.gameController.danceAreaUI.mainUI()}
         </Canvas>
+        <Canvas>{this.loader.profileVisible && this.loader.mainUi()}</Canvas>
       </UiEntity>
     )
   }

@@ -2,6 +2,7 @@ import { MainInstance } from '../instances/main/mainInstance'
 import { RechargeInstance } from '../instances/recharge/recharge'
 import { Scrapyard } from '../instances/scrapyard/scrapyard'
 import { type Realm, type RealmType } from '../instances/types'
+import { SoloSprint } from '../solo-sprint-2/scene.main'
 import { entityController } from '../utils/entityController'
 import { type GameController } from './game.controller'
 
@@ -28,6 +29,9 @@ export class RealmController {
         break
       case 'scrapyard':
         this.currentRealm = new Scrapyard(this.gameController)
+        break
+      case 'soloSprint':
+        this.currentRealm = new SoloSprint(this.gameController)
         break
     }
   }

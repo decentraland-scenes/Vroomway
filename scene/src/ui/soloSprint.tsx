@@ -97,38 +97,42 @@ export class SoloSprintBoard {
     if (this.gameController.Player.getFuel() >= 50) {
       // Hide the scoreboard
       this.hide()
-
       instance.setInstance('soloSprint')
-
-      //   cleanupScene()
-
-      // loader.showLoader(3000)
-
-      // just copy what is in the powerup utils??
-      //   const powerUps: serverStateSpec.PowerUpSelection =
-      //     PowerUpsInv.toPowerUpSelection()
-
-      //   const options: SceneArgs = {
-      //     mode: { type: 'normal' },
-      //     powerUps: powerUps
-      //   }
+      this.gameController.uiController.loader.showLoader(3000)
+      // const powerUps: serverStateSpec.PowerUpSelection =
+      //   PowerUpsInv.toPowerUpSelection()
+      // const options: SceneArgs = {
+      //   mode: { type: 'normal' },
+      //   powerUps: powerUps
+      // }
       // Renders Solo-Sprint 2
+      this.gameController.realmController.switchRealm('soloSprint')
       utils.timers.setTimeout(() => {
-        // this.loadAndEnableSoloSprint2(options)
+        void this.loadAndEnableSoloSprint2()
         utils.timers.setTimeout(() => {
           const raceStartPos = Vector3.create(86.25, 38, 32.9)
           void movePlayerTo({ newRelativePosition: raceStartPos })
-        }, 50)
+        }, 2000)
       }, 50)
-      // }
-
-      // if (Player.getFuel() < 50) {
+    }
+    if (this.gameController.Player.getFuel() < 50) {
       this.gameController.uiController.displayAnnouncement(
         'You need more FUEL! Go hit the dance floor at The Recharge!',
         Color4.Yellow(),
         2000
       )
     }
+  }
+
+  async loadAndEnableSoloSprint2(): Promise<void> {
+    this.gameController.realmController.currentRealm?.callAFunction(
+      'onRaceStart'
+    )
+  }
+
+  getFuelCost = (fuelCost: number): number => {
+    const total = this.gameController.vehicleOwnership.getFuelEff(fuelCost)
+    return total
   }
 
   hide(): void {

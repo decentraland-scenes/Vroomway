@@ -851,6 +851,8 @@ export class Scrapyard {
 
   removeSingleEntity(entityName: string): void {}
 
+  callAFunction(functionName: string): void {}
+
   removeAllEntities(): void {
     this.assets_entities.forEach((asset) => {
       entityController.removeEntity(asset)

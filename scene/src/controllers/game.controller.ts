@@ -6,6 +6,7 @@ import { UIController } from './ui.controller'
 import { Loader } from '../utils/loader'
 import { PlayerStats } from '../utils/player'
 import { RealmController } from './instance.controller'
+import { DanceArea } from '../ui/danceArea'
 
 export class GameController {
   public Player: PlayerStats
@@ -16,6 +17,7 @@ export class GameController {
   public dragRaceBoard: DragRaceBoard
   public decentrallyBoard: DecentrallyBoard
   public realmController: RealmController
+  public danceArea : DanceArea
   constructor() {
     this.uiController = new UIController(this)
     this.realmController = new RealmController(this)
@@ -25,5 +27,6 @@ export class GameController {
     this.loader = new Loader(this)
     this.dragRaceBoard = new DragRaceBoard(this)
     this.decentrallyBoard = new DecentrallyBoard(this)
+    this.danceArea = new DanceArea(this)
   }
 }

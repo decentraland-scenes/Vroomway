@@ -141,3 +141,21 @@ export const startAtlantisButton: Sprite = {
   w: 235,
   h: 100
 }
+
+export const danceOnIcon: Sprite = {
+  atlasSrc: board1Atlas,
+  atlasSize: { x: 2048, y: 2048 },
+  x: 0,
+  y: 1390,
+  w: 150.9,
+  h: 105.8
+}
+
+export const danceOffIcon: Sprite = {
+  atlasSrc: board1Atlas,
+  atlasSize: { x: 2048, y: 2048 },
+  x: 0,
+  y: 1495,
+  w: 150.9,
+  h: 105.8
+}

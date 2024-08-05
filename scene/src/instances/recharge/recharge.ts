@@ -162,7 +162,7 @@ export class RechargeInstance {
   }
 
   renderRecharge(): void {
-    // createDanceAreas();
+    this.gameController.danceArea.createDanceAreas();
     missions.checkAndUnlockCampaignMission('visitRecharge')
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     for (const [index, asset] of (this.assets as any).entries()) {

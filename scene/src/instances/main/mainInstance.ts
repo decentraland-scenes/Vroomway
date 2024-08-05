@@ -110,7 +110,6 @@ export class MainInstance {
 
     // Constants.SCENE_MGR?.lobbyScene?.init();
     // Constants.SCENE_MGR?.lobbyScene?.show();
-
     const staticEntities = [
       'assets/models/main-entrance/mainStructure.glb',
       'assets/models/main-entrance/ssHub.glb',
@@ -975,6 +974,8 @@ export class MainInstance {
   }
 
   spawnSingleEntity(entityName: string): void {}
+
+  callAFunction(functionName: string): void {}
 
   removeSingleEntity(entityName: string): void {}
 

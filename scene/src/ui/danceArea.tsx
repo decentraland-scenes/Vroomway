@@ -1,22 +1,20 @@
-import { Vector3, Quaternion } from '@dcl/sdk/math'
+import { type Vector3, type Quaternion, Color4 } from '@dcl/sdk/math'
 import { type GameController } from '../controllers/game.controller'
 import { ReactEcs, UiEntity } from '@dcl/sdk/react-ecs'
-import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
+import {
+  Material,
+  MeshRenderer,
+  Transform,
+  UiCanvasInformation,
+  engine
+} from '@dcl/sdk/ecs'
 import { getUvs, type Sprite } from './utils/utils'
 import { danceOffIcon, danceOnIcon } from './buttons'
+import * as utils from '@dcl-sdk/utils'
+import { triggerEmote } from '~system/RestrictedActions'
+import { entityController } from '../utils/entityController'
 
-export const danceAreas: any = [
-  {
-    transform: {
-      position: Vector3.create(47.65, 3.29, 32.72),
-      rotation: Quaternion.fromEulerDegrees(90, 0, 0),
-      scale: Vector3.create(10, 10, 10)
-    },
-    type: 'all'
-  }
-]
-
-export class DanceArea {
+export class DanceAreaUI {
   gameController: GameController
   isVisible: boolean = false
   danceIconTexture: Sprite
@@ -26,7 +24,7 @@ export class DanceArea {
     this.danceIconTexture = danceOnIcon
   }
 
-  createDanceAreas(): void {
+  turnOnUI(): void {
     this.isVisible = true
     this.isDanceOn = true
   }
@@ -60,9 +58,93 @@ export class DanceArea {
   toggleDanceButton(): void {
     if (this.isDanceOn) {
       this.danceIconTexture = danceOffIcon
+      this.gameController.realmController.currentRealm?.callSingleFunction(
+        'enableDanceAreas',
+        false
+      )
     } else {
+      this.gameController.realmController.currentRealm?.callSingleFunction(
+        'enableDanceAreas',
+        true
+      )
       this.danceIconTexture = danceOnIcon
     }
     this.isDanceOn = !this.isDanceOn
+  }
+}
+
+export class DanceArea {
+  danceArea = entityController.addEntity()
+  danceSystem = new DanceSystem('all')
+  gameController: GameController
+  constructor(
+    gameController: GameController,
+    position: Vector3,
+    scale: Vector3,
+    rotation: Quaternion
+  ) {
+    this.gameController = gameController
+    Transform.create(this.danceArea, {
+      position,
+      scale,
+      rotation
+    })
+    MeshRenderer.setBox(this.danceArea)
+    Material.setPbrMaterial(this.danceArea, {
+      albedoColor: Color4.create(0, 0, 0, 0)
+    })
+    utils.triggers.addTrigger(
+      this.danceArea,
+      1,
+      1,
+      [{ type: 'box', scale }],
+      () => {
+        this.danceSystem.routine = 'all'
+        this.danceSystem.dance()
+      }
+    )
+  }
+}
+
+export class DanceSystem {
+  length = 11
+  timer = 2
+  routine: any
+  danceFunction: () => void = () => {
+    this.dance()
+  }
+
+  routines: string[] = [
+    'robot',
+    'tik',
+    'tektonik',
+    'hammer',
+    'headexplode',
+    'handsair',
+    'disco',
+    'dab'
+  ]
+
+  constructor(routine: string) {
+    this.routine = routine
+  }
+
+  update(dt: number): void {
+    if (this.timer > 0) {
+      this.timer -= dt
+    } else {
+      this.dance()
+    }
+  }
+
+  dance(): void {
+    console.log('dance' + this.routine)
+    this.timer = this.length
+    if (this.routine === 'all') {
+      const rand = Math.floor(Math.random() * (this.routine.length - 0) + 0)
+      void triggerEmote({ predefinedEmote: this.routines[rand] })
+    } else {
+      void triggerEmote({ predefinedEmote: this.routine })
+    }
   }
 }

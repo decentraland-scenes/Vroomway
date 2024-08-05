@@ -847,6 +847,8 @@ export class Scrapyard {
 
   spawnSingleEntity(entityName: string): void {}
 
+  callSingleFunction(functionName: string, boolean: boolean): void {}
+
   removeSingleEntity(entityName: string): void {}
 
   removeAllEntities(): void {

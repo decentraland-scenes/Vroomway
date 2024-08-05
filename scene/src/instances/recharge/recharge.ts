@@ -27,6 +27,7 @@ import { type GameController } from '../../controllers/game.controller'
 import { instance } from '../../utils/currentInstance'
 import { entityController } from '../../utils/entityController'
 import { type RealmType } from '../types'
+import { DanceArea } from '../../ui/danceArea'
 
 export class RechargeInstance {
   gameController: GameController
@@ -65,8 +66,17 @@ export class RechargeInstance {
   public krystalKoin: Entity
   // Leaderboard
   scoreboardLevels: ScoreboardDisplayObject
+  // Dance Area
+  danceArea: DanceArea
+
   constructor(gameController: GameController) {
     this.gameController = gameController
+    this.danceArea = new DanceArea(
+      this.gameController,
+      Vector3.create(47.65, 3, 32.72),
+      Vector3.create(10, 10, 10),
+      Quaternion.fromEulerDegrees(90, 0, 0)
+    )
     this.assets = [
       (this.flagGORL1 = entityController.addEntity()),
       (this.flagGORL2 = entityController.addEntity()),
@@ -162,7 +172,7 @@ export class RechargeInstance {
   }
 
   renderRecharge(): void {
-    this.gameController.danceArea.createDanceAreas();
+    this.gameController.danceAreaUI.turnOnUI()
     missions.checkAndUnlockCampaignMission('visitRecharge')
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     for (const [index, asset] of (this.assets as any).entries()) {
@@ -524,12 +534,28 @@ export class RechargeInstance {
     )
   }
 
+  enableDanceAreas(dance: boolean): void {
+    if (dance) {
+      this.danceArea.danceSystem.routine = 'all'
+    } else {
+      this.danceArea.danceSystem.routine = ''
+    }
+    this.danceArea.danceSystem.dance()
+  }
+
   spawnSingleEntity(entityName: string): void {}
+
+  callSingleFunction(functionName: string, boolean: boolean): void {
+    if (functionName === 'enableDanceAreas') {
+      this.enableDanceAreas(boolean)
+    }
+  }
 
   removeSingleEntity(entityName: string): void {}
 
   removeAllEntities(): void {
     entityController.removeEntity(this.parentLevelScores)
+    entityController.removeEntity(this.danceArea.danceArea)
     entityController.removeEntity(this.krystalKoinText)
     entityController.removeEntity(this.wishPartnerObj)
     entityController.removeEntity(this.socialPoster1Obj)
@@ -554,7 +580,7 @@ export class RechargeInstance {
   }
 
   getId(): RealmType {
-    return 'mainInstance'
+    return 'recharge'
   }
 
   deadPosition(): Vector3 {

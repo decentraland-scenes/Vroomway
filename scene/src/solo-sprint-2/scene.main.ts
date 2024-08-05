@@ -1718,15 +1718,15 @@ export class SoloSprint {
     // log("DEBUG: zapper_index have remaining count: " + zapper_indexes.length)
   }
 
-  spawnSingleEntity(entityName: string): void {}
-
-  removeSingleEntity(entityName: string): void {}
-
-  callAFunction(functionName: string): void {
+  callSingleFunction(functionName: string, boolean: boolean): void {
     if (functionName === 'onRaceStart') {
       void this.onRaceStart()
     }
   }
+
+  spawnSingleEntity(entityName: string): void {}
+
+  removeSingleEntity(entityName: string): void {}
 
   removeAllEntities(): void {
     // triggers

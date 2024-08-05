@@ -125,7 +125,7 @@ export class SoloSprintBoard {
   }
 
   async loadAndEnableSoloSprint2(): Promise<void> {
-    this.gameController.realmController.currentRealm?.callAFunction(
+    this.gameController.realmController.currentRealm?.callSingleFunction(
       'onRaceStart'
     )
   }

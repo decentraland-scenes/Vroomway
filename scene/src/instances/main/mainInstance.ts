@@ -973,6 +973,8 @@ export class MainInstance {
     })
   }
 
+  callSingleFunction(functionName: string, boolean: boolean): void {}
+
   spawnSingleEntity(entityName: string): void {}
 
   callAFunction(functionName: string): void {}

@@ -64,6 +64,10 @@ export class UIController {
           {this.gameController.decentrallyBoard.boardVisible &&
             this.gameController.decentrallyBoard.createUI()}
         </Canvas>
+        <Canvas>
+          {this.gameController.danceAreaUI.isVisible &&
+            this.gameController.danceAreaUI.mainUI()}
+        </Canvas>
         <Canvas>{this.loader.profileVisible && this.loader.mainUi()}</Canvas>
       </UiEntity>
     )

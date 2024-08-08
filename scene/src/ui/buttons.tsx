@@ -159,3 +159,12 @@ export const danceOffIcon: Sprite = {
   w: 150.9,
   h: 105.8
 }
+
+export const superchargeIcon: Sprite = {
+  atlasSrc: board1Atlas,
+  atlasSize: { x: 2048, y: 2048 },
+  x: 0,
+  y: 456.7,
+  w: 150.9,
+  h: 105.8
+}

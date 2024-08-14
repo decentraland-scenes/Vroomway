@@ -77,6 +77,7 @@ export class SoloSprint {
   ZAPPER_QUANTITY: number = 14
   ZAPPER_MODELS: string[] = ['wires.01', 'wires.02']
   constructor(gameController: GameController) {
+    console.log('solo sprint created') 
     this.gameController = gameController
     // ██████╗  █████╗ ███████╗███████╗
     // ██╔══██╗██╔══██╗██╔════╝██╔════╝

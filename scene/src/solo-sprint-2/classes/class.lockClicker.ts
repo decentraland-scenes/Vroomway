@@ -17,7 +17,7 @@ import {
   PointerEventType,
   TextAlignMode,
   TextShape,
-  Transform 
+  Transform
 } from '@dcl/sdk/ecs'
 import { Color4, Quaternion, Vector3 } from '@dcl/sdk/math'
 import { CONFIG } from '../_config'
@@ -36,10 +36,10 @@ export class LockClicker {
 
   // The text and their pivot point
   text_current_value_pivot: Entity = entityController.addEntity()
-  text_current_value: string = ''
+  text_current_value: string = '0'
 
   text_target_value_pivot: Entity = entityController.addEntity()
-  text_target_value: string = ''
+  text_target_value: string = '0'
 
   // GLTF Shape
   gltfEntity: GLTFEntity = new GLTFEntity('lock.clicker')
@@ -94,27 +94,23 @@ export class LockClicker {
           audioClipUrl: this.sfx[s as SfxKeys] // Type assertion here
         })
       }
-
-      // Add the text elements (to avoid various errors if we create them in addTextObjects()
-      Transform.createOrReplace(this.text_target_value_pivot).parent =
-        this.entity
-      Transform.createOrReplace(this.text_current_value_pivot).parent =
-        this.entity
-      TextShape.createOrReplace(this.text_target_value_pivot, {
-        text: this.text_target_value
-      })
-      TextShape.createOrReplace(this.text_current_value_pivot, {
-        text: this.text_current_value
-      })
-
-      // Do the various setup functions
-      this.addButtonEvents()
-      this.randomiseTargetValue()
-      this.addTextObjects()
-      this.updateText()
-
-      console.log("Created LockClicker entity: target_value = " + this.target_value)
     }
+    // Add the text elements (to avoid various errors if we create them in addTextObjects()
+    Transform.createOrReplace(this.text_target_value_pivot).parent = this.entity
+    Transform.createOrReplace(this.text_current_value_pivot).parent =
+      this.entity
+    TextShape.create(this.text_target_value_pivot, {
+      text: this.text_target_value
+    })
+    TextShape.create(this.text_current_value_pivot, {
+      text: this.text_current_value
+    })
+
+    // Do the various setup functions
+    this.addButtonEvents()
+    this.randomiseTargetValue()
+    this.addTextObjects()
+    this.updateText()
   }
 
   // Function to remove object from scene when disabled
@@ -160,9 +156,8 @@ export class LockClicker {
   // Triggerd by primary E interactions
   incrementValue(): void {
     this.current_value = clamp(this.current_value + 1, 1, 99)
-    console.log(this.current_value, 'current valueeee')
     this.updateText()
-    AudioSource.playSound(this.foo, this.sfx.interact)
+    // AudioSource.playSound(this.foo, this.sfx.interact)
   }
 
   // Resets
@@ -178,18 +173,18 @@ export class LockClicker {
         {
           eventType: PointerEventType.PET_DOWN,
           eventInfo: {
-            button: InputAction.IA_PRIMARY,
+            button: InputAction.IA_SECONDARY,
             showFeedback: true,
-            hoverText: 'Match the target code!',
+            hoverText: 'Press F to Unlock',
             maxDistance: 4
           }
         },
         {
           eventType: PointerEventType.PET_DOWN,
           eventInfo: {
-            button: InputAction.IA_SECONDARY,
+            button: InputAction.IA_PRIMARY,
             showFeedback: true,
-            hoverText: 'Press F to Unlock',
+            hoverText: 'Match the target code!',
             maxDistance: 4
           }
         }
@@ -290,13 +285,14 @@ export class LockClicker {
 
   // Update the textShape interface with the current values
   updateText(): void {
-    this.text_current_value = this.current_value.toString()
-    this.text_target_value = this.target_value.toString()
-    console.log('text updated', this.text_current_value)
+    TextShape.getMutable(this.text_current_value_pivot).text =
+      this.current_value.toString()
+    TextShape.getMutable(this.text_target_value_pivot).text =
+      this.target_value.toString()
   }
 
   // Flashes a text object
-  flash(text: string, color: Color4): void { 
+  flash(text: string, color: Color4): void {
     const defaultColor = Color4.Teal()
     const duration = 150
     const interval = 300

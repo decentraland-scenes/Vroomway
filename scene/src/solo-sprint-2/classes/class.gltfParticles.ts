@@ -47,7 +47,7 @@ export class GLTFParticles {
           clip: animationClipName,
           loop: animationLooping,
           weight: animationLayer,
-          speed: animationSpeed,
+          speed: animationSpeed
         }
       ]
     })
@@ -58,11 +58,16 @@ export class GLTFParticles {
     this.enabled = true
     Animator.playSingleAnimation(this.entity, this.animation_clip)
     Animator.getClip(this.entity, this.animation_clip).playing = true
-    console.log('gltfparticles enabled', ' animation'+ this.animation_clip, this.animationSpeed, Animator.getClip(this.entity, this.animation_clip))
+    console.log(
+      'gltfparticles enabled',
+      ' animation' + this.animation_clip,
+      this.animationSpeed,
+      Animator.getClip(this.entity, this.animation_clip)
+    )
   }
 
   disable(): void {
-    console.log('gltfparticles disabled', ' animation'+ this.animation_clip)
+    console.log('gltfparticles disabled', ' animation' + this.animation_clip)
     this.enabled = false
     Animator.getClip(this.entity, this.animation_clip).playing = false
   }

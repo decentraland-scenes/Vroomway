@@ -16,7 +16,8 @@ import {
   AvatarAnchorPointType,
   AvatarAttach,
   engine,
-  Transform} from '@dcl/sdk/ecs'
+  Transform
+} from '@dcl/sdk/ecs'
 import { DoorRegular } from './classes/class.doorRegular'
 import { LockClicker } from './classes/class.lockClicker'
 import { DoorLarge } from './classes/class.doorLarge'
@@ -77,7 +78,7 @@ export class SoloSprint {
   ZAPPER_QUANTITY: number = 14
   ZAPPER_MODELS: string[] = ['wires.01', 'wires.02']
   constructor(gameController: GameController) {
-    console.log('solo sprint created') 
+    console.log('solo sprint created')
     this.gameController = gameController
     // ██████╗  █████╗ ███████╗███████╗
     // ██╔══██╗██╔══██╗██╔════╝██╔════╝
@@ -1297,7 +1298,9 @@ export class SoloSprint {
     ]
     this.particlesFish = []
     for (let i = 0; i < fish.length; i++) {
-      const randomSpeed = Math.random() * (CONFIG.FISH_SPEED_MAX - CONFIG.FISH_SPEED_MIN) + CONFIG.FISH_SPEED_MIN;
+      const randomSpeed =
+        Math.random() * (CONFIG.FISH_SPEED_MAX - CONFIG.FISH_SPEED_MIN) +
+        CONFIG.FISH_SPEED_MIN
       console.log('random speed ' + randomSpeed)
       const particlesFish01 = new GLTFParticles(
         'particles.fish.01',
@@ -1412,7 +1415,7 @@ export class SoloSprint {
         scale: Vector3.create(1, 1, 1)
       }
     ]
-    this.particlesWaterDrips = [] 
+    this.particlesWaterDrips = []
     for (let i = 0; i < droplets.length; i++) {
       const particlesWaterDrips01 = new GLTFParticles(
         'particles.water-drips.01',

@@ -94,7 +94,7 @@ export class SoloSprintBoard {
 
   startSoloSprint(): void {
     // pass tournmode??
-    if (this.gameController.Player.getFuel() >= 50) {
+    if (this.gameController.Player.getFuel() >= 0) {
       // Hide the scoreboard
       this.hide()
       instance.setInstance('soloSprint')

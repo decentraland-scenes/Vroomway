@@ -76,21 +76,16 @@ export class Door {
       }
 
       // Create a trigger zone placeholder
-      const trigger = new TriggerZone(
-        _triggerTransformP,
+      this.trigger = new TriggerZone(
+        _triggerTransformP, 
         _triggerTransformS,
-        _triggerTransformR,
-        () => {
-          this.onEnterTriggerZone()
-        },
-        () => {
-          this.onExitTriggerZone()
-        }
+        _triggerTransformR, 
+        () => { this.onEnterTriggerZone(); },
+        () => { this.onExitTriggerZone(); }
       )
-      Transform.getMutable(trigger.entity).parent = this.entity
-      this.trigger = trigger
-    }
-
+      Transform.createOrReplace(this.trigger.entity, { parent: this.entity })
+      Transform.getMutable(this.trigger.entity).scale = _triggerTransformS
+    } 
     // Add the gltfShape as a child of self
     this.gltfEntity = new GLTFEntity(gltfSrc)
     Transform.createOrReplace(this.gltfEntity.entity, { parent: this.entity })
@@ -101,7 +96,7 @@ export class Door {
         {
           clip: 'open',
           loop: false,
-          speed: 1.75,
+          speed: 1.75, 
           weight: 0
         },
         {
@@ -121,6 +116,12 @@ export class Door {
           loop: false,
           speed: 1.75,
           weight: 1
+        },
+        {
+          clip: 'broken',
+          loop: true,
+          weight: 1,
+          speed: 1.0
         }
       ]
     })
@@ -147,6 +148,7 @@ export class Door {
   }
 
   public enable(): void {
+    console.log('door enabled')
     this.enabled = true
 
     // Enable any triggers
@@ -168,10 +170,12 @@ export class Door {
   }
 
   public resetAnimationState(): void {
+
     // Bug workaround to ensure the correct pose on spawn
     if (this.isOpen) {
       Animator.getClip(this.gltfEntity.entity, 'close').playing = false
     } else {
+      Animator.getClip(this.gltfEntity.entity, 'close').playing = true
       Animator.getClip(this.gltfEntity.entity, 'open').playing = false
     }
 
@@ -182,7 +186,7 @@ export class Door {
     }
   }
 
-  public onEnterTriggerZone(): void {
+  public onEnterTriggerZone():void {
     if (this.enabled) {
       this.openDoor()
     }

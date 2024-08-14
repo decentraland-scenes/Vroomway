@@ -54,7 +54,7 @@ export class Elevator {
           weight: 0
         }
       ]
-    })
+    }) 
   }
 
   enable(): void {

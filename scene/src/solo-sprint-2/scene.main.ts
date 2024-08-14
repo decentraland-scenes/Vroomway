@@ -16,9 +16,7 @@ import {
   AvatarAnchorPointType,
   AvatarAttach,
   engine,
-  Transform,
-  type Entity
-} from '@dcl/sdk/ecs'
+  Transform} from '@dcl/sdk/ecs'
 import { DoorRegular } from './classes/class.doorRegular'
 import { LockClicker } from './classes/class.lockClicker'
 import { DoorLarge } from './classes/class.doorLarge'
@@ -68,13 +66,13 @@ export class SoloSprint {
   hexTunnelDoors: DoorLarge[]
   hexTunnelDoor2: DoorLarge
   hexTunnelDoors3: DoorLarge[]
-  fans: Entity[]
-  bubbles: Entity[]
-  particlesCaustics: Entity[]
-  particlesFish: Entity[]
-  creatureSharks: Entity[]
+  fans: GLTFEntity[]
+  bubbles: GLTFParticles[]
+  particlesCaustics: GLTFParticles[]
+  particlesFish: GLTFParticles[]
+  creatureSharks: GLTFParticles[]
   shark01: GLTFEntity
-  particlesWaterDrips: Entity[]
+  particlesWaterDrips: GLTFParticles[]
   zappers: Zapper[]
   ZAPPER_QUANTITY: number = 14
   ZAPPER_MODELS: string[] = ['wires.01', 'wires.02']
@@ -918,7 +916,7 @@ export class SoloSprint {
         Vector3.create(1, 1, 1),
         fans[i].rotation
       )
-      this.fans.push(hexFan.entity)
+      this.fans.push(hexFan)
     }
     // ██████╗ ██╗   ██╗██████╗ ██████╗ ██╗     ███████╗███████╗
     // ██╔══██╗██║   ██║██╔══██╗██╔══██╗██║     ██╔════╝██╔════╝
@@ -1097,7 +1095,7 @@ export class SoloSprint {
         0,
         randomSpeed
       )
-      this.bubbles.push(particlesBubblesO1.entity)
+      this.bubbles.push(particlesBubblesO1)
     }
     //  ██████╗ █████╗ ██╗   ██╗███████╗████████╗██╗ ██████╗███████╗
     // ██╔════╝██╔══██╗██║   ██║██╔════╝╚══██╔══╝██║██╔════╝██╔════╝
@@ -1230,7 +1228,7 @@ export class SoloSprint {
         caustics[i].rotation,
         'action.caustics'
       )
-      this.particlesCaustics.push(particlesCaustics01.entity)
+      this.particlesCaustics.push(particlesCaustics01)
     }
     // ███████╗██╗███████╗██╗  ██╗
     // ██╔════╝██║██╔════╝██║  ██║
@@ -1298,10 +1296,8 @@ export class SoloSprint {
     ]
     this.particlesFish = []
     for (let i = 0; i < fish.length; i++) {
-      const randomSpeed = Math.floor(
-        Math.random() * (CONFIG.FISH_SPEED_MAX - CONFIG.FISH_SPEED_MIN + 1) +
-          CONFIG.FISH_SPEED_MIN
-      )
+      const randomSpeed = Math.random() * (CONFIG.FISH_SPEED_MAX - CONFIG.FISH_SPEED_MIN) + CONFIG.FISH_SPEED_MIN;
+      console.log('random speed ' + randomSpeed)
       const particlesFish01 = new GLTFParticles(
         'particles.fish.01',
         fish[i].position,
@@ -1312,7 +1308,7 @@ export class SoloSprint {
         0,
         randomSpeed
       )
-      this.particlesFish.push(particlesFish01.entity)
+      this.particlesFish.push(particlesFish01)
     }
     // ███████╗██╗  ██╗ █████╗ ██████╗ ██╗  ██╗███████╗
     // ██╔════╝██║  ██║██╔══██╗██╔══██╗██║ ██╔╝██╔════╝
@@ -1377,7 +1373,7 @@ export class SoloSprint {
         0,
         randomSpeed
       )
-      this.creatureSharks.push(creatureShark02.entity)
+      this.creatureSharks.push(creatureShark02)
     }
 
     // Moon pool shark - he's one of a kind and moves in his own way
@@ -1415,7 +1411,7 @@ export class SoloSprint {
         scale: Vector3.create(1, 1, 1)
       }
     ]
-    this.particlesWaterDrips = []
+    this.particlesWaterDrips = [] 
     for (let i = 0; i < droplets.length; i++) {
       const particlesWaterDrips01 = new GLTFParticles(
         'particles.water-drips.01',
@@ -1424,7 +1420,7 @@ export class SoloSprint {
         droplets[i].rotation,
         'action.water-01'
       )
-      this.particlesWaterDrips.push(particlesWaterDrips01.entity)
+      this.particlesWaterDrips.push(particlesWaterDrips01)
     }
     // ███████╗ █████╗ ██████╗ ██████╗ ███████╗██████╗ ███████╗
     // ╚══███╔╝██╔══██╗██╔══██╗██╔══██╗██╔════╝██╔══██╗██╔════╝
@@ -1607,6 +1603,7 @@ export class SoloSprint {
       )
       this.zappers.push(zapper)
     }
+    this.enableAllObjects()
   }
 
   async onRaceStart(): Promise<void> {
@@ -1650,6 +1647,66 @@ export class SoloSprint {
       onFinish: { updateUI: true }
     })
     // sprintTimer.startTimer(options);
+  }
+
+  hasEnableMethod(obj: any): obj is { enable: () => void } {
+    return typeof obj.enable === 'function'
+  }
+
+  hasDisableMethod(obj: any): obj is { disable: () => void } {
+    return typeof obj.disable === 'function'
+  }
+
+  enableAllObjects(): void {
+    const allProperties = Object.values(this)
+
+    allProperties.forEach((obj) => {
+      if (Array.isArray(obj)) {
+        obj.forEach((item) => {
+          if (this.hasEnableMethod(item)) {
+            // eslint-disable-next-line @typescript-eslint/no-base-to-string, @typescript-eslint/restrict-template-expressions
+            console.log(`Enabling object in array: ${item}`)
+            item.enable()
+          } else {
+            console.log(
+              `Object in array does not have an enable() method: ${item}`
+            )
+          }
+        })
+      } else if (this.hasEnableMethod(obj)) {
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string, @typescript-eslint/restrict-template-expressions
+        console.log(`Enabling object: ${obj}`)
+        obj.enable()
+      } else {
+        console.log(`Object does not have an enable() method: ${obj}`)
+      }
+    })
+  }
+
+  disableAllObjects(): void {
+    const allProperties = Object.values(this)
+
+    allProperties.forEach((obj) => {
+      if (Array.isArray(obj)) {
+        obj.forEach((item) => {
+          if (this.hasDisableMethod(item)) {
+            // eslint-disable-next-line @typescript-eslint/no-base-to-string, @typescript-eslint/restrict-template-expressions
+            console.log(`Disabling object in array: ${item}`)
+            item.disable()
+          } else {
+            console.log(
+              `Object in array does not have a disable() method: ${item}`
+            )
+          }
+        })
+      } else if (this.hasDisableMethod(obj)) {
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string, @typescript-eslint/restrict-template-expressions
+        console.log(`Disabling object: ${obj}`)
+        obj.disable()
+      } else {
+        console.log(`Object does not have a disable() method: ${obj}`)
+      }
+    })
   }
 
   onRaceEnd(): void {
@@ -1786,28 +1843,29 @@ export class SoloSprint {
       entityController.removeEntity(entity.entity)
     })
     this.fans.forEach((entity) => {
-      entityController.removeEntity(entity)
+      entityController.removeEntity(entity.entity)
     })
     this.bubbles.forEach((entity) => {
-      entityController.removeEntity(entity)
+      entityController.removeEntity(entity.entity)
     })
     this.particlesCaustics.forEach((entity) => {
-      entityController.removeEntity(entity)
+      entityController.removeEntity(entity.entity)
     })
     this.particlesFish.forEach((entity) => {
-      entityController.removeEntity(entity)
+      entityController.removeEntity(entity.entity)
     })
     this.creatureSharks.forEach((entity) => {
-      entityController.removeEntity(entity)
+      entityController.removeEntity(entity.entity)
     })
 
     this.particlesWaterDrips.forEach((entity) => {
-      entityController.removeEntity(entity)
+      entityController.removeEntity(entity.entity)
     })
     this.zappers.forEach((entity) => {
       entity.removerTriggerEntity()
       entityController.removeEntity(entity.entity)
     })
+    this.disableAllObjects()
   }
 
   getId(): RealmType {

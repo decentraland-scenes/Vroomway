@@ -18,19 +18,15 @@ import { CONFIG } from '../_config'
 export class TriggerZone {
   public entity: Entity
   public enabled: boolean = false
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public onEnter: Function
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public onExit: Function
+  public onEnter: () => void;
+  public onExit: () => void; 
 
   constructor(
     position: Vector3,
     scale: Vector3,
     rotation: Quaternion,
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    onEnter: Function = function (): void {},
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    onExit: Function = function (): void {}
+    onEnter: () => void = () => {},
+    onExit: () => void = () => {}
   ) {
     this.entity = entityController.addEntity()
     // Add the transform for the trigger zone
@@ -52,7 +48,9 @@ export class TriggerZone {
       1,
       [{ type: 'box', scale }],
       () => {
+        console.log('enter trigger zone tb')
         if (this.enabled) {
+          console.log('trigger zone enabled')
           this.onEnter()
         }
       },
@@ -65,9 +63,9 @@ export class TriggerZone {
     Material.setPbrMaterial(this.entity, {
       albedoColor: Color4.create(0, 0, 0, 0)
     })
+    MeshRenderer.setBox(this.entity)
     // Debug shaoe
     if (CONFIG.SHOW_TRIGGER_BOXES) {
-      MeshRenderer.setBox(this.entity)
       this.shadeGreen()
     }
   }

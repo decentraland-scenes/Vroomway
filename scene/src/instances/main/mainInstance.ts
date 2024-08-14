@@ -186,6 +186,7 @@ export class MainInstance {
             )
           ) {
             if (entity.includes('SS')) {
+              this.gameController.soloSprint.show()
               if (instance.getInstance() !== 'main') return
               if (this.gameController.Player.getFuel() < SOLO_SPRINT_COST) {
                 this.gameController.uiController.outOfFuel.show()

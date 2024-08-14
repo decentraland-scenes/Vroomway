@@ -13,7 +13,7 @@ export function main(): void {
   // attempt initialization of player vehicle ownership
   utils.timers.setTimeout(() => {
     void movePlayerTo({
-      newRelativePosition: Vector3.create(11.29,7.74,12.35),
+      newRelativePosition: Vector3.create(71.18,13.06,39.85),
       cameraTarget: Vector3.create(31.12, 1.06, 53.56)
     })
     void game.vehicleOwnership.init()

@@ -18,8 +18,8 @@ import { CONFIG } from '../_config'
 export class TriggerZone {
   public entity: Entity
   public enabled: boolean = false
-  public onEnter: () => void;
-  public onExit: () => void; 
+  public onEnter: () => void
+  public onExit: () => void
 
   constructor(
     position: Vector3,

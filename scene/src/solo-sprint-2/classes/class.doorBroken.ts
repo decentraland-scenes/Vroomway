@@ -78,7 +78,7 @@ export class DoorBroken extends Door {
     // Trigger the broken animation to play as default
     Animator.getClip(this.gltfEntity.entity, 'broken').playing = true
 
-    // Trigger the sfx in a loop 
+    // Trigger the sfx in a loop
     // TODO: Fix sound system
     // AudioSource.playSound(this.foo, this.sfx.lock)
     // AudioSource.getMutable(this.foo).loop = true

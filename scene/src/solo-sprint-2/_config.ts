@@ -28,7 +28,7 @@ export class Config {
 
   // Set the directory. Doesn't support absolute paths :(
   // public GLTF_DIR = "models/glb/"
-  public GLTF_DIR = this.ROOT_DIR + 'models/solo-sprint/' 
+  public GLTF_DIR = this.ROOT_DIR + 'models/solo-sprint/'
 
   // ██████╗ ███████╗██████╗ ██╗   ██╗ ██████╗
   // ██╔══██╗██╔════╝██╔══██╗██║   ██║██╔════╝

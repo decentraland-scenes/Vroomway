@@ -47,15 +47,6 @@ export class DoorBroken extends Door {
       isLocked
     )
 
-    Animator.create(this.entity).states = [
-      {
-        clip: 'broken',
-        loop: true,
-        weight: 1,
-        speed: 1.0
-      }
-    ]
-
     // Must call addSoundFX() again for the correct sound effects to take effect, otherwise there will be no audio
     this.addSoundFX()
 
@@ -85,7 +76,7 @@ export class DoorBroken extends Door {
 
   public startBrokenDoor(): void {
     // Trigger the broken animation to play as default
-    Animator.playSingleAnimation(this.entity, 'broken')
+    Animator.getClip(this.gltfEntity.entity, 'broken').playing = true
 
     // Trigger the sfx in a loop
     // TODO: Fix sound system

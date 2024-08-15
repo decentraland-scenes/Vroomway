@@ -36,10 +36,10 @@ export class LockClicker {
 
   // The text and their pivot point
   text_current_value_pivot: Entity = entityController.addEntity()
-  text_current_value: string = ''
+  text_current_value: string = '0'
 
   text_target_value_pivot: Entity = entityController.addEntity()
-  text_target_value: string = ''
+  text_target_value: string = '0'
 
   // GLTF Shape
   gltfEntity: GLTFEntity = new GLTFEntity('lock.clicker')
@@ -94,29 +94,23 @@ export class LockClicker {
           audioClipUrl: this.sfx[s as SfxKeys] // Type assertion here
         })
       }
-
-      // Add the text elements (to avoid various errors if we create them in addTextObjects()
-      Transform.createOrReplace(this.text_target_value_pivot, {
-        parent: this.entity
-      })
-      Transform.createOrReplace(this.text_current_value_pivot, {
-        parent: this.entity
-      })
-      TextShape.createOrReplace(this.text_target_value_pivot, {
-        text: this.text_target_value
-      })
-      TextShape.createOrReplace(this.text_current_value_pivot, {
-        text: this.text_current_value
-      })
-
-      // Do the various setup functions
-      this.addButtonEvents()
-      this.randomiseTargetValue()
-      this.addTextObjects()
-      this.updateText()
-
-      // log("Created LockClicker entity: target_value = " + this.target_value)
     }
+    // Add the text elements (to avoid various errors if we create them in addTextObjects()
+    Transform.createOrReplace(this.text_target_value_pivot).parent = this.entity
+    Transform.createOrReplace(this.text_current_value_pivot).parent =
+      this.entity
+    TextShape.create(this.text_target_value_pivot, {
+      text: this.text_target_value
+    })
+    TextShape.create(this.text_current_value_pivot, {
+      text: this.text_current_value
+    })
+
+    // Do the various setup functions
+    this.addButtonEvents()
+    this.randomiseTargetValue()
+    this.addTextObjects()
+    this.updateText()
   }
 
   // Function to remove object from scene when disabled
@@ -155,16 +149,15 @@ export class LockClicker {
     } else {
       // Fail
       this.onFailUnlock()
+      console.log('fail unlocking')
     }
   }
 
   // Triggerd by primary E interactions
   incrementValue(): void {
     this.current_value = clamp(this.current_value + 1, 1, 99)
-
     this.updateText()
-
-    AudioSource.playSound(this.foo, this.sfx.interact)
+    // AudioSource.playSound(this.foo, this.sfx.interact)
   }
 
   // Resets
@@ -174,15 +167,24 @@ export class LockClicker {
   }
 
   addButtonEvents(): void {
+    console.log('Add button events')
     PointerEvents.createOrReplace(this.gltfEntity.entity, {
       pointerEvents: [
         {
           eventType: PointerEventType.PET_DOWN,
           eventInfo: {
-            button: InputAction.IA_POINTER,
+            button: InputAction.IA_SECONDARY,
             showFeedback: true,
-            hoverText:
-              'Match the target code! \n Press E to increment \n Press F to Unlock',
+            hoverText: 'Press F to Unlock',
+            maxDistance: 4
+          }
+        },
+        {
+          eventType: PointerEventType.PET_DOWN,
+          eventInfo: {
+            button: InputAction.IA_PRIMARY,
+            showFeedback: true,
+            hoverText: 'Match the target code!',
             maxDistance: 4
           }
         }
@@ -196,20 +198,26 @@ export class LockClicker {
           this.gltfEntity.entity
         )
       ) {
-        if (InputAction.IA_PRIMARY === 1) {
-          this.incrementValue()
-        } else {
-          this.attemptUnlock()
-        }
+        console.log('button E')
+        this.incrementValue()
+      }
+
+      if (
+        inputSystem.isTriggered(
+          InputAction.IA_SECONDARY,
+          PointerEventType.PET_DOWN,
+          this.gltfEntity.entity
+        )
+      ) {
+        console.log('button F')
+        this.attemptUnlock()
       }
     })
   }
 
   addTextObjects(): void {
     // Add the text_target_value_pivot
-    Transform.createOrReplace(this.text_target_value_pivot, {
-      parent: this.entity
-    })
+    Transform.getMutable(this.text_target_value_pivot).parent = this.entity
     Transform.getMutable(this.text_target_value_pivot).position =
       Vector3.create(-0.05, 1.865, -0.42)
     Transform.getMutable(this.text_target_value_pivot).scale = Vector3.create(
@@ -235,9 +243,7 @@ export class LockClicker {
       Color4.Black()
 
     // Add the text_current_value_pivot
-    Transform.createOrReplace(this.text_current_value_pivot, {
-      parent: this.entity
-    })
+    Transform.getMutable(this.text_current_value_pivot).parent = this.entity
     Transform.getMutable(this.text_current_value_pivot).position =
       Vector3.create(-0.05, 1.85, 0.33)
     Transform.getMutable(this.text_current_value_pivot).scale = Vector3.create(
@@ -275,19 +281,14 @@ export class LockClicker {
     }
 
     this.target_value = newRandomValue
-    console.log('randomiseTargetValue(): ' + newRandomValue)
   }
 
   // Update the textShape interface with the current values
   updateText(): void {
-    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-    if (this.text_current_value) {
-      this.text_current_value = this.current_value.toString()
-    }
-    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-    if (this.text_target_value) {
-      this.text_target_value = this.target_value.toString()
-    }
+    TextShape.getMutable(this.text_current_value_pivot).text =
+      this.current_value.toString()
+    TextShape.getMutable(this.text_target_value_pivot).text =
+      this.target_value.toString()
   }
 
   // Flashes a text object

@@ -7,6 +7,7 @@ export class GLTFParticles {
   entity: Entity
   enabled: boolean = false
   animation_clip: string
+  animationSpeed: number
 
   constructor(
     gltfSrc: string,
@@ -16,7 +17,7 @@ export class GLTFParticles {
     animationClipName: string = 'action',
     animationLooping: boolean = true,
     animationLayer: number = 0,
-    animationSpeed: number = 1.0
+    animationSpeed: number = 1
   ) {
     this.entity = entityController.addEntity()
     // Add the transform
@@ -38,27 +39,35 @@ export class GLTFParticles {
     GltfContainer.createOrReplace(this.entity, {
       src: CONFIG.GLTF_DIR + gltfSrc + CONFIG.GLTF_EXT
     })
-
     // Add the animator
     this.animation_clip = animationClipName
-    Animator.createOrReplace(this.entity, {
+    Animator.create(this.entity, {
       states: [
         {
           clip: animationClipName,
           loop: animationLooping,
-          speed: animationSpeed,
-          weight: animationLayer
+          weight: animationLayer,
+          speed: animationSpeed
         }
       ]
     })
+    this.animationSpeed = animationSpeed
   }
 
   enable(): void {
     this.enabled = true
+    Animator.playSingleAnimation(this.entity, this.animation_clip)
     Animator.getClip(this.entity, this.animation_clip).playing = true
+    console.log(
+      'gltfparticles enabled',
+      ' animation' + this.animation_clip,
+      this.animationSpeed,
+      Animator.getClip(this.entity, this.animation_clip)
+    )
   }
 
   disable(): void {
+    console.log('gltfparticles disabled', ' animation' + this.animation_clip)
     this.enabled = false
     Animator.getClip(this.entity, this.animation_clip).playing = false
   }

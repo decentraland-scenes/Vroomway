@@ -13,6 +13,8 @@ import { danceOffIcon, danceOnIcon } from './buttons'
 import * as utils from '@dcl-sdk/utils'
 import { triggerEmote } from '~system/RestrictedActions'
 import { entityController } from '../utils/entityController'
+import { instance } from '../utils/currentInstance'
+import { missions } from '../utils/missions'
 
 export class DanceAreaUI {
   gameController: GameController
@@ -101,6 +103,14 @@ export class DanceArea {
       () => {
         this.danceSystem.routine = 'all'
         this.danceSystem.dance()
+        if (instance.getInstance() !== 'recharge') return
+        if (this.gameController.Player.getFuel() < 50)
+          this.gameController.superChargeTimer.initDanceTimer()
+        this.gameController.superChargeTimer.show()
+        missions.checkAndUnlockCampaignMission('visitDanceFloor')
+      },
+      () => {
+        this.gameController.superChargeTimer.removeDanceTimer()
       }
     )
   }

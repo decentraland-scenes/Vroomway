@@ -6,6 +6,7 @@ import { UIController } from './ui.controller'
 import { PlayerStats } from '../utils/player'
 import { RealmController } from './instance.controller'
 import { DanceAreaUI } from '../ui/danceArea'
+import { SuperChargeTimer } from '../instances/recharge/timer'
 
 export class GameController {
   public Player: PlayerStats
@@ -16,6 +17,7 @@ export class GameController {
   public decentrallyBoard: DecentrallyBoard
   public realmController: RealmController
   public danceAreaUI: DanceAreaUI
+  public superChargeTimer: SuperChargeTimer
   constructor() {
     this.uiController = new UIController(this)
     this.realmController = new RealmController(this)
@@ -25,5 +27,6 @@ export class GameController {
     this.dragRaceBoard = new DragRaceBoard(this)
     this.decentrallyBoard = new DecentrallyBoard(this)
     this.danceAreaUI = new DanceAreaUI(this)
+    this.superChargeTimer = new SuperChargeTimer(this)
   }
 }

@@ -602,7 +602,7 @@ export class SoloSprint {
         rotation: Quaternion.fromEulerDegrees(0.0, 270.0, 0.0)
       },
 
-      // 4 - door.single.002 
+      // 4 - door.single.002
       {
         position: Vector3.create(32.057, 11.857, 2),
         rotation: Quaternion.fromEulerDegrees(0.0, 270.0, 0.0)

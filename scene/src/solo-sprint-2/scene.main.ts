@@ -196,6 +196,7 @@ export class SoloSprint {
         this.floor01Elevator.liftDown()
       }
     )
+
     //  ██████╗ ██████╗     ███████╗██╗     ███████╗██╗   ██╗ █████╗ ████████╗ ██████╗ ██████╗
     // ██╔═████╗╚════██╗    ██╔════╝██║     ██╔════╝██║   ██║██╔══██╗╚══██╔══╝██╔═══██╗██╔══██╗
     // ██║██╔██║ █████╔╝    █████╗  ██║     █████╗  ██║   ██║███████║   ██║   ██║   ██║██████╔╝
@@ -305,6 +306,7 @@ export class SoloSprint {
       CONFIG.SCENE_TRANSFORM_180.scale,
       CONFIG.SCENE_TRANSFORM_180.rotation,
       () => {
+        console.log('triggered')
         this.floor04Airlock.liftUp()
         utils.timers.setTimeout(() => {
           this.floor04Airlock.liftDown()
@@ -1608,6 +1610,12 @@ export class SoloSprint {
       this.zappers.push(zapper)
     }
     this.enableAllObjects()
+    // utils.timers.setTimeout(() => {
+    //   console.log('timeout')
+    //   void movePlayerTo({
+    //     newRelativePosition: Vector3.create(2.5, 10.59, 28.86)
+    //   })
+    // }, 5000)
   }
 
   async onRaceStart(): Promise<void> {

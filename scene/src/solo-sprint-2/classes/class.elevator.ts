@@ -19,14 +19,11 @@ export class Elevator {
   last_animation: number = 0
   public startDown: boolean = false
   public isDown: boolean = false
-  constructor(gltfSrc: string, startDown?: boolean) {
+  constructor(gltfSrc: string, startDown: boolean) {
     this.entity = entityController.addEntity()
     // Remember starting state
-    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-    if (startDown) {
-      this.startDown = startDown
-      this.isDown = startDown
-    }
+
+    this.startDown = startDown
 
     // Add the gltfShape
     this.gltfEntity = new GLTFEntity(
@@ -55,6 +52,7 @@ export class Elevator {
         }
       ]
     })
+    // this.enable()
   }
 
   enable(): void {
@@ -100,17 +98,12 @@ export class Elevator {
 
   // Platform controls
   liftUp(force?: boolean): void {
-    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-    if (this.last_animation !== 0 || force) {
+    console.log('clicked elevator', this.last_animation)
+    if (this.last_animation !== 0) {
       this.last_animation = 0
       console.log('liftUp()')
-      this.anim_action_up = Animator.getClipOrNull(
-        this.gltfEntity.entity,
-        'action_up'
-      )?.playing
-      if (this.anim_action_up ?? false) {
-        Animator.playSingleAnimation(this.gltfEntity.entity, 'action_up')
-      }
+      Animator.playSingleAnimation(this.gltfEntity.entity, 'action_up')
+      console.log('animationPlay')
     }
   }
 
@@ -123,9 +116,8 @@ export class Elevator {
         this.gltfEntity.entity,
         'action_down'
       )?.playing
-      if (this.anim_action_down ?? false) {
-        Animator.playSingleAnimation(this.gltfEntity.entity, 'action_down')
-      }
+
+      Animator.playSingleAnimation(this.gltfEntity.entity, 'action_down')
     }
   }
 }

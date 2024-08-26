@@ -37,6 +37,7 @@ import { entityController } from '../../utils/entityController'
 export class MainInstance {
   gameController: GameController
   assets: Entity[]
+  powerUpTrigger = entityController.addEntity()
   parentRaceScores = entityController.addEntity()
   yoyo = entityController.addEntity()
   yoyoText = entityController.addEntity()
@@ -110,6 +111,30 @@ export class MainInstance {
 
     // Constants.SCENE_MGR?.lobbyScene?.init();
     // Constants.SCENE_MGR?.lobbyScene?.show();
+    Transform.createOrReplace(this.powerUpTrigger, {
+      position: Vector3.create(72.35, 0, 43.87),
+      scale: Vector3.create(4, 9, 2),
+    })
+    MeshRenderer.setBox(this.powerUpTrigger)
+    Material.setPbrMaterial(this.powerUpTrigger, {
+      albedoColor: Color4.create(0, 0, 0, 0)
+    })
+    utils.triggers.addTrigger(
+      this.powerUpTrigger,
+      1,
+      1,
+      [{ type: 'box', scale: Vector3.create(3, 9, 10) }],
+      () => {
+        // powerUpShopUI.updateUI();
+        // powerUpShopUI.show();
+        console.log('power up trigger activated')
+        missions.checkAndUnlockCampaignMission("completePowerUps");
+      },
+      () => {
+        // powerUpShopUI.updateUI();
+        // powerUpShopUI.hide();
+      }
+    )
     const staticEntities = [
       'assets/models/main-entrance/mainStructure.glb',
       'assets/models/main-entrance/ssHub.glb',
@@ -985,6 +1010,7 @@ export class MainInstance {
     this.assets.forEach((entity) => {
       entityController.removeEntity(entity)
     })
+    entityController.removeEntity(this.powerUpTrigger)
     entityController.removeEntity(this.parentRaceScores)
     entityController.removeEntity(this.yoyo)
     entityController.removeEntity(this.yoyoText)
@@ -1031,6 +1057,7 @@ export class MainInstance {
     entityController.removeEntity(this.hofText)
     entityController.removeEntity(this.hofButton)
     entityController.removeEntity(this.hofButton2)
+
   }
 
   getId(): RealmType {

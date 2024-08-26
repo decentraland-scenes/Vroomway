@@ -267,7 +267,7 @@ export class Scrapyard {
         }
       ]
     })
-    engine.addSystem(() => { 
+    engine.addSystem(() => {
       if (
         inputSystem.isTriggered(
           InputAction.IA_POINTER,

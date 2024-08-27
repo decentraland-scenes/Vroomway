@@ -9,7 +9,6 @@
 
 // import * as utils from '@dcl-sdk/utils'
 import {
-  Animator,
   type Entity,
   Transform,
   pointerEventsSystem,
@@ -23,6 +22,7 @@ import { entityController } from '../../utils/entityController'
 import { List } from '../../utils/collections'
 import { type GameController } from '../../controllers/game.controller'
 import { missions } from '../../utils/missions'
+import { InventoryManager } from '../../inventory/inventory-manager'
 
 const isDebuggingBarrels: boolean = true
 const modelRootBarrelObj: string = 'assets/models/scrapyard/'
@@ -144,15 +144,6 @@ export class BarrelObject {
       parent: this.parentEntity
     })
     MeshCollider.setBox(this.collitionEntity)
-    Animator.createOrReplace(this.entity, {
-      states: [
-        {
-          clip: 'rummage',
-          loop: false,
-          playing: false
-        }
-      ]
-    })
   }
 
   SetType(type: BarrelDataTypes): void {
@@ -184,7 +175,6 @@ export class BarrelObject {
         missions.checkAndUnlockCampaignMission('rummage')
         missions.checkAndUnlockCampaignMission('collectMaterials')
         console.log('barrels active')
-        Animator.playSingleAnimation(this.entity, 'rummage', false)
       }
     )
 
@@ -451,87 +441,81 @@ export class BarrelHandler {
   /** called when user interacts with a barrel */
   public InteractBarrel(barrel: BarrelObject): void {
     this.debugLogRummage = 'Barrel Handler: providing interaction rewards...'
+    if (this.gameController.Player.getFuel() < barrel.getBarrelCost()) {
+      if (isDebuggingBarrels)
+        console.log(
+          this.debugLogRummage +
+            '\nfailed to rummage barrel, not enough fuel remaining'
+        )
+      // re-enable interactions for barrel
+      barrel.isInteractable = true
+      // halt and display feedback
+      this.gameController.uiController.outOfFuel.show()
+    }
+    const { rummagingCycles } =
+      this.gameController.vehicleOwnership.getBonusAttributes()
 
-    // ensure player has enough fuel to interact with barrel
-    // NOTE: this ensures the player gets a successful harvest (if we pay at the start of the animation player could lose out on the harvest if they dc during animation)
-    // if (Player.getFuel() < barrel.getBarrelCost()) {
-    //   if (isDebuggingBarrels)
-    //     log(
-    //       this.debugLogRummage +
-    //         '\nfailed to rummage barrel, not enough fuel remaining'
-    //     )
-    //   // re-enable interactions for barrel
-    //   barrel.isInteractable = true
-    //   // halt and display feedback
-    //   return renderOutOfFuel()
-    // }
+    const fuelValue = this.gameController.vehicleOwnership.getFuelEff(
+      barrel.getBarrelCost()
+    )
+    this.gameController.Player.fuel -= fuelValue
 
-    // get ownership perks
-    // const { rummagingCycles, coinBonusPercent } =
-    //   vehicleOwnership.getBonusAttributes()
+    const expValue = this.gameController.vehicleOwnership.getExpBonus(20)
+    this.gameController.Player.exp += expValue
+    let rewardCoins = this.gameController.vehicleOwnership.getCoinBonus(
+      Math.floor(Math.floor(Math.random() * 5)) + 5
+    )
+    //  provide additional coins if barrel was gold
+    if (barrel.type === BarrelDataTypes.gold)
+      rewardCoins += this.gameController.vehicleOwnership.getCoinBonus(500)
 
-    // // remove fuel cost
-    // const fuelValue = vehicleOwnership.getFuelEff(barrel.getBarrelCost())
-    // Player.fuel -= fuelValue
+    if (isDebuggingBarrels)
+      this.debugLogRummage +=
+        '\nbarrel interaction summary (cycles=' +
+        rummagingCycles +
+        '): \n\tfuelCost=' +
+        fuelValue +
+        ', expGain=' +
+        expValue +
+        ', coinGain=' +
+        rewardCoins
 
-    // // provide experience reward
-    // const expValue = vehicleOwnership.getExpBonus(20)
-    // Player.exp += expValue
+    // provide player with rewards based on their ownership
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const rewards = {}
+    for (let i = 0; i < rummagingCycles; i++) {
+      // get rarity
+      const rarity: number = this.getLootRarity(barrel.type)
+      if (isDebuggingBarrels)
+        this.debugLogRummage += '\n\treward generated, rarity=' + rarity
 
-    // // provide coin reward
-    // let rewardCoins = vehicleOwnership.getCoinBonus(
-    //   Math.floor(Math.floor(Math.random() * 5)) + 5
-    // )
-    // //  provide additional coins if barrel was gold
-    // if (barrel.type == BarrelDataTypes.gold)
-    //   rewardCoins += vehicleOwnership.getCoinBonus(500)
+      // get item ID
+      const item: string =
+        InventoryManager.Instance.GetRandomResourceViaRarity(rarity)
+      if (isDebuggingBarrels) this.debugLogRummage += ', id=' + item
 
-    // if (isDebuggingBarrels)
-    //   this.debugLogRummage +=
-    //     '\nbarrel interaction summary (cycles=' +
-    //     rummagingCycles +
-    //     '): \n\tfuelCost=' +
-    //     fuelValue +
-    //     ', expGain=' +
-    //     expValue +
-    //     ', coinGain=' +
-    //     rewardCoins
+      // add reword to stats pool
+      // TODO: rewards[item] = rewards[item] ? rewards[item] + 1 : 1
+    }
 
-    // // provide player with rewards based on their ownership
-    // const rewards = {}
-    // for (let i = 0; i < rummagingCycles; i++) {
-    //   // get rarity
-    //   const rarity: number = this.getLootRarity(barrel.type)
-    //   if (isDebuggingBarrels)
-    //     this.debugLogRummage += '\n\treward generated, rarity=' + rarity
+    // push loot to lootboard
+    // TODO: lootBoard.updateBoardStats({ ...rewards, coins: rewardCoins });
 
-    //   // get item ID
-    //   const item: string =
-    //     InventoryManager.Instance.GetRandomResourceViaRarity(rarity)
-    //   if (isDebuggingBarrels) this.debugLogRummage += ', id=' + item
+    // TODO: (THIS IS FROM CODEBASE) this should be relegated to automatic subscriber events
+    // update ui
+    this.gameController.Player.updateUI()
+    // TODO: lootBoard.toggleBoard();
 
-    //   // add reword to stats pool
-    //   rewards[item] = rewards[item] ? rewards[item] + 1 : 1
-    // }
+    // NOTE: right now current processing automatically places barrel again without delay, but we could add a timed system that places barrels over time,
+    //  maybe linked to a subvariable that defines how many barrels a user can salvage (resetting daily)
 
-    // // push loot to lootboard
-    // lootBoard.updateBoardStats({ ...rewards, coins: rewardCoins })
+    // remove barrel obj from use
+    this.RemoveBarrel(barrel)
 
-    // // TODO: this should be relegated to automatic subscriber events
-    // // update ui
-    // Player.updateUI()
-    // lootBoard.toggleBoard()
+    // place a new barrel somewhere
+    this.PlaceBarrel()
 
-    // // NOTE: right now current processing automatically places barrel again without delay, but we could add a timed system that places barrels over time,
-    // //  maybe linked to a subvariable that defines how many barrels a user can salvage (resetting daily)
-
-    // // remove barrel obj from use
-    // this.RemoveBarrel(barrel)
-
-    // // place a new barrel somewhere
-    // this.PlaceBarrel()
-
-    // if (isDebuggingBarrels)
-    //   log(this.debugLogRummage + '\nbarrel successfully rummaged!')
+    if (isDebuggingBarrels)
+      console.log(this.debugLogRummage + '\nbarrel successfully rummaged!')
   }
 }

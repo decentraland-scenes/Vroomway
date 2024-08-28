@@ -25,6 +25,7 @@ import { entityController } from '../../utils/entityController'
 import { type RealmType } from '../types'
 import * as utils from '@dcl-sdk/utils'
 import { instance } from '../../utils/currentInstance'
+import { BarrelHandler } from './class.barrel'
 
 // initVWRegistry();
 export class Scrapyard {
@@ -59,9 +60,12 @@ export class Scrapyard {
   bruteClaimBox = entityController.addEntity()
   mythicClaimBox = entityController.addEntity()
   gweiWarning5Obj = entityController.addEntity()
+  _scene: Entity = entityController.addEntity()
+  barrelHandler: BarrelHandler
   public mainPortal = entityController.addEntity()
   constructor(gameController: GameController) {
     this.gameController = gameController
+    this.barrelHandler = new BarrelHandler(11, this.gameController)
     this.assets = [
       'scrapyard/scrapyardStatic.gltf',
       'scrapyard/carousel.gltf',
@@ -132,8 +136,8 @@ export class Scrapyard {
 
     // set barrel parent and attempt to place all barrels
     // VW_REGISTRY.triggerBox.mainTriggerBox(box, BarrelHandler.Instance);
-    // BarrelHandler.Instance.SetParent(_scene);
-    // BarrelHandler.Instance.PlaceAllBarrels();
+    this.barrelHandler.SetParent(this._scene)
+    this.barrelHandler.PlaceAllBarrels()
     // MUSIC TRACK
     const publicKey = await getUserData({})
     AvatarAttach.createOrReplace(this.cube, {
@@ -891,6 +895,7 @@ export class Scrapyard {
     entityController.removeEntity(this.bruteClaimBox)
     entityController.removeEntity(this.mythicClaimBox)
     entityController.removeEntity(this.gweiWarning5Obj)
+    entityController.removeEntity(this._scene)
   }
 
   getId(): RealmType {

@@ -243,6 +243,7 @@ export class Scrapyard {
       rotation: Quaternion.fromEulerDegrees(0.0, 270.0, 0.0)
     })
     MeshRenderer.setPlane(this.gweiWarning1Obj)
+    MeshCollider.setPlane(this.gweiWarning1Obj)
     Material.setPbrMaterial(this.gweiWarning1Obj, {
       texture: Material.Texture.Common({
         src: 'https://bafkreidbag7swhrqwuawtfsag4ou4hqak4gd2f5gx24imkjtwfyed7brim.ipfs.nftstorage.link/'
@@ -274,6 +275,7 @@ export class Scrapyard {
           this.gweiWarning1Obj
         )
       ) {
+        console.log('polygon gwei')
         void openExternalUrl({
           url: 'https://polygonscan.com/gastracker/'
         })
@@ -306,6 +308,7 @@ export class Scrapyard {
       rotation: Quaternion.fromEulerDegrees(0.0, 270.0, 0.0)
     })
     MeshRenderer.setPlane(this.gweiWarning2Obj)
+    MeshCollider.setPlane(this.gweiWarning2Obj)
     Material.setPbrMaterial(this.gweiWarning2Obj, {
       texture: Material.Texture.Common({
         src: 'https://bafkreidbag7swhrqwuawtfsag4ou4hqak4gd2f5gx24imkjtwfyed7brim.ipfs.nftstorage.link/'
@@ -369,6 +372,7 @@ export class Scrapyard {
       rotation: Quaternion.fromEulerDegrees(0.0, 270.0, 0.0)
     })
     MeshRenderer.setPlane(this.gweiWarning3Obj)
+    MeshCollider.setPlane(this.gweiWarning3Obj)
     Material.setPbrMaterial(this.gweiWarning3Obj, {
       texture: Material.Texture.Common({
         src: 'https://bafkreidbag7swhrqwuawtfsag4ou4hqak4gd2f5gx24imkjtwfyed7brim.ipfs.nftstorage.link/'
@@ -432,6 +436,7 @@ export class Scrapyard {
       rotation: Quaternion.fromEulerDegrees(0.0, 270.0, 0.0)
     })
     MeshRenderer.setPlane(this.gweiWarning4Obj)
+    MeshCollider.setPlane(this.gweiWarning4Obj)
     Material.setPbrMaterial(this.gweiWarning4Obj, {
       texture: Material.Texture.Common({
         src: 'https://bafkreidbag7swhrqwuawtfsag4ou4hqak4gd2f5gx24imkjtwfyed7brim.ipfs.nftstorage.link/'
@@ -777,6 +782,7 @@ export class Scrapyard {
       rotation: Quaternion.fromEulerDegrees(0.0, 180.0, 0.0)
     })
     MeshRenderer.setPlane(this.gweiWarning5Obj)
+    MeshCollider.setPlane(this.gweiWarning5Obj)
     Material.setPbrMaterial(this.gweiWarning5Obj, {
       texture: Material.Texture.Common({
         src: 'https://bafkreidbag7swhrqwuawtfsag4ou4hqak4gd2f5gx24imkjtwfyed7brim.ipfs.nftstorage.link/'

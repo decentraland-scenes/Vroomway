@@ -19,7 +19,6 @@ const background: Sprite = {
   h: 1688
 }
 
-
 class PowerUpShopItem {
   buy: Sprite = buyHexagonButton
   powerupId: PowerUpIdEnum
@@ -79,7 +78,9 @@ class PowerUpShopItem {
             uvs: getUvs(this.buy),
             texture: { src: this.buy.atlasSrc }
           }}
-          onMouseDown={() => {this.buttonAction()}}
+          onMouseDown={() => {
+            this.buttonAction()
+          }}
         ></UiEntity>
       </UiEntity>
     )
@@ -208,16 +209,16 @@ export class PowerUpShop {
     if (this.player !== undefined) {
       coins = this.player.coins
     }
-    const powerupToBuyId = this.items[index].powerupId;
-    const powerup = PowerUpCatalog.get(powerupToBuyId);
+    const powerupToBuyId = this.items[index].powerupId
+    const powerup = PowerUpCatalog.get(powerupToBuyId)
 
-    this.powerupToBuyIndex = index;
-    
-    const cost = powerup.cost[0].amount;
-    
-    const canBuy = cost <= coins;
-    
-    console.log({index, coins, canBuy})
+    this.powerupToBuyIndex = index
+
+    const cost = powerup.cost[0].amount
+
+    const canBuy = cost <= coins
+
+    console.log({ index, coins, canBuy })
     // if (canBuy) {
     //   powerupShopConfirmTitle.text.value = "Confirm Purchase";
     //   //ui.displayAnnouncement("coins:"+coins +"\nbuy:"+powerupToBuyId +"\ncost:"+cost)
@@ -283,18 +284,18 @@ export class PowerUpShop {
                 positionType: 'absolute',
                 width: '20%',
                 height: '5%',
-                position:{top:'-2.5%', right:'-5%'}
+                position: { top: '-2.5%', right: '-5%' }
               }}
               uiBackground={{
                 textureMode: 'stretch',
                 uvs: getUvs(closeButton),
                 texture: { src: closeButton.atlasSrc }
               }}
-              onMouseDown={() => {this.hide()}}
+              onMouseDown={() => {
+                this.hide()
+              }}
             />
-            
           </UiEntity>
-          
         </UiEntity>
       </Canvas>
     )

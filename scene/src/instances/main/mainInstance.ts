@@ -680,8 +680,8 @@ export class MainInstance {
     })
 
     // Power Up Trigger
-    Transform.create(this.puTrigger,{
-      position: Vector3.create(71.29,0.88,42.77)
+    Transform.create(this.puTrigger, {
+      position: Vector3.create(71.29, 0.88, 42.77)
     })
     utils.triggers.addTrigger(
       this.puTrigger,

@@ -172,8 +172,8 @@ export const superchargeIcon: Sprite = {
 export const buyHexagonButton: Sprite = {
   atlasSrc: board1Atlas,
   atlasSize: { x: 2048, y: 2048 },
-  x: 0,
-  y: 1606,
-  w: 150.9,
-  h: 105.8
-};
+  x: 17,
+  y: 1600,
+  w: 120,
+  h: 120
+}

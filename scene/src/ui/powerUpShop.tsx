@@ -7,15 +7,20 @@ import {
 import { buyHexagonButton, closeButton } from './buttons'
 import { getUvs, type Sprite } from './utils/utils'
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
+import Canvas from './canvas/Canvas'
+import { type PlayerStats } from '../utils/player'
 
-const board5Atlas = 'images/uiAtlas/board5Atlas.png'
-const BOARD_WIDTH = 964
-const BOARD_HEIGHT = 1700
-const SCALE = 0.35
+const background: Sprite = {
+  atlasSize: { x: 2048, y: 2048 },
+  atlasSrc: 'assets/images/uiAtlas/board5Atlas.png',
+  x: 16,
+  y: 15,
+  w: 949,
+  h: 1688
+}
 
 class PowerUpShopItem {
-  powerupBoard: Sprite
-  buy: Sprite
+  buy: Sprite = buyHexagonButton
   powerupId: PowerUpIdEnum
   visible: boolean = true
   buttonAction: () => void
@@ -24,7 +29,6 @@ class PowerUpShopItem {
   buy_visible: boolean = false
   constructor(
     idx: number,
-    parent: Sprite,
     powerupId: PowerUpIdEnum,
     buttonAction: () => void,
     uiController: UIController
@@ -32,22 +36,6 @@ class PowerUpShopItem {
     this.powerupId = powerupId
     this.uiController = uiController
     this.buttonAction = buttonAction
-    const LEFT_PADD = 64
-    const MARGIN = 3.6
-    const HEIGHT = 260
-    this.powerupBoard = {
-      atlasSrc: board5Atlas,
-      atlasSize: { x: 2048, y: 2048 },
-      x: 0,
-      y:
-        (BOARD_HEIGHT * SCALE) / 2 -
-        (LEFT_PADD + idx * HEIGHT * SCALE + MARGIN * idx),
-      w: BOARD_WIDTH * SCALE,
-      h: HEIGHT * SCALE
-    }
-    this.buy = buyHexagonButton
-    this.buy.w = this.buy.w * SCALE
-    this.buy.h = this.buy.h * SCALE
   }
 
   setUsable(val: boolean): void {
@@ -74,27 +62,23 @@ class PowerUpShopItem {
     return (
       <UiEntity
         uiTransform={{
-          flexDirection: 'row',
-          width: canvasInfo.width,
-          height: canvasInfo.height,
-          justifyContent: 'center',
-          positionType: 'absolute',
-          position: { top: '25%', left: '50%' }
+          width: canvasInfo.height * 0.7 * 0.075,
+          height: canvasInfo.height * 0.7 * 0.075
         }}
       >
         {/* Power UP Board */}
         <UiEntity
           uiTransform={{
             positionType: 'relative',
-            width: (canvasInfo.height * 2.1) / 1.7,
-            height: canvasInfo.height * 0.5
+            width: '100%',
+            height: '100%'
           }}
           uiBackground={{
             textureMode: 'stretch',
-            uvs: getUvs(this.powerupBoard),
-            texture: { src: this.powerupBoard.atlasSrc }
+            uvs: getUvs(this.buy),
+            texture: { src: this.buy.atlasSrc }
           }}
-          onMouseDown={() => {}}
+          onMouseDown={() => {this.buttonAction()}}
         ></UiEntity>
       </UiEntity>
     )
@@ -143,86 +127,160 @@ class PowerUpShopItem {
 }
 
 export class PowerUpShop {
-  powerupBoard: Sprite
   items: PowerUpShopItem[] = []
   powerupToBuyIndex: number = 0
   closeBtn: Sprite
+  isVisible: boolean
   uiController: UIController
-  item1: PowerUpShopItem
-  item2: PowerUpShopItem
-  item3: PowerUpShopItem
-  item4: PowerUpShopItem
-  item5: PowerUpShopItem
-  item6: PowerUpShopItem
+  player: PlayerStats
   constructor(uiController: UIController) {
+    this.isVisible = true
     this.uiController = uiController
     this.closeBtn = closeButton
-    this.powerupBoard = {
-      atlasSrc: board5Atlas,
-      atlasSize: { x: 2048, y: 2048 },
-      x: 8,
-      y: 9,
-      w: BOARD_WIDTH * SCALE,
-      h: BOARD_HEIGHT * SCALE
+    this.player = uiController.player
+
+    this.items.push(
+      new PowerUpShopItem(
+        0,
+        PowerUpIdEnum.MULTIPLIER_COIN_2X_TIME_ROUND,
+        () => {
+          this.confirmBuyPu(0)
+        },
+        this.uiController
+      )
+    )
+    this.items.push(
+      new PowerUpShopItem(
+        1,
+        PowerUpIdEnum.MULTIPLIER_XP_2X_TIME_ROUND,
+        () => {
+          this.confirmBuyPu(1)
+        },
+        this.uiController
+      )
+    )
+    this.items.push(
+      new PowerUpShopItem(
+        2,
+        PowerUpIdEnum.PROJECTILE_DAMANGE_PLUS_5_TIME_ROUND,
+        () => {
+          this.confirmBuyPu(2)
+        },
+        this.uiController
+      )
+    )
+    this.items.push(
+      new PowerUpShopItem(
+        3,
+        PowerUpIdEnum.HEALTH_PLUS_50,
+        () => {
+          this.confirmBuyPu(3)
+        },
+        this.uiController
+      )
+    )
+    this.items.push(
+      new PowerUpShopItem(
+        4,
+        PowerUpIdEnum.TRAP_PROJECTILE_TIME_ROUND,
+        () => {
+          this.confirmBuyPu(4)
+        },
+        this.uiController
+      )
+    )
+
+    this.items.push(
+      new PowerUpShopItem(
+        5,
+        PowerUpIdEnum.HEALTH_INVINCIBLE_15_SECONDS,
+        () => {
+          this.confirmBuyPu(5)
+        },
+        this.uiController
+      )
+    )
+  }
+
+  confirmBuyPu(index: number): void {
+    let coins: number = 0
+    if (this.player !== undefined) {
+      coins = this.player.coins
     }
-    this.closeBtn.x = 50 * SCALE
-    this.closeBtn.y = 20 * SCALE
-    this.closeBtn.w = this.closeBtn.w * 0.3
-    this.closeBtn.h = this.closeBtn.h * 0.3
+    const powerupToBuyId = this.items[index].powerupId;
+    const powerup = PowerUpCatalog.get(powerupToBuyId);
 
-    this.item1 = new PowerUpShopItem(0, this.powerupBoard, PowerUpIdEnum.MULTIPLIER_COIN_2X_TIME_ROUND, () => {
-      this.activatePu1();
-    },this.uiController);
-    this.item2 = new PowerUpShopItem(1, this.powerupBoard, PowerUpIdEnum.MULTIPLIER_XP_2X_TIME_ROUND, () => {
-      this.activatePu2();
-    },this.uiController);
-    this.item3 = new PowerUpShopItem(2, this.powerupBoard, PowerUpIdEnum.PROJECTILE_DAMANGE_PLUS_5_TIME_ROUND, () => {
-      this.activatePu3();
-    },this.uiController);
-    this.item4 = new PowerUpShopItem(3, this.powerupBoard, PowerUpIdEnum.HEALTH_PLUS_50, () => {
-      this.activatePu4();
-    },this.uiController);
-    this.item5 = new PowerUpShopItem(4, this.powerupBoard, PowerUpIdEnum.TRAP_PROJECTILE_TIME_ROUND, () => {
-      this.activatePu5();
-    },this.uiController);
+    this.powerupToBuyIndex = index;
+    
+    const cost = powerup.cost[0].amount;
+    
+    const canBuy = cost <= coins;
+    
+    console.log({index, coins, canBuy})
+    // if (canBuy) {
+    //   powerupShopConfirmTitle.text.value = "Confirm Purchase";
+    //   //ui.displayAnnouncement("coins:"+coins +"\nbuy:"+powerupToBuyId +"\ncost:"+cost)
+    //   powerupShopConfirmMsg.text.value = "Buy " + powerup.name + "\nPrice: " + cost;
 
-    this.item6 = new PowerUpShopItem(5, this.powerupBoard, PowerUpIdEnum.HEALTH_INVINCIBLE_15_SECONDS, () => {
-      this.activatePu6();
-    },this.uiController);
+    //   powerupShopConfirm.show();
+    // } else {
+    //   powerupShopLackOfFundsMsg.text.value = "You do not have enough\n to Buy " + powerup.name + "\nPrice: " + cost;
 
-    this.items.push(this.item1);
-    this.items.push(this.item2);
-    this.items.push(this.item3);
-    this.items.push(this.item4);
-    this.items.push(this.item5);
-    this.items.push(this.item6);
+    //   powerupShopLackOfFunds.show();
+    // }
   }
 
-  activatePu1():void {
-    this.confirmBuyPu(0);
+  show(): void {
+    this.isVisible = true
   }
 
-  activatePu2():void {
-    this.confirmBuyPu(1);
+  hide(): void {
+    this.isVisible = false
   }
 
-  activatePu3():void {
-    this.confirmBuyPu(2);
-  }
-
-  activatePu4():void {
-    this.confirmBuyPu(3);
-  }
-
-  activatePu5():void {
-    this.confirmBuyPu(4);
-  }
-
-  activatePu6():void {
-    this.confirmBuyPu(5);
-  }
-
-  confirmBuyPu(index: number):void {
-
+  createUI(): ReactEcs.JSX.Element {
+    const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
+    return (
+      <Canvas>
+        <UiEntity
+          uiTransform={{
+            flexDirection: 'row',
+            width: canvasInfo.width,
+            height: canvasInfo.height,
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          {/* Power UP Board */}
+          <UiEntity
+            uiTransform={{
+              positionType: 'relative',
+              width: (canvasInfo.height * 0.7 * background.w) / background.h,
+              height: canvasInfo.height * 0.7
+            }}
+            uiBackground={{
+              textureMode: 'stretch',
+              uvs: getUvs(background),
+              texture: { src: background.atlasSrc }
+            }}
+          >
+            {' '}
+            <UiEntity
+              uiTransform={{
+                positionType: 'relative',
+                width: '15%',
+                height: '95%',
+                flexDirection: 'column',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                margin: { top: '3.5%' }
+              }}
+            >
+              {this.items.map((item) => item.createUI())}
+            </UiEntity>
+          </UiEntity>
+        </UiEntity>
+      </Canvas>
+    )
   }
 }

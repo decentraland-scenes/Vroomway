@@ -1,57 +1,67 @@
 export type Vector3State = {
-  x: number;
-  y: number;
-  z: number;
+  x: number
+  y: number
+  z: number
 }
 export type Quaternion3State = {
-  x: number;
-  y: number;
-  z: number;
-  w: number;
+  x: number
+  y: number
+  z: number
+  w: number
 }
 
 export type ClockState = {
-  serverTime: number;
+  serverTime: number
 }
 export type PlayerButtonState = {
-  forward: boolean;
-  backward: boolean;
-  left: boolean;
-  right: boolean;
-  shoot: boolean;
+  forward: boolean
+  backward: boolean
+  left: boolean
+  right: boolean
+  shoot: boolean
 }
 
 export type PlayerRaceDataState = {
   // move this to player race specific data???
-  carScenePosition: Vector3State; // car location will scene center since it does not move
-  closestProjectedPoint: Vector3State; // is scene relative, but when used with closestSegmentID + track data can compute where
-  worldPosition: Vector3State;
-  closestSegmentID: number;
-  closestPointID: number;
+  carScenePosition: Vector3State // car location will scene center since it does not move
+  closestProjectedPoint: Vector3State // is scene relative, but when used with closestSegmentID + track data can compute where
+  worldPosition: Vector3State
+  closestSegmentID: number
+  closestPointID: number
 
-  closestSegmentPercent: number; // relates to closestSegmentID.  what percent of this segement is player at
-  closestSegmentDistance: number; // how far player is from center, aka the segement
+  closestSegmentPercent: number // relates to closestSegmentID.  what percent of this segement is player at
+  closestSegmentDistance: number // how far player is from center, aka the segement
 
-  currentSpeed: number;
-  worldMoveDirection: Quaternion3State; // world moving direction
-  shootDirection: Quaternion3State; // car forward direction
-  cameraDirection: Quaternion3State; // turn angle
-  endTime: number; // move this as wont change till the end
-  carModelId: string; // move this as wont change much if at all?
-  lap: number; // move this as wont change till the end //currently base 1 index   first lap is lap:1
+  currentSpeed: number
+  worldMoveDirection: Quaternion3State // world moving direction
+  shootDirection: Quaternion3State // car forward direction
+  cameraDirection: Quaternion3State // turn angle
+  endTime: number // move this as wont change till the end
+  carModelId: string // move this as wont change much if at all?
+  lap: number // move this as wont change till the end //currently base 1 index   first lap is lap:1
   // lapTimes //TODO ADD DEFINITION HERE!!!
-  racePosition: number;
+  racePosition: number
 
-  lastKnownServerTime: number;
-  lastKnownClientTime: number;
+  lastKnownServerTime: number
+  lastKnownClientTime: number
 
   // isDrifting: boolean
   // currentSpeed : number
 } & ClockState
 
-export type EventStatus = "unknown" | "open" | "started" | "closed";
-export type RaceStatus = "unknown" | "not-started" | "starting" | "started" | "ended";
-export type PlayerConnectionStatus = "unknown" | "connected" | "reconnecting" | "disconnected" | "lost connection";
+export type EventStatus = 'unknown' | 'open' | 'started' | 'closed'
+export type RaceStatus =
+  | 'unknown'
+  | 'not-started'
+  | 'starting'
+  | 'started'
+  | 'ended'
+export type PlayerConnectionStatus =
+  | 'unknown'
+  | 'connected'
+  | 'reconnecting'
+  | 'disconnected'
+  | 'lost connection'
 
 export type SceneId = 'vroomway' | 'grandprix' | 'all'
 
@@ -59,92 +69,99 @@ export type SceneId = 'vroomway' | 'grandprix' | 'all'
 export type SendMsgData = {
   msg: string
   duration?: number
-  color?:string
-  fontSize?:number
-  sceneId:SceneId
+  color?: string
+  fontSize?: number
+  sceneId: SceneId
 }
 
 export type PlayerState = {
-  id: string;
-  sessionId: string;
+  id: string
+  sessionId: string
 
-  connStatus: PlayerConnectionStatus;
-  type: string;
+  connStatus: PlayerConnectionStatus
+  type: string
 
-  userData: PlayerUserDataState;
-  racingData: PlayerRaceDataState;
-  healthData: PlayerHealthDataState;
-  buttons: PlayerButtonState;
-  statsData: PlayerStatsDataState;
+  userData: PlayerUserDataState
+  racingData: PlayerRaceDataState
+  healthData: PlayerHealthDataState
+  buttons: PlayerButtonState
+  statsData: PlayerStatsDataState
 }
 
 export type PlayerUserDataState = {
-  name: string;
-  userId: string;
+  name: string
+  userId: string
   /// snapshotFace128:string snapshots deprecated use AvatarTexture
 }
 
 export type RaceState = {
-  id: string;
-  name: string;
-  status: RaceStatus;
-  startTime: number;
-  endTime: number;
-  maxLaps: number; // move to track data or is max laps race data?
+  id: string
+  name: string
+  status: RaceStatus
+  startTime: number
+  endTime: number
+  maxLaps: number // move to track data or is max laps race data?
 } & ClockState
 
 // broadcast object instead of linking to state the level details
 export type LevelDataState = {
-  id: string;
-  name: string;
+  id: string
+  name: string
   // status:RaceStatus
 
   // theme:Theme
   // FIXME cannot declare this
-  trackFeatures: Map<any, ITrackFeatureState>; // Map<any,TrackFeatureConstructorArgs>
-  localTrackFeatures?: TrackFeatureConstructorArgs[]; // for loading only, not for state sharing
+  trackFeatures: Map<any, ITrackFeatureState> // Map<any,TrackFeatureConstructorArgs>
+  localTrackFeatures?: TrackFeatureConstructorArgs[] // for loading only, not for state sharing
 
-  maxLaps: number; // move to track data or is max laps race data?
-  trackPath: Vector3State[];
+  maxLaps: number // move to track data or is max laps race data?
+  trackPath: Vector3State[]
   // other track info?
 }
 
-export type TrackFeatureType = "boost" | "slow-down" | "slow-down-wall" | "inert" | "wall" | "coin-1" | "coin-2";
+export type TrackFeatureType =
+  | 'boost'
+  | 'slow-down'
+  | 'slow-down-wall'
+  | 'inert'
+  | 'wall'
+  | 'coin-1'
+  | 'coin-2'
 
 export type TrackFeatureDef = {
-  numSegements?: number; // default 200
-  keepStartClear?: number; // default 1
-  featureDensity?: number; // default features.length + 5, how likly an item is spawned
-  features: TrackFeatureInstDef[];
-};
+  numSegements?: number // default 200
+  keepStartClear?: number // default 1
+  featureDensity?: number // default features.length + 5, how likly an item is spawned
+  features: TrackFeatureInstDef[]
+}
 
 export type TrackFeatureZoneDef = {
-  xOffsetRange?: number[]; // default +-2, max offset from center. random between 0-maxXOffset
-  segmentRange?: number[][];
-};
+  xOffsetRange?: number[] // default +-2, max offset from center. random between 0-maxXOffset
+  segmentRange?: number[][]
+}
 export type TrackFeatureInstDef = {
-  type: TrackFeatureType;
-  enabled?: boolean; // defaults true
-  spawnAmount?: number; // default 2, when decided to spawn, will spawn between 1-spawnAmount (randomly picked)
-  spawnPercentage?: number; // default .5. when decided to spawn (see featureDensity) it is the (0-1 probability to spawn it
-  maxXCloseness?: number; // default .3 when spawning more than 1, how close together can they get
-  zones?: TrackFeatureZoneDef[];
-};
+  type: TrackFeatureType
+  enabled?: boolean // defaults true
+  spawnAmount?: number // default 2, when decided to spawn, will spawn between 1-spawnAmount (randomly picked)
+  spawnPercentage?: number // default .5. when decided to spawn (see featureDensity) it is the (0-1 probability to spawn it
+  maxXCloseness?: number // default .3 when spawning more than 1, how close together can they get
+  zones?: TrackFeatureZoneDef[]
+}
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function getTrackFeatureType(str: string) {
-  return str as TrackFeatureType;
+  return str as TrackFeatureType
 }
 
 export type TrackFeatureConstructorArgs = {
-  name: string;
-  position: ITrackFeaturePosition;
+  name: string
+  position: ITrackFeaturePosition
   // triggerSize?:Vector3
   // shape:TrackFeatureShape
-  type: TrackFeatureType;
-  createdBy?: string; // player who created it is safe for X time?
-  activateTime?: number;
-  destructable?: boolean;
+  type: TrackFeatureType
+  createdBy?: string // player who created it is safe for X time?
+  activateTime?: number
+  destructable?: boolean
 }
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type TrackFeatureUpdate = {} & TrackFeatureConstructorArgs
@@ -152,170 +169,182 @@ export type TrackFeatureUpdate = {} & TrackFeatureConstructorArgs
 // can we get rid of and replace with 'TrackFeatureConstructorArgs'?
 
 export type ITrackFeatureState = {
-  name: string;
-  position: ITrackFeaturePosition;
-  createdBy?: string; // player who created it is safe for X time?
+  name: string
+  position: ITrackFeaturePosition
+  createdBy?: string // player who created it is safe for X time?
   // triggerSize?:Vector3
   // shape:TrackFeatureShape
-  type: string; // ONLY DIFF???
-  activateTime?: number;
+  type: string // ONLY DIFF???
+  activateTime?: number
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type TrackFeatureStateConstructorArgs = {} & ITrackFeatureState
 
 export type TrackFeaturePositionConstructorArgs = {
-  position?: Vector3State; // optional, if set its the exact spot
-  rotation?: Quaternion3State; // optional, if set its the exact rotation
-  startSegment: number;
-  endSegment: number;
-  offset?: Vector3State;
-  centerOffset?: number; // positive is right, negative is left
-};
+  position?: Vector3State // optional, if set its the exact spot
+  rotation?: Quaternion3State // optional, if set its the exact rotation
+  startSegment: number
+  endSegment: number
+  offset?: Vector3State
+  centerOffset?: number // positive is right, negative is left
+}
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function createTrackFeaturePositionConstructorArgs(position: ITrackFeaturePosition) {
+export function createTrackFeaturePositionConstructorArgs(
+  position: ITrackFeaturePosition
+) {
   return {
     startSegment: position.startSegment,
     endSegment: position.endSegment,
     offset: position.offset,
     centerOffset: position.centerOffset
-  };
+  }
 }
 
 export type ITrackFeaturePosition = {
-  position?: Vector3State; // optional, if set its the exact spot
-  rotation?: Quaternion3State; // optional, if set its the exact rotation
-  startSegment: number;
-  endSegment: number;
-  offset?: Vector3State;
-  centerOffset?: number;
+  position?: Vector3State // optional, if set its the exact spot
+  rotation?: Quaternion3State // optional, if set its the exact rotation
+  startSegment: number
+  endSegment: number
+  offset?: Vector3State
+  centerOffset?: number
   // entity:Entity
 }
 export class TrackFeaturePosition implements ITrackFeaturePosition {
-  position?: Vector3State; // optional, if set its the exact spot
-  rotation?: Quaternion3State; // optional, if set its the exact rotation
-  startSegment: number;
-  endSegment: number;
-  offset?: Vector3State;
-  centerOffset?: number;
+  position?: Vector3State // optional, if set its the exact spot
+  rotation?: Quaternion3State // optional, if set its the exact rotation
+  startSegment: number
+  endSegment: number
+  offset?: Vector3State
+  centerOffset?: number
   // entity:Entity
 
   constructor(args: TrackFeaturePositionConstructorArgs) {
-    this.startSegment = args.startSegment;
-    this.endSegment = args.endSegment;
-    this.centerOffset = args.centerOffset;
-    this.position = args.position;
-    if (args.offset != null) this.offset = args.offset;
+    this.startSegment = args.startSegment
+    this.endSegment = args.endSegment
+    this.centerOffset = args.centerOffset
+    this.position = args.position
+    if (args.offset != null) this.offset = args.offset
   }
 }
 
 // EquippedVehicle should be copied/synced with vehicleOwnership.ts and server-state-spec
 export type EquippedVehicle =
-  | "diamondVroom"
-  | "buildaVroom"
-  | "kittyVroom"
-  | "caddyVroom"
-  | "broomVroom"
-  | "flamesEnd"
-  | "tideBreaker"
-  | "viridianQuake"
-  | "wonderVroom"
-  | "junkerVan"
-  | "vroomWing"
-  | "obsidianStrike"
-  | "opulent"
-  | "rollerVroom"
-  | "bosier"
-  | "divinity"
-  | "pleather"
-  | "machina"
-  | "peafowl"
-  | "rattyVroom"
-  | "vroomVroom"
-  | "modelO"
-  | "bronzeSaucer"
-  | "silverSaucer"
-  | "goldSaucer"
-  | "bronzeSaucer2"
-  | "silverSaucer2"
-  | "goldSaucer2"
-  | "speedBoots1"
-  | "speedBoots2"
-  | "speedBoots3"
-  | "hoverBike1"
-  | "hoverBike2"
-  | "hoverBike3"
-  | "hoverCar1"
-  | "hoverCar2"
-  | "hoverCar3"
-  | "brutes1"
-  | "brutes2"
-  | "brutes3";
+  | 'diamondVroom'
+  | 'buildaVroom'
+  | 'kittyVroom'
+  | 'caddyVroom'
+  | 'broomVroom'
+  | 'flamesEnd'
+  | 'tideBreaker'
+  | 'viridianQuake'
+  | 'wonderVroom'
+  | 'junkerVan'
+  | 'vroomWing'
+  | 'obsidianStrike'
+  | 'opulent'
+  | 'rollerVroom'
+  | 'bosier'
+  | 'divinity'
+  | 'pleather'
+  | 'machina'
+  | 'peafowl'
+  | 'rattyVroom'
+  | 'vroomVroom'
+  | 'modelO'
+  | 'bronzeSaucer'
+  | 'silverSaucer'
+  | 'goldSaucer'
+  | 'bronzeSaucer2'
+  | 'silverSaucer2'
+  | 'goldSaucer2'
+  | 'speedBoots1'
+  | 'speedBoots2'
+  | 'speedBoots3'
+  | 'hoverBike1'
+  | 'hoverBike2'
+  | 'hoverBike3'
+  | 'hoverCar1'
+  | 'hoverCar2'
+  | 'hoverCar3'
+  | 'brutes1'
+  | 'brutes2'
+  | 'brutes3'
 
-export type PriceType = "coins";
+export type PriceType = 'coins'
 export type CostDataState = {
-  amount: number;
-  type: PriceType;
-  id: string;
-};
-export type PowerUpClassificationType = "health" | "trap" | "projectile" | "multiplier";
+  amount: number
+  type: PriceType
+  id: string
+}
+export type PowerUpClassificationType =
+  | 'health'
+  | 'trap'
+  | 'projectile'
+  | 'multiplier'
 export type PowerUpId =
-  | "health.plus.50"
-  | "health.invincible.time.15s"
-  | "projectile.damage.plus.5.time.round"
-  | "trap.projectile.time.round"
-  | "trap.projectile.consumed.time.round"
-  | "multiplier.coins.2x.time.round"
-  | "multiplier.xp.2x.time.round";
+  | 'health.plus.50'
+  | 'health.invincible.time.15s'
+  | 'projectile.damage.plus.5.time.round'
+  | 'trap.projectile.time.round'
+  | 'trap.projectile.consumed.time.round'
+  | 'multiplier.coins.2x.time.round'
+  | 'multiplier.xp.2x.time.round'
 
 export type PowerUpLevelModeType = {
-  type: "normal" | "tournament";
+  type: 'normal' | 'tournament'
   // more stuff like branch, level, difficulty...?
-};
-export type PowerUpLevelType = "circuit" | "derby" | "lobby" | "dragrace" | "solosprint" | "grandprix";
+}
+export type PowerUpLevelType =
+  | 'circuit'
+  | 'derby'
+  | 'lobby'
+  | 'dragrace'
+  | 'solosprint'
+  | 'grandprix'
 
 export type PowerUpsDefInst = {
-  id: PowerUpId;
-  classType: PowerUpClassificationType;
-  name: string;
-  desc: string;
-  usageType: "consumable" | "durable"; //
+  id: PowerUpId
+  classType: PowerUpClassificationType
+  name: string
+  desc: string
+  usageType: 'consumable' | 'durable' //
   /** how fast can use it, -1 no speed limit */
-  cooldown: number;
+  cooldown: number
   /** effective time, -1 no time limit */
-  duration: number;
+  duration: number
   /** max usage per game/round/what ever, can drive allocation */
-  usageMax: number;
+  usageMax: number
   /** how many times can it be used per activate. -1 duration means have unlimited time to use X amount  */
-  usePerActivate: number;
+  usePerActivate: number
   /** if activates once aquired */
-  autoActivate: boolean;
+  autoActivate: boolean
   /** how many can be applied at a time; <0 means infin; 1 = 1 at time etc. */
-  stackableAmount: number;
-  cost: CostDataState[];
+  stackableAmount: number
+  cost: CostDataState[]
   valueModifier: {
-    numVal: number;
-  };
+    numVal: number
+  }
   validFor?: {
     // determine what this is valid for, undefined == any
-    mode?: PowerUpLevelModeType[];
-    level?: PowerUpLevelType[];
-  };
+    mode?: PowerUpLevelModeType[]
+    level?: PowerUpLevelType[]
+  }
   // consumeAmount:number //how much to consuem
-};
+}
 export type PowerUpManagerState = {
-  powerUps: Map<string, PowerUpsItemPoolState>;
+  powerUps: Map<string, PowerUpsItemPoolState>
 }
 export class PowerUpsStatusUpdateResult {
-  id: PowerUpId | undefined;
-  activated: PowerUpItemState[] = [];
-  expired: PowerUpItemState[] = [];
+  id: PowerUpId | undefined
+  activated: PowerUpItemState[] = []
+  expired: PowerUpItemState[] = []
 }
 // use this for state!
 export type PowerUpsItemPoolState = {
-  id: PowerUpId;
-  items: PowerUpItemState[];
+  id: PowerUpId
+  items: PowerUpItemState[]
   // available: PowerUpItemState[];//allocated
   // activated: PowerUpItemState[];
   // expired: PowerUpItemState[];
@@ -331,71 +360,75 @@ export type PowerUpsItemPoolState = {
 } & ClockState
 
 export type PowerUpItemUseResult = {
-  success: boolean;
-  newlyActivated: boolean;
-  id: PowerUpId;
-  msg: string;
-  itm: PowerUpItemState;
+  success: boolean
+  newlyActivated: boolean
+  id: PowerUpId
+  msg: string
+  itm: PowerUpItemState
 } & ClockState
 
-export type PowerUpItemStateStatus = "not-init" | "available" | "activated" | "used";
+export type PowerUpItemStateStatus =
+  | 'not-init'
+  | 'available'
+  | 'activated'
+  | 'used'
 
 // use this for state!
 export type PowerUpItemState = {
-  id: PowerUpId;
+  id: PowerUpId
   // instId: string //instance id so can tell them apart
-  status: PowerUpItemStateStatus;
-  activateTime: number;
-  expireTime: number;
-  usesLeft: number;
+  status: PowerUpItemStateStatus
+  activateTime: number
+  expireTime: number
+  usesLeft: number
 } & ClockState
 
 export type PowerUpsGameSettingsItm = {
-  id: PowerUpId;
+  id: PowerUpId
   // instIds[]: string //distinct Id
-  total: number; // total they have
-  available: number; // available/allocated to this race; allocated <= total
+  total: number // total they have
+  available: number // available/allocated to this race; allocated <= total
   // active:number //how many applied; applied <= allocated
   // expired:number //how many used.  used <= applied
 }
 
 export type PowerUpSelection = {
-  items: PowerUpsGameSettingsItm[];
+  items: PowerUpsGameSettingsItm[]
 }
 export type PlayerInGameSettings = {
-  equippedVehicle?: EquippedVehicle;
+  equippedVehicle?: EquippedVehicle
   // TODO convert to type once actually user server side
   // for now sending just incase we need it
-  equippedAccessories?: string;
-  powerUps?: PowerUpSelection;
+  equippedAccessories?: string
+  powerUps?: PowerUpSelection
   // vehicleType: string;
 }
 
 export type RaceDataOptions = {
-  levelId: string;
-  name?: string;
-  maxLaps?: number;
-  maxPlayers?: number;
-  roadWidth?: number;
+  levelId: string
+  name?: string
+  maxLaps?: number
+  maxPlayers?: number
+  roadWidth?: number
   /// numberOfTrackSegments?: number; //use featureDefinition.numSegements
-  customRoomId?: string;
-  featureDefinition?: TrackFeatureDef;
-  secondsPerFloorDrop?: number; // TODO make derby specific one?
-  mode?: { type: "normal" | "tournament" }; // matches LevelModeType type
-  sceneId?:SceneId
+  customRoomId?: string
+  featureDefinition?: TrackFeatureDef
+  secondsPerFloorDrop?: number // TODO make derby specific one?
+  mode?: { type: 'normal' | 'tournament' } // matches LevelModeType type
+  sceneId?: SceneId
 }
 export type EnrollmentSlot = {
-  number: number;
-  enrollTime: number;
-  playerId?: string;
+  number: number
+  enrollTime: number
+  playerId?: string
 }
 export type EnrollmentState = {
-  open: boolean;
+  open: boolean
   eventStatus: EventStatus
-  startTime: number;
-  endTime: number;
-  maxPlayers: number;
-  minPlayers: number;
+  startTime: number
+  endTime: number
+  maxPlayers: number
+  minPlayers: number
 
   // could we just do session hash? - pretty good no?
   // would be bettern than scanning for open slot from 0?
@@ -406,65 +439,65 @@ export type EnrollmentState = {
   // p2 join = 2
   // p1 leave, clear slot
   // p3 join = 2 //p2 slot remains 2 for stability
-  slots: EnrollmentSlot[];
+  slots: EnrollmentSlot[]
 } & ClockState
 
 export type RacingRoomState = {
-  players: Map<any, PlayerState>;
-  raceData: RaceState;
-  enrollment: EnrollmentState;
-  levelData: LevelDataState;
+  players: Map<any, PlayerState>
+  raceData: RaceState
+  enrollment: EnrollmentState
+  levelData: LevelDataState
 }
 
 export type PlayerGiveDamageDataState = {
-  playerIdTo: string;
-  playerIdFrom: string;
-  damageTime: number;
-  damageDesc: string;
-  damageAmount: number;
+  playerIdTo: string
+  playerIdFrom: string
+  damageTime: number
+  damageDesc: string
+  damageAmount: number
 }
 
 // to collect server side a log of all damange given (maybe share it in stage but seems exessive)
 // and you can build a list saving the changes that flow through PlayerHealthDataState
 export type PlayerDamageLogState = {
-  current: number;
-  max: number;
-  playerIdTo: string;
-  playerIdFrom: string;
-  damageTime: number;
-  damageDesc: string;
-  damageAmount: number;
+  current: number
+  max: number
+  playerIdTo: string
+  playerIdFrom: string
+  damageTime: number
+  damageDesc: string
+  damageAmount: number
 } & ClockState
 
 export type PlayerHealthDataState = {
-  current: number;
-  max: number;
-  invincible: boolean;
+  current: number
+  max: number
+  invincible: boolean
   // track what gave u last damange (was it LAVA!?)
-  lastDamageTime: number;
-  lastDamageDesc: string;
-  lastDamageFrom: string;
-  lastDamageAmount: number;
+  lastDamageTime: number
+  lastDamageDesc: string
+  lastDamageFrom: string
+  lastDamageAmount: number
 } & ClockState
 
 export type PlayerStatsKillDataState = {
-  playerIdKilled: string;
-  playerIdCredited: string;
-  time: number;
-  type: "direct" | "indirect";
+  playerIdKilled: string
+  playerIdCredited: string
+  time: number
+  type: 'direct' | 'indirect'
 }
 export type PlayerStatsDataState = {
-  kills: PlayerStatsKillDataState[];
-  shotsFired: number; // how many times fired
-  damageGiven: number; // how much damange given out
+  kills: PlayerStatsKillDataState[]
+  shotsFired: number // how many times fired
+  damageGiven: number // how much damange given out
 }
 
 export type ProjectileShotData = {
-  pos: Vector3State;
-  dir: Vector3State;
-  force: number;
-  teamColor: string;
-  id: string;
-  type: "normal" | "yellow";
-  playerIdFrom: string;
+  pos: Vector3State
+  dir: Vector3State
+  force: number
+  teamColor: string
+  id: string
+  type: 'normal' | 'yellow'
+  playerIdFrom: string
 }

@@ -16,8 +16,10 @@ import { dailyMission } from '../utils/dailyMissions'
 import Canvas from '../ui/canvas/Canvas'
 import { Loader } from '../ui/loader'
 import { PowerUpShop } from '../ui/powerUpShop'
+import { type PlayerStats } from '../utils/player'
 
 export class UIController {
+  public player: PlayerStats
   public socialsVisible: boolean = true
   public canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
   public sideBar = new SideBar(this)
@@ -35,6 +37,7 @@ export class UIController {
     this.gameController = gameController
     ReactEcsRenderer.setUiRenderer(this.ui.bind(this))
     this.loader.showLoader()
+    this.player = gameController.Player
   }
 
   ui(): ReactEcs.JSX.Element | null {
@@ -76,8 +79,7 @@ export class UIController {
             this.gameController.superChargeTimer.mainUI()}
         </Canvas>
         <Canvas>
-          {this.powerUpShop.item1.visible &&
-            this.powerUpShop.item1.createUI()}
+          {this.powerUpShop.isVisible && this.powerUpShop.createUI()}
         </Canvas>
       </UiEntity>
     )

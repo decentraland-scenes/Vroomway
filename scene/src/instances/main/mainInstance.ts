@@ -55,6 +55,7 @@ export class MainInstance {
   aMaryPosterText = entityController.addEntity()
   kKoinPosterText = entityController.addEntity()
   puSign = entityController.addEntity()
+  puTrigger = entityController.addEntity()
   seasonWinner1 = entityController.addEntity()
   seasonWinner2 = entityController.addEntity()
   seasonWinner3 = entityController.addEntity()
@@ -678,6 +679,23 @@ export class MainInstance {
       })
     })
 
+    // Power Up Trigger
+    Transform.create(this.puTrigger,{
+      position: Vector3.create(71.29,0.88,42.77)
+    })
+    utils.triggers.addTrigger(
+      this.puTrigger,
+      1,
+      1,
+      [{ type: 'box', scale: Vector3.create(3, 1, 3) }],
+      () => {
+        this.gameController.uiController.powerUpShop.show()
+      },
+      () => {
+        this.gameController.uiController.powerUpShop.hide()
+      }
+    )
+
     // Season Winner 1
 
     Transform.create(this.seasonWinner1, {
@@ -1003,6 +1021,7 @@ export class MainInstance {
     entityController.removeEntity(this.aMaryPosterText)
     entityController.removeEntity(this.kKoinPosterText)
     entityController.removeEntity(this.puSign)
+    entityController.removeEntity(this.puTrigger)
     entityController.removeEntity(this.seasonWinner1)
     entityController.removeEntity(this.seasonWinner2)
     entityController.removeEntity(this.seasonWinner3)

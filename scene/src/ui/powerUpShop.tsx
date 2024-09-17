@@ -23,7 +23,7 @@ const background: Sprite = {
 class PowerUpShopItem {
   buy: Sprite = buyHexagonButton
   powerupId: PowerUpIdEnum
-  visible: boolean = true
+  visible: boolean = false
   buttonAction: () => void
   uiController: UIController
   buy_opacity: number = 0
@@ -135,7 +135,7 @@ export class PowerUpShop {
   uiController: UIController
   player: PlayerStats
   constructor(uiController: UIController) {
-    this.isVisible = true
+    this.isVisible = false
     this.uiController = uiController
     this.closeBtn = closeButton
     this.player = uiController.player

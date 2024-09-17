@@ -17,7 +17,7 @@ class PowerUpShopItem {
   powerupBoard: Sprite
   buy: Sprite
   powerupId: PowerUpIdEnum
-  visible: boolean = false
+  visible: boolean = true
   buttonAction: () => void
   uiController: UIController
   buy_opacity: number = 0
@@ -148,6 +148,12 @@ export class PowerUpShop {
   powerupToBuyIndex: number = 0
   closeBtn: Sprite
   uiController: UIController
+  item1: PowerUpShopItem
+  item2: PowerUpShopItem
+  item3: PowerUpShopItem
+  item4: PowerUpShopItem
+  item5: PowerUpShopItem
+  item6: PowerUpShopItem
   constructor(uiController: UIController) {
     this.uiController = uiController
     this.closeBtn = closeButton
@@ -164,32 +170,32 @@ export class PowerUpShop {
     this.closeBtn.w = this.closeBtn.w * 0.3
     this.closeBtn.h = this.closeBtn.h * 0.3
 
-    const item1 = new PowerUpShopItem(0, this.powerupBoard, PowerUpIdEnum.MULTIPLIER_COIN_2X_TIME_ROUND, () => {
+    this.item1 = new PowerUpShopItem(0, this.powerupBoard, PowerUpIdEnum.MULTIPLIER_COIN_2X_TIME_ROUND, () => {
       this.activatePu1();
     },this.uiController);
-    const item2 = new PowerUpShopItem(1, this.powerupBoard, PowerUpIdEnum.MULTIPLIER_XP_2X_TIME_ROUND, () => {
+    this.item2 = new PowerUpShopItem(1, this.powerupBoard, PowerUpIdEnum.MULTIPLIER_XP_2X_TIME_ROUND, () => {
       this.activatePu2();
     },this.uiController);
-    const item3 = new PowerUpShopItem(2, this.powerupBoard, PowerUpIdEnum.PROJECTILE_DAMANGE_PLUS_5_TIME_ROUND, () => {
+    this.item3 = new PowerUpShopItem(2, this.powerupBoard, PowerUpIdEnum.PROJECTILE_DAMANGE_PLUS_5_TIME_ROUND, () => {
       this.activatePu3();
     },this.uiController);
-    const item4 = new PowerUpShopItem(3, this.powerupBoard, PowerUpIdEnum.HEALTH_PLUS_50, () => {
+    this.item4 = new PowerUpShopItem(3, this.powerupBoard, PowerUpIdEnum.HEALTH_PLUS_50, () => {
       this.activatePu4();
     },this.uiController);
-    const item5 = new PowerUpShopItem(4, this.powerupBoard, PowerUpIdEnum.TRAP_PROJECTILE_TIME_ROUND, () => {
+    this.item5 = new PowerUpShopItem(4, this.powerupBoard, PowerUpIdEnum.TRAP_PROJECTILE_TIME_ROUND, () => {
       this.activatePu5();
     },this.uiController);
 
-    const item6 = new PowerUpShopItem(5, this.powerupBoard, PowerUpIdEnum.HEALTH_INVINCIBLE_15_SECONDS, () => {
+    this.item6 = new PowerUpShopItem(5, this.powerupBoard, PowerUpIdEnum.HEALTH_INVINCIBLE_15_SECONDS, () => {
       this.activatePu6();
     },this.uiController);
 
-    this.items.push(item1);
-    this.items.push(item2);
-    this.items.push(item3);
-    this.items.push(item4);
-    this.items.push(item5);
-    this.items.push(item6);
+    this.items.push(this.item1);
+    this.items.push(this.item2);
+    this.items.push(this.item3);
+    this.items.push(this.item4);
+    this.items.push(this.item5);
+    this.items.push(this.item6);
   }
 
   activatePu1():void {

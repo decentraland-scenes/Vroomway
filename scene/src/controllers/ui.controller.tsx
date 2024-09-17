@@ -15,6 +15,7 @@ import { RenderOutOfFuel } from '../ui/outOfFuel'
 import { dailyMission } from '../utils/dailyMissions'
 import Canvas from '../ui/canvas/Canvas'
 import { Loader } from '../ui/loader'
+import { PowerUpShop } from '../ui/powerUpShop'
 
 export class UIController {
   public socialsVisible: boolean = true
@@ -25,6 +26,7 @@ export class UIController {
   public inventory = new UIInventoryManager(this)
   public outOfFuel = new RenderOutOfFuel(this)
   public loader = new Loader(this)
+  public powerUpShop = new PowerUpShop(this)
   announcement_visible: boolean = false
   announcement: string = ''
   announcement_color: Color4 = Color4.White()
@@ -72,6 +74,10 @@ export class UIController {
         <Canvas>
           {this.gameController.superChargeTimer.isVisible &&
             this.gameController.superChargeTimer.mainUI()}
+        </Canvas>
+        <Canvas>
+          {this.powerUpShop.item1.visible &&
+            this.powerUpShop.item1.createUI()}
         </Canvas>
       </UiEntity>
     )

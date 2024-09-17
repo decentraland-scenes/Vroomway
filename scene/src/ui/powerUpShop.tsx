@@ -19,6 +19,7 @@ const background: Sprite = {
   h: 1688
 }
 
+
 class PowerUpShopItem {
   buy: Sprite = buyHexagonButton
   powerupId: PowerUpIdEnum
@@ -264,7 +265,6 @@ export class PowerUpShop {
               texture: { src: background.atlasSrc }
             }}
           >
-            {' '}
             <UiEntity
               uiTransform={{
                 positionType: 'relative',
@@ -278,7 +278,23 @@ export class PowerUpShop {
             >
               {this.items.map((item) => item.createUI())}
             </UiEntity>
+            <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                width: '20%',
+                height: '5%',
+                position:{top:'-2.5%', right:'-5%'}
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs: getUvs(closeButton),
+                texture: { src: closeButton.atlasSrc }
+              }}
+              onMouseDown={() => {this.hide()}}
+            />
+            
           </UiEntity>
+          
         </UiEntity>
       </Canvas>
     )

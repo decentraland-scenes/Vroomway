@@ -1658,6 +1658,7 @@ export class SoloSprint {
     void this.gameController.Player.writeDataToServer({
       onFinish: { updateUI: true }
     })
+    this.gameController.sprintTimer.startTimer()
     // sprintTimer.startTimer(options);
   }
 
@@ -1728,7 +1729,7 @@ export class SoloSprint {
     console.log('Race is over. Finished. DONE-ZO!')
     // end timer
     // by setting this the timer should pick up and close race out
-    // this.gameController.sprintTimer.sprintComplete = true
+    this.gameController.sprintTimer.sprintComplete = true
   }
 
   reset(): void {

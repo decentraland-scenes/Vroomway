@@ -29,6 +29,8 @@ export class UIController {
   public outOfFuel = new RenderOutOfFuel(this)
   public loader = new Loader(this)
   public powerUpShop = new PowerUpShop(this)
+  public timeCounter_visible = true
+  public timerText: string = ''
   announcement_visible: boolean = false
   announcement: string = ''
   announcement_color: Color4 = Color4.White()
@@ -80,6 +82,8 @@ export class UIController {
         </Canvas>
         <Canvas>
           {this.powerUpShop.isVisible && this.powerUpShop.createUI()}
+          {this.gameController.sprintTimer.isVisible &&
+            this.gameController.sprintTimer.mainUI()}
         </Canvas>
       </UiEntity>
     )

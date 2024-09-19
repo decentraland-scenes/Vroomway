@@ -442,6 +442,7 @@ export class MainInstance {
       rotation: Quaternion.fromEulerDegrees(0.0, 179.998, 180.0)
     })
     MeshRenderer.setPlane(this.fuelInfoPoster)
+    MeshCollider.setPlane(this.fuelInfoPoster)
     Material.setPbrMaterial(this.fuelInfoPoster, {
       texture: Material.Texture.Common({
         src: 'https://bafybeibgpc27qayhrp6rnibpqdmbxa3cujflglogwfv53lvm2twt5hpqri.ipfs.nftstorage.link/'
@@ -488,6 +489,7 @@ export class MainInstance {
       rotation: Quaternion.fromEulerDegrees(0.0, 135.0, 180.0)
     })
     MeshRenderer.setPlane(this.soloSprintSign)
+    MeshCollider.setPlane(this.soloSprintSign)
     Material.setPbrMaterial(this.soloSprintSign, {
       texture: Material.Texture.Common({
         src: 'https://bafkreidz7jasew2mjigvh2ja2jm7gd5js6s7mqj5daogwsuerhvrilqmbu.ipfs.nftstorage.link/'
@@ -508,6 +510,7 @@ export class MainInstance {
       rotation: Quaternion.fromEulerDegrees(0.0, 180.0, 180.0)
     })
     MeshRenderer.setPlane(this.dragRaceSign)
+    MeshCollider.setPlane(this.dragRaceSign)
     Material.setPbrMaterial(this.dragRaceSign, {
       texture: Material.Texture.Common({
         src: 'https://bafkreid5gmydkzhkyazy5l6uj5frrwdzicwo6igyeypcktaicraqr4ftk4.ipfs.nftstorage.link/'
@@ -528,6 +531,7 @@ export class MainInstance {
       rotation: Quaternion.fromEulerDegrees(0.0, 180.0, 180.0)
     })
     MeshRenderer.setPlane(this.fuegoCircuitsSign)
+    MeshCollider.setPlane(this.fuegoCircuitsSign)
     Material.setPbrMaterial(this.fuegoCircuitsSign, {
       texture: Material.Texture.Common({
         src: 'https://bafkreigehlbdsuxzcljwbps4kzip4qm3suiu36rtinwwdo34ylawkh5pme.ipfs.nftstorage.link/'
@@ -667,6 +671,7 @@ export class MainInstance {
       rotation: Quaternion.fromEulerDegrees(0.0, 55.0, 180.0)
     })
     MeshRenderer.setPlane(this.puSign)
+    MeshCollider.setPlane(this.puSign)
     Material.setPbrMaterial(this.puSign, {
       texture: Material.Texture.Common({
         src: 'https://bafybeibyecasmxnmhfo5va7zaam6h4c6if7enmxevwq7ufebpqoivksi3i.ipfs.nftstorage.link/'
@@ -908,6 +913,7 @@ export class MainInstance {
       rotation: Quaternion.fromEulerDegrees(360.0, 165.0, 180.0)
     })
     MeshRenderer.setPlane(this.newHere)
+    MeshCollider.setPlane(this.newHere)
     Material.setPbrMaterial(this.newHere, {
       texture: Material.Texture.Common({
         src: 'https://bafkreigmzy4kbncu35ktvh47qox7bk4oae4h5e6gogwnsw5ss7druadtca.ipfs.nftstorage.link/'

@@ -380,7 +380,7 @@ export class PlayerStats {
   }
 
   getFuel(): number {
-    return this.fuel
+    return 1000
   }
 
   getMetal(): number {

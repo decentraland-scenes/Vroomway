@@ -25,6 +25,8 @@ export class UIController {
   public inventory = new UIInventoryManager(this)
   public outOfFuel = new RenderOutOfFuel(this)
   public loader = new Loader(this)
+  public timeCounter_visible = true
+  public timerText: string = ''
   announcement_visible: boolean = false
   announcement: string = ''
   announcement_color: Color4 = Color4.White()
@@ -72,6 +74,10 @@ export class UIController {
         <Canvas>
           {this.gameController.superChargeTimer.isVisible &&
             this.gameController.superChargeTimer.mainUI()}
+        </Canvas>
+        <Canvas>
+          {this.gameController.sprintTimer.isVisible &&
+            this.gameController.sprintTimer.mainUI()}
         </Canvas>
       </UiEntity>
     )

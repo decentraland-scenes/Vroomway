@@ -15,8 +15,11 @@ import { RenderOutOfFuel } from '../ui/outOfFuel'
 import { dailyMission } from '../utils/dailyMissions'
 import Canvas from '../ui/canvas/Canvas'
 import { Loader } from '../ui/loader'
+import { PowerUpShop } from '../ui/powerUpShop'
+import { type PlayerStats } from '../utils/player'
 
 export class UIController {
+  public player: PlayerStats
   public socialsVisible: boolean = true
   public canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
   public sideBar = new SideBar(this)
@@ -25,6 +28,7 @@ export class UIController {
   public inventory = new UIInventoryManager(this)
   public outOfFuel = new RenderOutOfFuel(this)
   public loader = new Loader(this)
+  public powerUpShop = new PowerUpShop(this)
   public timeCounter_visible = true
   public timerText: string = ''
   announcement_visible: boolean = false
@@ -35,6 +39,7 @@ export class UIController {
     this.gameController = gameController
     ReactEcsRenderer.setUiRenderer(this.ui.bind(this))
     this.loader.showLoader()
+    this.player = gameController.Player
   }
 
   ui(): ReactEcs.JSX.Element | null {
@@ -76,6 +81,7 @@ export class UIController {
             this.gameController.superChargeTimer.mainUI()}
         </Canvas>
         <Canvas>
+          {this.powerUpShop.isVisible && this.powerUpShop.createUI()}
           {this.gameController.sprintTimer.isVisible &&
             this.gameController.sprintTimer.mainUI()}
         </Canvas>

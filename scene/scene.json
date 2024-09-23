@@ -48,9 +48,9 @@
       "name": "spawn1",
       "default": true,
       "position": {
-        "x": [47],
-        "y": [0.89],
-        "z": [63]
+        "x": [9.28],
+        "y": [1.71],
+        "z": [51.26]
       },
       "cameraTarget": {
         "x": 47,
@@ -61,6 +61,6 @@
   ],
   "featureToggles": {
     "voiceChat": "enabled",
-    "portableExperiences": "enabled"
+    "portableExperiences": "enabled" 
   }
 }

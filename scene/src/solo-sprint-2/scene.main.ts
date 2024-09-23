@@ -834,7 +834,7 @@ export class SoloSprint {
       // 8 - hex-tunnel.door.016
       {
         position: Vector3.create(4.0, 30.828, 29.5),
-        rotation: Quaternion.create(0.0, 180.0, 0.0)
+        rotation: Quaternion.fromEulerDegrees(0.0, 180.0, 0.0)
       },
 
       // 9 - hex-tunnel.door.020
@@ -843,28 +843,28 @@ export class SoloSprint {
         rotation: Quaternion.fromEulerDegrees(0, 0, 0)
       },
 
-      // 10 - hex-tunnel.door.001
+      // 10 - hex-tunnel.door.001 // fix
       {
         position: Vector3.create(9.0, 30.828, 49.5),
-        rotation: Quaternion.create(0.0, 270.0, 0.0)
+        rotation: Quaternion.fromEulerDegrees(0.0, 270.0, 0.0)
       },
 
-      // 11 - hex-tunnel.door.002
+      // 11 - hex-tunnel.door.002 // fix
       {
         position: Vector3.create(9.0, 30.828, 39.5),
-        rotation: Quaternion.create(0.0, 270.0, 0.0)
+        rotation: Quaternion.fromEulerDegrees(0.0, 270.0, 0.0)
       },
 
-      // 12 - hex-tunnel.door.003
+      // 12 - hex-tunnel.door.003// fix
       {
         position: Vector3.create(9.0, 30.828, 24.5),
-        rotation: Quaternion.create(0.0, 270.0, 0.0)
+        rotation: Quaternion.fromEulerDegrees(0.0, 270.0, 0.0) 
       },
 
-      // 13 - hex-tunnel.door.004
+      // 13 - hex-tunnel.door.004 // fix
       {
         position: Vector3.create(9.0, 30.828, 14.5),
-        rotation: Quaternion.create(0.0, 270.0, 0.0)
+        rotation: Quaternion.fromEulerDegrees(0.0, 270.0, 0.0) 
       }
     ]
     this.hexTunnelDoors3 = []

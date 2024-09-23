@@ -16,9 +16,6 @@ import {
   AvatarAnchorPointType,
   AvatarAttach,
   engine,
-  InputAction,
-  PointerEvents,
-  PointerEventType,
   Transform
 } from '@dcl/sdk/ecs'
 import { DoorRegular } from './classes/class.doorRegular'
@@ -175,17 +172,6 @@ export class SoloSprint {
       'Start the Race',
       8
     )
-    PointerEvents.getMutable(this.towerButton.gltfEntity.entity).pointerEvents = [
-      {
-        eventType: PointerEventType.PET_DOWN,
-        eventInfo: {
-          button: InputAction.IA_SECONDARY,  
-          showFeedback: true,
-          hoverText: 'Start the Race',
-          maxDistance: 8
-        }
-      }
-    ]
     //  ██████╗  ██╗    ███████╗██╗     ███████╗██╗   ██╗ █████╗ ████████╗ ██████╗ ██████╗
     // ██╔═████╗███║    ██╔════╝██║     ██╔════╝██║   ██║██╔══██╗╚══██╔══╝██╔═══██╗██╔══██╗
     // ██║██╔██║╚██║    █████╗  ██║     █████╗  ██║   ██║███████║   ██║   ██║   ██║██████╔╝

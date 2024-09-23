@@ -88,7 +88,7 @@ export class ButtonSprint {
           InputAction.IA_SECONDARY,
           PointerEventType.PET_DOWN,
           this.gltfEntity.entity
-        ) 
+        )
       ) {
         if (this.onInteract != null) {
           this.onInteract()

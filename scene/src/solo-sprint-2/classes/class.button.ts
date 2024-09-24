@@ -60,7 +60,7 @@ export class ButtonSprint {
         {
           eventType: PointerEventType.PET_DOWN,
           eventInfo: {
-            button: InputAction.IA_POINTER,
+            button: InputAction.IA_SECONDARY,
             showFeedback: true,
             hoverText,
             maxDistance: distance
@@ -71,7 +71,7 @@ export class ButtonSprint {
     engine.addSystem(() => {
       if (
         inputSystem.isTriggered(
-          InputAction.IA_POINTER,
+          InputAction.IA_SECONDARY,
           PointerEventType.PET_DOWN,
           this.gltfEntity.entity
         )

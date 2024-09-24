@@ -858,13 +858,13 @@ export class SoloSprint {
       // 12 - hex-tunnel.door.003// fix
       {
         position: Vector3.create(9.0, 30.828, 24.5),
-        rotation: Quaternion.fromEulerDegrees(0.0, 270.0, 0.0) 
+        rotation: Quaternion.fromEulerDegrees(0.0, 270.0, 0.0)
       },
 
       // 13 - hex-tunnel.door.004 // fix
       {
         position: Vector3.create(9.0, 30.828, 14.5),
-        rotation: Quaternion.fromEulerDegrees(0.0, 270.0, 0.0) 
+        rotation: Quaternion.fromEulerDegrees(0.0, 270.0, 0.0)
       }
     ]
     this.hexTunnelDoors3 = []

@@ -92,18 +92,19 @@ export class SuperChargeTimer {
             uvs: getUvs(superchargeIcon),
             texture: { src: superchargeIcon.atlasSrc }
           }}
-          onMouseDown={() => {}}
         >
           {/* Timer */}
           <Label
             uiTransform={{
-              positionType: 'absolute',
-              position: { right: '48%', top: '33%' }
+              width: '100%',
+              height: '100%'
             }}
+            uiBackground={{color:Color4.create(1,0,0,0.1)}}
             value={this.time}
             fontSize={16}
             font="sans-serif"
             color={Color4.Yellow()}
+            textAlign='middle-center'
           />
         </UiEntity>
       </UiEntity>

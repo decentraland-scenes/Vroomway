@@ -64,7 +64,7 @@ export class Profile {
             width: profileH,
             height: profileH,
             justifyContent: 'center',
-            alignItems:'center'
+            alignItems: 'center'
           }}
           uiBackground={{
             textureMode: 'stretch',
@@ -76,11 +76,11 @@ export class Profile {
           <Label
             uiTransform={{
               width: '100%',
-              height:'25%'
+              height: '25%'
             }}
             value={this.refuelTimer}
             fontSize={fontSize}
-            textAlign='middle-center'
+            textAlign="middle-center"
             font="sans-serif"
             color={Color4.Yellow()}
           />
@@ -88,9 +88,9 @@ export class Profile {
         {/* Profile Conteiner */}
         <UiEntity
           uiTransform={{
-            margin:{top:profileH * 0.05, right:profileH * 0.05},
+            margin: { top: profileH * 0.05, right: profileH * 0.05 },
             positionType: 'relative',
-            width: profileH * this.profile.w / this.profile.h,
+            width: (profileH * this.profile.w) / this.profile.h,
             height: profileH
           }}
           uiBackground={{
@@ -109,7 +109,7 @@ export class Profile {
             }}
             value={this.lvl.toString()}
             fontSize={fontSize}
-            textAlign='middle-left'
+            textAlign="middle-left"
             font="sans-serif"
             color={Color4.Yellow()}
           />
@@ -121,9 +121,8 @@ export class Profile {
               positionType: 'absolute',
               position: { right: '19%', top: '32%' }
             }}
-
             value={this.exp}
-            fontSize={fontSize*.6}
+            fontSize={fontSize * 0.6}
             font="sans-serif"
             color={Color4.Yellow()}
             textAlign="middle-center"
@@ -155,22 +154,20 @@ export class Profile {
             font="sans-serif"
             color={Color4.Yellow()}
             value={this.compPoints.toString()}
-
           />
           {/* Coins */}
           <Label
-           uiTransform={{
-            width: '15%',
-            height: '20%',
-            positionType: 'absolute',
-            position: { left: '12%', top: '65%' }
-          }}
-          fontSize={fontSize * 1.2}
-          textAlign="middle-left"
-          font="sans-serif"
-          color={Color4.Yellow()}
+            uiTransform={{
+              width: '15%',
+              height: '20%',
+              positionType: 'absolute',
+              position: { left: '12%', top: '65%' }
+            }}
+            fontSize={fontSize * 1.2}
+            textAlign="middle-left"
+            font="sans-serif"
+            color={Color4.Yellow()}
             value={this.coins.toString()}
-           
           />
         </UiEntity>
       </UiEntity>

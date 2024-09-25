@@ -117,12 +117,7 @@ export class SprintTimer {
       this.resetTimer()
       return
     }
-    console.log(
-      this._timerIteration,
-      'hey',
-      this.sprintOff,
-      this.sprintComplete
-    )
+
     // Handle timer updates
     this._timerIteration++
     const total = (this._sprintTimer += dt)

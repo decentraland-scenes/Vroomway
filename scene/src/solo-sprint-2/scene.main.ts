@@ -306,11 +306,11 @@ export class SoloSprint {
       CONFIG.SCENE_TRANSFORM_180.scale,
       CONFIG.SCENE_TRANSFORM_180.rotation,
       () => {
-        console.log('triggered')
+        console.log('triggered rotor')
         this.floor04Airlock.liftUp()
         utils.timers.setTimeout(() => {
           this.floor04Airlock.liftDown()
-        }, 1500)
+        }, 15000)
       }
     )
 

@@ -841,6 +841,7 @@ export class MainInstance {
           this.hyperfy
         )
       ) {
+        console.log('clicked')
         void openExternalUrl({
           url: 'https://hyperfy.io/vroomway'
         })

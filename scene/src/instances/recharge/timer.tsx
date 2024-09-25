@@ -18,7 +18,7 @@ export class SuperChargeTimer {
 
   initDanceTimer(): void {
     console.log('dance timer')
-    let defaultValue = 15 * 60
+    let defaultValue = 15 * 1 // 60 for minutes, 15 seconds is for testing
     utils.timers.setInterval(() => {
       if (this.gameController.Player.getFuel() >= 100) {
         this.hide()
@@ -68,6 +68,8 @@ export class SuperChargeTimer {
 
   mainUI(): ReactEcs.JSX.Element | null {
     const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
+    const fontSize = canvasInfo.height * 0.025
+
     return (
       <UiEntity
         uiTransform={{
@@ -84,7 +86,9 @@ export class SuperChargeTimer {
         <UiEntity
           uiTransform={{
             positionType: 'relative',
-            width: canvasInfo.height * 0.12 * superchargeIcon.w / superchargeIcon.h,
+            width:
+              (canvasInfo.height * 0.12 * superchargeIcon.w) /
+              superchargeIcon.h,
             height: canvasInfo.height * 0.12
           }}
           uiBackground={{
@@ -97,14 +101,13 @@ export class SuperChargeTimer {
           <Label
             uiTransform={{
               width: '100%',
-              height: '100%'
+              height: '85%'
             }}
-            uiBackground={{color:Color4.create(1,0,0,0.1)}}
             value={this.time}
-            fontSize={16}
+            fontSize={fontSize}
             font="sans-serif"
             color={Color4.Yellow()}
-            textAlign='middle-center'
+            textAlign="middle-center"
           />
         </UiEntity>
       </UiEntity>

@@ -84,8 +84,8 @@ export class SuperChargeTimer {
         <UiEntity
           uiTransform={{
             positionType: 'relative',
-            width: (canvasInfo.height * 0.17) / 1.09,
-            height: canvasInfo.height * 0.1
+            width: canvasInfo.height * 0.12 * superchargeIcon.w / superchargeIcon.h,
+            height: canvasInfo.height * 0.12
           }}
           uiBackground={{
             textureMode: 'stretch',

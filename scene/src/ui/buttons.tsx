@@ -163,10 +163,10 @@ export const danceOffIcon: Sprite = {
 export const superchargeIcon: Sprite = {
   atlasSrc: board1Atlas,
   atlasSize: { x: 2048, y: 2048 },
-  x: 0,
-  y: 456.7,
-  w: 150.9,
-  h: 105.8
+  x: 23,
+  y: 455,
+  w: 120,
+  h: 106
 }
 
 export const buyHexagonButton: Sprite = {

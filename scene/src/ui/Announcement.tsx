@@ -25,7 +25,7 @@ function Announcement({
         font="sans-serif"
         value={text}
         color={color}
-        textAlign='middle-center'
+        textAlign="middle-center"
       />
     </Canvas>
   )

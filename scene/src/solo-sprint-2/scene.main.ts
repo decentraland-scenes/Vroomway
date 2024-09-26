@@ -307,6 +307,7 @@ export class SoloSprint {
       CONFIG.SCENE_TRANSFORM_180.rotation,
       () => {
         console.log('triggered rotor')
+        this.floor04Airlock.liftDown()
         this.floor04Airlock.liftUp()
         utils.timers.setTimeout(() => {
           this.floor04Airlock.liftDown()

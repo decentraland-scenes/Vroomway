@@ -64,10 +64,10 @@ export const inventoryButtons: Record<string, Sprite> = {
 export const refuelIcon: Sprite = {
   atlasSrc: board1Atlas,
   atlasSize: { x: 2048, y: 2048 },
-  x: 0,
-  y: 348.3,
-  w: 150.9,
-  h: 105.8
+  x: 23,
+  y: 334,
+  w: 120,
+  h: 120
 }
 export const closeButton: Sprite = {
   atlasSrc: board1Atlas,

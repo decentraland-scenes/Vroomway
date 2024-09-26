@@ -28,9 +28,9 @@ export class Profile {
       atlasSrc: this.board2Atlas,
       atlasSize: { x: 2048, y: 2048 },
       x: 16,
-      y: 1787,
-      w: 995,
-      h: 249
+      y: 1790,
+      w: 994,
+      h: 244
     }
     utils.timers.setTimeout(() => {
       this.initRefuelTimer()
@@ -44,12 +44,14 @@ export class Profile {
     this.updateFuel()
     this.updateCompPoints()
     const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
+    const profileH = canvasInfo.height * 0.1
+    const fontSize = profileH * 0.15
     return (
       <UiEntity
         uiTransform={{
           flexDirection: 'row',
           width: canvasInfo.width,
-          height: canvasInfo.height * 0.1,
+          height: profileH,
           justifyContent: 'flex-end',
           positionType: 'absolute',
           position: { top: '0%', right: '0%' }
@@ -59,24 +61,26 @@ export class Profile {
         <UiEntity
           uiTransform={{
             positionType: 'relative',
-            width: (canvasInfo.height * 0.17) / 1.09,
-            height: canvasInfo.height * 0.1
+            width: profileH,
+            height: profileH,
+            justifyContent: 'center',
+            alignItems: 'center'
           }}
           uiBackground={{
             textureMode: 'stretch',
             uvs: getUvs(refuelIcon),
             texture: { src: refuelIcon.atlasSrc }
           }}
-          onMouseDown={() => {}}
         >
           {/* Timer */}
           <Label
             uiTransform={{
-              positionType: 'absolute',
-              position: { right: '48%', top: '33%' }
+              width: '100%',
+              height: '25%'
             }}
             value={this.refuelTimer}
-            fontSize={16}
+            fontSize={fontSize}
+            textAlign="middle-center"
             font="sans-serif"
             color={Color4.Yellow()}
           />
@@ -84,72 +88,86 @@ export class Profile {
         {/* Profile Conteiner */}
         <UiEntity
           uiTransform={{
+            margin: { top: profileH * 0.05, right: profileH * 0.05 },
             positionType: 'relative',
-            width: (canvasInfo.height * 2.16) / 3.99,
-            height: '100%'
+            width: (profileH * this.profile.w) / this.profile.h,
+            height: profileH
           }}
           uiBackground={{
             textureMode: 'stretch',
             uvs: getUvs(this.profile),
             texture: { src: this.profile.atlasSrc }
           }}
-          onMouseDown={() => {}}
         >
           {/* Level */}
           <Label
             uiTransform={{
+              width: '15%',
+              height: '20%',
               positionType: 'absolute',
-              position: { right: '34%', top: '15%' }
+              position: { right: '20%', top: '12%' }
             }}
             value={this.lvl.toString()}
-            fontSize={20}
+            fontSize={fontSize}
+            textAlign="middle-left"
             font="sans-serif"
             color={Color4.Yellow()}
           />
           {/* Exp */}
           <Label
             uiTransform={{
+              width: '30%',
+              height: '20%',
               positionType: 'absolute',
-              position: { right: '49%', top: '35%' }
+              position: { right: '19%', top: '32%' }
             }}
             value={this.exp}
-            fontSize={11}
+            fontSize={fontSize * 0.6}
             font="sans-serif"
             color={Color4.Yellow()}
-            textAlign="middle-left"
+            textAlign="middle-center"
           />
           {/* Fuel */}
           <Label
             uiTransform={{
+              width: '15%',
+              height: '20%',
               positionType: 'absolute',
-              position: { right: '87%', top: '20%' }
+              position: { left: '12%', top: '20%' }
             }}
-            value={this.fuel.toString()}
-            fontSize={20}
+            fontSize={fontSize * 1.5}
+            textAlign="middle-left"
             font="sans-serif"
             color={Color4.Yellow()}
+            value={this.fuel.toString()}
           />
           {/* Comp points */}
           <Label
             uiTransform={{
+              width: '15%',
+              height: '20%',
               positionType: 'absolute',
-              position: { right: '55%', top: '64%' }
+              position: { left: '42%', top: '65%' }
             }}
-            value={this.compPoints.toString()}
-            fontSize={20}
+            fontSize={fontSize * 1.2}
+            textAlign="middle-left"
             font="sans-serif"
             color={Color4.Yellow()}
+            value={this.compPoints.toString()}
           />
           {/* Coins */}
           <Label
             uiTransform={{
+              width: '15%',
+              height: '20%',
               positionType: 'absolute',
-              position: { right: '87%', top: '64%' }
+              position: { left: '12%', top: '65%' }
             }}
-            value={this.coins.toString()}
-            fontSize={20}
+            fontSize={fontSize * 1.2}
+            textAlign="middle-left"
             font="sans-serif"
             color={Color4.Yellow()}
+            value={this.coins.toString()}
           />
         </UiEntity>
       </UiEntity>

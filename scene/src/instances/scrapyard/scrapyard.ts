@@ -848,7 +848,7 @@ export class Scrapyard {
               cameraTarget: Vector3.create(68.79, 0.88, 32.11)
             })
             this.gameController.realmController.switchRealm('mainInstance')
-            // loader.showLoader();
+            this.gameController.uiController.loader.showLoader()
           }, 50)
         }, 50)
       }
@@ -899,7 +899,7 @@ export class Scrapyard {
   }
 
   getId(): RealmType {
-    return 'mainInstance'
+    return 'scrapyard'
   }
 
   deadPosition(): Vector3 {

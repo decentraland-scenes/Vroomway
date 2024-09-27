@@ -502,7 +502,7 @@ export class RechargeInstance {
               cameraTarget: Vector3.create(30.18, 0.88, 31.3)
             })
             this.gameController.realmController.switchRealm('mainInstance')
-            // loader.showLoader();
+            this.gameController.uiController.loader.showLoader()
           }, 50)
         }, 50)
       }
@@ -527,7 +527,7 @@ export class RechargeInstance {
           // cleanUpScene();
           utils.timers.setTimeout(() => {
             this.gameController.realmController.switchRealm('scrapyard')
-            // loader.showLoader();
+            this.gameController.uiController.loader.showLoader()
           }, 50)
         }, 50)
       }

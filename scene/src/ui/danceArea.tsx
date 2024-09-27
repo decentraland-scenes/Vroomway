@@ -1,4 +1,4 @@
-import { type Vector3, type Quaternion, Color4 } from '@dcl/sdk/math'
+import { type Quaternion, Color4, Vector3 } from '@dcl/sdk/math'
 import { type GameController } from '../controllers/game.controller'
 import { ReactEcs, UiEntity } from '@dcl/sdk/react-ecs'
 import {
@@ -11,7 +11,7 @@ import {
 import { getUvs, type Sprite } from './utils/utils'
 import { danceOffIcon, danceOnIcon } from './buttons'
 import * as utils from '@dcl-sdk/utils'
-import { triggerEmote } from '~system/RestrictedActions'
+import { movePlayerTo, triggerEmote } from '~system/RestrictedActions'
 import { entityController } from '../utils/entityController'
 import { instance } from '../utils/currentInstance'
 import { missions } from '../utils/missions'
@@ -79,6 +79,7 @@ export class DanceArea {
   danceArea = entityController.addEntity()
   danceSystem = new DanceSystem('all')
   gameController: GameController
+  firstTime: boolean = true
   constructor(
     gameController: GameController,
     position: Vector3,
@@ -101,6 +102,13 @@ export class DanceArea {
       1,
       [{ type: 'box', scale }],
       () => {
+        if (this.firstTime) {
+          void movePlayerTo({
+            newRelativePosition: Vector3.create(48, 16.29, 32),
+            cameraTarget: Vector3.create(48, 8.29, 32)
+          })
+          this.firstTime = false
+        }
         this.danceSystem.routine = 'all'
         this.danceSystem.dance()
         if (instance.getInstance() !== 'recharge') return

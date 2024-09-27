@@ -183,7 +183,7 @@ export class SideBar {
     // cleanupScene();}
     utils.timers.setTimeout(() => {
       //   renderMainInstance()
-      //   loader.showLoader()
+      this.uiController.loader.showLoader()
     }, 50)
     utils.timers.setTimeout(() => {
       void movePlayerTo({

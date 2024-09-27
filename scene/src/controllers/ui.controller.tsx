@@ -75,7 +75,6 @@ export class UIController {
           {this.gameController.danceAreaUI.isVisible &&
             this.gameController.danceAreaUI.mainUI()}
         </Canvas>
-        <Canvas>{this.loader.profileVisible && this.loader.mainUi()}</Canvas>
         <Canvas>
           {this.gameController.superChargeTimer.isVisible &&
             this.gameController.superChargeTimer.mainUI()}
@@ -85,6 +84,7 @@ export class UIController {
           {this.gameController.sprintTimer.isVisible &&
             this.gameController.sprintTimer.mainUI()}
         </Canvas>
+        <Canvas>{this.loader.profileVisible && this.loader.mainUi()}</Canvas>
       </UiEntity>
     )
   }

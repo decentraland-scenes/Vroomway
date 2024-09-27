@@ -328,7 +328,7 @@ export class MainInstance {
             newRelativePosition: Vector3.create(48, 16.29, 32),
             cameraTarget: Vector3.create(48, 8.29, 32)
           })
-          this.gameController.uiController.loader.showLoader(5000);
+          this.gameController.uiController.loader.showLoader(5000)
         }, 50)
       }
     )
@@ -356,7 +356,7 @@ export class MainInstance {
         })
         this.gameController.realmController.switchRealm('scrapyard')
         utils.timers.setTimeout(() => {
-          this.gameController.uiController.loader.showLoader(7000);
+          this.gameController.uiController.loader.showLoader(7000)
         }, 50)
       }
     )

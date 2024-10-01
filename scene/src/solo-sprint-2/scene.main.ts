@@ -11,12 +11,13 @@ import { Elevator } from './classes/class.elevator'
 import { ElevatorButton } from './classes/class.elevatorButton'
 import { TriggerZone } from './classes/class.triggerZone'
 import {
-  Animator,
-  AudioSource,
-  AvatarAnchorPointType,
-  AvatarAttach,
-  engine,
-  Transform
+  Animator
+  //  engine
+  // AudioSource,
+  // AvatarAnchorPointType,
+  // AvatarAttach,
+  // engine,
+  // Transform
 } from '@dcl/sdk/ecs'
 import { DoorRegular } from './classes/class.doorRegular'
 import { LockClicker } from './classes/class.lockClicker'
@@ -25,7 +26,7 @@ import { DoorBroken } from './classes/class.doorBroken'
 import { GLTFParticles } from './classes/class.gltfParticles'
 import { Zapper } from './classes/class.zapper'
 import { entityController } from '../utils/entityController'
-import { getUserData } from '~system/UserIdentity'
+// import { getUserData } from '~system/UserIdentity'
 
 export class SoloSprint {
   gameController: GameController
@@ -168,6 +169,7 @@ export class SoloSprint {
         utils.timers.setTimeout(() => {
           this.towerTrapdoor.closeDoor(false, true)
         }, 2000)
+        // this.gameController.realmController.switchRealm('mainInstance')
       },
       'Start the Race',
       8
@@ -1625,20 +1627,20 @@ export class SoloSprint {
 
     if (startClicked) return
     startClicked = true
-    const publicKey = await getUserData({})
+    // const publicKey = await getUserData({})
     // Create entity
-    const cube = entityController.addEntity()
-    Transform.createOrReplace(cube, {
-      parent: engine.PlayerEntity
-    })
-    AvatarAttach.createOrReplace(cube, {
-      avatarId: publicKey.data?.publicKey,
-      anchorPointId: AvatarAnchorPointType.AAPT_NAME_TAG
-    })
-    // Create AudioClip object, holding audio file
-    AudioSource.create(cube, {
-      audioClipUrl: 'sounds/solosprintMusicTrack.mp3'
-    })
+    // // const cube = entityController.addEntity()
+    // Transform.createOrReplace(cube, {
+    //   parent: engine.PlayerEntity
+    // })
+    // AvatarAttach.createOrReplace(cube, {
+    //   avatarId: publicKey.data?.publicKey,
+    //   anchorPointId: AvatarAnchorPointType.AAPT_NAME_TAG
+    // })
+    // // Create AudioClip object, holding audio file
+    // AudioSource.create(cube, {
+    //   audioClipUrl: 'sounds/solosprintMusicTrack.mp3'
+    // })
     // Add AudioSource component to entity
     // start timer
     // if connected to lobby, lobby will overwrite, but still want this here to enforce expectation
@@ -1724,13 +1726,17 @@ export class SoloSprint {
   }
 
   onRaceEnd(): void {
-    const respawnPosition = Vector3.create(33.5, 0, 57.5)
-    void movePlayerTo({ newRelativePosition: respawnPosition })
+    const respawnPosition = Vector3.create(51.89, 0.88, 45.48)
+    this.gameController.realmController.switchRealm('mainInstance')
+    this.gameController.sprintTimer.sprintComplete = true
+    utils.timers.setTimeout(() => {
+      void movePlayerTo({ newRelativePosition: respawnPosition })
+    }, 1500)
+
     // debugger
-    console.log('Race is over. Finished. DONE-ZO!')
+    console.log('Race is over. Finished. DONE-ZO!!')
     // end timer
     // by setting this the timer should pick up and close race out
-    this.gameController.sprintTimer.sprintComplete = true
   }
 
   reset(): void {
@@ -1871,7 +1877,6 @@ export class SoloSprint {
     this.creatureSharks.forEach((entity) => {
       entityController.removeEntity(entity.entity)
     })
-
     this.particlesWaterDrips.forEach((entity) => {
       entityController.removeEntity(entity.entity)
     })
@@ -1879,7 +1884,6 @@ export class SoloSprint {
       entity.removerTriggerEntity()
       entityController.removeEntity(entity.entity)
     })
-    this.disableAllObjects()
   }
 
   getId(): RealmType {

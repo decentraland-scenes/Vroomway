@@ -1,6 +1,6 @@
 import { type Sprite } from '../utils/utils'
 
-const itemAtlas: string = 'assets/images/uiAtlas/itemAtlas.png'
+const itemAtlas: string = 'assets/images/uiAtlas/itemsAtlas.png'
 const itemAtlasSize: { x: number; y: number } = { x: 2048, y: 2048 }
 
 export const itemsSprites: Record<string, Sprite> = {
@@ -10,14 +10,14 @@ export const itemsSprites: Record<string, Sprite> = {
     x: 256,
     y: 0,
     w: 256,
-    h: 246
+    h: 245
   },
   cargoSprite: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 0,
-    y: 1476,
+    y: 1205,
     w: 256,
-    h: 246
+    h: 240
   }
 }

@@ -21,8 +21,9 @@ import { itemsSprites } from './atlas/itemsSprites'
 
 export class Reward {
   public timeText: string = '00:00.00'
-  public coinsText: string = ''
-  public cargoText: string = ''
+  public coinsText: string = '5'
+  public cargoText: string = '2'
+  public compPointsText = '0'
   public isVisible: boolean = true
   public expText: string = '+50'
   public time: string = '00:00.00'
@@ -173,10 +174,10 @@ export class Reward {
   }
 
   createUi(): ReactEcs.JSX.Element {
-      const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
-      const fontSizeTimer = canvasInfo.height * 0.035
-      const fontSizeXP = canvasInfo.height * 0.02
-      const fontSizeDrop = canvasInfo.height * 0.02
+    const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
+    const fontSizeTimer = canvasInfo.height * 0.035
+    const fontSizeXP = canvasInfo.height * 0.02
+    const fontSizeDrop = canvasInfo.height * 0.02
 
     return (
       <UiEntity
@@ -239,64 +240,92 @@ export class Reward {
             onMouseDown={() => {
               this.tweet()
             }}
-                />
-                <Label
-                uiTransform={{
-                    width: '100%',
-                        height: fontSizeTimer,
-                        positionType: 'absolute',
-                    position:{top:'24.5%', left:'52%'}
-                  }}
-                  value={this.timeText}
-                  fontSize={fontSizeTimer}
-                  font="sans-serif"
-                  color={Color4.Yellow()}
-                    textAlign="middle-left"
-                />
-                <Label
-                uiTransform={{
-                    width: '100%',
-                        height: fontSizeXP,
-                        positionType: 'absolute',
-                    position:{bottom:'24%'}
-                  }}
-                  value={this.expText}
-                  fontSize={fontSizeXP}
-                  font="sans-serif"
-                  color={Color4.White()}
-                    textAlign="middle-center"
-                />
-                <UiEntity
+          />
+          <Label
+            uiTransform={{
+              width: '100%',
+              height: fontSizeTimer,
+              positionType: 'absolute',
+              position: { top: '24.5%', left: '52%' }
+            }}
+            value={this.timeText}
+            fontSize={fontSizeTimer}
+            font="sans-serif"
+            color={Color4.Yellow()}
+            textAlign="middle-left"
+          />
+          <Label
+            uiTransform={{
+              width: '100%',
+              height: fontSizeXP,
+              positionType: 'absolute',
+              position: { bottom: '25.3%' }
+            }}
+            value={this.expText}
+            fontSize={fontSizeXP}
+            font="sans-serif"
+            color={Color4.White()}
+            textAlign="middle-center"
+          />
+          <UiEntity
             uiTransform={{
               positionType: 'absolute',
-              position: { top: '30%', left: '20%' },
+              position: { top: '40%', left: '25%' },
               width:
-                ((canvasInfo.height * 0.5 * 0.1) /
-                  itemsSprites.coinSprite.h) *
-                buttonsSprites.coinSprite.w,
-              height: canvasInfo.height * 0.5 * 0.3
+                ((canvasInfo.height * 0.5 * 0.25) / itemsSprites.coinSprite.h) *
+                itemsSprites.coinSprite.w,
+              height: canvasInfo.height * 0.5 * 0.25
             }}
             uiBackground={{
               textureMode: 'stretch',
               uvs: getUvs(itemsSprites.coinSprite),
               texture: { src: itemsSprites.coinSprite.atlasSrc }
             }}
-            
-                >
-                    <Label
-                uiTransform={{
-                    width: '100%',
-                        height: fontSizeDrop,
-                        positionType: 'absolute',
-                    position:{bottom:'24%'}
-                  }}
-                  value={this.cargoText}
-                  fontSize={fontSizeDrop}
-                  font="sans-serif"
-                  color={Color4.Green()}
-                    textAlign="bottom-right"
-                />
-                    </UiEntity>
+          >
+            <Label
+              uiTransform={{
+                width: '100%',
+                height: fontSizeDrop,
+                positionType: 'absolute',
+                position: { bottom: '5%', left: '12%' }
+              }}
+              value={this.coinsText}
+              fontSize={fontSizeDrop}
+              font="sans-serif"
+              color={Color4.Green()}
+              textAlign="bottom-left"
+            />
+          </UiEntity>
+          <UiEntity
+            uiTransform={{
+              positionType: 'absolute',
+              position: { top: '40%', right: '25%' },
+              width:
+                ((canvasInfo.height * 0.5 * 0.25) /
+                  itemsSprites.cargoSprite.h) *
+                itemsSprites.cargoSprite.w,
+              height: canvasInfo.height * 0.5 * 0.25
+            }}
+            uiBackground={{
+              textureMode: 'stretch',
+              uvs: getUvs(itemsSprites.cargoSprite),
+              texture: { src: itemsSprites.cargoSprite.atlasSrc }
+            }}
+          >
+            <Label
+              uiTransform={{
+                width: '100%',
+                height: fontSizeDrop,
+                positionType: 'absolute',
+                position: { bottom: '5%', left: '12%' }
+              }}
+              value={this.cargoText}
+              fontSize={fontSizeDrop}
+              font="sans-serif"
+              color={Color4.Green()}
+              textAlign="bottom-left"
+            />
+          </UiEntity>
         </UiEntity>
       </UiEntity>
     )

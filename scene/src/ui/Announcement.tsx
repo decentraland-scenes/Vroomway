@@ -1,5 +1,6 @@
 import { type Color4 } from '@dcl/sdk/math'
 import ReactEcs, { Label } from '@dcl/sdk/react-ecs'
+import Canvas from './canvas/Canvas'
 
 type AnnouncementProps = {
   visible: boolean
@@ -13,20 +14,20 @@ function Announcement({
   color
 }: AnnouncementProps): ReactEcs.JSX.Element {
   return (
-    <Label
-      uiTransform={{
-        width: 13,
-        height: 13,
-        margin: { top: '5%', bottom: '0%', left: '50%', right: '50%' },
-        positionType: 'absolute',
-        position: { bottom: '0%', top: '0%', left: '0%' },
-        display: visible ? 'flex' : 'none'
-      }}
-      fontSize={40}
-      font="sans-serif"
-      value={text}
-      color={color}
-    />
+    <Canvas>
+      <Label
+        uiTransform={{
+          width: '100%',
+          height: '100%',
+          display: visible ? 'flex' : 'none'
+        }}
+        fontSize={40}
+        font="sans-serif"
+        value={text}
+        color={color}
+        textAlign="middle-center"
+      />
+    </Canvas>
   )
 }
 

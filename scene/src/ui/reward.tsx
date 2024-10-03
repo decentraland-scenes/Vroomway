@@ -24,7 +24,7 @@ export class Reward {
   public coinsText: string = '5'
   public cargoText: string = '2'
   public compPointsText = '0'
-  public isVisible: boolean = true
+  public isVisible: boolean = false
   public expText: string = '+50'
   public time: string = '00:00.00'
   uiController: UIController

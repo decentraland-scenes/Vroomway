@@ -1726,11 +1726,13 @@ export class SoloSprint {
   }
 
   onRaceEnd(): void {
-    const respawnPosition = Vector3.create(51.89, 0.88, 45.48)
     this.gameController.realmController.switchRealm('mainInstance')
     this.gameController.sprintTimer.sprintComplete = true
+    this.gameController.uiController.reward.timeText =
+      this.gameController.sprintTimer.timerText
+    this.gameController.uiController.reward.show()
     utils.timers.setTimeout(() => {
-      void movePlayerTo({ newRelativePosition: respawnPosition })
+      this.gameController.sprintTimer.resetTimer()
     }, 1500)
 
     // debugger

@@ -17,12 +17,14 @@ import Canvas from '../ui/canvas/Canvas'
 import { Loader } from '../ui/loader'
 import { PowerUpShop } from '../ui/powerUpShop'
 import { type PlayerStats } from '../utils/player'
+import { Reward } from '../ui/reward'
 
 export class UIController {
   public player: PlayerStats
   public socialsVisible: boolean = true
   public canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
   public sideBar = new SideBar(this)
+  public reward = new Reward(this)
   public profile = new Profile(this)
   public missionsBoard = new MissionsBoard(this)
   public inventory = new UIInventoryManager(this)
@@ -84,6 +86,7 @@ export class UIController {
           {this.gameController.sprintTimer.isVisible &&
             this.gameController.sprintTimer.mainUI()}
         </Canvas>
+        <Canvas>{this.reward.isVisible && this.reward.createUi()}</Canvas>
         <Canvas>{this.loader.profileVisible && this.loader.mainUi()}</Canvas>
       </UiEntity>
     )

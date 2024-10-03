@@ -12,10 +12,26 @@ export const itemsSprites: Record<string, Sprite> = {
     w: 256,
     h: 245
   },
-  cargoSprite: {
+  smCargoSprite: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 0,
+    y: 1205,
+    w: 256,
+    h: 240
+  },
+  mdCargoSprite: {
+    atlasSrc: itemAtlas,
+    atlasSize: itemAtlasSize,
+    x: 256,
+    y: 1205,
+    w: 256,
+    h: 240
+  },
+  lgCargoSprite: {
+    atlasSrc: itemAtlas,
+    atlasSize: itemAtlasSize,
+    x: 512,
     y: 1205,
     w: 256,
     h: 240

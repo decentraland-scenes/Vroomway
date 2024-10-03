@@ -1,32 +1,26 @@
 import { movePlayerTo, openExternalUrl } from '~system/RestrictedActions'
 import type * as serverStateSpec from '../vw-decentrally/modules/connection/state/server-state-spec'
-
-// import * as utils from '@dcl-sdk/utils'
-// import { instance } from '../utils/currentInstance'
-// import { cleanUpScene } from '../utils/cleanupScene'
-// import { dailyMission } from "../utils/dailyMissions"
-// import { missions } from "../utils/missions"
-// import { type LevelModeType } from "../utils/sprintTimer"
 import { Color4, Vector3 } from '@dcl/sdk/math'
 import { type UIController } from '../controllers/ui.controller'
 import ReactEcs, { Label, UiEntity } from '@dcl/sdk/react-ecs'
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
-import { getUvs } from './utils/utils'
+import { getUvs, type Sprite } from './utils/utils'
 import { boardsSprites } from './atlas/boardsAtlas'
 import { buttonsSprites } from './atlas/buttonsSprites'
 import { dailyMission } from '../utils/dailyMissions'
 import { missions } from '../utils/missions'
-import { type LevelModeType } from '../utils/sprintTimer'
 import { itemsSprites } from './atlas/itemsSprites'
 
 export class Reward {
-  public timeText: string = '00:00.00'
-  public coinsText: string = '5'
-  public cargoText: string = '2'
-  public compPointsText = '0'
+  public coins: number = 0
+  public smCargo: number = 0
+  public mdCargo: number = 0
+  public lgCargo: number = 0
+  public cargoQuantity: number = 0
+  public cargoSpriteSize: Sprite = itemsSprites.smCargoSprite
+  public exp: number = 0
   public isVisible: boolean = false
-  public expText: string = '+50'
-  public time: string = '00:00.00'
+  public timeText: string = '00:00.00'
   uiController: UIController
   constructor(uiController: UIController) {
     this.uiController = uiController
@@ -44,6 +38,15 @@ export class Reward {
 
   claim(): void {
     this.hide()
+    // Give loot to player:
+    const player = this.uiController.gameController.Player
+
+    player.getValueAdjuster().coins += this.coins
+    player.getValueAdjuster().exp += this.exp
+    player.getValueAdjuster().smCargo += this.smCargo
+    player.getValueAdjuster().mdCargo += this.mdCargo
+    player.getValueAdjuster().lgCargo += this.lgCargo
+
     // Unsubscribe from buttons
     // removeKeyBindings(this.eButtonAction, this.fButtonAction)
     // Player.getValueAdjuster().sprintCoinsCollected = 0
@@ -63,93 +66,77 @@ export class Reward {
   }
 
   //   time argument is seconds
-  async updateTime(
-    time: number,
-    _mode: LevelModeType,
-    _powerUps: serverStateSpec.PowerUpSelection
-  ): Promise<void> {
-    //   if (DEBUGGING_SPRINT_SOLO_REWARDS) log("Race Rewards - Solo Sprint: race finished, processing rewards...")
+  updateTime(time: number, powerUps?: serverStateSpec.PowerUpSelection): void {
+    const player = this.uiController.gameController.Player
+    const vehicleOwnership = this.uiController.gameController.vehicleOwnership
 
     // entry processing
     //  leash time decimals
-    const fixedTime = time.toFixed(2)
     //  convert time to formatted string (for tween and ui update)
-    this.time = this.uiController.gameController.sprintTimer.format(fixedTime)
-    this.timeText = this.time
+    this.timeText = this.uiController.gameController.sprintTimer.format(time)
     //
-    // const total = 125 + Player.sprintCoinsCollected
 
-    // check for tournament mode
-    //   const tournamentMode = mode?.type === "tournament"
     // calculate race exp
-    //   const xpPowerUp = PowerUpsInv.powerUpMgr.getXpMultiplier()
-    //   const numRacersXp = 1
+    // const xpPowerUp = PowerUpsInv.powerUpMgr.getXpMultiplier()
+    const xpPowerUp = 2
+    const numRacersXp = 1
     // let coinMultiplier = powerUps.getCoinMultiplier()
-
-    //   if (DEBUGGING_SPRINT_SOLO_REWARDS) log("Race Rewards - Solo Sprint: parsing speed rewards for tournament=" + tournamentMode + " time=" + fixedTime + "mode=" + mode)
 
     // TODO: this can be hugely reduced
     // normal mode
+    // Clear reward:
+    this.coins = 0
+    this.exp = 0
+    this.smCargo = 0
+    this.mdCargo = 0
+    this.lgCargo = 0
+    this.cargoQuantity = 0
+
     if (time >= 180.03) {
-      this.expText = '+50'
-      this.coinsText = '50'
-      this.cargoText = '0'
-      //   Player.getValueAdjuster().exp += 50
-      //   Player.getValueAdjuster().coins += 50
-      // Player.getValueAdjuster().compPoints += 300
-      // this.compPointsText = "300"
+      this.exp = 50
+      this.coins = 50
+      this.cargoQuantity = 0
     } else if (time >= 180.02 && time <= 180.02) {
-      //   Player.getValueAdjuster().smCargo += 1
-      //   const bonusCoins = vehicleOwnership.getCoinBonus(125 + Player.getValueAdjuster().sprintCoinsCollected)
-      //   const bonusExp = computeXP(150, xpPowerUp, numRacersXp)
-      //   Player.getValueAdjuster().coins += bonusCoins
-      //   Player.getValueAdjuster().exp += bonusExp
-      // Player.getValueAdjuster().compPoints += 300
-      // this.compPointsText = "300"
-      //   this.expText = `+${bonusExp.toString()}`
-      //   this.coinsText = bonusCoins.toString()
-      this.cargoText = '1'
+      const bonusCoins = vehicleOwnership.getCoinBonus(
+        125 + player.getValueAdjuster().sprintCoinsCollected
+      )
+      const bonusExp = vehicleOwnership.computeXP(150, xpPowerUp, numRacersXp)
+      this.exp = bonusExp
+      this.coins = bonusCoins
+      this.smCargo = 1
+      this.cargoQuantity = this.smCargo
+      this.cargoSpriteSize = itemsSprites.smCargoSprite
     } else if (time >= 135.02 && time <= 180.01) {
-      //   Player.getValueAdjuster().mdCargo += 1
-      //   const bonusCoins = vehicleOwnership.getCoinBonus(150 + Player.getValueAdjuster().sprintCoinsCollected)
-      //   const bonusExp = computeXP(200, xpPowerUp, numRacersXp)
-      //   Player.getValueAdjuster().coins += bonusCoins
-      //   Player.getValueAdjuster().exp += bonusExp
-      // Player.getValueAdjuster().compPoints += 400
-      // this.compPointsText = "400"
-      //   this.expText = `+${bonusExp.toString()}`
-      //   this.coinsText = bonusCoins.toString()
-      this.cargoText = '1'
+      const bonusCoins = vehicleOwnership.getCoinBonus(
+        150 + player.getValueAdjuster().sprintCoinsCollected
+      )
+      const bonusExp = vehicleOwnership.computeXP(200, xpPowerUp, numRacersXp)
+      this.exp = bonusExp
+      this.coins = bonusCoins
+      this.mdCargo = 1
+      this.cargoQuantity = this.mdCargo
+      this.cargoSpriteSize = itemsSprites.mdCargoSprite
       missions.checkAndUnlockCampaignMission('completeSprintFastTime')
     } else if (time <= 135.01) {
-      //   Player.getValueAdjuster().lgCargo += 1
-      // Player.getValueAdjuster().compPoints += 500
-      //   const bonusCoins = vehicleOwnership.getCoinBonus(200 + Player.getValueAdjuster().sprintCoinsCollected)
-      //   const bonusExp = computeXP(300, xpPowerUp, numRacersXp)
-      //   Player.getValueAdjuster().coins += bonusCoins
-      //   Player.getValueAdjuster().exp += bonusExp
-      // this.compPointsText = "500"
-      //   this.expText = `+${bonusExp.toString()}`
-      //   this.coinsText = bonusCoins.toString()
-      this.cargoText = '1'
+      const bonusCoins = vehicleOwnership.getCoinBonus(
+        200 + player.getValueAdjuster().sprintCoinsCollected
+      )
+      const bonusExp = vehicleOwnership.computeXP(300, xpPowerUp, numRacersXp)
+      this.exp = bonusExp
+      this.coins = bonusCoins
+      this.lgCargo = 1
+      this.cargoQuantity = this.lgCargo
+      this.cargoSpriteSize = itemsSprites.lgCargoSprite
       missions.checkAndUnlockCampaignMission('completeSprintFastTime')
+
+      console.log('time = ' + time)
     }
 
-    // if add at the end
-    /* const addAtTheEnd = false
-          if(coinMultiplier > 1 && addAtTheEnd){
-            //adds a multiplier -1 since we already added the values 1x
-            Player.getValueAdjuster().coins += Player.getValueAdjuster().sprintCoinsCollected * (coinMultiplier-1)
-          } */
-
-    //   if (DEBUGGING_SPRINT_SOLO_REWARDS) log("Race Rewards - Solo Sprint: oldScore=" + Player.soloSprintTime + ", newScore=" + fixedTime)
-    // Update player time if time < last quest time or they dont have a record
-    //   Player.soloSprintTime = time
-
     // Daily Missions
-    if (time <= 105) await dailyMission.checkMission('sprintCompleteFast')
-    //   if (Player.sprintCoinsCollected >= 50) dailyMission.checkMission("sprintCollectFiftyCoins")
-    await dailyMission.checkMission('sprintCompleteThree')
+    if (time <= 105) void dailyMission.checkMission('sprintCompleteFast')
+    if (this.uiController.gameController.Player.sprintCoinsCollected >= 50)
+      void dailyMission.checkMission('sprintCollectFiftyCoins')
+    void dailyMission.checkMission('sprintCompleteThree')
 
     // PowerUpsInv.updateUsedPowerUps() //TODO should we wait till write to server then call this?
     //   PowerUpsInv.updateEndOfRace()
@@ -167,7 +154,7 @@ export class Reward {
   tweet(): void {
     const url: string = `https://twitter.com/intent/tweet?text=${this.getTweetText(
       `${encodeURIComponent('🏎')} I crushed the SoloSprint in ${
-        this.time
+        this.timeText
       } seconds at @Vroomwayio!%0A%0ACome beat my record: https://play.decentraland.org/?position=-103%2C-144 %0A%0A`
     )}&hashtags=Decentraland,DCL,P2E,Vroomway`
     void openExternalUrl({ url })
@@ -261,7 +248,7 @@ export class Reward {
               positionType: 'absolute',
               position: { bottom: '25.3%' }
             }}
-            value={this.expText}
+            value={'+' + this.exp.toString()}
             fontSize={fontSizeXP}
             font="sans-serif"
             color={Color4.White()}
@@ -289,7 +276,7 @@ export class Reward {
                 positionType: 'absolute',
                 position: { bottom: '5%', left: '12%' }
               }}
-              value={this.coinsText}
+              value={this.coins.toString()}
               fontSize={fontSizeDrop}
               font="sans-serif"
               color={Color4.Green()}
@@ -301,15 +288,15 @@ export class Reward {
               positionType: 'absolute',
               position: { top: '40%', right: '25%' },
               width:
-                ((canvasInfo.height * 0.5 * 0.25) /
-                  itemsSprites.cargoSprite.h) *
-                itemsSprites.cargoSprite.w,
-              height: canvasInfo.height * 0.5 * 0.25
+                ((canvasInfo.height * 0.5 * 0.25) / this.cargoSpriteSize.h) *
+                this.cargoSpriteSize.w,
+              height: canvasInfo.height * 0.5 * 0.25,
+              display: this.cargoQuantity > 0 ? 'flex' : 'none'
             }}
             uiBackground={{
               textureMode: 'stretch',
-              uvs: getUvs(itemsSprites.cargoSprite),
-              texture: { src: itemsSprites.cargoSprite.atlasSrc }
+              uvs: getUvs(this.cargoSpriteSize),
+              texture: { src: this.cargoSpriteSize.atlasSrc }
             }}
           >
             <Label
@@ -319,7 +306,7 @@ export class Reward {
                 positionType: 'absolute',
                 position: { bottom: '5%', left: '12%' }
               }}
-              value={this.cargoText}
+              value={'1'}
               fontSize={fontSizeDrop}
               font="sans-serif"
               color={Color4.Green()}

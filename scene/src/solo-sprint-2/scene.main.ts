@@ -1727,9 +1727,10 @@ export class SoloSprint {
 
   onRaceEnd(): void {
     this.gameController.realmController.switchRealm('mainInstance')
+    this.gameController.uiController.reward.updateTime(
+      this.gameController.sprintTimer.getTime()
+    )
     this.gameController.sprintTimer.sprintComplete = true
-    this.gameController.uiController.reward.timeText =
-      this.gameController.sprintTimer.timerText
     this.gameController.uiController.reward.show()
     utils.timers.setTimeout(() => {
       this.gameController.sprintTimer.resetTimer()

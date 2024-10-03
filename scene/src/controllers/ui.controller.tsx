@@ -3,10 +3,10 @@ import { getUvs } from '../ui/utils/utils'
 import * as utils from '@dcl-sdk/utils'
 import { joinDiscord, joinTwitter } from '../ui/buttons'
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
-import { openExternalUrl } from '~system/RestrictedActions'
+import { movePlayerTo, openExternalUrl } from '~system/RestrictedActions'
 import { SideBar } from '../ui/sidebar'
 import Announcement from '../ui/Announcement'
-import { Color4 } from '@dcl/sdk/math'
+import { Color4, Vector3 } from '@dcl/sdk/math'
 import { Profile } from '../ui/profile'
 import { MissionsBoard } from '../ui/missions'
 import { UIInventoryManager } from '../ui/inventory'
@@ -93,17 +93,23 @@ export class UIController {
 
   renderSocials(): ReactEcs.JSX.Element | null {
     if (this.canvasInfo === null) return null
+    const iconSizeW = this.canvasInfo.height * 0.055 * joinDiscord.w / joinDiscord.h
+    const iconSizeH = this.canvasInfo.height * 0.055
     return (
+      <UiEntity uiTransform={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        positionType: 'absolute',
+        position: { left: '0%', top: '30%' },
+        width: iconSizeW * 2,
+        height: iconSizeH,
+        display: this.socialsVisible ? 'flex' : 'none'
+      }}>
       <UiEntity
         uiTransform={{
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          positionType: 'absolute',
-          position: { left: '0%', top: '30%' },
-          width: (this.canvasInfo.height * 0.055) / 0.67,
-          height: this.canvasInfo.height * 0.055,
-          display: this.socialsVisible ? 'flex' : 'none'
+          width: iconSizeW,
+          height: iconSizeH, 
         }}
         uiBackground={{
           textureMode: 'stretch',
@@ -113,20 +119,17 @@ export class UIController {
         onMouseDown={() => {
           void openExternalUrl({ url: 'https://discord.gg/2E9AwrgssP' })
           void dailyMission.checkMission('sprintCompleteThree')
-          // void movePlayerTo({
-          //   newRelativePosition: Vector3.create(23.22, 42.46, 5.85)
-          // })
+
+          // To finish solosprint race
+          void movePlayerTo({
+            newRelativePosition: Vector3.create(23.22, 42.46, 5.85)
+          })
         }}
-      >
+      />
         <UiEntity
           uiTransform={{
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            positionType: 'absolute',
-            position: { left: '90%', top: '0%' },
-            width: (this.canvasInfo.height * 0.055) / 0.67,
-            height: this.canvasInfo.height * 0.055
+            width: iconSizeW,
+            height: iconSizeH, 
           }}
           uiBackground={{
             textureMode: 'stretch',
@@ -146,6 +149,8 @@ export class UIController {
                 )}`
               )}&hashtags=Decentraland,DCL,P2E,Vroomway`
             })
+            // To charge fuel
+            this.gameController.Player.getValueAdjuster().fuel += 50
           }}
         />
       </UiEntity>

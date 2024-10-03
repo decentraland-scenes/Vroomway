@@ -93,43 +93,46 @@ export class UIController {
 
   renderSocials(): ReactEcs.JSX.Element | null {
     if (this.canvasInfo === null) return null
-    const iconSizeW = this.canvasInfo.height * 0.055 * joinDiscord.w / joinDiscord.h
+    const iconSizeW =
+      (this.canvasInfo.height * 0.055 * joinDiscord.w) / joinDiscord.h
     const iconSizeH = this.canvasInfo.height * 0.055
     return (
-      <UiEntity uiTransform={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        positionType: 'absolute',
-        position: { left: '0%', top: '30%' },
-        width: iconSizeW * 2,
-        height: iconSizeH,
-        display: this.socialsVisible ? 'flex' : 'none'
-      }}>
       <UiEntity
         uiTransform={{
-          width: iconSizeW,
-          height: iconSizeH, 
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          positionType: 'absolute',
+          position: { left: '0%', top: '30%' },
+          width: iconSizeW * 2,
+          height: iconSizeH,
+          display: this.socialsVisible ? 'flex' : 'none'
         }}
-        uiBackground={{
-          textureMode: 'stretch',
-          uvs: getUvs(joinDiscord),
-          texture: { src: joinDiscord.atlasSrc }
-        }}
-        onMouseDown={() => {
-          void openExternalUrl({ url: 'https://discord.gg/2E9AwrgssP' })
-          void dailyMission.checkMission('sprintCompleteThree')
-
-          // To finish solosprint race
-          void movePlayerTo({
-            newRelativePosition: Vector3.create(23.22, 42.46, 5.85)
-          })
-        }}
-      />
+      >
         <UiEntity
           uiTransform={{
             width: iconSizeW,
-            height: iconSizeH, 
+            height: iconSizeH
+          }}
+          uiBackground={{
+            textureMode: 'stretch',
+            uvs: getUvs(joinDiscord),
+            texture: { src: joinDiscord.atlasSrc }
+          }}
+          onMouseDown={() => {
+            void openExternalUrl({ url: 'https://discord.gg/2E9AwrgssP' })
+            void dailyMission.checkMission('sprintCompleteThree')
+
+            // To finish solosprint race
+            void movePlayerTo({
+              newRelativePosition: Vector3.create(23.22, 42.46, 5.85)
+            })
+          }}
+        />
+        <UiEntity
+          uiTransform={{
+            width: iconSizeW,
+            height: iconSizeH
           }}
           uiBackground={{
             textureMode: 'stretch',

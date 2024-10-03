@@ -15,7 +15,8 @@ import {
   InputAction,
   GltfContainer,
   engine,
-  MeshCollider
+  MeshCollider,
+  Animator
 } from '@dcl/sdk/ecs'
 import { Quaternion, Vector3 } from '@dcl/sdk/math'
 import { entityController } from '../../utils/entityController'
@@ -175,6 +176,7 @@ export class BarrelObject {
         missions.checkAndUnlockCampaignMission('rummage')
         missions.checkAndUnlockCampaignMission('collectMaterials')
         console.log('barrels active')
+        Animator.getClip(this.entity, 'rummage').playing = true
       }
     )
 
@@ -182,6 +184,16 @@ export class BarrelObject {
     const modelLocation: string =
       modelRootBarrelObj + BarrelData[this.type].model
     GltfContainer.create(this.entity, { src: modelLocation })
+    Animator.create(this.entity, {
+      states: [
+        {
+          clip: 'rummage',
+          loop: false,
+          playing: true
+          // speed:
+        }
+      ]
+    })
   }
 
   getBarrelCost(): number {

@@ -139,6 +139,7 @@ export class Door {
 
   public removerTriggerEntity(): void {
     if (this.trigger != null) {
+      utils.triggers.removeTrigger(this.trigger.entity)
       entityController.removeEntity(this.trigger.entity)
     }
   }

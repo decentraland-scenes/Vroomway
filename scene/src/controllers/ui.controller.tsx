@@ -116,6 +116,9 @@ export class UIController {
         onMouseDown={() => {
           void openExternalUrl({ url: 'https://discord.gg/2E9AwrgssP' })
           void dailyMission.checkMission('sprintCompleteThree')
+          // void movePlayerTo({
+          //   newRelativePosition: Vector3.create(23.22, 42.46, 5.85)
+          // })
         }}
       >
         <UiEntity

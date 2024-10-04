@@ -11,6 +11,16 @@ import { Color4 } from '@dcl/sdk/math'
 import { LevelManager } from '../leveling/level-manager'
 import { boardsSprites } from './atlas/boardsAtlas'
 import Canvas from './canvas/Canvas'
+import {
+  type BaseObject,
+  type CargoObject,
+  CargoObjectData,
+  PowerUpObjectData,
+  type ResourceObject,
+  ResourceObjectData,
+  TokenObjectData
+} from '../inventory/inventory-data'
+import { InventoryManager } from '../inventory/inventory-manager'
 
 const DEBUGGING_UI_INVENTORY: boolean = true
 const DEBUGGING_UI_INVENTORY_VERBOSE: boolean = false
@@ -146,9 +156,13 @@ class UIInteractable {
     this.index = index
   }
 }
+
+type InventoryItem = BaseObject | ResourceObject | CargoObject
+
 export class UIInventoryManager {
-  background: Sprite = boardsSprites.inventoryVehiclesBoardSprite
-  uiParentVisible: boolean = false
+  arrayToShow: InventoryItem[] = [...ResourceObjectData, ...CargoObjectData]
+  background: Sprite = boardsSprites.inventoryMaterialsBoardSprite
+  uiParentVisible: boolean = true
   uiTextExperience: string = '999999'
   uiTextLevel: string = '999'
   uiController: UIController | undefined
@@ -178,22 +192,27 @@ export class UIInventoryManager {
     switch (type) {
       case 0: {
         this.background = boardsSprites.inventoryVehiclesBoardSprite
+        this.arrayToShow = []
         break
       }
       case 1: {
         this.background = boardsSprites.inventoryAccesoriesBoardSprite
+        this.arrayToShow = []
         break
       }
       case 2: {
         this.background = boardsSprites.inventoryMaterialsBoardSprite
+        this.arrayToShow = [...ResourceObjectData, ...CargoObjectData]
         break
       }
       case 3: {
         this.background = boardsSprites.inventoryPowerUpsBoardSprite
+        this.arrayToShow = PowerUpObjectData
         break
       }
       default: {
         this.background = boardsSprites.inventoryVehiclesBoardSprite
+        this.arrayToShow = []
         break
       }
     }
@@ -201,6 +220,9 @@ export class UIInventoryManager {
 
   createUI(): ReactEcs.JSX.Element {
     const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
+    const fontSizeTimer = canvasInfo.height * 0.035
+    const fontSizeXP = canvasInfo.height * 0.02
+    const fontSizeDrop = canvasInfo.height * 0.02
     return (
       <Canvas
         uiTransform={{
@@ -273,6 +295,56 @@ export class UIInventoryManager {
               }}
             />
           </UiEntity>
+          <UiEntity
+            uiTransform={{
+              flexDirection: 'row',
+              alignContent: 'flex-start',
+              flexWrap: 'wrap',
+              positionType: 'absolute',
+              position: { top: '30.5%', right: '2.5%' },
+              width: '51%',
+              height: '60%'
+            }}
+            uiBackground={{ color: Color4.create(1, 0, 0, 0.1) }}
+          >
+            {
+              /* Items grid */
+              this.arrayToShow.map((element, index) => (
+                <UiEntity
+                  uiTransform={{
+                    positionType: 'relative',
+                    width: '16%',
+                    height: '23%',
+                    margin: { right: '0.7%', bottom: '0.6%' }
+                  }}
+                  uiBackground={{
+                    textureMode: 'stretch',
+                    uvs: getUvs(element.Sprite),
+                    texture: { src: element.Sprite.atlasSrc }
+                  }}
+                >
+                  <Label
+                    uiTransform={{
+                      width: '100%',
+                      height: fontSizeDrop,
+                      positionType: 'absolute',
+                      position: { bottom: '5%', left: '12%' }
+                    }}
+                    value={InventoryManager.Instance.GetItemCountByID(
+                      element.ID,
+                      false
+                    ).toString()}
+                    key={index}
+                    fontSize={fontSizeDrop}
+                    font="sans-serif"
+                    color={Color4.White()}
+                    textAlign="bottom-left"
+                  />
+                </UiEntity>
+              ))
+            }
+          </UiEntity>
+
           {/* Experience */}
           <Label
             uiTransform={{

@@ -14,13 +14,13 @@ import { itemsSprites } from '../ui/atlas/itemsSprites'
 import { type Sprite } from '../ui/utils/utils'
 
 // interfaces
-type BaseObject = {
+export type BaseObject = {
   ID: string // unique index, this is the value sent to the server
   Name: string // display name
   Desc: string // display desc, hover text
   Sprite: Sprite
 }
-type CargoObject = {
+export type CargoObject = {
   ID: string // unique index, this is the value sent to the server
   Name: string // display name
   Desc: string // display desc, hover text
@@ -28,7 +28,7 @@ type CargoObject = {
   // DISPLAY 2D
   Sprite: Sprite
 }
-type ResourceObject = {
+export type ResourceObject = {
   ID: string // unique index, this is the value sent to the server
   Rarity: number // TODO: noticed this in the rewards calculator, but currently not implemented
   Name: string // display name

@@ -2,17 +2,34 @@ import { type Sprite } from '../utils/utils'
 
 const itemAtlas: string = 'assets/images/uiAtlas/itemsAtlas.png'
 const itemAtlasSize: { x: number; y: number } = { x: 2048, y: 2048 }
-
-export const itemsSprites: Record<string, Sprite> = {
-  coinSprite: {
-    atlasSrc: itemAtlas,
-    atlasSize: itemAtlasSize,
-    x: 256,
-    y: 0,
-    w: 256,
-    h: 245
-  },
-  smCargoSprite: {
+enum items {
+  exp = 'exp',
+  lvl = 'lvl',
+  token0 = 'token0',
+  token1 = 'token1',
+  token2 = 'token2',
+  PlayerInvincible = 'healthinvincible15s',
+  PlayerHeal = 'healthPlus50',
+  BonusCoins = 'multipleCoins2x',
+  BonusExp = 'multipleXp2x',
+  WeaponBoost = 'projectileDamagePlus5',
+  WeaponTrap = 'projectileTrap',
+  smCargo = 'smCargo',
+  mdCargo = 'mdCargo',
+  lgCargo = 'lgCargo',
+  coins = 'coins',
+  fuel = 'fuel',
+  metal = 'metal',
+  rubber = 'rubber',
+  glass = 'glass',
+  propulsion = 'propulsion',
+  wires = 'wires',
+  antimatter = 'antimatter',
+  cannisters = 'cannisters',
+  circuitBoard = 'circuitBoard'
+}
+export const itemsSprites: Record<items, Sprite> = {
+  smCargo: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 0,
@@ -20,7 +37,7 @@ export const itemsSprites: Record<string, Sprite> = {
     w: 256,
     h: 240
   },
-  mdCargoSprite: {
+  mdCargo: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 256,
@@ -28,7 +45,7 @@ export const itemsSprites: Record<string, Sprite> = {
     w: 256,
     h: 240
   },
-  lgCargoSprite: {
+  lgCargo: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 512,
@@ -37,6 +54,22 @@ export const itemsSprites: Record<string, Sprite> = {
     h: 240
   },
   coins: {
+    atlasSrc: itemAtlas,
+    atlasSize: itemAtlasSize,
+    x: 270,
+    y: 14.2,
+    w: 240,
+    h: 240
+  },
+  exp: {
+    atlasSrc: itemAtlas,
+    atlasSize: itemAtlasSize,
+    x: 270,
+    y: 14.2,
+    w: 240,
+    h: 240
+  },
+  lvl: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 270,

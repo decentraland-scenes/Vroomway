@@ -10,16 +10,15 @@
     contact: TheCryptoTrader69@gmail.com 
 */
 
-import { itemsSprites } from "../ui/atlas/itemsSprites"
-import { type Sprite } from "../ui/utils/utils"
-
+import { itemsSprites } from '../ui/atlas/itemsSprites'
+import { type Sprite } from '../ui/utils/utils'
 
 // interfaces
 type BaseObject = {
   ID: string // unique index, this is the value sent to the server
   Name: string // display name
   Desc: string // display desc, hover text
-  Sprite: Sprite 
+  Sprite: Sprite
 }
 type CargoObject = {
   ID: string // unique index, this is the value sent to the server
@@ -27,7 +26,7 @@ type CargoObject = {
   Desc: string // display desc, hover text
   Rewards: Array<{ Type: number; ID: string; Count: number }> // represents rewards that are awarded upon opening
   // DISPLAY 2D
-  Sprite: Sprite 
+  Sprite: Sprite
 }
 type ResourceObject = {
   ID: string // unique index, this is the value sent to the server
@@ -50,7 +49,7 @@ export const LevelingObjectData: BaseObject[] = [
     Name: 'Experience',
     Desc: '<HOVER_TEXT>',
 
-    Sprite: itemsSprites.exp 
+    Sprite: itemsSprites.exp
   },
   // prestige
   {
@@ -58,7 +57,7 @@ export const LevelingObjectData: BaseObject[] = [
     Name: 'Prestige',
     Desc: '<HOVER_TEXT>',
 
-    Sprite: itemsSprites.lvl 
+    Sprite: itemsSprites.lvl
   }
 ]
 /** call-values for IDs, resources */
@@ -76,14 +75,20 @@ export enum ItemNameResource {
 }
 
 export const ResourceObjectData: ResourceObject[] = [
-
+  {
+    ID: 'coins',
+    Rarity: -1,
+    Name: 'Coins',
+    Desc: '<HOVER_TEXT>',
+    Sprite: itemsSprites.coins
+  },
   {
     ID: 'fuel',
     Rarity: -1,
     Name: 'Fuel',
     Desc: '<HOVER_TEXT>',
 
-    Sprite: itemsSprites.fuel 
+    Sprite: itemsSprites.fuel
   },
   // basic
   {
@@ -92,7 +97,7 @@ export const ResourceObjectData: ResourceObject[] = [
     Name: 'Metal',
     Desc: '<HOVER_TEXT>',
 
-    Sprite: itemsSprites.metal 
+    Sprite: itemsSprites.metal
   },
   {
     ID: 'rubber',
@@ -108,7 +113,7 @@ export const ResourceObjectData: ResourceObject[] = [
     Name: 'Glass',
     Desc: '<HOVER_TEXT>',
 
-    Sprite: itemsSprites.glass 
+    Sprite: itemsSprites.glass
   },
   {
     ID: 'wires',
@@ -116,7 +121,7 @@ export const ResourceObjectData: ResourceObject[] = [
     Name: 'Wires',
     Desc: '<HOVER_TEXT>',
 
-    Sprite: itemsSprites.wires 
+    Sprite: itemsSprites.wires
   },
   // components
   {
@@ -125,7 +130,7 @@ export const ResourceObjectData: ResourceObject[] = [
     Name: 'Cannisters',
     Desc: '<HOVER_TEXT>',
 
-    Sprite: itemsSprites.cannisters 
+    Sprite: itemsSprites.cannisters
   },
   {
     ID: 'circuitBoard',
@@ -133,7 +138,7 @@ export const ResourceObjectData: ResourceObject[] = [
     Name: 'Circuit Boards',
     Desc: '<HOVER_TEXT>',
 
-    Sprite: itemsSprites.circuitBoard 
+    Sprite: itemsSprites.circuitBoard
   },
   {
     ID: 'propulsion',
@@ -141,7 +146,7 @@ export const ResourceObjectData: ResourceObject[] = [
     Name: 'Propulsion',
     Desc: '<HOVER_TEXT>',
 
-    Sprite: itemsSprites.propulsion 
+    Sprite: itemsSprites.propulsion
   },
   {
     ID: 'antimatter',
@@ -149,7 +154,7 @@ export const ResourceObjectData: ResourceObject[] = [
     Name: 'Antimatter',
     Desc: '<HOVER_TEXT>',
 
-    Sprite: itemsSprites.antimatter 
+    Sprite: itemsSprites.antimatter
   }
 ]
 
@@ -181,7 +186,7 @@ export const CargoObjectData: CargoObject[] = [
       { Type: 0, ID: '0', Count: 10 } // experience
     ],
 
-    Sprite: itemsSprites.mdCargo 
+    Sprite: itemsSprites.mdCargo
   },
   {
     ID: 'lgCargo',
@@ -192,7 +197,7 @@ export const CargoObjectData: CargoObject[] = [
       { Type: 0, ID: '0', Count: 25 } // experience
     ],
 
-    Sprite: itemsSprites.lgCargo 
+    Sprite: itemsSprites.lgCargo
   }
 ]
 /** call-values for IDs, tokens */
@@ -208,14 +213,14 @@ export const TokenObjectData: BaseObject[] = [
     Name: 'Common Token',
     Desc: '<HOVER_TEXT>',
 
-    Sprite: itemsSprites.token0 
+    Sprite: itemsSprites.token0
   },
   {
     ID: 'token1',
     Name: 'Uncommon Token',
     Desc: '<HOVER_TEXT>',
 
-    Sprite: itemsSprites.token1 
+    Sprite: itemsSprites.token1
   },
   {
     ID: 'token2',
@@ -242,7 +247,7 @@ export const PowerUpObjectData: BaseObject[] = [
     Name: 'Invincibility',
     Desc: 'Provides immunity for a small period of time',
 
-    Sprite: itemsSprites.healthinvincible15s 
+    Sprite: itemsSprites.healthinvincible15s
   },
   {
     ID: 'healthPlus50',
@@ -256,27 +261,27 @@ export const PowerUpObjectData: BaseObject[] = [
     Name: 'Coin Booster',
     Desc: 'Greatly increases the number of coins gained',
 
-    Sprite: itemsSprites.multipleCoins2x 
+    Sprite: itemsSprites.multipleCoins2x
   },
   {
     ID: 'multipleXp2x',
     Name: 'Exp Booster',
     Desc: 'Greatly increases the amount of experience gained',
 
-    Sprite: itemsSprites.multipleXp2x 
+    Sprite: itemsSprites.multipleXp2x
   },
   {
     ID: 'projectileDamagePlus5',
     Name: 'Weapon Booster',
     Desc: 'Increases weapon damage by X',
 
-    Sprite: itemsSprites.projectileDamagePlus5 
+    Sprite: itemsSprites.projectileDamagePlus5
   },
   {
     ID: 'projectileTrap',
     Name: 'Snap Trap',
     Desc: '<HOVER_TEXT>',
 
-    Sprite: itemsSprites.projectileTrap 
+    Sprite: itemsSprites.projectileTrap
   }
 ]

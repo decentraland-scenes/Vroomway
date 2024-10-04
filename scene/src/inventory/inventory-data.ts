@@ -13,18 +13,12 @@
 import { itemsSprites } from "../ui/atlas/itemsSprites"
 import { type Sprite } from "../ui/utils/utils"
 
-/** defines the atlas sheets for all base items icons */
-export const ATLAS_SHEET_ITEM = [
-  'images/uiAtlas/itemsAtlas.png', // atlas sheet 0
-  'images/uiAtlas/itemsAtlas.png' // atlas sheet 1
-]
 
 // interfaces
 type BaseObject = {
   ID: string // unique index, this is the value sent to the server
   Name: string // display name
   Desc: string // display desc, hover text
-  SheetIndex: number
   Sprite: Sprite 
 }
 type CargoObject = {
@@ -33,18 +27,16 @@ type CargoObject = {
   Desc: string // display desc, hover text
   Rewards: Array<{ Type: number; ID: string; Count: number }> // represents rewards that are awarded upon opening
   // DISPLAY 2D
-  SheetIndex: number
   Sprite: Sprite 
 }
-// type ResourceObject = {
-//   ID: string // unique index, this is the value sent to the server
-//   Rarity: number // TODO: noticed this in the rewards calculator, but currently not implemented
-//   Name: string // display name
-//   Desc: string // display desc, hover text
-//   // DISPLAY 2D
-//   SheetIndex: number
-//   Sprite: Sprite
-// }
+type ResourceObject = {
+  ID: string // unique index, this is the value sent to the server
+  Rarity: number // TODO: noticed this in the rewards calculator, but currently not implemented
+  Name: string // display name
+  Desc: string // display desc, hover text
+  // DISPLAY 2
+  Sprite: Sprite
+}
 /** call-values for IDs, leveling */
 export enum ItemNameLeveling {
   exp = 'exp',
@@ -57,7 +49,7 @@ export const LevelingObjectData: BaseObject[] = [
     ID: 'exp',
     Name: 'Experience',
     Desc: '<HOVER_TEXT>',
-    SheetIndex: 0,
+
     Sprite: itemsSprites.exp 
   },
   // prestige
@@ -65,7 +57,7 @@ export const LevelingObjectData: BaseObject[] = [
     ID: 'lvl',
     Name: 'Prestige',
     Desc: '<HOVER_TEXT>',
-    SheetIndex: 0,
+
     Sprite: itemsSprites.lvl 
   }
 ]
@@ -82,18 +74,15 @@ export enum ItemNameResource {
   cannisters = 'cannisters',
   circuitBoard = 'circuitBoard'
 }
-/** contains all object definitions for resource items
- * NOTE: we can cull the width/height property Sprite  itemsSprites.o
-    Desc: '<HOVER_TEXT>',
-    SheetIndex: 0,
-    Sprite: itemsSprites. 
-  },
+
+export const ResourceObjectData: ResourceObject[] = [
+
   {
     ID: 'fuel',
     Rarity: -1,
     Name: 'Fuel',
     Desc: '<HOVER_TEXT>',
-    SheetIndex: 0,
+
     Sprite: itemsSprites.fuel 
   },
   // basic
@@ -102,7 +91,7 @@ export enum ItemNameResource {
     Rarity: 0,
     Name: 'Metal',
     Desc: '<HOVER_TEXT>',
-    SheetIndex: 0,
+
     Sprite: itemsSprites.metal 
   },
   {
@@ -110,7 +99,7 @@ export enum ItemNameResource {
     Rarity: 0,
     Name: 'Rubber',
     Desc: '<HOVER_TEXT>',
-    SheetIndex: 0,
+
     Sprite: itemsSprites.rubber
   },
   {
@@ -118,7 +107,7 @@ export enum ItemNameResource {
     Rarity: 1,
     Name: 'Glass',
     Desc: '<HOVER_TEXT>',
-    SheetIndex: 0,
+
     Sprite: itemsSprites.glass 
   },
   {
@@ -126,7 +115,7 @@ export enum ItemNameResource {
     Rarity: 1,
     Name: 'Wires',
     Desc: '<HOVER_TEXT>',
-    SheetIndex: 0,
+
     Sprite: itemsSprites.wires 
   },
   // components
@@ -135,7 +124,7 @@ export enum ItemNameResource {
     Rarity: 2,
     Name: 'Cannisters',
     Desc: '<HOVER_TEXT>',
-    SheetIndex: 0,
+
     Sprite: itemsSprites.cannisters 
   },
   {
@@ -143,7 +132,7 @@ export enum ItemNameResource {
     Rarity: 2,
     Name: 'Circuit Boards',
     Desc: '<HOVER_TEXT>',
-    SheetIndex: 0,
+
     Sprite: itemsSprites.circuitBoard 
   },
   {
@@ -151,7 +140,7 @@ export enum ItemNameResource {
     Rarity: 3,
     Name: 'Propulsion',
     Desc: '<HOVER_TEXT>',
-    SheetIndex: 0,
+
     Sprite: itemsSprites.propulsion 
   },
   {
@@ -159,10 +148,11 @@ export enum ItemNameResource {
     Rarity: 3,
     Name: 'Antimatter',
     Desc: '<HOVER_TEXT>',
-    SheetIndex: 0,
+
     Sprite: itemsSprites.antimatter 
   }
 ]
+
 /** call-values for IDs, cargo */
 export enum ItemNameCargo {
   smCargo = 'smCargo',
@@ -179,7 +169,7 @@ export const CargoObjectData: CargoObject[] = [
       { Type: -1, ID: '0', Count: 5 }, // loot generation rounds
       { Type: 0, ID: '0', Count: 5 } // experience
     ],
-    SheetIndex: 0,
+
     Sprite: itemsSprites.smCargo
   },
   {
@@ -190,7 +180,7 @@ export const CargoObjectData: CargoObject[] = [
       { Type: -1, ID: '0', Count: 12 }, // loot generation rounds
       { Type: 0, ID: '0', Count: 10 } // experience
     ],
-    SheetIndex: 0,
+
     Sprite: itemsSprites.mdCargo 
   },
   {
@@ -201,7 +191,7 @@ export const CargoObjectData: CargoObject[] = [
       { Type: -1, ID: '0', Count: 40 }, // loot generation rounds
       { Type: 0, ID: '0', Count: 25 } // experience
     ],
-    SheetIndex: 0,
+
     Sprite: itemsSprites.lgCargo 
   }
 ]
@@ -217,21 +207,21 @@ export const TokenObjectData: BaseObject[] = [
     ID: 'token0',
     Name: 'Common Token',
     Desc: '<HOVER_TEXT>',
-    SheetIndex: 0,
+
     Sprite: itemsSprites.token0 
   },
   {
     ID: 'token1',
     Name: 'Uncommon Token',
     Desc: '<HOVER_TEXT>',
-    SheetIndex: 0,
+
     Sprite: itemsSprites.token1 
   },
   {
     ID: 'token2',
     Name: 'Rare Token',
     Desc: '<HOVER_TEXT>',
-    SheetIndex: 0,
+
     Sprite: itemsSprites.token2
   }
 ]
@@ -251,42 +241,42 @@ export const PowerUpObjectData: BaseObject[] = [
     ID: 'healthinvincible15s',
     Name: 'Invincibility',
     Desc: 'Provides immunity for a small period of time',
-    SheetIndex: 0,
+
     Sprite: itemsSprites.healthinvincible15s 
   },
   {
     ID: 'healthPlus50',
     Name: 'Repair Kit',
     Desc: 'Restores X health',
-    SheetIndex: 0,
+
     Sprite: itemsSprites.healthPlus50
   },
   {
     ID: 'multipleCoins2x',
     Name: 'Coin Booster',
     Desc: 'Greatly increases the number of coins gained',
-    SheetIndex: 0,
+
     Sprite: itemsSprites.multipleCoins2x 
   },
   {
     ID: 'multipleXp2x',
     Name: 'Exp Booster',
     Desc: 'Greatly increases the amount of experience gained',
-    SheetIndex: 0,
+
     Sprite: itemsSprites.multipleXp2x 
   },
   {
     ID: 'projectileDamagePlus5',
     Name: 'Weapon Booster',
     Desc: 'Increases weapon damage by X',
-    SheetIndex: 0,
+
     Sprite: itemsSprites.projectileDamagePlus5 
   },
   {
     ID: 'projectileTrap',
     Name: 'Snap Trap',
     Desc: '<HOVER_TEXT>',
-    SheetIndex: 0,
+
     Sprite: itemsSprites.projectileTrap 
   }
 ]

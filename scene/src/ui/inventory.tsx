@@ -1,7 +1,6 @@
 /* eslint-disable spaced-comment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { ATLAS_SHEET_ITEM } from '../inventory/inventory-data'
 import { ATLAS_SHEET_VEHICLE } from '../vehicle/vehicle-data'
 import { ATLAS_SHEET_ACCESSORY } from '../vehicle/accessory-data'
 import { type UIController } from '../controllers/ui.controller'
@@ -83,12 +82,12 @@ const INVENTORY_BACKPLATE_POS: SplicePiece = {
 }
 /** defines what splice sheet will be used for icons, sub arrays based on current inventory type
  */
-const INVENTORY_TEXTURES_PER_TYPE: string[][] = [
-  ATLAS_SHEET_VEHICLE, //vehicles
-  ATLAS_SHEET_ACCESSORY, //accessories
-  ATLAS_SHEET_ITEM, //resources
-  ATLAS_SHEET_ITEM //powerups
-]
+// const INVENTORY_TEXTURES_PER_TYPE: string[][] = [
+//   ATLAS_SHEET_VEHICLE, //vehicles
+//   ATLAS_SHEET_ACCESSORY, //accessories
+//   ATLAS_SHEET_ITEM, //resources
+//   ATLAS_SHEET_ITEM //powerups
+// ]
 
 /** if true vehicle attachment ownership is not verified */
 const ATTACHMENTS_SKIP_OWNERSHIP_CHECK: boolean = true

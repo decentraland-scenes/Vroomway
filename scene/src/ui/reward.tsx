@@ -53,10 +53,6 @@ export class Reward {
     // Player.getValueAdjuster().sprintCoinsQtyCollected = 0
     // PowerUpsInv.powerUpMgr.reset()
 
-    // instance.setInstance('main')
-    // cleanUpScene()
-    // // SCENE_MANAGER.disableScene("base_main")
-
     this.uiController.loader.showLoader()
     // renderMainInstance()
     void movePlayerTo({

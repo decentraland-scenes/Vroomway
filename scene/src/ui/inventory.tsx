@@ -10,6 +10,8 @@ import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
 import { getUvs, type Sprite } from './utils/utils'
 import { Color4 } from '@dcl/sdk/math'
 import { LevelManager } from '../leveling/level-manager'
+import { boardsSprites } from './atlas/boardsAtlas'
+import Canvas from './canvas/Canvas'
 
 const DEBUGGING_UI_INVENTORY: boolean = true
 const DEBUGGING_UI_INVENTORY_VERBOSE: boolean = false
@@ -146,7 +148,7 @@ class UIInteractable {
   }
 }
 export class UIInventoryManager {
-  uiParent: Sprite
+  background: Sprite = boardsSprites.inventoryVehiclesBoardSprite
   uiParentVisible: boolean = false
   uiTextExperience: string = '999999'
   uiTextLevel: string = '999'
@@ -163,14 +165,6 @@ export class UIInventoryManager {
 
   constructor(uiController?: UIController) {
     this.uiController = uiController
-    this.uiParent = {
-      atlasSrc: INVENTORY_TEXTURE_BACKGROUND,
-      atlasSize: { x: 2048, y: 2048 },
-      x: 0,
-      y: 580,
-      w: 1000,
-      h: 550
-    }
     LevelManager.Instance.RegisterUICallbackExperience(
       this.CallbackUpdateExpDisplay
     )
@@ -180,43 +174,97 @@ export class UIInventoryManager {
   }
 
   public DisplayInventory(type: number): void {
-    if (DEBUGGING_UI_INVENTORY)
-      console.log('UI Inventory Manager: redrawing inventory type=' + type)
-
-    //redraw progression display
+   
     this.updateExpDisplay()
     this.updateLevelDisplay()
-    if (DEBUGGING_UI_INVENTORY)
-      console.log('UI Inventory Manager: redrew inventory type=' + type)
+    switch(type) { 
+      case 0: { 
+        this.background = boardsSprites.inventoryVehiclesBoardSprite
+         break; 
+      }
+      case 1: { 
+        this.background = boardsSprites.inventoryAccesoriesBoardSprite
+        break; 
+     }
+     case 2: { 
+      this.background = boardsSprites.inventoryMaterialsBoardSprite
+       break; 
+    }
+    case 3: { 
+      this.background = boardsSprites.inventoryPowerUpsBoardSprite
+      break; 
+   }   
+      default: { 
+        this.background = boardsSprites.inventoryVehiclesBoardSprite
+         break; 
+      } 
+   } 
   }
 
   createUI(): ReactEcs.JSX.Element {
     const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
     return (
-      <UiEntity
-        uiTransform={{
-          flexDirection: 'row',
-          width: canvasInfo.width,
-          height: canvasInfo.height,
-          justifyContent: 'center',
-          positionType: 'absolute',
-          position: { top: '25%', right: '0%' }
-        }}
-      >
-        {/* Ui Parent */}
+      <Canvas uiTransform={{
+        justifyContent: 'center',
+        alignItems:'center'
+      }}>
         <UiEntity
           uiTransform={{
             positionType: 'relative',
-            width: (canvasInfo.height * 1.88) / 1.8,
+            width: canvasInfo.height * 0.55 / this.background.h * this.background.w,
             height: canvasInfo.height * 0.55
           }}
           uiBackground={{
             textureMode: 'stretch',
-            uvs: getUvs(this.uiParent),
-            texture: { src: this.uiParent.atlasSrc }
+            uvs: getUvs(this.background),
+            texture: { src: this.background.atlasSrc }
           }}
-          onMouseDown={() => {}}
         >
+          {/* Navbar */}
+          <UiEntity
+            uiTransform={{
+            flexDirection:'row',
+              positionType: 'absolute',
+            position:{top:'12%', right:'2%'},
+            width: '53%',
+            height: '10%'
+          }}
+          
+          >
+            <UiEntity
+          uiTransform={{
+              positionType: 'relative',
+            width: '25%',
+            height: '100%'
+              }}
+              onMouseDown={()=>{this.DisplayInventory(0)}}
+            />
+            <UiEntity
+          uiTransform={{
+              positionType: 'relative',
+            width: '25%',
+            height: '100%'
+              }}
+              onMouseDown={()=>{this.DisplayInventory(1)}}
+            />
+            <UiEntity
+          uiTransform={{
+              positionType: 'relative',
+            width: '25%',
+            height: '100%'
+              }}
+              onMouseDown={()=>{this.DisplayInventory(2)}}
+            />
+            <UiEntity
+          uiTransform={{
+              positionType: 'relative',
+            width: '25%',
+            height: '100%'
+              }}
+              onMouseDown={()=>{this.DisplayInventory(3)}}
+          />
+
+        </UiEntity>
           {/* Experience */}
           <Label
             uiTransform={{
@@ -242,7 +290,7 @@ export class UIInventoryManager {
             textAlign="bottom-left"
           />
         </UiEntity>
-      </UiEntity>
+        </Canvas>
     )
   }
 

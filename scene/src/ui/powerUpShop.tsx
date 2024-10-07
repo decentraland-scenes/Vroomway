@@ -4,11 +4,11 @@ import {
   PowerUpCatalog,
   PowerUpIdEnum
 } from '../vw-decentrally/modules/connection/state/powerups-spec'
-import { buyHexagonButton, closeButton } from './buttons'
 import { getUvs, type Sprite } from './utils/utils'
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
 import Canvas from './canvas/Canvas'
 import { type PlayerStats } from '../utils/player'
+import { buttonsSprites } from './atlas/buttonsSprites'
 
 const background: Sprite = {
   atlasSize: { x: 2048, y: 2048 },
@@ -20,7 +20,7 @@ const background: Sprite = {
 }
 
 class PowerUpShopItem {
-  buy: Sprite = buyHexagonButton
+  buy: Sprite = buttonsSprites.buyHexagonButton
   powerupId: PowerUpIdEnum
   visible: boolean = false
   buttonAction: () => void
@@ -138,7 +138,7 @@ export class PowerUpShop {
   constructor(uiController: UIController) {
     this.isVisible = false
     this.uiController = uiController
-    this.closeBtn = closeButton
+    this.closeBtn = buttonsSprites.closeButton
     this.player = uiController.player
 
     this.items.push(
@@ -288,8 +288,8 @@ export class PowerUpShop {
               }}
               uiBackground={{
                 textureMode: 'stretch',
-                uvs: getUvs(closeButton),
-                texture: { src: closeButton.atlasSrc }
+                uvs: getUvs(buttonsSprites.closeButton),
+                texture: { src: buttonsSprites.closeButton.atlasSrc }
               }}
               onMouseDown={() => {
                 this.hide()

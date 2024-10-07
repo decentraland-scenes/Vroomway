@@ -5,8 +5,8 @@ import { dailyMission } from '../../utils/dailyMissions'
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
 import { Color4 } from '@dcl/sdk/math'
 import ReactEcs, { UiEntity, Label } from '@dcl/sdk/react-ecs'
-import { superchargeIcon } from '../../ui/buttons'
 import { getUvs } from '../../ui/utils/utils'
+import { buttonsSprites } from '../../ui/atlas/buttonsSprites'
 
 export class SuperChargeTimer {
   gameController: GameController
@@ -87,14 +87,14 @@ export class SuperChargeTimer {
           uiTransform={{
             positionType: 'relative',
             width:
-              (canvasInfo.height * 0.12 * superchargeIcon.w) /
-              superchargeIcon.h,
+              (canvasInfo.height * 0.12 * buttonsSprites.superchargeIcon.w) /
+              buttonsSprites.superchargeIcon.h,
             height: canvasInfo.height * 0.12
           }}
           uiBackground={{
             textureMode: 'stretch',
-            uvs: getUvs(superchargeIcon),
-            texture: { src: superchargeIcon.atlasSrc }
+            uvs: getUvs(buttonsSprites.superchargeIcon),
+            texture: { src: buttonsSprites.superchargeIcon.atlasSrc }
           }}
         >
           {/* Timer */}

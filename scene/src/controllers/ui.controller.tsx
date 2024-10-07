@@ -97,7 +97,8 @@ export class UIController {
   renderSocials(): ReactEcs.JSX.Element | null {
     if (this.canvasInfo === null) return null
     const iconSizeW =
-      (this.canvasInfo.height * 0.055 * buttonsSprites.joinDiscord.w) / buttonsSprites.joinDiscord.h
+      (this.canvasInfo.height * 0.055 * buttonsSprites.joinDiscord.w) /
+      buttonsSprites.joinDiscord.h
     const iconSizeH = this.canvasInfo.height * 0.055
     return (
       <UiEntity

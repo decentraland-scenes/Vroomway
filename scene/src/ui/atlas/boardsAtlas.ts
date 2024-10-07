@@ -7,8 +7,6 @@ const board3AtlasSize: { x: number; y: number } = { x: 2048, y: 2048 }
 const board8Atlas: string = 'assets/images/uiAtlas/board3Atlas.png'
 const board8AtlasSize: { x: number; y: number } = { x: 2048, y: 2048 }
 
-
-
 export const boardsSprites: Record<string, Sprite> = {
   rewardBoardSprite: {
     atlasSrc: board2Atlas,

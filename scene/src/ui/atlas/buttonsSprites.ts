@@ -4,8 +4,6 @@ const buttonAtlas: string = 'assets/images/uiAtlas/buttonAtlas.png'
 const buttonAtlasSize: { x: number; y: number } = { x: 2048, y: 2048 }
 const board1Atlas = 'assets/images/uiAtlas/buttonAtlas.png'
 
-
-
 export const buttonsSprites: Record<string, Sprite> = {
   tweetSprite: {
     atlasSrc: buttonAtlas,
@@ -47,23 +45,23 @@ export const buttonsSprites: Record<string, Sprite> = {
     w: 135,
     h: 91
   },
-    missionsActive: {
-      atlasSrc: board1Atlas,
-      atlasSize: { x: 2048, y: 2048 },
-      x: 475.5,
-      y: 531,
-      w: 284,
-      h: 160.5,
-    },
-    missionsInactive: {
-      atlasSrc: board1Atlas,
-      atlasSize: { x: 2048, y: 2048 },
-      x: 169,
-      y: 348,
-      w: 284,
-      h: 160
-    },
-  
+  missionsActive: {
+    atlasSrc: board1Atlas,
+    atlasSize: { x: 2048, y: 2048 },
+    x: 475.5,
+    y: 531,
+    w: 284,
+    h: 160.5
+  },
+  missionsInactive: {
+    atlasSrc: board1Atlas,
+    atlasSize: { x: 2048, y: 2048 },
+    x: 169,
+    y: 348,
+    w: 284,
+    h: 160
+  },
+
   teleportButton: {
     atlasSrc: board1Atlas,
     atlasSize: { x: 2048, y: 2048 },
@@ -72,24 +70,24 @@ export const buttonsSprites: Record<string, Sprite> = {
     w: 284,
     h: 160
   },
- 
-    inventoryActive: {
-      atlasSrc: board1Atlas,
-      atlasSize: { x: 2048, y: 2048 },
-      x: 475.5,
-      y: 340.6,
-      w: 284,
-      h: 160,
-    },
-    inventoryInactive: {
-      atlasSrc: board1Atlas,
-      atlasSize: { x: 2048, y: 2048 },
-      x: 169,
-      y: 715,
-      w: 284,
-      h: 160
-    },
- 
+
+  inventoryActive: {
+    atlasSrc: board1Atlas,
+    atlasSize: { x: 2048, y: 2048 },
+    x: 475.5,
+    y: 340.6,
+    w: 284,
+    h: 160
+  },
+  inventoryInactive: {
+    atlasSrc: board1Atlas,
+    atlasSize: { x: 2048, y: 2048 },
+    x: 169,
+    y: 715,
+    w: 284,
+    h: 160
+  },
+
   refuelIcon: {
     atlasSrc: board1Atlas,
     atlasSize: { x: 2048, y: 2048 },
@@ -170,7 +168,7 @@ export const buttonsSprites: Record<string, Sprite> = {
     w: 235,
     h: 100
   },
-  
+
   danceOnIcon: {
     atlasSrc: board1Atlas,
     atlasSize: { x: 2048, y: 2048 },
@@ -179,7 +177,7 @@ export const buttonsSprites: Record<string, Sprite> = {
     w: 150.9,
     h: 105.8
   },
-  
+
   danceOffIcon: {
     atlasSrc: board1Atlas,
     atlasSize: { x: 2048, y: 2048 },
@@ -188,7 +186,7 @@ export const buttonsSprites: Record<string, Sprite> = {
     w: 150.9,
     h: 105.8
   },
-  
+
   superchargeIcon: {
     atlasSrc: board1Atlas,
     atlasSize: { x: 2048, y: 2048 },
@@ -197,7 +195,7 @@ export const buttonsSprites: Record<string, Sprite> = {
     w: 120,
     h: 106
   },
-  
+
   buyHexagonButton: {
     atlasSrc: board1Atlas,
     atlasSize: { x: 2048, y: 2048 },

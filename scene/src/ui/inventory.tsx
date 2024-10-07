@@ -235,19 +235,19 @@ export class UIInventoryManager {
       >
         {this.isModsVisible ? (
           <UiEntity
-          uiTransform={{
-            positionType: 'relative',
-            width:
-              ((canvasInfo.height * 0.55) / this.background.h) *
-              this.background.w,
-            height: canvasInfo.height * 0.55
-          }}
-          uiBackground={{
-            textureMode: 'stretch',
-            uvs: getUvs(this.background),
-            texture: { src: this.background.atlasSrc }
-          }}
-        />
+            uiTransform={{
+              positionType: 'relative',
+              width:
+                ((canvasInfo.height * 0.55) / this.background.h) *
+                this.background.w,
+              height: canvasInfo.height * 0.55
+            }}
+            uiBackground={{
+              textureMode: 'stretch',
+              uvs: getUvs(this.background),
+              texture: { src: this.background.atlasSrc }
+            }}
+          />
         ) : (
           <UiEntity
             uiTransform={{
@@ -313,24 +313,30 @@ export class UIInventoryManager {
                   this.DisplayInventory(3)
                 }}
               />
-              </UiEntity>
-              <UiEntity
+            </UiEntity>
+            <UiEntity
               uiTransform={{
                 flexDirection: 'row',
                 alignContent: 'flex-start',
                 flexWrap: 'wrap',
                 positionType: 'absolute',
                 position: { top: '50%', left: '25%' },
-                width: canvasInfo.height * 0.55 * 0.05 * buttonsSprites.modsSprite.w / buttonsSprites.modsSprite.h  ,
+                width:
+                  (canvasInfo.height *
+                    0.55 *
+                    0.05 *
+                    buttonsSprites.modsSprite.w) /
+                  buttonsSprites.modsSprite.h,
                 height: canvasInfo.height * 0.55 * 0.05
               }}
-              uiBackground={{ textureMode: 'stretch',
+              uiBackground={{
+                textureMode: 'stretch',
                 uvs: getUvs(buttonsSprites.modsSprite),
                 texture: { src: buttonsSprites.modsSprite.atlasSrc }
               }}
               onMouseDown={() => {
                 this.isModsVisible = true
-              }} 
+              }}
             />
             <UiEntity
               uiTransform={{

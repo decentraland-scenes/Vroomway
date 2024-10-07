@@ -4,6 +4,10 @@ const board2Atlas: string = 'assets/images/uiAtlas/board2Atlas.png'
 const board2AtlasSize: { x: number; y: number } = { x: 2048, y: 2048 }
 const board3Atlas: string = 'assets/images/uiAtlas/board3Atlas.png'
 const board3AtlasSize: { x: number; y: number } = { x: 2048, y: 2048 }
+const board8Atlas: string = 'assets/images/uiAtlas/board3Atlas.png'
+const board8AtlasSize: { x: number; y: number } = { x: 2048, y: 2048 }
+
+
 
 export const boardsSprites: Record<string, Sprite> = {
   rewardBoardSprite: {
@@ -45,5 +49,29 @@ export const boardsSprites: Record<string, Sprite> = {
     y: 14,
     w: 975,
     h: 547
+  },
+  modsSprite: {
+    atlasSrc: board8Atlas,
+    atlasSize: board8AtlasSize,
+    x: 488,
+    y: 45,
+    w: 1065,
+    h: 1964
+  },
+  modHighlightSprite: {
+    atlasSrc: board8Atlas,
+    atlasSize: board8AtlasSize,
+    x: 31,
+    y: 20,
+    w: 250,
+    h: 250
+  },
+  modLockSprite: {
+    atlasSrc: board8Atlas,
+    atlasSize: board8AtlasSize,
+    x: 92,
+    y: 320,
+    w: 162,
+    h: 182
   }
 }

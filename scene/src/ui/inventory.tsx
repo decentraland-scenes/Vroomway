@@ -21,6 +21,7 @@ import {
   TokenObjectData
 } from '../inventory/inventory-data'
 import { InventoryManager } from '../inventory/inventory-manager'
+import { buttonsSprites } from './atlas/buttonsSprites'
 
 const DEBUGGING_UI_INVENTORY: boolean = true
 const DEBUGGING_UI_INVENTORY_VERBOSE: boolean = false
@@ -160,6 +161,7 @@ class UIInteractable {
 type InventoryItem = BaseObject | ResourceObject | CargoObject
 
 export class UIInventoryManager {
+  isModsVisible: boolean = false
   arrayToShow: InventoryItem[] = [...ResourceObjectData, ...CargoObjectData]
   background: Sprite = boardsSprites.inventoryMaterialsBoardSprite
   uiParentVisible: boolean = true
@@ -187,6 +189,7 @@ export class UIInventoryManager {
   }
 
   public DisplayInventory(type: number): void {
+    this.isModsVisible = false
     this.updateExpDisplay()
     this.updateLevelDisplay()
     switch (type) {
@@ -230,7 +233,8 @@ export class UIInventoryManager {
           alignItems: 'center'
         }}
       >
-        <UiEntity
+        {this.isModsVisible ? (
+          <UiEntity
           uiTransform={{
             positionType: 'relative',
             width:
@@ -243,133 +247,166 @@ export class UIInventoryManager {
             uvs: getUvs(this.background),
             texture: { src: this.background.atlasSrc }
           }}
-        >
-          {/* Navbar */}
+        />
+        ) : (
           <UiEntity
             uiTransform={{
-              flexDirection: 'row',
-              positionType: 'absolute',
-              position: { top: '12%', right: '2%' },
-              width: '53%',
-              height: '10%'
+              positionType: 'relative',
+              width:
+                ((canvasInfo.height * 0.55) / this.background.h) *
+                this.background.w,
+              height: canvasInfo.height * 0.55
+            }}
+            uiBackground={{
+              textureMode: 'stretch',
+              uvs: getUvs(this.background),
+              texture: { src: this.background.atlasSrc }
             }}
           >
+            {/* Navbar */}
             <UiEntity
               uiTransform={{
-                positionType: 'relative',
-                width: '25%',
-                height: '100%'
+                flexDirection: 'row',
+                positionType: 'absolute',
+                position: { top: '12%', right: '2%' },
+                width: '53%',
+                height: '10%'
+              }}
+            >
+              <UiEntity
+                uiTransform={{
+                  positionType: 'relative',
+                  width: '25%',
+                  height: '100%'
+                }}
+                onMouseDown={() => {
+                  this.DisplayInventory(0)
+                }}
+              />
+              <UiEntity
+                uiTransform={{
+                  positionType: 'relative',
+                  width: '25%',
+                  height: '100%'
+                }}
+                onMouseDown={() => {
+                  this.DisplayInventory(1)
+                }}
+              />
+              <UiEntity
+                uiTransform={{
+                  positionType: 'relative',
+                  width: '25%',
+                  height: '100%'
+                }}
+                onMouseDown={() => {
+                  this.DisplayInventory(2)
+                }}
+              />
+              <UiEntity
+                uiTransform={{
+                  positionType: 'relative',
+                  width: '25%',
+                  height: '100%'
+                }}
+                onMouseDown={() => {
+                  this.DisplayInventory(3)
+                }}
+              />
+              </UiEntity>
+              <UiEntity
+              uiTransform={{
+                flexDirection: 'row',
+                alignContent: 'flex-start',
+                flexWrap: 'wrap',
+                positionType: 'absolute',
+                position: { top: '50%', left: '25%' },
+                width: canvasInfo.height * 0.55 * 0.05 * buttonsSprites.modsSprite.w / buttonsSprites.modsSprite.h  ,
+                height: canvasInfo.height * 0.55 * 0.05
+              }}
+              uiBackground={{ textureMode: 'stretch',
+                uvs: getUvs(buttonsSprites.modsSprite),
+                texture: { src: buttonsSprites.modsSprite.atlasSrc }
               }}
               onMouseDown={() => {
-                this.DisplayInventory(0)
-              }}
+                this.isModsVisible = true
+              }} 
             />
             <UiEntity
               uiTransform={{
-                positionType: 'relative',
-                width: '25%',
-                height: '100%'
+                flexDirection: 'row',
+                alignContent: 'flex-start',
+                flexWrap: 'wrap',
+                positionType: 'absolute',
+                position: { top: '30.5%', right: '2.5%' },
+                width: '51%',
+                height: '60%'
               }}
-              onMouseDown={() => {
-                this.DisplayInventory(1)
-              }}
-            />
-            <UiEntity
-              uiTransform={{
-                positionType: 'relative',
-                width: '25%',
-                height: '100%'
-              }}
-              onMouseDown={() => {
-                this.DisplayInventory(2)
-              }}
-            />
-            <UiEntity
-              uiTransform={{
-                positionType: 'relative',
-                width: '25%',
-                height: '100%'
-              }}
-              onMouseDown={() => {
-                this.DisplayInventory(3)
-              }}
-            />
-          </UiEntity>
-          <UiEntity
-            uiTransform={{
-              flexDirection: 'row',
-              alignContent: 'flex-start',
-              flexWrap: 'wrap',
-              positionType: 'absolute',
-              position: { top: '30.5%', right: '2.5%' },
-              width: '51%',
-              height: '60%'
-            }}
-            uiBackground={{ color: Color4.create(1, 0, 0, 0.1) }}
-          >
-            {
-              /* Items grid */
-              this.arrayToShow.map((element, index) => (
-                <UiEntity
-                  uiTransform={{
-                    positionType: 'relative',
-                    width: '16%',
-                    height: '23%',
-                    margin: { right: '0.7%', bottom: '0.6%' }
-                  }}
-                  uiBackground={{
-                    textureMode: 'stretch',
-                    uvs: getUvs(element.Sprite),
-                    texture: { src: element.Sprite.atlasSrc }
-                  }}
-                >
-                  <Label
+            >
+              {
+                /* Items grid */
+                this.arrayToShow.map((element, index) => (
+                  <UiEntity
                     uiTransform={{
-                      width: '100%',
-                      height: fontSizeDrop,
-                      positionType: 'absolute',
-                      position: { bottom: '5%', left: '12%' }
+                      positionType: 'relative',
+                      width: '16%',
+                      height: '23%',
+                      margin: { right: '0.7%', bottom: '0.6%' }
                     }}
-                    value={InventoryManager.Instance.GetItemCountByID(
-                      element.ID,
-                      false
-                    ).toString()}
-                    key={index}
-                    fontSize={fontSizeDrop}
-                    font="sans-serif"
-                    color={Color4.White()}
-                    textAlign="bottom-left"
-                  />
-                </UiEntity>
-              ))
-            }
-          </UiEntity>
+                    uiBackground={{
+                      textureMode: 'stretch',
+                      uvs: getUvs(element.Sprite),
+                      texture: { src: element.Sprite.atlasSrc }
+                    }}
+                  >
+                    <Label
+                      uiTransform={{
+                        width: '100%',
+                        height: fontSizeDrop,
+                        positionType: 'absolute',
+                        position: { bottom: '5%', left: '12%' }
+                      }}
+                      value={InventoryManager.Instance.GetItemCountByID(
+                        element.ID,
+                        false
+                      ).toString()}
+                      key={index}
+                      fontSize={fontSizeDrop}
+                      font="sans-serif"
+                      color={Color4.White()}
+                      textAlign="bottom-left"
+                    />
+                  </UiEntity>
+                ))
+              }
+            </UiEntity>
 
-          {/* Experience */}
-          <Label
-            uiTransform={{
-              positionType: 'absolute',
-              position: { left: '11.3%', bottom: '13.3%' }
-            }}
-            value={this.uiTextExperience}
-            fontSize={13}
-            font="sans-serif"
-            color={Color4.Yellow()}
-            textAlign="bottom-left"
-          />
-          {/* Level */}
-          <Label
-            uiTransform={{
-              positionType: 'absolute',
-              position: { left: '21%', bottom: '19%' }
-            }}
-            value={this.uiTextLevel}
-            fontSize={20}
-            font="sans-serif"
-            color={Color4.Yellow()}
-            textAlign="bottom-left"
-          />
-        </UiEntity>
+            {/* Experience */}
+            <Label
+              uiTransform={{
+                positionType: 'absolute',
+                position: { left: '11.3%', bottom: '13.3%' }
+              }}
+              value={this.uiTextExperience}
+              fontSize={13}
+              font="sans-serif"
+              color={Color4.Yellow()}
+              textAlign="bottom-left"
+            />
+            {/* Level */}
+            <Label
+              uiTransform={{
+                positionType: 'absolute',
+                position: { left: '21%', bottom: '19%' }
+              }}
+              value={this.uiTextLevel}
+              fontSize={20}
+              font="sans-serif"
+              color={Color4.Yellow()}
+              textAlign="bottom-left"
+            />
+          </UiEntity>
+        )}
       </Canvas>
     )
   }

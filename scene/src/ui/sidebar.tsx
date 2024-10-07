@@ -1,5 +1,4 @@
 import ReactEcs, { UiEntity } from '@dcl/sdk/react-ecs'
-import { inventoryButtons, missionsButtons, teleportButton } from './buttons'
 import { getUvs } from './utils/utils'
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
 import * as utils from '@dcl-sdk/utils'
@@ -7,6 +6,7 @@ import { movePlayerTo } from '~system/RestrictedActions'
 import { Color4, Vector3 } from '@dcl/sdk/math'
 import { type UIController } from '../controllers/ui.controller'
 import { instance, type InstanceId } from '../utils/currentInstance'
+import { buttonsSprites } from './atlas/buttonsSprites'
 
 export class SideBar {
   public isVisible: boolean = true
@@ -19,8 +19,8 @@ export class SideBar {
   uiController: UIController
   constructor(uiController: UIController) {
     this.uiController = uiController
-    this.inventoryButton = getUvs(inventoryButtons.inactive)
-    this.missionsButton = getUvs(missionsButtons.inactive)
+    this.inventoryButton = getUvs(buttonsSprites.inventoryInactive)
+    this.missionsButton = getUvs(buttonsSprites.missionsInactive)
   }
 
   createSideBarIcons(): ReactEcs.JSX.Element {
@@ -49,7 +49,7 @@ export class SideBar {
           uiBackground={{
             textureMode: 'stretch',
             uvs: this.inventoryButton,
-            texture: { src: inventoryButtons.inactive.atlasSrc }
+            texture: { src: buttonsSprites.inventoryInactive.atlasSrc }
           }}
           onMouseDown={() => {
             this.switchButtonState('Inventory')
@@ -86,7 +86,7 @@ export class SideBar {
           uiBackground={{
             textureMode: 'stretch',
             uvs: this.missionsButton,
-            texture: { src: missionsButtons.inactive.atlasSrc }
+            texture: { src: buttonsSprites.missionsInactive.atlasSrc }
           }}
           onMouseDown={() => {
             this.switchButtonState('Missions')
@@ -103,8 +103,8 @@ export class SideBar {
           }}
           uiBackground={{
             textureMode: 'stretch',
-            uvs: getUvs(teleportButton),
-            texture: { src: teleportButton.atlasSrc }
+            uvs: getUvs(buttonsSprites.teleportButton),
+            texture: { src: buttonsSprites.teleportButton.atlasSrc }
           }}
           onMouseDown={() => {
             // UIInventoryManager.Instance.SetDisplayState(false);
@@ -146,8 +146,8 @@ export class SideBar {
       this.inventoryButtonActive = !this.inventoryButtonActive
       this.inventoryButton = getUvs(
         this.inventoryButtonActive
-          ? inventoryButtons.active
-          : inventoryButtons.inactive
+          ? buttonsSprites.inventoryActive
+          : buttonsSprites.inventoryInactive
       )
       if (this.inventoryButtonActive) {
         this.uiController.inventory.init()
@@ -159,8 +159,8 @@ export class SideBar {
       this.missionsButtonActive = !this.missionsButtonActive
       this.missionsButton = getUvs(
         this.missionsButtonActive
-          ? missionsButtons.active
-          : missionsButtons.inactive
+          ? buttonsSprites.missionsActive
+          : buttonsSprites.missionsInactive
       )
       if (this.missionsButtonActive) {
         this.uiController.missionsBoard.show()

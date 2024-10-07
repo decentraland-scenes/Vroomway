@@ -176,7 +176,7 @@ export class BarrelObject {
         missions.checkAndUnlockCampaignMission('rummage')
         missions.checkAndUnlockCampaignMission('collectMaterials')
         console.log('barrels active')
-        Animator.getClip(this.entity, 'rummage').playing = true
+        Animator.playSingleAnimation(this.entity, 'rummage')
       }
     )
 
@@ -190,7 +190,6 @@ export class BarrelObject {
           clip: 'rummage',
           loop: false,
           playing: true
-          // speed:
         }
       ]
     })
@@ -223,12 +222,9 @@ export class BarrelObject {
     //  to the engine interface, so we can just use scaling while wait for that update
 
     if (this.inUse) {
-      this.entity = engine.addEntity()
-      // Vector3.getMutable(entity).scale = Vector3.One();
+      Transform.getMutable(this.entity).scale = Vector3.create(0.5, 0.5, 0.5)
     } else {
-      engine.removeEntity(this.entity)
-      // this.entity.getComponent(Animator).stop(this.animationClip)
-      // Vector3.getMutable(entity).scale = Vector3.Zero();
+      Transform.getMutable(this.entity).scale = Vector3.create(0, 0, 0)
     }
   }
 }

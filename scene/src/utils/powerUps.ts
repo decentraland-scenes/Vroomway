@@ -8,6 +8,7 @@ import {
 import { SAVE_TESTERS, LAMBDA_URL } from './constants'
 import type * as serverStateSpec from '../vw-decentrally/modules/connection/state/server-state-spec'
 import * as eth from 'eth-connect'
+import { type GameController } from '../controllers/game.controller'
 const CLASSNAME = 'powerups.ts'
 type PlayerStats = {
   multiplierCoins2x?: number
@@ -18,8 +19,10 @@ type PlayerStats = {
   healthInvincible15s?: number
 }
 export class PowerUpManagerClient extends PowerUpManager {
-  constructor() {
+  gameController: GameController
+  constructor(gameController: GameController) {
     super()
+    this.gameController = gameController
     this.powerUps = new Map()
   }
 
@@ -86,7 +89,7 @@ export class PowerUpManagerClient extends PowerUpManager {
 
     super.reset()
 
-    // powerUpBarUI.updateUI()
+    this.gameController.uiController.powerUpBar.updateUI()
   }
 
   initPowerUps(inventory: serverStateSpec.PowerUpSelection): void {
@@ -123,7 +126,7 @@ export class PowerUpManagerClient extends PowerUpManager {
     const now = Date.now()
     const result = super.updateStatuses(now)
 
-    // powerUpBarUI.updateUI()
+    this.gameController.uiController.powerUpBar.updateUI()
 
     console.log(
       CLASSNAME,
@@ -291,7 +294,7 @@ const SEED = {
   projectileDamangePlus5: 0,
   projectileTrap: 0
 }
-class PlayerPowerUps extends PowerUpsBase {
+export class PlayerPowerUps extends PowerUpsBase {
   firstLoad: boolean = false
   hasFetchingError: boolean
   saveInProgress: boolean = false
@@ -300,11 +303,12 @@ class PlayerPowerUps extends PowerUpsBase {
   adjustValues: PowerUpsBase
 
   public powerUpMgr: PowerUpManagerClient
-
-  constructor() {
+  gameController: GameController
+  constructor(gameController: GameController) {
     super()
+    this.gameController = gameController
 
-    this.powerUpMgr = new PowerUpManagerClient()
+    this.powerUpMgr = new PowerUpManagerClient(this.gameController)
 
     this.adjustValues = new PowerUpsBase()
     this.adjustValues.resetStats()
@@ -467,7 +471,7 @@ class PlayerPowerUps extends PowerUpsBase {
 
   updateUI(): void {
     // TODO use powerUpBarUI????
-    // powerUpBarUI.updateUI()
+    this.gameController.uiController.powerUpBar.updateUI()
   }
 
   /**
@@ -743,7 +747,6 @@ class PlayerPowerUps extends PowerUpsBase {
   }
 }
 
-export const PowerUpsInv = new PlayerPowerUps()
 /*
 //uncomment to give your player some data for testing. also shows how easy it is to hack
 PowerUpsInv.getValueAdjuster().multiplierCoins2x+=2

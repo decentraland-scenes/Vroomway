@@ -272,14 +272,14 @@ export class Reward {
               positionType: 'absolute',
               position: { top: '40%', left: '25%' },
               width:
-                ((canvasInfo.height * 0.5 * 0.25) / itemsSprites.coinSprite.h) *
-                itemsSprites.coinSprite.w,
+                ((canvasInfo.height * 0.5 * 0.25) / itemsSprites.coins.h) *
+                itemsSprites.coins.w,
               height: canvasInfo.height * 0.5 * 0.25
             }}
             uiBackground={{
               textureMode: 'stretch',
-              uvs: getUvs(itemsSprites.coinSprite),
-              texture: { src: itemsSprites.coinSprite.atlasSrc }
+              uvs: getUvs(itemsSprites.coins),
+              texture: { src: itemsSprites.coins.atlasSrc }
             }}
           >
             <Label
@@ -301,15 +301,14 @@ export class Reward {
               positionType: 'absolute',
               position: { top: '40%', right: '25%' },
               width:
-                ((canvasInfo.height * 0.5 * 0.25) /
-                  itemsSprites.cargoSprite.h) *
-                itemsSprites.cargoSprite.w,
+                ((canvasInfo.height * 0.5 * 0.25) / itemsSprites.smCargo.h) *
+                itemsSprites.smCargo.w,
               height: canvasInfo.height * 0.5 * 0.25
             }}
             uiBackground={{
               textureMode: 'stretch',
-              uvs: getUvs(itemsSprites.cargoSprite),
-              texture: { src: itemsSprites.cargoSprite.atlasSrc }
+              uvs: getUvs(itemsSprites.smCargo),
+              texture: { src: itemsSprites.smCargo.atlasSrc }
             }}
           >
             <Label

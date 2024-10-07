@@ -8,6 +8,7 @@ import { RealmController } from './instance.controller'
 import { DanceAreaUI } from '../ui/danceArea'
 import { SuperChargeTimer } from '../instances/recharge/timer'
 import { SprintTimer } from '../utils/sprintTimer'
+import { PlayerPowerUps } from '../utils/powerUps'
 
 export class GameController {
   public Player: PlayerStats
@@ -20,6 +21,7 @@ export class GameController {
   public danceAreaUI: DanceAreaUI
   public superChargeTimer: SuperChargeTimer
   public sprintTimer: SprintTimer
+  public PowerUpsInv: PlayerPowerUps
   constructor() {
     this.uiController = new UIController(this)
     this.realmController = new RealmController(this)
@@ -31,5 +33,6 @@ export class GameController {
     this.danceAreaUI = new DanceAreaUI(this)
     this.superChargeTimer = new SuperChargeTimer(this)
     this.sprintTimer = new SprintTimer(this)
+    this.PowerUpsInv = new PlayerPowerUps(this)
   }
 }

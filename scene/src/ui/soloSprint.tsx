@@ -1,13 +1,15 @@
 import { ReactEcs, UiEntity } from '@dcl/sdk/react-ecs'
 import { getUvs, type Sprite } from './utils/utils'
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
+import { closeButton, startButton } from './buttons'
 import { Color4, Vector3 } from '@dcl/sdk/math'
 import { movePlayerTo } from '~system/RestrictedActions'
 import { instance } from '../utils/currentInstance'
 import * as utils from '@dcl-sdk/utils'
 import { type GameController } from '../controllers/game.controller'
-import { buttonsSprites } from './atlas/buttonsSprites'
-
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import * as serverStateSpec from '../vw-decentrally/modules/connection/state/server-state-spec'
+import { type SceneArgs } from '../vw-decentrally/modules/scene/raceSceneManagerInterface'
 export class SoloSprintBoard {
   soloSprintBoard: Sprite
   soloSprintBoardVisible: boolean = false
@@ -63,8 +65,8 @@ export class SoloSprintBoard {
             }}
             uiBackground={{
               textureMode: 'stretch',
-              uvs: getUvs(buttonsSprites.closeButton),
-              texture: { src: buttonsSprites.closeButton.atlasSrc }
+              uvs: getUvs(closeButton),
+              texture: { src: closeButton.atlasSrc }
             }}
             onMouseDown={() => {
               this.hide()
@@ -80,8 +82,8 @@ export class SoloSprintBoard {
             }}
             uiBackground={{
               textureMode: 'stretch',
-              uvs: getUvs(buttonsSprites.startButton),
-              texture: { src: buttonsSprites.startButton.atlasSrc }
+              uvs: getUvs(startButton),
+              texture: { src: startButton.atlasSrc }
             }}
             onMouseDown={() => {
               this.startSoloSprint()
@@ -99,12 +101,13 @@ export class SoloSprintBoard {
       this.hide()
       instance.setInstance('soloSprint')
       this.gameController.uiController.loader.showLoader(3000)
-      // const powerUps: serverStateSpec.PowerUpSelection =
-      //   PowerUpsInv.toPowerUpSelection()
-      // const options: SceneArgs = {
-      //   mode: { type: 'normal' },
-      //   powerUps: powerUps
-      // }
+      const powerUps: serverStateSpec.PowerUpSelection =
+        this.gameController.PowerUpsInv.toPowerUpSelection()
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const options: SceneArgs = {
+        mode: { type: 'normal' },
+        powerUps
+      }
       // Renders Solo-Sprint 2
       this.gameController.realmController.switchRealm('soloSprint')
       utils.timers.setTimeout(() => {

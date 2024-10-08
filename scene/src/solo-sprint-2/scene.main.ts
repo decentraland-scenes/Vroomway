@@ -1732,6 +1732,9 @@ export class SoloSprint {
     this.gameController.uiController.reward.timeText =
       this.gameController.sprintTimer.timerText
     this.gameController.uiController.reward.show()
+    this.gameController.uiController.reward.updateTime(
+      this.gameController.sprintTimer.time
+    )
     utils.timers.setTimeout(() => {
       this.gameController.sprintTimer.resetTimer()
     }, 1500)

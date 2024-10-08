@@ -165,7 +165,7 @@ export class UIInventoryManager {
   modSlotSelected: number = 1
   arrayToShow: InventoryItem[] = [...ResourceObjectData, ...CargoObjectData]
   background: Sprite = boardsSprites.inventoryMaterialsBoardSprite
-  uiParentVisible: boolean = true
+  uiParentVisible: boolean = false
   uiTextExperience: string = '999999'
   uiTextLevel: string = '999'
   uiController: UIController | undefined
@@ -192,7 +192,9 @@ export class UIInventoryManager {
   public selectModSlot(value: number): void {
     if (value > 0 && value < 7) {
       this.modSlotSelected = value
-    } else { this.modSlotSelected = 1}
+    } else {
+      this.modSlotSelected = 1
+    }
   }
 
   public DisplayInventory(type: number): void {
@@ -240,12 +242,12 @@ export class UIInventoryManager {
           alignItems: 'center'
         }}
       >
-        {this.isModsVisible &&
+        {this.isModsVisible && (
           <UiEntity
             uiTransform={{
               positionType: 'relative',
               width:
-                ((canvasInfo.height * 0.55) /boardsSprites.modsSprite.h) *
+                ((canvasInfo.height * 0.55) / boardsSprites.modsSprite.h) *
                 boardsSprites.modsSprite.w,
               height: canvasInfo.height * 0.55
             }}
@@ -267,32 +269,30 @@ export class UIInventoryManager {
               }}
             >
               <UiEntity
-              uiTransform={{
-                positionType: 'absolute',
-                width: '90%',
-                height: '90%',
-                position: { top: '10%', left: '10%' }
-              }}
-              uiBackground={{
-                textureMode: 'stretch',
-                uvs: getUvs(boardsSprites.modLockSprite),
-                texture: { src: boardsSprites.modLockSprite.atlasSrc }
-              }}
-
-            />
-              <UiEntity
-              
                 uiTransform={{
-                display: this.modSlotSelected === 1 ? 'flex' : 'none',
-                width: '100%',
-                height: '100%',
-              }}
-              uiBackground={{
-                textureMode: 'stretch',
-                uvs: getUvs(boardsSprites.modHighlightSprite),
-                texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
-              }}
-            />
+                  positionType: 'absolute',
+                  width: '90%',
+                  height: '90%',
+                  position: { top: '10%', left: '10%' }
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  uvs: getUvs(boardsSprites.modLockSprite),
+                  texture: { src: boardsSprites.modLockSprite.atlasSrc }
+                }}
+              />
+              <UiEntity
+                uiTransform={{
+                  display: this.modSlotSelected === 1 ? 'flex' : 'none',
+                  width: '100%',
+                  height: '100%'
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  uvs: getUvs(boardsSprites.modHighlightSprite),
+                  texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
+                }}
+              />
             </UiEntity>
             <UiEntity
               uiTransform={{
@@ -306,32 +306,30 @@ export class UIInventoryManager {
               }}
             >
               <UiEntity
-              uiTransform={{
-                positionType: 'absolute',
-                width: '90%',
-                height: '90%',
-                position: { top: '10%', left: '10%' }
-              }}
-              uiBackground={{
-                textureMode: 'stretch',
-                uvs: getUvs(boardsSprites.modLockSprite),
-                texture: { src: boardsSprites.modLockSprite.atlasSrc }
-              }}
-
-            />
-              <UiEntity
-              
                 uiTransform={{
-                display: this.modSlotSelected === 2 ? 'flex' : 'none',
-                width: '100%',
-                height: '100%',
-              }}
-              uiBackground={{
-                textureMode: 'stretch',
-                uvs: getUvs(boardsSprites.modHighlightSprite),
-                texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
-              }}
-            />
+                  positionType: 'absolute',
+                  width: '90%',
+                  height: '90%',
+                  position: { top: '10%', left: '10%' }
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  uvs: getUvs(boardsSprites.modLockSprite),
+                  texture: { src: boardsSprites.modLockSprite.atlasSrc }
+                }}
+              />
+              <UiEntity
+                uiTransform={{
+                  display: this.modSlotSelected === 2 ? 'flex' : 'none',
+                  width: '100%',
+                  height: '100%'
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  uvs: getUvs(boardsSprites.modHighlightSprite),
+                  texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
+                }}
+              />
             </UiEntity>
             <UiEntity
               uiTransform={{
@@ -345,32 +343,30 @@ export class UIInventoryManager {
               }}
             >
               <UiEntity
-              uiTransform={{
-                positionType: 'absolute',
-                width: '90%',
-                height: '90%',
-                position: { top: '10%', left: '10%' }
-              }}
-              uiBackground={{
-                textureMode: 'stretch',
-                uvs: getUvs(boardsSprites.modLockSprite),
-                texture: { src: boardsSprites.modLockSprite.atlasSrc }
-              }}
-
-            />
-              <UiEntity
-              
                 uiTransform={{
-                display: this.modSlotSelected === 3 ? 'flex' : 'none',
-                width: '100%',
-                height: '100%',
-              }}
-              uiBackground={{
-                textureMode: 'stretch',
-                uvs: getUvs(boardsSprites.modHighlightSprite),
-                texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
-              }}
-            />
+                  positionType: 'absolute',
+                  width: '90%',
+                  height: '90%',
+                  position: { top: '10%', left: '10%' }
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  uvs: getUvs(boardsSprites.modLockSprite),
+                  texture: { src: boardsSprites.modLockSprite.atlasSrc }
+                }}
+              />
+              <UiEntity
+                uiTransform={{
+                  display: this.modSlotSelected === 3 ? 'flex' : 'none',
+                  width: '100%',
+                  height: '100%'
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  uvs: getUvs(boardsSprites.modHighlightSprite),
+                  texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
+                }}
+              />
             </UiEntity>
             <UiEntity
               uiTransform={{
@@ -384,32 +380,30 @@ export class UIInventoryManager {
               }}
             >
               <UiEntity
-              uiTransform={{
-                positionType: 'absolute',
-                width: '90%',
-                height: '90%',
-                position: { top: '10%', left: '10%' }
-              }}
-              uiBackground={{
-                textureMode: 'stretch',
-                uvs: getUvs(boardsSprites.modLockSprite),
-                texture: { src: boardsSprites.modLockSprite.atlasSrc }
-              }}
-
-            />
-              <UiEntity
-              
                 uiTransform={{
-                display: this.modSlotSelected === 4 ? 'flex' : 'none',
-                width: '100%',
-                height: '100%',
-              }}
-              uiBackground={{
-                textureMode: 'stretch',
-                uvs: getUvs(boardsSprites.modHighlightSprite),
-                texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
-              }}
-            />
+                  positionType: 'absolute',
+                  width: '90%',
+                  height: '90%',
+                  position: { top: '10%', left: '10%' }
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  uvs: getUvs(boardsSprites.modLockSprite),
+                  texture: { src: boardsSprites.modLockSprite.atlasSrc }
+                }}
+              />
+              <UiEntity
+                uiTransform={{
+                  display: this.modSlotSelected === 4 ? 'flex' : 'none',
+                  width: '100%',
+                  height: '100%'
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  uvs: getUvs(boardsSprites.modHighlightSprite),
+                  texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
+                }}
+              />
             </UiEntity>
             <UiEntity
               uiTransform={{
@@ -423,32 +417,30 @@ export class UIInventoryManager {
               }}
             >
               <UiEntity
-              uiTransform={{
-                positionType: 'absolute',
-                width: '90%',
-                height: '90%',
-                position: { top: '10%', left: '10%' }
-              }}
-              uiBackground={{
-                textureMode: 'stretch',
-                uvs: getUvs(boardsSprites.modLockSprite),
-                texture: { src: boardsSprites.modLockSprite.atlasSrc }
-              }}
-
-            />
-              <UiEntity
-              
                 uiTransform={{
-                display: this.modSlotSelected === 5 ? 'flex' : 'none',
-                width: '100%',
-                height: '100%',
-              }}
-              uiBackground={{
-                textureMode: 'stretch',
-                uvs: getUvs(boardsSprites.modHighlightSprite),
-                texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
-              }}
-            />
+                  positionType: 'absolute',
+                  width: '90%',
+                  height: '90%',
+                  position: { top: '10%', left: '10%' }
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  uvs: getUvs(boardsSprites.modLockSprite),
+                  texture: { src: boardsSprites.modLockSprite.atlasSrc }
+                }}
+              />
+              <UiEntity
+                uiTransform={{
+                  display: this.modSlotSelected === 5 ? 'flex' : 'none',
+                  width: '100%',
+                  height: '100%'
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  uvs: getUvs(boardsSprites.modHighlightSprite),
+                  texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
+                }}
+              />
             </UiEntity>
             <UiEntity
               uiTransform={{
@@ -462,32 +454,30 @@ export class UIInventoryManager {
               }}
             >
               <UiEntity
-              uiTransform={{
-                positionType: 'absolute',
-                width: '90%',
-                height: '90%',
-                position: { top: '10%', left: '10%' }
-              }}
-              uiBackground={{
-                textureMode: 'stretch',
-                uvs: getUvs(boardsSprites.modLockSprite),
-                texture: { src: boardsSprites.modLockSprite.atlasSrc }
-              }}
-
-            />
-              <UiEntity
-              
                 uiTransform={{
-                display: this.modSlotSelected === 6 ? 'flex' : 'none',
-                width: '100%',
-                height: '100%',
-              }}
-              uiBackground={{
-                textureMode: 'stretch',
-                uvs: getUvs(boardsSprites.modHighlightSprite),
-                texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
-              }}
-            />
+                  positionType: 'absolute',
+                  width: '90%',
+                  height: '90%',
+                  position: { top: '10%', left: '10%' }
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  uvs: getUvs(boardsSprites.modLockSprite),
+                  texture: { src: boardsSprites.modLockSprite.atlasSrc }
+                }}
+              />
+              <UiEntity
+                uiTransform={{
+                  display: this.modSlotSelected === 6 ? 'flex' : 'none',
+                  width: '100%',
+                  height: '100%'
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  uvs: getUvs(boardsSprites.modHighlightSprite),
+                  texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
+                }}
+              />
             </UiEntity>
             <UiEntity
               uiTransform={{
@@ -506,8 +496,8 @@ export class UIInventoryManager {
               }}
             />
           </UiEntity>
-        }
-        {!this.isModsVisible &&
+        )}
+        {!this.isModsVisible && (
           <UiEntity
             uiTransform={{
               positionType: 'relative',
@@ -645,12 +635,27 @@ export class UIInventoryManager {
                 ))
               }
             </UiEntity>
-
+            <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                width: '10%',
+                height: '5%',
+                position: { top: '-0.5%', right: '-0.5%' }
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs: getUvs(buttonsSprites.closeButton),
+                texture: { src: buttonsSprites.closeButton.atlasSrc }
+              }}
+              onMouseDown={() => {
+                this.uiController?.sideBar.switchButtonState('Inventory')
+              }}
+            />
             {/* Experience */}
             <Label
               uiTransform={{
                 positionType: 'absolute',
-                position: { left: '11.3%', bottom: '13.3%' }
+                position: { left: '10%', bottom: '9.5%' }
               }}
               value={this.uiTextExperience}
               fontSize={13}
@@ -662,7 +667,7 @@ export class UIInventoryManager {
             <Label
               uiTransform={{
                 positionType: 'absolute',
-                position: { left: '21%', bottom: '19%' }
+                position: { left: '21%', bottom: '15%' }
               }}
               value={this.uiTextLevel}
               fontSize={20}
@@ -671,7 +676,7 @@ export class UIInventoryManager {
               textAlign="bottom-left"
             />
           </UiEntity>
-        }
+        )}
       </Canvas>
     )
   }

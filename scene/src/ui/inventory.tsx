@@ -240,7 +240,7 @@ export class UIInventoryManager {
           alignItems: 'center'
         }}
       >
-        {this.isModsVisible ? (
+        {this.isModsVisible &&
           <UiEntity
             uiTransform={{
               positionType: 'relative',
@@ -506,7 +506,8 @@ export class UIInventoryManager {
               }}
             />
           </UiEntity>
-        ) : (
+        }
+        {!this.isModsVisible &&
           <UiEntity
             uiTransform={{
               positionType: 'relative',
@@ -670,7 +671,7 @@ export class UIInventoryManager {
               textAlign="bottom-left"
             />
           </UiEntity>
-        )}
+        }
       </Canvas>
     )
   }

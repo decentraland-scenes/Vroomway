@@ -172,10 +172,10 @@ export class UIInventoryManager {
       h: 550
     }
     LevelManager.Instance.RegisterUICallbackExperience(
-      this.CallbackUpdateExpDisplay
+      this.CallbackUpdateExpDisplay.bind(this)
     )
     LevelManager.Instance.RegisterUICallbackLevel(
-      this.CallbackUpdateLevelDisplay
+      this.CallbackUpdateLevelDisplay.bind(this)
     )
   }
 

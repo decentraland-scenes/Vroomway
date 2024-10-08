@@ -19,6 +19,7 @@ import { PowerUpShop } from '../ui/powerUpShop'
 import { type PlayerStats } from '../utils/player'
 import { Reward } from '../ui/reward'
 import { PowerUpBar } from '../ui/powerUpBar'
+import { LootBoard } from '../ui/loot'
 
 export class UIController {
   public player: PlayerStats
@@ -33,6 +34,7 @@ export class UIController {
   public loader = new Loader(this)
   public powerUpShop = new PowerUpShop(this)
   public powerUpBar = new PowerUpBar(this)
+  public lootBoard = new LootBoard(this)
   public timeCounter_visible = true
   public timerText: string = ''
   announcement_visible: boolean = false
@@ -91,6 +93,7 @@ export class UIController {
         <Canvas>{this.reward.isVisible && this.reward.createUi()}</Canvas>
         <Canvas>{this.loader.profileVisible && this.loader.mainUi()}</Canvas>
         <Canvas>{this.powerUpBar.visible && this.powerUpBar.createUI()}</Canvas>
+        <Canvas>{this.lootBoard.visible && this.lootBoard.createUI()}</Canvas>
       </UiEntity>
     )
   }

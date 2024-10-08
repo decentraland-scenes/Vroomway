@@ -7,7 +7,9 @@ import { movePlayerTo } from '~system/RestrictedActions'
 import { instance } from '../utils/currentInstance'
 import * as utils from '@dcl-sdk/utils'
 import { type GameController } from '../controllers/game.controller'
-
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import * as serverStateSpec from '../vw-decentrally/modules/connection/state/server-state-spec'
+import { type SceneArgs } from '../vw-decentrally/modules/scene/raceSceneManagerInterface'
 export class SoloSprintBoard {
   soloSprintBoard: Sprite
   soloSprintBoardVisible: boolean = false
@@ -99,12 +101,13 @@ export class SoloSprintBoard {
       this.hide()
       instance.setInstance('soloSprint')
       this.gameController.uiController.loader.showLoader(3000)
-      // const powerUps: serverStateSpec.PowerUpSelection =
-      //   PowerUpsInv.toPowerUpSelection()
-      // const options: SceneArgs = {
-      //   mode: { type: 'normal' },
-      //   powerUps: powerUps
-      // }
+      const powerUps: serverStateSpec.PowerUpSelection =
+        this.gameController.PowerUpsInv.toPowerUpSelection()
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const options: SceneArgs = {
+        mode: { type: 'normal' },
+        powerUps
+      }
       // Renders Solo-Sprint 2
       this.gameController.realmController.switchRealm('soloSprint')
       utils.timers.setTimeout(() => {

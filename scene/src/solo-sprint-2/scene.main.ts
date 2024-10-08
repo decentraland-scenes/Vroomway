@@ -26,7 +26,6 @@ import { DoorBroken } from './classes/class.doorBroken'
 import { GLTFParticles } from './classes/class.gltfParticles'
 import { Zapper } from './classes/class.zapper'
 import { entityController } from '../utils/entityController'
-import { instance } from '../utils/currentInstance'
 // import { getUserData } from '~system/UserIdentity'
 
 export class SoloSprint {
@@ -1646,11 +1645,11 @@ export class SoloSprint {
     // start timer
     // if connected to lobby, lobby will overwrite, but still want this here to enforce expectation
     // Constants.SCENE_MGR.lastRaceType = 'solosprint'
-    // powerUpBarUI.show()
+    this.gameController.uiController.powerUpBar.show()
     // GAME_STATE.setGameTimeFromServerClock({ serverTime: -2 }) // using local game time since not connected
-    // PowerUpsInv.powerUpMgr.reset()
-    // PowerUpsInv.powerUpMgr.initPowerUps(options.powerUps)
-    // PowerUpsInv.powerUpMgr.updateStatuses()
+    // this.gameController.PowerUpsInv.powerUpMgr.reset()
+    // this.gameController.PowerUpsInv.powerUpMgr.initPowerUps(options.powerUps)
+    // this.gameController.PowerUpsInv.powerUpMgr.updateStatuses()
     // save too??
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const preFuel = this.gameController.Player.getFuel()
@@ -1728,12 +1727,10 @@ export class SoloSprint {
 
   onRaceEnd(): void {
     this.gameController.realmController.switchRealm('mainInstance')
-    instance.setInstance('main')
-
-    this.gameController.uiController.reward.updateTime(
-      this.gameController.sprintTimer.getTime()
-    )
+    this.gameController.uiController.powerUpBar.hide()
     this.gameController.sprintTimer.sprintComplete = true
+    this.gameController.uiController.reward.timeText =
+      this.gameController.sprintTimer.timerText
     this.gameController.uiController.reward.show()
     utils.timers.setTimeout(() => {
       this.gameController.sprintTimer.resetTimer()

@@ -182,10 +182,10 @@ export class UIInventoryManager {
   constructor(uiController?: UIController) {
     this.uiController = uiController
     LevelManager.Instance.RegisterUICallbackExperience(
-      this.CallbackUpdateExpDisplay
+      this.CallbackUpdateExpDisplay.bind(this)
     )
     LevelManager.Instance.RegisterUICallbackLevel(
-      this.CallbackUpdateLevelDisplay
+      this.CallbackUpdateLevelDisplay.bind(this)
     )
   }
 

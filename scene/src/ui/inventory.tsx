@@ -174,44 +174,47 @@ export class UIInventoryManager {
   }
 
   public DisplayInventory(type: number): void {
-   
     this.updateExpDisplay()
     this.updateLevelDisplay()
-    switch(type) { 
-      case 0: { 
+    switch (type) {
+      case 0: {
         this.background = boardsSprites.inventoryVehiclesBoardSprite
-         break; 
+        break
       }
-      case 1: { 
+      case 1: {
         this.background = boardsSprites.inventoryAccesoriesBoardSprite
-        break; 
-     }
-     case 2: { 
-      this.background = boardsSprites.inventoryMaterialsBoardSprite
-       break; 
-    }
-    case 3: { 
-      this.background = boardsSprites.inventoryPowerUpsBoardSprite
-      break; 
-   }   
-      default: { 
+        break
+      }
+      case 2: {
+        this.background = boardsSprites.inventoryMaterialsBoardSprite
+        break
+      }
+      case 3: {
+        this.background = boardsSprites.inventoryPowerUpsBoardSprite
+        break
+      }
+      default: {
         this.background = boardsSprites.inventoryVehiclesBoardSprite
-         break; 
-      } 
-   } 
+        break
+      }
+    }
   }
 
   createUI(): ReactEcs.JSX.Element {
     const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
     return (
-      <Canvas uiTransform={{
-        justifyContent: 'center',
-        alignItems:'center'
-      }}>
+      <Canvas
+        uiTransform={{
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
         <UiEntity
           uiTransform={{
             positionType: 'relative',
-            width: canvasInfo.height * 0.55 / this.background.h * this.background.w,
+            width:
+              ((canvasInfo.height * 0.55) / this.background.h) *
+              this.background.w,
             height: canvasInfo.height * 0.55
           }}
           uiBackground={{
@@ -223,48 +226,54 @@ export class UIInventoryManager {
           {/* Navbar */}
           <UiEntity
             uiTransform={{
-            flexDirection:'row',
+              flexDirection: 'row',
               positionType: 'absolute',
-            position:{top:'12%', right:'2%'},
-            width: '53%',
-            height: '10%'
-          }}
-          
+              position: { top: '12%', right: '2%' },
+              width: '53%',
+              height: '10%'
+            }}
           >
             <UiEntity
-          uiTransform={{
-              positionType: 'relative',
-            width: '25%',
-            height: '100%'
+              uiTransform={{
+                positionType: 'relative',
+                width: '25%',
+                height: '100%'
               }}
-              onMouseDown={()=>{this.DisplayInventory(0)}}
+              onMouseDown={() => {
+                this.DisplayInventory(0)
+              }}
             />
             <UiEntity
-          uiTransform={{
-              positionType: 'relative',
-            width: '25%',
-            height: '100%'
+              uiTransform={{
+                positionType: 'relative',
+                width: '25%',
+                height: '100%'
               }}
-              onMouseDown={()=>{this.DisplayInventory(1)}}
+              onMouseDown={() => {
+                this.DisplayInventory(1)
+              }}
             />
             <UiEntity
-          uiTransform={{
-              positionType: 'relative',
-            width: '25%',
-            height: '100%'
+              uiTransform={{
+                positionType: 'relative',
+                width: '25%',
+                height: '100%'
               }}
-              onMouseDown={()=>{this.DisplayInventory(2)}}
+              onMouseDown={() => {
+                this.DisplayInventory(2)
+              }}
             />
             <UiEntity
-          uiTransform={{
-              positionType: 'relative',
-            width: '25%',
-            height: '100%'
+              uiTransform={{
+                positionType: 'relative',
+                width: '25%',
+                height: '100%'
               }}
-              onMouseDown={()=>{this.DisplayInventory(3)}}
-          />
-
-        </UiEntity>
+              onMouseDown={() => {
+                this.DisplayInventory(3)
+              }}
+            />
+          </UiEntity>
           {/* Experience */}
           <Label
             uiTransform={{
@@ -290,7 +299,7 @@ export class UIInventoryManager {
             textAlign="bottom-left"
           />
         </UiEntity>
-        </Canvas>
+      </Canvas>
     )
   }
 

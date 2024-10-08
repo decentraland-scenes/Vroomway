@@ -17,7 +17,7 @@ export class Reward {
   public mdCargo: number = 0
   public lgCargo: number = 0
   public cargoQuantity: number = 0
-  public cargoSpriteSize: Sprite = itemsSprites.smCargoSprite
+  public CargoSpriteSize: Sprite = itemsSprites.smCargo
   public exp: number = 0
   public isVisible: boolean = false
   public timeText: string = '00:00.00'
@@ -101,7 +101,7 @@ export class Reward {
       this.coins = bonusCoins
       this.smCargo = 1
       this.cargoQuantity = this.smCargo
-      this.cargoSpriteSize = itemsSprites.smCargoSprite
+      this.CargoSpriteSize = itemsSprites.smCargo
     } else if (time >= 135.02 && time <= 180.01) {
       const bonusCoins = vehicleOwnership.getCoinBonus(
         150 + player.getValueAdjuster().sprintCoinsCollected
@@ -111,7 +111,7 @@ export class Reward {
       this.coins = bonusCoins
       this.mdCargo = 1
       this.cargoQuantity = this.mdCargo
-      this.cargoSpriteSize = itemsSprites.mdCargoSprite
+      this.CargoSpriteSize = itemsSprites.mdCargo
       missions.checkAndUnlockCampaignMission('completeSprintFastTime')
     } else if (time <= 135.01) {
       const bonusCoins = vehicleOwnership.getCoinBonus(
@@ -122,7 +122,7 @@ export class Reward {
       this.coins = bonusCoins
       this.lgCargo = 1
       this.cargoQuantity = this.lgCargo
-      this.cargoSpriteSize = itemsSprites.lgCargoSprite
+      this.CargoSpriteSize = itemsSprites.lgCargo
       missions.checkAndUnlockCampaignMission('completeSprintFastTime')
 
       console.log('time = ' + time)
@@ -255,14 +255,14 @@ export class Reward {
               positionType: 'absolute',
               position: { top: '40%', left: '25%' },
               width:
-                ((canvasInfo.height * 0.5 * 0.25) / itemsSprites.coinSprite.h) *
-                itemsSprites.coinSprite.w,
+                ((canvasInfo.height * 0.5 * 0.25) / itemsSprites.coins.h) *
+                itemsSprites.coins.w,
               height: canvasInfo.height * 0.5 * 0.25
             }}
             uiBackground={{
               textureMode: 'stretch',
-              uvs: getUvs(itemsSprites.coinSprite),
-              texture: { src: itemsSprites.coinSprite.atlasSrc }
+              uvs: getUvs(itemsSprites.coins),
+              texture: { src: itemsSprites.coins.atlasSrc }
             }}
           >
             <Label
@@ -284,15 +284,15 @@ export class Reward {
               positionType: 'absolute',
               position: { top: '40%', right: '25%' },
               width:
-                ((canvasInfo.height * 0.5 * 0.25) / this.cargoSpriteSize.h) *
-                this.cargoSpriteSize.w,
+                ((canvasInfo.height * 0.5 * 0.25) / this.CargoSpriteSize.h) *
+                this.CargoSpriteSize.w,
               height: canvasInfo.height * 0.5 * 0.25,
               display: this.cargoQuantity > 0 ? 'flex' : 'none'
             }}
             uiBackground={{
               textureMode: 'stretch',
-              uvs: getUvs(this.cargoSpriteSize),
-              texture: { src: this.cargoSpriteSize.atlasSrc }
+              uvs: getUvs(this.CargoSpriteSize),
+              texture: { src: this.CargoSpriteSize.atlasSrc }
             }}
           >
             <Label

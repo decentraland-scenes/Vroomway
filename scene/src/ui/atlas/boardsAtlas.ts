@@ -4,7 +4,7 @@ const board2Atlas: string = 'assets/images/uiAtlas/board2Atlas.png'
 const board2AtlasSize: { x: number; y: number } = { x: 2048, y: 2048 }
 const board3Atlas: string = 'assets/images/uiAtlas/board3Atlas.png'
 const board3AtlasSize: { x: number; y: number } = { x: 2048, y: 2048 }
-const board8Atlas: string = 'assets/images/uiAtlas/board3Atlas.png'
+const board8Atlas: string = 'assets/images/uiAtlas/board8Atlas.png'
 const board8AtlasSize: { x: number; y: number } = { x: 2048, y: 2048 }
 
 export const boardsSprites: Record<string, Sprite> = {

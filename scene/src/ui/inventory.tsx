@@ -162,6 +162,7 @@ type InventoryItem = BaseObject | ResourceObject | CargoObject
 
 export class UIInventoryManager {
   isModsVisible: boolean = false
+  modSlotSelected: number = 1
   arrayToShow: InventoryItem[] = [...ResourceObjectData, ...CargoObjectData]
   background: Sprite = boardsSprites.inventoryMaterialsBoardSprite
   uiParentVisible: boolean = true
@@ -186,6 +187,12 @@ export class UIInventoryManager {
     LevelManager.Instance.RegisterUICallbackLevel(
       this.CallbackUpdateLevelDisplay
     )
+  }
+
+  public selectModSlot(value: number): void {
+    if (value > 0 && value < 7) {
+      this.modSlotSelected = value
+    } else { this.modSlotSelected = 1}
   }
 
   public DisplayInventory(type: number): void {
@@ -238,16 +245,267 @@ export class UIInventoryManager {
             uiTransform={{
               positionType: 'relative',
               width:
-                ((canvasInfo.height * 0.55) / this.background.h) *
-                this.background.w,
+                ((canvasInfo.height * 0.55) /boardsSprites.modsSprite.h) *
+                boardsSprites.modsSprite.w,
               height: canvasInfo.height * 0.55
             }}
             uiBackground={{
               textureMode: 'stretch',
-              uvs: getUvs(this.background),
-              texture: { src: this.background.atlasSrc }
+              uvs: getUvs(boardsSprites.modsSprite),
+              texture: { src: boardsSprites.modsSprite.atlasSrc }
             }}
-          />
+          >
+            <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                width: canvasInfo.height * 0.55 * 0.1,
+                height: canvasInfo.height * 0.55 * 0.1,
+                position: { top: '18%', left: '8%' }
+              }}
+              onMouseDown={() => {
+                this.modSlotSelected = 1
+              }}
+            >
+              <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                width: '90%',
+                height: '90%',
+                position: { top: '10%', left: '10%' }
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs: getUvs(boardsSprites.modLockSprite),
+                texture: { src: boardsSprites.modLockSprite.atlasSrc }
+              }}
+
+            />
+              <UiEntity
+              
+                uiTransform={{
+                display: this.modSlotSelected === 1 ? 'flex' : 'none',
+                width: '100%',
+                height: '100%',
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs: getUvs(boardsSprites.modHighlightSprite),
+                texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
+              }}
+            />
+            </UiEntity>
+            <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                width: canvasInfo.height * 0.55 * 0.1,
+                height: canvasInfo.height * 0.55 * 0.1,
+                position: { top: '18%', left: '41%' }
+              }}
+              onMouseDown={() => {
+                this.modSlotSelected = 2
+              }}
+            >
+              <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                width: '90%',
+                height: '90%',
+                position: { top: '10%', left: '10%' }
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs: getUvs(boardsSprites.modLockSprite),
+                texture: { src: boardsSprites.modLockSprite.atlasSrc }
+              }}
+
+            />
+              <UiEntity
+              
+                uiTransform={{
+                display: this.modSlotSelected === 2 ? 'flex' : 'none',
+                width: '100%',
+                height: '100%',
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs: getUvs(boardsSprites.modHighlightSprite),
+                texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
+              }}
+            />
+            </UiEntity>
+            <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                width: canvasInfo.height * 0.55 * 0.1,
+                height: canvasInfo.height * 0.55 * 0.1,
+                position: { top: '18%', left: '74%' }
+              }}
+              onMouseDown={() => {
+                this.modSlotSelected = 3
+              }}
+            >
+              <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                width: '90%',
+                height: '90%',
+                position: { top: '10%', left: '10%' }
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs: getUvs(boardsSprites.modLockSprite),
+                texture: { src: boardsSprites.modLockSprite.atlasSrc }
+              }}
+
+            />
+              <UiEntity
+              
+                uiTransform={{
+                display: this.modSlotSelected === 3 ? 'flex' : 'none',
+                width: '100%',
+                height: '100%',
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs: getUvs(boardsSprites.modHighlightSprite),
+                texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
+              }}
+            />
+            </UiEntity>
+            <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                width: canvasInfo.height * 0.55 * 0.1,
+                height: canvasInfo.height * 0.55 * 0.1,
+                position: { top: '31%', left: '8%' }
+              }}
+              onMouseDown={() => {
+                this.modSlotSelected = 4
+              }}
+            >
+              <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                width: '90%',
+                height: '90%',
+                position: { top: '10%', left: '10%' }
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs: getUvs(boardsSprites.modLockSprite),
+                texture: { src: boardsSprites.modLockSprite.atlasSrc }
+              }}
+
+            />
+              <UiEntity
+              
+                uiTransform={{
+                display: this.modSlotSelected === 4 ? 'flex' : 'none',
+                width: '100%',
+                height: '100%',
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs: getUvs(boardsSprites.modHighlightSprite),
+                texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
+              }}
+            />
+            </UiEntity>
+            <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                width: canvasInfo.height * 0.55 * 0.1,
+                height: canvasInfo.height * 0.55 * 0.1,
+                position: { top: '31%', left: '41%' }
+              }}
+              onMouseDown={() => {
+                this.modSlotSelected = 5
+              }}
+            >
+              <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                width: '90%',
+                height: '90%',
+                position: { top: '10%', left: '10%' }
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs: getUvs(boardsSprites.modLockSprite),
+                texture: { src: boardsSprites.modLockSprite.atlasSrc }
+              }}
+
+            />
+              <UiEntity
+              
+                uiTransform={{
+                display: this.modSlotSelected === 5 ? 'flex' : 'none',
+                width: '100%',
+                height: '100%',
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs: getUvs(boardsSprites.modHighlightSprite),
+                texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
+              }}
+            />
+            </UiEntity>
+            <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                width: canvasInfo.height * 0.55 * 0.1,
+                height: canvasInfo.height * 0.55 * 0.1,
+                position: { top: '31%', left: '74%' }
+              }}
+              onMouseDown={() => {
+                this.modSlotSelected = 6
+              }}
+            >
+              <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                width: '90%',
+                height: '90%',
+                position: { top: '10%', left: '10%' }
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs: getUvs(boardsSprites.modLockSprite),
+                texture: { src: boardsSprites.modLockSprite.atlasSrc }
+              }}
+
+            />
+              <UiEntity
+              
+                uiTransform={{
+                display: this.modSlotSelected === 6 ? 'flex' : 'none',
+                width: '100%',
+                height: '100%',
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs: getUvs(boardsSprites.modHighlightSprite),
+                texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
+              }}
+            />
+            </UiEntity>
+            <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                width: '30%',
+                height: '7.5%',
+                position: { top: '-2.5%', right: '-5%' }
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs: getUvs(buttonsSprites.closeButton),
+                texture: { src: buttonsSprites.closeButton.atlasSrc }
+              }}
+              onMouseDown={() => {
+                this.isModsVisible = false
+              }}
+            />
+          </UiEntity>
         ) : (
           <UiEntity
             uiTransform={{

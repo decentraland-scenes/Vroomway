@@ -20,24 +20,26 @@ import { Reward } from '../ui/reward'
 import { PowerUpBar } from '../ui/powerUpBar'
 import { buttonsSprites } from '../ui/atlas/buttonsSprites'
 import { LootBoard } from '../ui/loot'
+import { ClaimAsset } from '../instances/scrapyard/claimAsset'
 
 export class UIController {
   public lootBoard = new LootBoard(this)
   public player: PlayerStats
-  public socialsVisible: boolean = true
+  public socialsIsVisible: boolean = true
   public canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
   public sideBar = new SideBar(this)
   public reward = new Reward(this)
   public profile = new Profile(this)
   public missionsBoard = new MissionsBoard(this)
   public inventory = new UIInventoryManager(this)
+  public claimAsset = new ClaimAsset(this)
   public outOfFuel = new RenderOutOfFuel(this)
   public loader = new Loader(this)
   public powerUpShop = new PowerUpShop(this)
   public powerUpBar = new PowerUpBar(this)
-  public timeCounter_visible = true
+  public timeCounterIsVisible = true
   public timerText: string = ''
-  announcement_visible: boolean = false
+  announcementIsVisible: boolean = false
   announcement: string = ''
   announcement_color: Color4 = Color4.White()
   gameController: GameController
@@ -56,26 +58,26 @@ export class UIController {
           {this.sideBar.isVisible && this.sideBar.createSideBarIcons()}
         </Canvas>
         <Canvas>{this.profile.isVisible && this.profile.initialize()}</Canvas>
-        {this.socialsVisible && this.renderSocials()}
-        <Canvas>{this.announcement_visible && this.announcementUI()}</Canvas>
+        {this.socialsIsVisible && this.renderSocials()}
+        <Canvas>{this.announcementIsVisible && this.announcementUI()}</Canvas>
         <Canvas>
           {this.missionsBoard.isVisible &&
             this.missionsBoard.createMissionBoard()}
         </Canvas>
         <Canvas>
-          {this.inventory.uiParentVisible && this.inventory.createUI()}
+          {this.inventory.uiParentVisible && this.inventory.createUi()}
         </Canvas>
         <Canvas>
           {this.gameController.soloSprint.soloSprintBoardVisible &&
-            this.gameController.soloSprint.createUI()}
+            this.gameController.soloSprint.createUi()}
         </Canvas>
         <Canvas>
           {this.gameController.dragRaceBoard.boardVisible &&
-            this.gameController.dragRaceBoard.createUI()}
+            this.gameController.dragRaceBoard.createUi()}
         </Canvas>
         <Canvas>
           {this.gameController.decentrallyBoard.boardVisible &&
-            this.gameController.decentrallyBoard.createUI()}
+            this.gameController.decentrallyBoard.createUi()}
         </Canvas>
         <Canvas>
           {this.gameController.danceAreaUI.isVisible &&
@@ -86,14 +88,15 @@ export class UIController {
             this.gameController.superChargeTimer.mainUI()}
         </Canvas>
         <Canvas>
-          {this.powerUpShop.isVisible && this.powerUpShop.createUI()}
+          {this.powerUpShop.isVisible && this.powerUpShop.createUi()}
           {this.gameController.sprintTimer.isVisible &&
             this.gameController.sprintTimer.mainUI()}
         </Canvas>
         <Canvas>{this.reward.isVisible && this.reward.createUi()}</Canvas>
         <Canvas>{this.loader.profileVisible && this.loader.mainUi()}</Canvas>
-        <Canvas>{this.powerUpBar.visible && this.powerUpBar.createUI()}</Canvas>
-        <Canvas>{this.lootBoard.visible && this.lootBoard.createUI()}</Canvas>
+        <Canvas>{this.powerUpBar.isVisible === true && this.powerUpBar.createUi()}</Canvas>
+        <Canvas>{this.lootBoard.isVisible && this.lootBoard.createUi()}</Canvas>
+        <Canvas>{this.claimAsset.isVisible && this.claimAsset.createUi()}</Canvas>
       </UiEntity>
     )
   }
@@ -116,7 +119,7 @@ export class UIController {
           position: { left: '0%', top: '30%' },
           width: iconSizeW * 2,
           height: iconSizeH,
-          display: this.socialsVisible ? 'flex' : 'none'
+          display: this.socialsIsVisible ? 'flex' : 'none'
         }}
       >
         <UiEntity
@@ -173,7 +176,7 @@ export class UIController {
   announcementUI(): ReactEcs.JSX.Element {
     return (
       <Announcement
-        visible={this.announcement_visible}
+        isVisible={this.announcementIsVisible}
         text={this.announcement}
         color={this.announcement_color}
       />
@@ -188,10 +191,10 @@ export class UIController {
     utils.timers.clearInterval(duration)
     console.log('OPEN ANNOUNCEMENT')
     this.announcement = announcement
-    this.announcement_visible = true
+    this.announcementIsVisible = true
     this.announcement_color = color
     utils.timers.setTimeout(() => {
-      this.announcement_visible = false
+      this.announcementIsVisible = false
     }, duration)
   }
 }

@@ -13,12 +13,12 @@ export class LootBoard {
   rewards: Record<string, number> = {}
   uiController: UIController
   lootBoard: Sprite = boardsSprites.lootBoard
-  visible: boolean = false
+  isVisible: boolean = false
   constructor(uiController: UIController) {
     this.uiController = uiController
   }
 
-  createUI(): ReactEcs.JSX.Element {
+  createUi(): ReactEcs.JSX.Element {
     const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
     return (
       <Canvas>
@@ -106,11 +106,11 @@ export class LootBoard {
   }
 
   hide(): void {
-    this.visible = false
+    this.isVisible = false
   }
 
   toggleBoard = (): void => {
-    this.visible = true
+    this.isVisible = true
     missions.checkAndUnlockCampaignMission('collectMaterials')
     utils.timers.setTimeout(() => {
       this.hide()

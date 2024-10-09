@@ -57,7 +57,7 @@ export class Loader {
     this.profileVisible = false
   }
 
-  createUI(): ReactEcs.JSX.Element | null {
+  createUi(): ReactEcs.JSX.Element | null {
     const canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
     if (canvasInfo === null) return null
     return (

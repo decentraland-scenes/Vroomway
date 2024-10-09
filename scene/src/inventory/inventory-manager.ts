@@ -85,7 +85,7 @@ export class InventoryEntry {
 }
 // manages the player's inventory
 export class InventoryManager {
-  // if true, all debugging logs will be visible (ensure is false when deploying to remove overhead)
+  // if true, all debugging logs will be isVisible (ensure is false when deploying to remove overhead)
   private static readonly IsDebugging: boolean = false
 
   // access pocketing

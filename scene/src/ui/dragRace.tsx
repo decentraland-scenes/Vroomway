@@ -25,7 +25,7 @@ export class DragRaceBoard {
     }
   }
 
-  createUI(): ReactEcs.JSX.Element {
+  createUi(): ReactEcs.JSX.Element {
     const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
     return (
       <UiEntity

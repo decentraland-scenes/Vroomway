@@ -26,12 +26,12 @@ const background: Sprite = {
 export class PowerUpBarItem {
   item: Sprite
   item_opacity: number = 0
-  item_visible: boolean = false
+  itemIsVisible: boolean = false
   itemQty: string = ''
   itemActivated: string = ''
-  itemActivated_visible: boolean = false
+  itemActivatedIsVisible: boolean = false
   powerupId: PowerUpIdEnum
-  visible: boolean = false
+  isVisible: boolean = false
   actionButton: InputAction
   buttonAction: () => void
   uiController: UIController
@@ -70,7 +70,7 @@ export class PowerUpBarItem {
     }
   }
 
-  createUI(): ReactEcs.JSX.Element {
+  createUi(): ReactEcs.JSX.Element {
     const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
     return (
       <UiEntity
@@ -112,15 +112,15 @@ export class PowerUpBarItem {
   }
 
   setVisible(val: boolean): void {
-    this.visible = val
-    if (this.item_visible !== val) {
-      this.item_visible = this.visible
+    this.isVisible = val
+    if (this.itemIsVisible !== val) {
+      this.itemIsVisible = this.isVisible
     }
   }
 
   setActive(val: boolean): void {
-    if (this.itemActivated_visible !== val) {
-      this.itemActivated_visible = val
+    if (this.itemActivatedIsVisible !== val) {
+      this.itemActivatedIsVisible = val
     }
   }
 
@@ -197,7 +197,7 @@ export class PowerUpBarItem {
 
 export class PowerUpBar {
   powerupBoard: Sprite
-  visible: boolean = false
+  public isVisible: boolean = false
   items: PowerUpBarItem[] = []
   uiController: UIController
   constructor(uiController: UIController) {
@@ -274,7 +274,7 @@ export class PowerUpBar {
     this.items.push(item6)
   }
 
-  createUI(): ReactEcs.JSX.Element {
+  createUi(): ReactEcs.JSX.Element {
     const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
     return (
       <Canvas>
@@ -312,7 +312,7 @@ export class PowerUpBar {
                 margin: { left: '4%', top: '1%' }
               }}
             >
-              {this.items.map((item) => item.createUI())}
+              {this.items.map((item) => item.createUi())}
             </UiEntity>
           </UiEntity>
         </UiEntity>
@@ -382,12 +382,12 @@ export class PowerUpBar {
   //     false,
   //     (e) => {
   //       // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-  //       if (!this.visible) {
+  //       if (!this.isVisible) {
   //         console.log(
   //           'PowerUpBar',
   //           'key down',
   //           'SECONDARY',
-  //           'not visible ignored'
+  //           'not isVisible ignored'
   //         )
   //         return
   //       }
@@ -400,8 +400,8 @@ export class PowerUpBar {
   //     InputAction.IA_ACTION_3,
   //     false,
   //     (e) => {
-  //       if (!this.visible) {
-  //         console.log('PowerUpBar', 'key down', 'ACTION_3', 'not visible ignored')
+  //       if (!this.isVisible) {
+  //         console.log('PowerUpBar', 'key down', 'ACTION_3', 'not isVisible ignored')
   //         return
   //       }
   //       console.log('PowerUpBar', 'key down', 'ACTION_3')
@@ -414,8 +414,8 @@ export class PowerUpBar {
   //     InputAction.IA_ACTION_4,
   //     false,
   //     (e) => {
-  //       if (!this.visible) {
-  //         console.log('PowerUpBar', 'key down', 'ACTION_4', 'not visible ignored')
+  //       if (!this.isVisible) {
+  //         console.log('PowerUpBar', 'key down', 'ACTION_4', 'not isVisible ignored')
   //         return
   //       }
   //       console.log('PowerUpBar', 'key down', 'ACTION_4')
@@ -428,8 +428,8 @@ export class PowerUpBar {
   //     InputAction.IA_ACTION_5,
   //     false,
   //     (e) => {
-  //       if (!this.visible) {
-  //         console.log('PowerUpBar', 'key down', 'ACTION_5', 'not visible ignored')
+  //       if (!this.isVisible) {
+  //         console.log('PowerUpBar', 'key down', 'ACTION_5', 'not isVisible ignored')
   //         return
   //       }
   //       console.log('PowerUpBar', 'key down', 'ACTION_5')
@@ -448,7 +448,7 @@ export class PowerUpBar {
     //     this.k2ButtonAction,
     //     this.k3ButtonAction
     //   )
-    this.visible = true
+    this.isVisible = true
   }
 
   hide(): void {
@@ -460,7 +460,7 @@ export class PowerUpBar {
     //   this.k2ButtonAction,
     //   this.k3ButtonAction
     // )
-    this.visible = false
+    this.isVisible = false
   }
 
   // time argument is seconds

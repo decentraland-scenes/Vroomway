@@ -94,7 +94,7 @@ export class VehicleAttachmentEntry {
 export class VehicleAttachmentManager {
   /** when true debugging logs will be generated (ensure is false when deploying to remove overhead) */
   private static readonly IsDebugging: boolean = true
-  /** when true vehicle attachments will only be visible in inventory if the player owns them (set to false to test) */
+  /** when true vehicle attachments will only be isVisible in inventory if the player owns them (set to false to test) */
   private static readonly EnforceOwnership: boolean = false
 
   // access pocketing

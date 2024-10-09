@@ -22,11 +22,11 @@ const background: Sprite = {
 class PowerUpShopItem {
   buy: Sprite = buttonsSprites.buyHexagonButton
   powerupId: PowerUpIdEnum
-  visible: boolean = false
+  isVisible: boolean = false
   buttonAction: () => void
   uiController: UIController
   buy_opacity: number = 0
-  buy_visible: boolean = false
+  buyIsVisible: boolean = false
   constructor(
     idx: number,
     powerupId: PowerUpIdEnum,
@@ -51,13 +51,13 @@ class PowerUpShopItem {
   }
 
   setVisible(val: boolean): void {
-    this.visible = val
-    if (this.buy_visible !== val) {
-      this.buy_visible = this.visible
+    this.isVisible = val
+    if (this.buyIsVisible !== val) {
+      this.buyIsVisible = this.isVisible
     }
   }
 
-  createUI(): ReactEcs.JSX.Element {
+  createUi(): ReactEcs.JSX.Element {
     const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
     return (
       <UiEntity
@@ -240,7 +240,7 @@ export class PowerUpShop {
     this.isVisible = false
   }
 
-  createUI(): ReactEcs.JSX.Element {
+  createUi(): ReactEcs.JSX.Element {
     const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
     return (
       <Canvas>
@@ -277,7 +277,7 @@ export class PowerUpShop {
                 margin: { top: '3.5%' }
               }}
             >
-              {this.items.map((item) => item.createUI())}
+              {this.items.map((item) => item.createUi())}
             </UiEntity>
             <UiEntity
               uiTransform={{

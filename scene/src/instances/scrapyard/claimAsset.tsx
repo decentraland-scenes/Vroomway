@@ -1,7 +1,12 @@
+import { getUserData } from '~system/UserIdentity'
 import { type UIController } from '../../controllers/ui.controller'
 import { boardsSprites } from '../../ui/atlas/boardsAtlas'
-import { type Sprite } from '../../ui/utils/utils'
-
+import { getUvs, type Sprite } from '../../ui/utils/utils'
+import { LAMBDA_URL } from '../../utils/constants'
+import * as eth from 'eth-connect'
+import ReactEcs, { UiEntity } from '@dcl/sdk/react-ecs'
+import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
+import { buttonsSprites } from '../../ui/atlas/buttonsSprites'
 
 type Asset = {
   urn: string[]
@@ -87,7 +92,7 @@ export const CLAIMABLE_ASSETS: Record<string, Asset> = {
   }
 }
 
-export class claimAsset {
+export class ClaimAsset {
   assets: Asset = CLAIMABLE_ASSETS.speedBoots
   isVisible: boolean = true
   backGround: Sprite = boardsSprites.speedBootsBoard
@@ -99,8 +104,8 @@ export class claimAsset {
   public asset1urn: string = ''
   public asset2urn: string = ''
   public asset3urn: string = ''
-    public prevAssetUrn: string = ''
-    uiController: UIController
+  public prevAssetUrn: string = ''
+  uiController: UIController
   loader: any
   constructor(uiController: UIController) {
     this.uiController = uiController
@@ -109,50 +114,59 @@ export class claimAsset {
 
   canPurchaseAsset(index: number): boolean {
     const {
-      metal,
-      rubber,
-      glass,
-      wires,
-      propulsion,
-      fuel,
-      coins,
-      circuitBoard
-    } = Player
+      metal
+      //   rubber,
+      //   glass,
+      //   wires,
+      //   propulsion,
+      //   fuel,
+      //   coins,
+      //   circuitBoard
+    } = this.uiController.gameController.Player
 
     if (
-      metal >= this.assets.cost.metal[index] &&
-      rubber >= this.assets.cost.rubber[index] &&
-      wires >= this.assets.cost.wires[index] &&
-      glass >= this.assets.cost.glass[index] &&
-      circuitBoard >= this.assets.cost.circuitBoard[index] &&
-      propulsion >= this.assets.cost.propulsion[index] &&
-      coins >= this.assets.cost.coins[index] &&
-      fuel >= this.assets.cost.fuel[index] &&
-      this.prevAssetOwned
+      //   metal >= this.assets.cost.metal[index] &&
+      //   rubber >= this.assets.cost.rubber[index] &&
+      //   wires >= this.assets.cost.wires[index] &&
+      //   glass >= this.assets.cost.glass[index] &&
+      //   circuitBoard >= this.assets.cost.circuitBoard[index] &&
+      //   propulsion >= this.assets.cost.propulsion[index] &&
+      //   coins >= this.assets.cost.coins[index] &&
+      //   fuel >= this.assets.cost.fuel[index] &&
+      //   this.prevAssetOwned
+      metal >= 0
     )
       return true
     return false
   }
 
   subtractResources(index: number): void {
-    this.uiController.gameController.Player.getValueAdjuster().metal -= this.assets.cost.metal[index]
-    this.uiController.gameController.Player.getValueAdjuster().rubber -= this.assets.cost.rubber[index]
-    this.uiController.gameController.Player.getValueAdjuster().wires -= this.assets.cost.wires[index]
-    this.uiController.gameController.Player.getValueAdjuster().glass -= this.assets.cost.glass[index]
-    this.uiController.gameController.Player.getValueAdjuster().circuitBoard -=
-      this.assets.cost.circuitBoard[index]
-    this.uiController.gameController.Player.getValueAdjuster().propulsion -= this.assets.cost.propulsion[index]
-    this.uiController.gameController.Player.getValueAdjuster().coins -= this.assets.cost.coins[index]
-    this.uiController.gameController.Player.getValueAdjuster().fuel -= this.assets.cost.fuel[index]
-    this.uiController.gameController.Player.writeDataToServer()
+    // this.uiController.gameController.Player.getValueAdjuster().metal -=
+    //   this.assets.cost.metal[index]
+    // this.uiController.gameController.Player.getValueAdjuster().rubber -=
+    //   this.assets.cost.rubber[index]
+    // this.uiController.gameController.Player.getValueAdjuster().wires -=
+    //   this.assets.cost.wires[index]
+    // this.uiController.gameController.Player.getValueAdjuster().glass -=
+    //   this.assets.cost.glass[index]
+    // this.uiController.gameController.Player.getValueAdjuster().circuitBoard -=
+    //   this.assets.cost.circuitBoard[index]
+    // this.uiController.gameController.Player.getValueAdjuster().propulsion -=
+    //   this.assets.cost.propulsion[index]
+    // this.uiController.gameController.Player.getValueAdjuster().coins -=
+    //   this.assets.cost.coins[index]
+    // this.uiController.gameController.Player.getValueAdjuster().fuel -=
+    //   this.assets.cost.fuel[index]
+    this.uiController.gameController.Player.getValueAdjuster().metal -= 100
+    void this.uiController.gameController.Player.writeDataToServer()
     this.uiController.gameController.Player.updateUI()
   }
 
   async airdrop(index: number): Promise<void> {
     const urn: string = this.assets.urn[index]
-    const { userId } = await getUserData()
-    this.loader = new ui.LoadingIcon()
-    const data = eth.toHex(`urn=${urn}&uuid=${userId}`)
+    const userData = await getUserData({})
+    this.uiController.loader.showLoader(5)
+    const data = eth.toHex(`urn=${urn}&uuid=${userData.data?.userId}`)
     // Get the first four characters of the string
     const reversedStr = data.substring(0, data.length - 7)
     // Split the first four characters into an array of characters
@@ -173,25 +187,25 @@ export class claimAsset {
       return
     }
     this.loader.hide()
-    mintBoard.show(json, urn)
+    // mintBoard.show(json, urn)
   }
 
   showClaimingError(): void {
     this.isVisible = false
     this.loader.hide()
-    errorBoard.show()
+    // errorBoard.show()
   }
 
   //   showTeleportBoard(): void {
-  //     this.hoverCarBoard.visible = false
-  //     // this.teleportBoard.visible = true;
+  //     this.hoverCarBoard.isVisible = false
+  //     // this.teleportBoard.isVisible = true;
   //     ui.displayAnnouncement(
   //       'You need more resources to buy this!\n\nGo loot in the scrapyard for more!'
   //     )
   //   }
 
   //   teleportToScrapyard(): void {
-  //     this.teleportBoard.visible = false
+  //     this.teleportBoard.isVisible = false
   //     instance.setInstance('scrapyard')
   //     cleanupScene()
   //     setTimeout(50, () => {
@@ -201,11 +215,11 @@ export class claimAsset {
   //   }
 
   //   eButtonAction = Input.instance.subscribe("BUTTON_DOWN", ActionButton.PRIMARY, false, (e) => {
-  //     // if (this.hoverCarBoard.visible) this.teleport();
+  //     // if (this.hoverCarBoard.isVisible) this.teleport();
   //   });
 
   //   fButtonAction = Input.instance.subscribe("BUTTON_DOWN", ActionButton.SECONDARY, false, (e) => {
-  //     if (this.hoverCarBoard.visible) this.cancel();
+  //     if (this.hoverCarBoard.isVisible) this.cancel();
   //   });
 
   show(type: 'boots' | 'cars' | 'bikes' | 'brutes'): void {
@@ -262,10 +276,10 @@ export class claimAsset {
 
   async checkAssetsOwnership(): Promise<void> {
     try {
-      const player = await getUserData()
+      const player = await getUserData({})
       //   const playerRealm = await getCurrentRealm();
       const url =
-        `https://peer.decentraland.org/lambdas/collections/wearables-by-owner/${player.userId}`.toString()
+        `https://peer.decentraland.org/lambdas/collections/wearables-by-owner/${player.data?.userId}`.toString()
       const response = await fetch(url)
       const usersWearables = await response.json()
       usersWearables.forEach((wearable: { urn: string | string[] }) => {
@@ -280,7 +294,101 @@ export class claimAsset {
         }
       })
     } catch (e) {
-      errorBoard.show()
+      console.error('Error checking assets owenership - getting user data')
+      //   errorBoard.show()
     }
+  }
+
+  createUi(): ReactEcs.JSX.Element {
+    const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
+
+      return (
+        <UiEntity uiTransform={{
+            flexDirection: 'column',
+            width:'100%',
+            height:'100%'
+          }}>
+      <UiEntity
+        uiTransform={{
+          flexDirection: 'column',
+          width:
+            ((canvasInfo.height * 0.5) / this.backGround.h) * this.backGround.w,
+          height: canvasInfo.height * 0.5
+        }}
+        uiBackground={{
+          textureMode: 'stretch',
+          uvs: getUvs(this.backGround),
+          texture: { src: this.backGround.atlasSrc }
+        }}
+      >
+        <UiEntity
+          uiTransform={{
+            positionType: 'absolute',
+            position: { bottom: '10%', left: '10%' },
+            width:
+              ((canvasInfo.height * 0.5 * 0.1) / buttonsSprites.claimSprite.h) *
+              buttonsSprites.claimSprite.w,
+            height: canvasInfo.height * 0.5 * 0.1
+          }}
+          uiBackground={{
+            textureMode: 'stretch',
+            uvs: getUvs(buttonsSprites.claimSprite),
+            texture: { src: buttonsSprites.claimSprite.atlasSrc }
+          }}
+          onMouseDown={() => {
+            if (this.canPurchaseAsset(0)) {
+              console.log('se puede comprar 0')
+            } else {
+              console.error('no se puede comprar 0')
+            }
+          }}
+        />
+        <UiEntity
+          uiTransform={{
+            positionType: 'absolute',
+            position: { bottom: '10%', right: '45%' },
+            width:
+              ((canvasInfo.height * 0.5 * 0.1) / buttonsSprites.claimSprite.h) *
+              buttonsSprites.claimSprite.w,
+            height: canvasInfo.height * 0.5 * 0.1
+          }}
+          uiBackground={{
+            textureMode: 'stretch',
+            uvs: getUvs(buttonsSprites.claimSprite),
+            texture: { src: buttonsSprites.claimSprite.atlasSrc }
+          }}
+          onMouseDown={() => {
+            if (this.canPurchaseAsset(1)) {
+              console.log('se puede comprar 1')
+            } else {
+              console.error('no se puede comprar 1')
+            }
+          }}
+        />
+        <UiEntity
+          uiTransform={{
+            positionType: 'absolute',
+            position: { bottom: '10%', right: '10%' },
+            width:
+              ((canvasInfo.height * 0.5 * 0.1) / buttonsSprites.claimSprite.h) *
+              buttonsSprites.claimSprite.w,
+            height: canvasInfo.height * 0.5 * 0.1
+          }}
+          uiBackground={{
+            textureMode: 'stretch',
+            uvs: getUvs(buttonsSprites.claimSprite),
+            texture: { src: buttonsSprites.claimSprite.atlasSrc }
+          }}
+          onMouseDown={() => {
+            if (this.canPurchaseAsset(2)) {
+              console.log('se puede comprar 2')
+            } else {
+              console.error('no se puede comprar 2')
+            }
+          }}
+        />
+              </UiEntity>
+              </UiEntity>
+    )
   }
 }

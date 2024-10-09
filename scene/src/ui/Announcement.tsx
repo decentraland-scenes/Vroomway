@@ -3,13 +3,13 @@ import ReactEcs, { Label } from '@dcl/sdk/react-ecs'
 import Canvas from './canvas/Canvas'
 
 type AnnouncementProps = {
-  visible: boolean
+  isVisible: boolean
   color: Color4
   text: string
 }
 
 function Announcement({
-  visible,
+  isVisible,
   text,
   color
 }: AnnouncementProps): ReactEcs.JSX.Element {
@@ -19,7 +19,7 @@ function Announcement({
         uiTransform={{
           width: '100%',
           height: '100%',
-          display: visible ? 'flex' : 'none'
+          display: isVisible ? 'flex' : 'none'
         }}
         fontSize={40}
         font="sans-serif"

@@ -230,7 +230,7 @@ export class UIInventoryManager {
     }
   }
 
-  createUI(): ReactEcs.JSX.Element {
+  createUi(): ReactEcs.JSX.Element {
     const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
     const fontSizeTimer = canvasInfo.height * 0.035
     const fontSizeXP = canvasInfo.height * 0.02

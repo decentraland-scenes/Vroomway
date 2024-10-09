@@ -17,7 +17,7 @@ import * as utils from '@dcl-sdk/utils'
 type LevelingCallbackFunction = () => void
 // object that represents an enemy in scene
 export class LevelManager {
-  // if true, all debugging logs will be visible (ensure is false when deploying to remove overhead)
+  // if true, all debugging logs will be isVisible (ensure is false when deploying to remove overhead)
   private static readonly IsDebugging: boolean = true
 
   // access pocketing

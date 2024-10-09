@@ -52,7 +52,7 @@ export class VehicleEntry {
 export class VehicleManager {
   /** when true debugging logs will be generated (ensure is false when deploying to remove overhead) */
   private static readonly IsDebugging: boolean = true
-  /** when true vehicles will only be visible in the inventory if the player owns them (set to false to test) */
+  /** when true vehicles will only be isVisible in the inventory if the player owns them (set to false to test) */
   private static readonly EnforceOwnership: boolean = true
 
   // access pocketing

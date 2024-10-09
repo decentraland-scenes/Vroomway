@@ -1,4 +1,4 @@
-import ReactEcs, { UiEntity } from '@dcl/sdk/react-ecs'
+import ReactEcs, { Label, UiEntity } from '@dcl/sdk/react-ecs'
 import { type UIController } from '../controllers/ui.controller'
 import { getUvs, type Sprite } from './utils/utils'
 import { engine, UiCanvasInformation } from '@dcl/sdk/ecs'
@@ -44,35 +44,38 @@ export class LootItem {
   }
 }
 
+
+
 export class LootBoard {
-  metalMaterial: LootItem
-  rubberMaterial: LootItem
-  wiresMaterial: LootItem
-  glassMaterial: LootItem
-  circuitMaterial: LootItem
-  propulsionMaterial: LootItem
-  antimatterMaterial: LootItem
-  cannistersMat: LootItem
-  coinMaterial: LootItem
-  items: LootItem[] = []
-  metal: string = '-'
-  glass: string = '-'
-  circuitBoard: string = '-'
-  rubber: string = '-'
-  wires: string = '-'
-  propulsion: string = '-'
-  coins: string = '-'
-  antimatter: string = '-'
-  antimatterText: string = '-'
-  cannisters: string = '-'
-  cannistersText: string = '-'
-  metalText: string = '-'
-  glassText: string = '-'
-  circuitText: string = '-'
-  rubberText: string = '-'
-  wiresText: string = '-'
-  propulsionText: string = '-'
-  coinsText: string = '-'
+  rewards:Record<string, number> = {}
+  // metalMaterial: LootItem
+  // rubberMaterial: LootItem
+  // wiresMaterial: LootItem
+  // glassMaterial: LootItem
+  // circuitMaterial: LootItem
+  // propulsionMaterial: LootItem
+  // antimatterMaterial: LootItem
+  // cannistersMat: LootItem
+  // coinMaterial: LootItem
+  // items: LootItem[] = []
+  // metal: string = '-'
+  // glass: string = '-'
+  // circuitBoard: string = '-'
+  // rubber: string = '-'
+  // wires: string = '-'
+  // propulsion: string = '-'
+  // coins: string = '-'
+  // antimatter: string = '-'
+  // antimatterText: string = '-'
+  // cannisters: string = '-'
+  // cannistersText: string = '-'
+  // metalText: string = '-'
+  // glassText: string = '-'
+  // circuitText: string = '-'
+  // rubberText: string = '-'
+  // wiresText: string = '-'
+  // propulsionText: string = '-'
+  // coinsText: string = '-'
   uiController: UIController
   lootBoard: Sprite
   visible: boolean = false
@@ -87,36 +90,36 @@ export class LootBoard {
       w: 1000,
       h: 250
     }
-    this.metalMaterial = new LootItem(itemsSprites.metal, this.uiController)
-    this.rubberMaterial = new LootItem(itemsSprites.rubber, this.uiController)
-    this.wiresMaterial = new LootItem(itemsSprites.wires, this.uiController)
-    this.glassMaterial = new LootItem(itemsSprites.glass, this.uiController)
-    this.circuitMaterial = new LootItem(
-      itemsSprites.circuitBoard,
-      this.uiController
-    )
-    this.propulsionMaterial = new LootItem(
-      itemsSprites.propulsion,
-      this.uiController
-    )
-    this.antimatterMaterial = new LootItem(
-      itemsSprites.antimatter,
-      this.uiController
-    )
-    this.cannistersMat = new LootItem(
-      itemsSprites.cannisters,
-      this.uiController
-    )
-    this.coinMaterial = new LootItem(itemsSprites.coins, this.uiController)
-    this.items.push(this.metalMaterial)
-    this.items.push(this.rubberMaterial)
-    this.items.push(this.wiresMaterial)
-    this.items.push(this.glassMaterial)
-    this.items.push(this.circuitMaterial)
-    this.items.push(this.propulsionMaterial)
-    this.items.push(this.antimatterMaterial)
-    this.items.push(this.cannistersMat)
-    this.items.push(this.coinMaterial)
+  //   this.metalMaterial = new LootItem(itemsSprites.metal, this.uiController)
+  //   this.rubberMaterial = new LootItem(itemsSprites.rubber, this.uiController)
+  //   this.wiresMaterial = new LootItem(itemsSprites.wires, this.uiController)
+  //   this.glassMaterial = new LootItem(itemsSprites.glass, this.uiController)
+  //   this.circuitMaterial = new LootItem(
+  //     itemsSprites.circuitBoard,
+  //     this.uiController
+  //   )
+  //   this.propulsionMaterial = new LootItem(
+  //     itemsSprites.propulsion,
+  //     this.uiController
+  //   )
+  //   this.antimatterMaterial = new LootItem(
+  //     itemsSprites.antimatter,
+  //     this.uiController
+  //   )
+  //   this.cannistersMat = new LootItem(
+  //     itemsSprites.cannisters,
+  //     this.uiController
+  //   )
+  //   this.coinMaterial = new LootItem(itemsSprites.coins, this.uiController)
+  //   this.items.push(this.metalMaterial)
+  //   this.items.push(this.rubberMaterial)
+  //   this.items.push(this.wiresMaterial)
+  //   this.items.push(this.glassMaterial)
+  //   this.items.push(this.circuitMaterial)
+  //   this.items.push(this.propulsionMaterial)
+  //   this.items.push(this.antimatterMaterial)
+  //   this.items.push(this.cannistersMat)
+  //   this.items.push(this.coinMaterial)
   }
 
   createUI(): ReactEcs.JSX.Element {
@@ -157,7 +160,18 @@ export class LootBoard {
                 margin: { left: '32%', top: '5%' }
               }}
             >
-              {this.items.map((item) => item.createUI())}
+              {/* {this.items.map((item) => item.createUI())} */}
+              {Object.entries(this.rewards).map(([key, value]) => (
+                <UiEntity key={key}>
+                  <Label
+                  value={key}
+                  />
+                  <Label
+                  value={value.toString()}
+                  />
+              </UiEntity>
+              ))}
+
             </UiEntity>
           </UiEntity>
         </UiEntity>
@@ -165,30 +179,30 @@ export class LootBoard {
     )
   }
 
-  showIcons = (materials: any): void => {
-    console.log('materials' + materials)
-    Object.keys(materials).forEach((material, i) => {
-      console.log(material)
-      if (material === 'metal') this.metalText = materials[material]
-      else if (material === 'glass') this.glassText = materials[material]
-      else if (material === 'circuitBoard')
-        this.circuitText = materials[material]
-      else if (material === 'rubber') this.rubberText = materials[material]
-      else if (material === 'wires') this.wiresText = materials[material]
-      else if (material === 'coins') this.coinsText = materials[material]
-      else if (material === 'propulsion')
-        this.propulsionText = materials[material]
-      else if (material === 'cannisters')
-        this.cannistersText = materials[material]
-      else if (material === 'antimatter')
-        this.antimatterText = materials[material]
-    })
-  }
+  // showIcons = (materials: any): void => {
+  //   console.log('materials' + materials)
+  //   Object.keys(materials).forEach((material, i) => {
+  //     console.log(material)
+  //     if (material === 'metal') this.metalText = materials[material]
+  //     else if (material === 'glass') this.glassText = materials[material]
+  //     else if (material === 'circuitBoard')
+  //       this.circuitText = materials[material]
+  //     else if (material === 'rubber') this.rubberText = materials[material]
+  //     else if (material === 'wires') this.wiresText = materials[material]
+  //     else if (material === 'coins') this.coinsText = materials[material]
+  //     else if (material === 'propulsion')
+  //       this.propulsionText = materials[material]
+  //     else if (material === 'cannisters')
+  //       this.cannistersText = materials[material]
+  //     else if (material === 'antimatter')
+  //       this.antimatterText = materials[material]
+  //   })
+  // }
 
   updateBoardStats = (rewards: Record<string, number>): void => {
     // display icons based on existance
-    this.showIcons(rewards)
-
+    // this.showIcons(rewards)
+    this.rewards = rewards
     // add rewards to player's inventory
     Object.keys(rewards).forEach((reward) => {
       console.log(
@@ -205,14 +219,14 @@ export class LootBoard {
   hide(): void {
     this.visible = false
     // Clear out looted materials
-    this.metalText = '-'
-    this.glassText = '-'
-    this.circuitText = '-'
-    this.rubberText = '-'
-    this.wiresText = '-'
-    this.propulsionText = '-'
-    this.cannistersText = '-'
-    this.antimatterText = '-'
+    // this.metalText = '-'
+    // this.glassText = '-'
+    // this.circuitText = '-'
+    // this.rubberText = '-'
+    // this.wiresText = '-'
+    // this.propulsionText = '-'
+    // this.cannistersText = '-'
+    // this.antimatterText = '-'
   }
 
   toggleBoard = (): void => {

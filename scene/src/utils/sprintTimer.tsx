@@ -34,10 +34,9 @@ export class SprintTimer {
     engine.addSystem(this.updateTimer)
   }
 
-  format = (secs: string): string => {
-    const secNum = parseFloat(secs)
-    const minutes = Math.floor(secNum / 60) % 60
-    const seconds = (secNum % 60).toFixed(2)
+  format = (secs: number): string => {
+    const minutes = Math.floor(secs / 60) % 60
+    const seconds = (secs % 60).toFixed(2)
 
     return [minutes.toString(), seconds] // Convertir ambos a string
       .map((v) => (parseFloat(v) < 10 ? '0' + v : v)) // Ahora ambos son strings
@@ -49,6 +48,7 @@ export class SprintTimer {
     this.timerText = ''
     this.sprintOff = true
     this.sprintComplete = false
+    this.time = 0
   }
 
   startTimer(options: SceneArgs = this.options): void {
@@ -107,7 +107,7 @@ export class SprintTimer {
     // Handle sprint completion
     if (this.sprintComplete) {
       // Update reward popup with time and remove timer
-      this.timerText = this.format(this._sprintTimer.toString())
+      this.timerText = this.format(this._sprintTimer)
       // reward.updateTime(
       //   this._sprintTimer,
       //   sprintTimer.gameMode,
@@ -122,8 +122,9 @@ export class SprintTimer {
     this._timerIteration++
     const total = (this._sprintTimer += dt)
     this._sprintTimer = total
+    this.time = total
     if (this._timerIteration === 2) {
-      this.timerText = this.format(total.toString())
+      this.timerText = this.format(total)
       this._timerIteration = 0
     }
   }

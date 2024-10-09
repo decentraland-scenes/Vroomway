@@ -1,7 +1,6 @@
 import ReactEcs, { ReactEcsRenderer, UiEntity } from '@dcl/sdk/react-ecs'
 import { getUvs } from '../ui/utils/utils'
 import * as utils from '@dcl-sdk/utils'
-import { joinDiscord, joinTwitter } from '../ui/buttons'
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
 import { movePlayerTo, openExternalUrl } from '~system/RestrictedActions'
 import { SideBar } from '../ui/sidebar'
@@ -19,7 +18,7 @@ import { PowerUpShop } from '../ui/powerUpShop'
 import { type PlayerStats } from '../utils/player'
 import { Reward } from '../ui/reward'
 import { PowerUpBar } from '../ui/powerUpBar'
-import { LootBoard } from '../ui/loot'
+import { buttonsSprites } from '../ui/atlas/buttonsSprites'
 
 export class UIController {
   public player: PlayerStats
@@ -34,7 +33,6 @@ export class UIController {
   public loader = new Loader(this)
   public powerUpShop = new PowerUpShop(this)
   public powerUpBar = new PowerUpBar(this)
-  public lootBoard = new LootBoard(this)
   public timeCounter_visible = true
   public timerText: string = ''
   announcement_visible: boolean = false
@@ -93,7 +91,6 @@ export class UIController {
         <Canvas>{this.reward.isVisible && this.reward.createUi()}</Canvas>
         <Canvas>{this.loader.profileVisible && this.loader.mainUi()}</Canvas>
         <Canvas>{this.powerUpBar.visible && this.powerUpBar.createUI()}</Canvas>
-        <Canvas>{this.lootBoard.visible && this.lootBoard.createUI()}</Canvas>
       </UiEntity>
     )
   }
@@ -103,7 +100,8 @@ export class UIController {
   renderSocials(): ReactEcs.JSX.Element | null {
     if (this.canvasInfo === null) return null
     const iconSizeW =
-      (this.canvasInfo.height * 0.055 * joinDiscord.w) / joinDiscord.h
+      (this.canvasInfo.height * 0.055 * buttonsSprites.joinDiscord.w) /
+      buttonsSprites.joinDiscord.h
     const iconSizeH = this.canvasInfo.height * 0.055
     return (
       <UiEntity
@@ -125,8 +123,8 @@ export class UIController {
           }}
           uiBackground={{
             textureMode: 'stretch',
-            uvs: getUvs(joinDiscord),
-            texture: { src: joinDiscord.atlasSrc }
+            uvs: getUvs(buttonsSprites.joinDiscord),
+            texture: { src: buttonsSprites.joinDiscord.atlasSrc }
           }}
           onMouseDown={() => {
             void openExternalUrl({ url: 'https://discord.gg/2E9AwrgssP' })
@@ -145,8 +143,8 @@ export class UIController {
           }}
           uiBackground={{
             textureMode: 'stretch',
-            uvs: getUvs(joinTwitter),
-            texture: { src: joinTwitter.atlasSrc }
+            uvs: getUvs(buttonsSprites.joinTwitter),
+            texture: { src: buttonsSprites.joinTwitter.atlasSrc }
           }}
           onMouseDown={() => {
             const getTweetText = (text: string): string => {

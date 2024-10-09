@@ -188,11 +188,12 @@ export class MainInstance {
           ) {
             if (entity.includes('SS')) {
               if (instance.getInstance() !== 'main') return
-              if (this.gameController.Player.getFuel() < SOLO_SPRINT_COST) {
+              if (this.gameController.Player.getFuel() >= SOLO_SPRINT_COST) {
+                this.gameController.soloSprint.show()
+              } else {
                 this.gameController.uiController.outOfFuel.show()
                 return
               }
-              this.gameController.soloSprint.show()
             }
             if (entity.includes('DD')) {
               if (instance.getInstance() !== 'main') return

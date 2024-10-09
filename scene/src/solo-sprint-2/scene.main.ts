@@ -26,6 +26,7 @@ import { DoorBroken } from './classes/class.doorBroken'
 import { GLTFParticles } from './classes/class.gltfParticles'
 import { Zapper } from './classes/class.zapper'
 import { entityController } from '../utils/entityController'
+import { instance } from '../utils/currentInstance'
 // import { getUserData } from '~system/UserIdentity'
 
 export class SoloSprint {
@@ -1726,12 +1727,14 @@ export class SoloSprint {
   }
 
   onRaceEnd(): void {
+    instance.setInstance('main')
     this.gameController.realmController.switchRealm('mainInstance')
     this.gameController.uiController.powerUpBar.hide()
     this.gameController.sprintTimer.sprintComplete = true
-    this.gameController.uiController.reward.timeText =
-      this.gameController.sprintTimer.timerText
     this.gameController.uiController.reward.show()
+    this.gameController.uiController.reward.updateTime(
+      this.gameController.sprintTimer.time
+    )
     utils.timers.setTimeout(() => {
       this.gameController.sprintTimer.resetTimer()
     }, 1500)

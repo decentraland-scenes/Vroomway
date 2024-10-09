@@ -748,4 +748,18 @@ export class VehicleOwnership {
     const total = expBonus + Math.ceil((exp / 100) * expBonus)
     return total
   }
+
+  computeXP(
+    base: number,
+    xpPowerUp: number,
+    xpBonusByRacerNum: number
+  ): number {
+    // Math.max(0, to ensure never goes negative
+    const res = Math.ceil(
+      this.getExpBonus(base) +
+        base * Math.max(0, xpPowerUp - 1) +
+        base * Math.max(0, xpBonusByRacerNum - 1)
+    )
+    return res
+  }
 }

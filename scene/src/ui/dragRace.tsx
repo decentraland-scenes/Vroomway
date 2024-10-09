@@ -2,16 +2,7 @@ import { ReactEcs, UiEntity } from '@dcl/sdk/react-ecs'
 import { type GameController } from '../controllers/game.controller'
 import { getUvs, type Sprite } from './utils/utils'
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
-import {
-  closeButton,
-  startAtlantisButton,
-  startCapitalButton,
-  startCloudlandsButton,
-  startFungalButton,
-  startObelisqueButton,
-  startWAGMIButton,
-  startWinterButton
-} from './buttons'
+import { buttonsSprites } from './atlas/buttonsSprites'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SHOW_LOAD_TIME = 14000
@@ -71,8 +62,8 @@ export class DragRaceBoard {
             }}
             uiBackground={{
               textureMode: 'stretch',
-              uvs: getUvs(closeButton),
-              texture: { src: closeButton.atlasSrc }
+              uvs: getUvs(buttonsSprites.closeButton),
+              texture: { src: buttonsSprites.closeButton.atlasSrc }
             }}
             onMouseDown={() => {
               this.hide()
@@ -88,8 +79,8 @@ export class DragRaceBoard {
             }}
             uiBackground={{
               textureMode: 'stretch',
-              uvs: getUvs(startCapitalButton),
-              texture: { src: startCapitalButton.atlasSrc }
+              uvs: getUvs(buttonsSprites.startCapitalButton),
+              texture: { src: buttonsSprites.startCapitalButton.atlasSrc }
             }}
             onMouseDown={() => {}}
           />
@@ -103,8 +94,8 @@ export class DragRaceBoard {
             }}
             uiBackground={{
               textureMode: 'stretch',
-              uvs: getUvs(startCloudlandsButton),
-              texture: { src: startCloudlandsButton.atlasSrc }
+              uvs: getUvs(buttonsSprites.startCloudlandsButton),
+              texture: { src: buttonsSprites.startCloudlandsButton.atlasSrc }
             }}
             onMouseDown={() => {}}
           />
@@ -118,8 +109,8 @@ export class DragRaceBoard {
             }}
             uiBackground={{
               textureMode: 'stretch',
-              uvs: getUvs(startObelisqueButton),
-              texture: { src: startObelisqueButton.atlasSrc }
+              uvs: getUvs(buttonsSprites.startObelisqueButton),
+              texture: { src: buttonsSprites.startObelisqueButton.atlasSrc }
             }}
             onMouseDown={() => {}}
           />
@@ -133,8 +124,8 @@ export class DragRaceBoard {
             }}
             uiBackground={{
               textureMode: 'stretch',
-              uvs: getUvs(startFungalButton),
-              texture: { src: startFungalButton.atlasSrc }
+              uvs: getUvs(buttonsSprites.startFungalButton),
+              texture: { src: buttonsSprites.startFungalButton.atlasSrc }
             }}
             onMouseDown={() => {}}
           />
@@ -148,8 +139,8 @@ export class DragRaceBoard {
             }}
             uiBackground={{
               textureMode: 'stretch',
-              uvs: getUvs(startWinterButton),
-              texture: { src: startWinterButton.atlasSrc }
+              uvs: getUvs(buttonsSprites.startWinterButton),
+              texture: { src: buttonsSprites.startWinterButton.atlasSrc }
             }}
             onMouseDown={() => {}}
           />
@@ -163,8 +154,8 @@ export class DragRaceBoard {
             }}
             uiBackground={{
               textureMode: 'stretch',
-              uvs: getUvs(startWAGMIButton),
-              texture: { src: startWAGMIButton.atlasSrc }
+              uvs: getUvs(buttonsSprites.startWAGMIButton),
+              texture: { src: buttonsSprites.startWAGMIButton.atlasSrc }
             }}
             onMouseDown={() => {}}
           />
@@ -178,8 +169,8 @@ export class DragRaceBoard {
             }}
             uiBackground={{
               textureMode: 'stretch',
-              uvs: getUvs(startAtlantisButton),
-              texture: { src: startAtlantisButton.atlasSrc }
+              uvs: getUvs(buttonsSprites.startAtlantisButton),
+              texture: { src: buttonsSprites.startAtlantisButton.atlasSrc }
             }}
             onMouseDown={() => {}}
           />

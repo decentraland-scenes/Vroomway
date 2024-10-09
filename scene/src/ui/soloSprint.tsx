@@ -1,7 +1,6 @@
 import { ReactEcs, UiEntity } from '@dcl/sdk/react-ecs'
 import { getUvs, type Sprite } from './utils/utils'
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
-import { closeButton, startButton } from './buttons'
 import { Color4, Vector3 } from '@dcl/sdk/math'
 import { movePlayerTo } from '~system/RestrictedActions'
 import { instance } from '../utils/currentInstance'
@@ -10,6 +9,7 @@ import { type GameController } from '../controllers/game.controller'
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import * as serverStateSpec from '../vw-decentrally/modules/connection/state/server-state-spec'
 import { type SceneArgs } from '../vw-decentrally/modules/scene/raceSceneManagerInterface'
+import { buttonsSprites } from './atlas/buttonsSprites'
 export class SoloSprintBoard {
   soloSprintBoard: Sprite
   soloSprintBoardVisible: boolean = false
@@ -65,8 +65,8 @@ export class SoloSprintBoard {
             }}
             uiBackground={{
               textureMode: 'stretch',
-              uvs: getUvs(closeButton),
-              texture: { src: closeButton.atlasSrc }
+              uvs: getUvs(buttonsSprites.closeButton),
+              texture: { src: buttonsSprites.closeButton.atlasSrc }
             }}
             onMouseDown={() => {
               this.hide()
@@ -82,8 +82,8 @@ export class SoloSprintBoard {
             }}
             uiBackground={{
               textureMode: 'stretch',
-              uvs: getUvs(startButton),
-              texture: { src: startButton.atlasSrc }
+              uvs: getUvs(buttonsSprites.startButton),
+              texture: { src: buttonsSprites.startButton.atlasSrc }
             }}
             onMouseDown={() => {
               this.startSoloSprint()

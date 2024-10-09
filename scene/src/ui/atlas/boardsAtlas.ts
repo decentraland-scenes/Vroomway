@@ -73,11 +73,43 @@ export const boardsSprites: Record<string, Sprite> = {
     h: 182
   },
   lootBoard: {
-    atlasSrc: 'assets/images/uiAtlas/board2Atlas.png',
-    atlasSize: { x: 2048, y: 2048 },
+    atlasSrc: board2Atlas,
+    atlasSize: board2AtlasSize,
     x: 947,
     y: 1176,
     w: 1047,
     h: 190
+  },
+  speedBootsBoard: {
+    atlasSrc: board2Atlas,
+    atlasSize: board2AtlasSize,
+    x: 19,
+    y: 16,
+    w: 1004,
+    h: 518
+  },
+  hoverBikesBoard: {
+    atlasSrc: board2Atlas,
+    atlasSize: board2AtlasSize,
+    x: 1028,
+    y: 16,
+    w: 1004,
+    h: 518
+  },
+  brutesBoard: {
+    atlasSrc: board2Atlas,
+    atlasSize: board2AtlasSize,
+    x: 19,
+    y: 562,
+    w: 1004,
+    h: 518
+  },
+  hoverCarsBoard: {
+    atlasSrc: board2Atlas,
+    atlasSize: board2AtlasSize,
+    x: 1028,
+    y: 562,
+    w: 1004,
+    h: 518
   }
 }

@@ -3,13 +3,13 @@ import { getUvs, type Sprite } from './utils/utils'
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
 import { type UIController } from '../controllers/ui.controller'
 import { Color4 } from '@dcl/sdk/math'
-import { refuelIcon } from './buttons'
 import * as utils from '@dcl-sdk/utils'
 import { LevelManager } from '../leveling/level-manager'
 import { ItemNameResource } from '../inventory/inventory-data'
 import { InventoryManager } from '../inventory/inventory-manager'
 import { PLAYER_SCORE_NAMES } from '../player-scores/player-score-data'
 import { PlayerScoreManager } from '../player-scores/player-score-manager'
+import { buttonsSprites } from './atlas/buttonsSprites'
 
 export class Profile {
   public profile: Sprite
@@ -68,8 +68,8 @@ export class Profile {
           }}
           uiBackground={{
             textureMode: 'stretch',
-            uvs: getUvs(refuelIcon),
-            texture: { src: refuelIcon.atlasSrc }
+            uvs: getUvs(buttonsSprites.refuelIcon),
+            texture: { src: buttonsSprites.refuelIcon.atlasSrc }
           }}
         >
           {/* Timer */}

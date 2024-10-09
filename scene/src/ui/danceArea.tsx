@@ -9,12 +9,12 @@ import {
   engine
 } from '@dcl/sdk/ecs'
 import { getUvs, type Sprite } from './utils/utils'
-import { danceOffIcon, danceOnIcon } from './buttons'
 import * as utils from '@dcl-sdk/utils'
 import { movePlayerTo, triggerEmote } from '~system/RestrictedActions'
 import { entityController } from '../utils/entityController'
 import { instance } from '../utils/currentInstance'
 import { missions } from '../utils/missions'
+import { buttonsSprites } from './atlas/buttonsSprites'
 
 export class DanceAreaUI {
   gameController: GameController
@@ -23,7 +23,7 @@ export class DanceAreaUI {
   isDanceOn: boolean = true
   constructor(gameController: GameController) {
     this.gameController = gameController
-    this.danceIconTexture = danceOnIcon
+    this.danceIconTexture = buttonsSprites.danceOnIcon
   }
 
   turnOnUI(): void {
@@ -59,7 +59,7 @@ export class DanceAreaUI {
 
   toggleDanceButton(): void {
     if (this.isDanceOn) {
-      this.danceIconTexture = danceOffIcon
+      this.danceIconTexture = buttonsSprites.danceOffIcon
       this.gameController.realmController.currentRealm?.callSingleFunction(
         'enableDanceAreas',
         false
@@ -69,7 +69,7 @@ export class DanceAreaUI {
         'enableDanceAreas',
         true
       )
-      this.danceIconTexture = danceOnIcon
+      this.danceIconTexture = buttonsSprites.danceOnIcon
     }
     this.isDanceOn = !this.isDanceOn
   }

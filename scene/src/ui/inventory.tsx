@@ -1,7 +1,6 @@
 /* eslint-disable spaced-comment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { ATLAS_SHEET_ITEM } from '../inventory/inventory-data'
 import { ATLAS_SHEET_VEHICLE } from '../vehicle/vehicle-data'
 import { ATLAS_SHEET_ACCESSORY } from '../vehicle/accessory-data'
 import { type UIController } from '../controllers/ui.controller'
@@ -10,6 +9,19 @@ import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
 import { getUvs, type Sprite } from './utils/utils'
 import { Color4 } from '@dcl/sdk/math'
 import { LevelManager } from '../leveling/level-manager'
+import { boardsSprites } from './atlas/boardsAtlas'
+import Canvas from './canvas/Canvas'
+import {
+  type BaseObject,
+  type CargoObject,
+  CargoObjectData,
+  PowerUpObjectData,
+  type ResourceObject,
+  ResourceObjectData,
+  TokenObjectData
+} from '../inventory/inventory-data'
+import { InventoryManager } from '../inventory/inventory-manager'
+import { buttonsSprites } from './atlas/buttonsSprites'
 
 const DEBUGGING_UI_INVENTORY: boolean = true
 const DEBUGGING_UI_INVENTORY_VERBOSE: boolean = false
@@ -81,12 +93,12 @@ const INVENTORY_BACKPLATE_POS: SplicePiece = {
 }
 /** defines what splice sheet will be used for icons, sub arrays based on current inventory type
  */
-const INVENTORY_TEXTURES_PER_TYPE: string[][] = [
-  ATLAS_SHEET_VEHICLE, //vehicles
-  ATLAS_SHEET_ACCESSORY, //accessories
-  ATLAS_SHEET_ITEM, //resources
-  ATLAS_SHEET_ITEM //powerups
-]
+// const INVENTORY_TEXTURES_PER_TYPE: string[][] = [
+//   ATLAS_SHEET_VEHICLE, //vehicles
+//   ATLAS_SHEET_ACCESSORY, //accessories
+//   ATLAS_SHEET_ITEM, //resources
+//   ATLAS_SHEET_ITEM //powerups
+// ]
 
 /** if true vehicle attachment ownership is not verified */
 const ATTACHMENTS_SKIP_OWNERSHIP_CHECK: boolean = true
@@ -145,8 +157,14 @@ class UIInteractable {
     this.index = index
   }
 }
+
+type InventoryItem = BaseObject | ResourceObject | CargoObject
+
 export class UIInventoryManager {
-  uiParent: Sprite
+  isModsVisible: boolean = false
+  modSlotSelected: number = 1
+  arrayToShow: InventoryItem[] = [...ResourceObjectData, ...CargoObjectData]
+  background: Sprite = boardsSprites.inventoryMaterialsBoardSprite
   uiParentVisible: boolean = false
   uiTextExperience: string = '999999'
   uiTextLevel: string = '999'
@@ -163,86 +181,503 @@ export class UIInventoryManager {
 
   constructor(uiController?: UIController) {
     this.uiController = uiController
-    this.uiParent = {
-      atlasSrc: INVENTORY_TEXTURE_BACKGROUND,
-      atlasSize: { x: 2048, y: 2048 },
-      x: 0,
-      y: 580,
-      w: 1000,
-      h: 550
-    }
     LevelManager.Instance.RegisterUICallbackExperience(
-      this.CallbackUpdateExpDisplay
+      this.CallbackUpdateExpDisplay.bind(this)
     )
     LevelManager.Instance.RegisterUICallbackLevel(
-      this.CallbackUpdateLevelDisplay
+      this.CallbackUpdateLevelDisplay.bind(this)
     )
   }
 
-  public DisplayInventory(type: number): void {
-    if (DEBUGGING_UI_INVENTORY)
-      console.log('UI Inventory Manager: redrawing inventory type=' + type)
+  public selectModSlot(value: number): void {
+    if (value > 0 && value < 7) {
+      this.modSlotSelected = value
+    } else {
+      this.modSlotSelected = 1
+    }
+  }
 
-    //redraw progression display
+  public DisplayInventory(type: number): void {
+    this.isModsVisible = false
     this.updateExpDisplay()
     this.updateLevelDisplay()
-    if (DEBUGGING_UI_INVENTORY)
-      console.log('UI Inventory Manager: redrew inventory type=' + type)
+    switch (type) {
+      case 0: {
+        this.background = boardsSprites.inventoryVehiclesBoardSprite
+        this.arrayToShow = []
+        break
+      }
+      case 1: {
+        this.background = boardsSprites.inventoryAccesoriesBoardSprite
+        this.arrayToShow = []
+        break
+      }
+      case 2: {
+        this.background = boardsSprites.inventoryMaterialsBoardSprite
+        this.arrayToShow = [...ResourceObjectData, ...CargoObjectData]
+        break
+      }
+      case 3: {
+        this.background = boardsSprites.inventoryPowerUpsBoardSprite
+        this.arrayToShow = PowerUpObjectData
+        break
+      }
+      default: {
+        this.background = boardsSprites.inventoryVehiclesBoardSprite
+        this.arrayToShow = []
+        break
+      }
+    }
   }
 
   createUI(): ReactEcs.JSX.Element {
     const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
+    const fontSizeTimer = canvasInfo.height * 0.035
+    const fontSizeXP = canvasInfo.height * 0.02
+    const fontSizeDrop = canvasInfo.height * 0.02
     return (
-      <UiEntity
+      <Canvas
         uiTransform={{
-          flexDirection: 'row',
-          width: canvasInfo.width,
-          height: canvasInfo.height,
           justifyContent: 'center',
-          positionType: 'absolute',
-          position: { top: '25%', right: '0%' }
+          alignItems: 'center'
         }}
       >
-        {/* Ui Parent */}
-        <UiEntity
-          uiTransform={{
-            positionType: 'relative',
-            width: (canvasInfo.height * 1.88) / 1.8,
-            height: canvasInfo.height * 0.55
-          }}
-          uiBackground={{
-            textureMode: 'stretch',
-            uvs: getUvs(this.uiParent),
-            texture: { src: this.uiParent.atlasSrc }
-          }}
-          onMouseDown={() => {}}
-        >
-          {/* Experience */}
-          <Label
+        {this.isModsVisible && (
+          <UiEntity
             uiTransform={{
-              positionType: 'absolute',
-              position: { left: '11.3%', bottom: '13.3%' }
+              positionType: 'relative',
+              width:
+                ((canvasInfo.height * 0.55) / boardsSprites.modsSprite.h) *
+                boardsSprites.modsSprite.w,
+              height: canvasInfo.height * 0.55
             }}
-            value={this.uiTextExperience}
-            fontSize={13}
-            font="sans-serif"
-            color={Color4.Yellow()}
-            textAlign="bottom-left"
-          />
-          {/* Level */}
-          <Label
+            uiBackground={{
+              textureMode: 'stretch',
+              uvs: getUvs(boardsSprites.modsSprite),
+              texture: { src: boardsSprites.modsSprite.atlasSrc }
+            }}
+          >
+            <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                width: canvasInfo.height * 0.55 * 0.1,
+                height: canvasInfo.height * 0.55 * 0.1,
+                position: { top: '18%', left: '8%' }
+              }}
+              onMouseDown={() => {
+                this.modSlotSelected = 1
+              }}
+            >
+              <UiEntity
+                uiTransform={{
+                  positionType: 'absolute',
+                  width: '90%',
+                  height: '90%',
+                  position: { top: '10%', left: '10%' }
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  uvs: getUvs(boardsSprites.modLockSprite),
+                  texture: { src: boardsSprites.modLockSprite.atlasSrc }
+                }}
+              />
+              <UiEntity
+                uiTransform={{
+                  display: this.modSlotSelected === 1 ? 'flex' : 'none',
+                  width: '100%',
+                  height: '100%'
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  uvs: getUvs(boardsSprites.modHighlightSprite),
+                  texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
+                }}
+              />
+            </UiEntity>
+            <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                width: canvasInfo.height * 0.55 * 0.1,
+                height: canvasInfo.height * 0.55 * 0.1,
+                position: { top: '18%', left: '41%' }
+              }}
+              onMouseDown={() => {
+                this.modSlotSelected = 2
+              }}
+            >
+              <UiEntity
+                uiTransform={{
+                  positionType: 'absolute',
+                  width: '90%',
+                  height: '90%',
+                  position: { top: '10%', left: '10%' }
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  uvs: getUvs(boardsSprites.modLockSprite),
+                  texture: { src: boardsSprites.modLockSprite.atlasSrc }
+                }}
+              />
+              <UiEntity
+                uiTransform={{
+                  display: this.modSlotSelected === 2 ? 'flex' : 'none',
+                  width: '100%',
+                  height: '100%'
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  uvs: getUvs(boardsSprites.modHighlightSprite),
+                  texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
+                }}
+              />
+            </UiEntity>
+            <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                width: canvasInfo.height * 0.55 * 0.1,
+                height: canvasInfo.height * 0.55 * 0.1,
+                position: { top: '18%', left: '74%' }
+              }}
+              onMouseDown={() => {
+                this.modSlotSelected = 3
+              }}
+            >
+              <UiEntity
+                uiTransform={{
+                  positionType: 'absolute',
+                  width: '90%',
+                  height: '90%',
+                  position: { top: '10%', left: '10%' }
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  uvs: getUvs(boardsSprites.modLockSprite),
+                  texture: { src: boardsSprites.modLockSprite.atlasSrc }
+                }}
+              />
+              <UiEntity
+                uiTransform={{
+                  display: this.modSlotSelected === 3 ? 'flex' : 'none',
+                  width: '100%',
+                  height: '100%'
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  uvs: getUvs(boardsSprites.modHighlightSprite),
+                  texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
+                }}
+              />
+            </UiEntity>
+            <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                width: canvasInfo.height * 0.55 * 0.1,
+                height: canvasInfo.height * 0.55 * 0.1,
+                position: { top: '31%', left: '8%' }
+              }}
+              onMouseDown={() => {
+                this.modSlotSelected = 4
+              }}
+            >
+              <UiEntity
+                uiTransform={{
+                  positionType: 'absolute',
+                  width: '90%',
+                  height: '90%',
+                  position: { top: '10%', left: '10%' }
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  uvs: getUvs(boardsSprites.modLockSprite),
+                  texture: { src: boardsSprites.modLockSprite.atlasSrc }
+                }}
+              />
+              <UiEntity
+                uiTransform={{
+                  display: this.modSlotSelected === 4 ? 'flex' : 'none',
+                  width: '100%',
+                  height: '100%'
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  uvs: getUvs(boardsSprites.modHighlightSprite),
+                  texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
+                }}
+              />
+            </UiEntity>
+            <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                width: canvasInfo.height * 0.55 * 0.1,
+                height: canvasInfo.height * 0.55 * 0.1,
+                position: { top: '31%', left: '41%' }
+              }}
+              onMouseDown={() => {
+                this.modSlotSelected = 5
+              }}
+            >
+              <UiEntity
+                uiTransform={{
+                  positionType: 'absolute',
+                  width: '90%',
+                  height: '90%',
+                  position: { top: '10%', left: '10%' }
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  uvs: getUvs(boardsSprites.modLockSprite),
+                  texture: { src: boardsSprites.modLockSprite.atlasSrc }
+                }}
+              />
+              <UiEntity
+                uiTransform={{
+                  display: this.modSlotSelected === 5 ? 'flex' : 'none',
+                  width: '100%',
+                  height: '100%'
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  uvs: getUvs(boardsSprites.modHighlightSprite),
+                  texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
+                }}
+              />
+            </UiEntity>
+            <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                width: canvasInfo.height * 0.55 * 0.1,
+                height: canvasInfo.height * 0.55 * 0.1,
+                position: { top: '31%', left: '74%' }
+              }}
+              onMouseDown={() => {
+                this.modSlotSelected = 6
+              }}
+            >
+              <UiEntity
+                uiTransform={{
+                  positionType: 'absolute',
+                  width: '90%',
+                  height: '90%',
+                  position: { top: '10%', left: '10%' }
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  uvs: getUvs(boardsSprites.modLockSprite),
+                  texture: { src: boardsSprites.modLockSprite.atlasSrc }
+                }}
+              />
+              <UiEntity
+                uiTransform={{
+                  display: this.modSlotSelected === 6 ? 'flex' : 'none',
+                  width: '100%',
+                  height: '100%'
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  uvs: getUvs(boardsSprites.modHighlightSprite),
+                  texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
+                }}
+              />
+            </UiEntity>
+            <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                width: '30%',
+                height: '7.5%',
+                position: { top: '-2.5%', right: '-5%' }
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs: getUvs(buttonsSprites.closeButton),
+                texture: { src: buttonsSprites.closeButton.atlasSrc }
+              }}
+              onMouseDown={() => {
+                this.isModsVisible = false
+              }}
+            />
+          </UiEntity>
+        )}
+        {!this.isModsVisible && (
+          <UiEntity
             uiTransform={{
-              positionType: 'absolute',
-              position: { left: '21%', bottom: '19%' }
+              positionType: 'relative',
+              width:
+                ((canvasInfo.height * 0.55) / this.background.h) *
+                this.background.w,
+              height: canvasInfo.height * 0.55
             }}
-            value={this.uiTextLevel}
-            fontSize={20}
-            font="sans-serif"
-            color={Color4.Yellow()}
-            textAlign="bottom-left"
-          />
-        </UiEntity>
-      </UiEntity>
+            uiBackground={{
+              textureMode: 'stretch',
+              uvs: getUvs(this.background),
+              texture: { src: this.background.atlasSrc }
+            }}
+          >
+            {/* Navbar */}
+            <UiEntity
+              uiTransform={{
+                flexDirection: 'row',
+                positionType: 'absolute',
+                position: { top: '12%', right: '2%' },
+                width: '53%',
+                height: '10%'
+              }}
+            >
+              <UiEntity
+                uiTransform={{
+                  positionType: 'relative',
+                  width: '25%',
+                  height: '100%'
+                }}
+                onMouseDown={() => {
+                  this.DisplayInventory(0)
+                }}
+              />
+              <UiEntity
+                uiTransform={{
+                  positionType: 'relative',
+                  width: '25%',
+                  height: '100%'
+                }}
+                onMouseDown={() => {
+                  this.DisplayInventory(1)
+                }}
+              />
+              <UiEntity
+                uiTransform={{
+                  positionType: 'relative',
+                  width: '25%',
+                  height: '100%'
+                }}
+                onMouseDown={() => {
+                  this.DisplayInventory(2)
+                }}
+              />
+              <UiEntity
+                uiTransform={{
+                  positionType: 'relative',
+                  width: '25%',
+                  height: '100%'
+                }}
+                onMouseDown={() => {
+                  this.DisplayInventory(3)
+                }}
+              />
+            </UiEntity>
+            <UiEntity
+              uiTransform={{
+                flexDirection: 'row',
+                alignContent: 'flex-start',
+                flexWrap: 'wrap',
+                positionType: 'absolute',
+                position: { top: '50%', left: '25%' },
+                width:
+                  (canvasInfo.height *
+                    0.55 *
+                    0.05 *
+                    buttonsSprites.modsSprite.w) /
+                  buttonsSprites.modsSprite.h,
+                height: canvasInfo.height * 0.55 * 0.05
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs: getUvs(buttonsSprites.modsSprite),
+                texture: { src: buttonsSprites.modsSprite.atlasSrc }
+              }}
+              onMouseDown={() => {
+                this.isModsVisible = true
+              }}
+            />
+            <UiEntity
+              uiTransform={{
+                flexDirection: 'row',
+                alignContent: 'flex-start',
+                flexWrap: 'wrap',
+                positionType: 'absolute',
+                position: { top: '30.5%', right: '2.5%' },
+                width: '51%',
+                height: '60%'
+              }}
+            >
+              {
+                /* Items grid */
+                this.arrayToShow.map((element, index) => (
+                  <UiEntity
+                    uiTransform={{
+                      positionType: 'relative',
+                      width: '16%',
+                      height: '23%',
+                      margin: { right: '0.7%', bottom: '0.6%' }
+                    }}
+                    uiBackground={{
+                      textureMode: 'stretch',
+                      uvs: getUvs(element.Sprite),
+                      texture: { src: element.Sprite.atlasSrc }
+                    }}
+                  >
+                    <Label
+                      uiTransform={{
+                        width: '100%',
+                        height: fontSizeDrop,
+                        positionType: 'absolute',
+                        position: { bottom: '5%', left: '12%' }
+                      }}
+                      value={InventoryManager.Instance.GetItemCountByID(
+                        element.ID,
+                        false
+                      ).toString()}
+                      key={index}
+                      fontSize={fontSizeDrop}
+                      font="sans-serif"
+                      color={Color4.White()}
+                      textAlign="bottom-left"
+                    />
+                  </UiEntity>
+                ))
+              }
+            </UiEntity>
+            <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                width: '10%',
+                height: '5%',
+                position: { top: '-0.5%', right: '-0.5%' }
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs: getUvs(buttonsSprites.closeButton),
+                texture: { src: buttonsSprites.closeButton.atlasSrc }
+              }}
+              onMouseDown={() => {
+                this.uiController?.sideBar.switchButtonState('Inventory')
+              }}
+            />
+            {/* Experience */}
+            <Label
+              uiTransform={{
+                positionType: 'absolute',
+                position: { left: '10%', bottom: '9.5%' }
+              }}
+              value={this.uiTextExperience}
+              fontSize={13}
+              font="sans-serif"
+              color={Color4.Yellow()}
+              textAlign="bottom-left"
+            />
+            {/* Level */}
+            <Label
+              uiTransform={{
+                positionType: 'absolute',
+                position: { left: '21%', bottom: '15%' }
+              }}
+              value={this.uiTextLevel}
+              fontSize={20}
+              font="sans-serif"
+              color={Color4.Yellow()}
+              textAlign="bottom-left"
+            />
+          </UiEntity>
+        )}
+      </Canvas>
     )
   }
 

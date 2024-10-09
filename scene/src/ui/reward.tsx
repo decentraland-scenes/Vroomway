@@ -65,7 +65,7 @@ export class Reward {
   updateTime(time: number, powerUps?: serverStateSpec.PowerUpSelection): void {
     const player = this.uiController.gameController.Player
     const vehicleOwnership = this.uiController.gameController.vehicleOwnership
-
+    
     // entry processing
     //  leash time decimals
     //  convert time to formatted string (for tween and ui update)

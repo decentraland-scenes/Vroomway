@@ -1731,8 +1731,6 @@ export class SoloSprint {
     this.gameController.realmController.switchRealm('mainInstance')
     this.gameController.uiController.powerUpBar.hide()
     this.gameController.sprintTimer.sprintComplete = true
-    this.gameController.uiController.reward.timeText =
-      this.gameController.sprintTimer.timerText
     this.gameController.uiController.reward.show()
     this.gameController.uiController.reward.updateTime(
       this.gameController.sprintTimer.time

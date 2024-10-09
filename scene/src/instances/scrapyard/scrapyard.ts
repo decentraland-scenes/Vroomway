@@ -25,7 +25,7 @@ import { entityController } from '../../utils/entityController'
 import { type RealmType } from '../types'
 import * as utils from '@dcl-sdk/utils'
 import { instance } from '../../utils/currentInstance'
-import { BarrelHandler } from './class.barrel'
+import { BarrelHandler } from './rummaging'
 
 // initVWRegistry();
 export class Scrapyard {

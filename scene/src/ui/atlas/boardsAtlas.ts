@@ -71,5 +71,13 @@ export const boardsSprites: Record<string, Sprite> = {
     y: 320,
     w: 162,
     h: 182
+  },
+  lootBoard: {
+    atlasSrc: 'assets/images/uiAtlas/board2Atlas.png',
+    atlasSize: { x: 2048, y: 2048 },
+    x: 947,
+    y: 1176,
+    w: 1047,
+    h: 190
   }
 }

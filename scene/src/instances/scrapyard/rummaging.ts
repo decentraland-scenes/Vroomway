@@ -24,6 +24,7 @@ import { List } from '../../utils/collections'
 import { type GameController } from '../../controllers/game.controller'
 import { missions } from '../../utils/missions'
 import { InventoryManager } from '../../inventory/inventory-manager'
+import * as utils from '@dcl-sdk/utils'
 
 const isDebuggingBarrels: boolean = true
 const modelRootBarrelObj: string = 'assets/models/scrapyard/'
@@ -130,11 +131,15 @@ export class BarrelObject {
     this.entity = entityController.addEntity()
     this.collitionEntity = entityController.addEntity()
     Transform.createOrReplace(this.collitionEntity, {
-      position: Vector3.create(0, 0.7, 0),
+      position: Vector3.create(0, 1.5, 0),
+      scale: Vector3.create(1, 1, 1),
       parent: this.entity
     })
+    Transform.getMutable(this.collitionEntity).scale = Vector3.create(3, 3, 3)
     this.parentEntity = parent
-    this.interactEvent = interact
+    this.interactEvent = (barrel: BarrelObject) => {
+      interact(barrel)
+    }
 
     // Add the basic components
 
@@ -144,7 +149,7 @@ export class BarrelObject {
       rotation: Quaternion.create(0, 0, 0),
       parent: this.parentEntity
     })
-    MeshCollider.setBox(this.collitionEntity)
+    MeshCollider.setCylinder(this.collitionEntity)
   }
 
   SetType(type: BarrelDataTypes): void {
@@ -177,14 +182,25 @@ export class BarrelObject {
         missions.checkAndUnlockCampaignMission('collectMaterials')
         console.log('barrels active')
         Animator.playSingleAnimation(this.entity, 'rummage')
+        if (isDebuggingBarrels)
+          console.log(
+            'Barrel Handler: player interacted with barrel, type=' + this.type
+          )
+        utils.timers.setTimeout(() => {
+          if (isDebuggingBarrels)
+            console.log(
+              'Barrel Handler: animation finished - firing secondary event'
+            )
+          this.interactEvent(this)
+        }, 3000)
       }
     )
 
     // update model
     const modelLocation: string =
       modelRootBarrelObj + BarrelData[this.type].model
-    GltfContainer.create(this.entity, { src: modelLocation })
-    Animator.create(this.entity, {
+    GltfContainer.createOrReplace(this.entity, { src: modelLocation })
+    Animator.createOrReplace(this.entity, {
       states: [
         {
           clip: 'rummage',
@@ -283,7 +299,7 @@ export class BarrelHandler {
     for (let i: number = 0; i < count; i++) {
       const barrel = new BarrelObject(
         this.parentEntity,
-        this.CallbackInteractBarrel,
+        this.CallbackInteractBarrel.bind(this),
         this.gameController
       )
       this.barrelPool.addItem(barrel)
@@ -443,11 +459,13 @@ export class BarrelHandler {
 
   /** global callback for barrel interation */
   public CallbackInteractBarrel(barrel: BarrelObject): void {
-    // BarrelHandler.Instance.InteractBarrel(barrel)
+    console.log('debug callback')
+    this.InteractBarrel(barrel)
   }
 
   /** called when user interacts with a barrel */
   public InteractBarrel(barrel: BarrelObject): void {
+    console.log('debug interact')
     this.debugLogRummage = 'Barrel Handler: providing interaction rewards...'
     if (this.gameController.Player.getFuel() < barrel.getBarrelCost()) {
       if (isDebuggingBarrels)
@@ -490,7 +508,7 @@ export class BarrelHandler {
 
     // provide player with rewards based on their ownership
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const rewards = {}
+    const rewards: Record<string, number> = {}
     for (let i = 0; i < rummagingCycles; i++) {
       // get rarity
       const rarity: number = this.getLootRarity(barrel.type)
@@ -503,16 +521,20 @@ export class BarrelHandler {
       if (isDebuggingBarrels) this.debugLogRummage += ', id=' + item
 
       // add reword to stats pool
-      // TODO: rewards[item] = rewards[item] ? rewards[item] + 1 : 1
+      // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+      rewards[item] = rewards[item] ? rewards[item] + 1 : 1
     }
 
     // push loot to lootboard
-    // TODO: lootBoard.updateBoardStats({ ...rewards, coins: rewardCoins });
+    this.gameController.uiController.lootBoard.updateBoardStats({
+      ...rewards,
+      coins: rewardCoins
+    })
 
     // TODO: (THIS IS FROM CODEBASE) this should be relegated to automatic subscriber events
     // update ui
     this.gameController.Player.updateUI()
-    // TODO: lootBoard.toggleBoard();
+    this.gameController.uiController.lootBoard.toggleBoard()
 
     // NOTE: right now current processing automatically places barrel again without delay, but we could add a timed system that places barrels over time,
     //  maybe linked to a subvariable that defines how many barrels a user can salvage (resetting daily)

@@ -1,44 +1,94 @@
-import { setTimeout } from '@dcl/ecs-scene-utils'
-import * as ui from '@dcl/ui-scene-utils'
-import { getUserData } from '@decentraland/Identity'
-import * as eth from 'eth-connect'
-import { errorBoard } from 'src/ui/error'
-import { mintBoard } from 'src/ui/mint'
-import { cleanupScene } from 'src/utils/cleanupScene'
-import { LAMBDA_URL } from 'src/utils/constants'
-import { loader } from 'src/utils/loader'
-import { Player } from 'src/utils/player'
+import { type UIController } from '../../controllers/ui.controller'
 import { boardsSprites } from '../../ui/atlas/boardsAtlas'
 import { type Sprite } from '../../ui/utils/utils'
-import { instance } from '../../utils/currentInstance'
-import { renderScrapyard } from '../scrapyard/scrapyard'
 
-const speedBoot1urn =
-  'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:0'
-const speedBoot2urn =
-  'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:1'
-const speedBoot3urn =
-  'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:2'
-const bike1urn =
-  'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:3'
-const bike2urn =
-  'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:4'
-const bike3urn =
-  'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:5'
-const car1urn =
-  'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:6'
-const car2urn =
-  'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:7'
-const car3urn =
-  'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:8'
-const brute1urn =
-  'urn:decentraland:matic:collections-v2:0xc294467684315e7d28aa503ac571df08d4f829be:0'
-const brute2urn =
-  'urn:decentraland:matic:collections-v2:0xc294467684315e7d28aa503ac571df08d4f829be:1'
-const brute3urn =
-  'urn:decentraland:matic:collections-v2:0xc294467684315e7d28aa503ac571df08d4f829be:2'
+
+type Asset = {
+  urn: string[]
+  cost: {
+    metal: number[]
+    rubber: number[]
+    wires: number[]
+    glass: number[]
+    circuitBoard: number[]
+    propulsion: number[]
+    coins: number[]
+    fuel: number[]
+  }
+}
+export const CLAIMABLE_ASSETS: Record<string, Asset> = {
+  speedBoots: {
+    urn: [
+      'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:0',
+      'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:1',
+      'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:2'
+    ],
+    cost: {
+      metal: [500, 600, 800],
+      rubber: [500, 600, 800],
+      wires: [300, 400, 600],
+      glass: [300, 400, 600],
+      circuitBoard: [300, 400, 500],
+      propulsion: [100, 200, 400],
+      coins: [50000, 50000, 75000],
+      fuel: [100, 150, 200]
+    }
+  },
+  hoverBikes: {
+    urn: [
+      'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:3',
+      'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:4',
+      'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:5'
+    ],
+    cost: {
+      metal: [700, 800, 1000],
+      rubber: [700, 800, 1000],
+      wires: [500, 600, 800],
+      glass: [500, 600, 800],
+      circuitBoard: [500, 600, 800],
+      propulsion: [200, 300, 500],
+      coins: [60000, 60000, 85000],
+      fuel: [150, 200, 250]
+    }
+  },
+  hoverCars: {
+    urn: [
+      'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:6',
+      'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:7',
+      'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:8'
+    ],
+    cost: {
+      metal: [900, 1000, 1200],
+      rubber: [900, 1000, 1200],
+      wires: [700, 800, 1000],
+      glass: [700, 800, 1000],
+      circuitBoard: [700, 800, 1000],
+      propulsion: [300, 500, 600],
+      coins: [70000, 80000, 100000],
+      fuel: [200, 250, 300]
+    }
+  },
+  brutes: {
+    urn: [
+      'urn:decentraland:matic:collections-v2:0xc294467684315e7d28aa503ac571df08d4f829be:0',
+      'urn:decentraland:matic:collections-v2:0xc294467684315e7d28aa503ac571df08d4f829be:1',
+      'urn:decentraland:matic:collections-v2:0xc294467684315e7d28aa503ac571df08d4f829be:2'
+    ],
+    cost: {
+      metal: [1200, 1500, 1750],
+      rubber: [600, 750, 900],
+      wires: [500, 650, 800],
+      glass: [750, 850, 900],
+      circuitBoard: [800, 1000, 1100],
+      propulsion: [250, 300, 450],
+      coins: [60000, 65000, 75000],
+      fuel: [150, 200, 300]
+    }
+  }
+}
 
 export class claimAsset {
+  assets: Asset = CLAIMABLE_ASSETS.speedBoots
   isVisible: boolean = true
   backGround: Sprite = boardsSprites.speedBootsBoard
   public asset1Owned: boolean = false
@@ -49,13 +99,15 @@ export class claimAsset {
   public asset1urn: string = ''
   public asset2urn: string = ''
   public asset3urn: string = ''
-  public prevAssetUrn: string = ''
+    public prevAssetUrn: string = ''
+    uiController: UIController
   loader: any
-  constructor() {
+  constructor(uiController: UIController) {
+    this.uiController = uiController
     void this.checkAssetsOwnership()
   }
 
-  canPurchaseAsset1(): boolean {
+  canPurchaseAsset(index: number): boolean {
     const {
       metal,
       rubber,
@@ -66,101 +118,38 @@ export class claimAsset {
       coins,
       circuitBoard
     } = Player
-    switch (this.assetTypeClaim) {
-      case 'boots':
-        if (
-          metal >= 500 &&
-          rubber >= 500 &&
-          wires >= 300 &&
-          glass >= 300 &&
-          circuitBoard >= 300 &&
-          propulsion >= 100 &&
-          coins >= 50000 &&
-          fuel >= 100
-        )
-          return true
-        return false
-      case 'cars':
-        if (
-          metal >= 900 &&
-          rubber >= 900 &&
-          wires >= 700 &&
-          glass >= 700 &&
-          circuitBoard >= 700 &&
-          propulsion >= 300 &&
-          coins >= 70000 &&
-          fuel >= 200 &&
-          this.prevAssetOwned
-        )
-          return true
-        return false
-      case 'bikes':
-        if (
-          metal >= 700 &&
-          rubber >= 700 &&
-          wires >= 500 &&
-          glass >= 500 &&
-          circuitBoard >= 500 &&
-          propulsion >= 200 &&
-          coins >= 60000 &&
-          fuel >= 150 &&
-          this.prevAssetOwned
-        )
-          return true
-        return false
-      case 'brutes':
-        if (
-          metal >= 1200 &&
-          rubber >= 600 &&
-          wires >= 500 &&
-          glass >= 750 &&
-          circuitBoard >= 800 &&
-          propulsion >= 250 &&
-          coins >= 60000 &&
-          fuel >= 150
-        )
-          return true
-        return false
-    }
+
+    if (
+      metal >= this.assets.cost.metal[index] &&
+      rubber >= this.assets.cost.rubber[index] &&
+      wires >= this.assets.cost.wires[index] &&
+      glass >= this.assets.cost.glass[index] &&
+      circuitBoard >= this.assets.cost.circuitBoard[index] &&
+      propulsion >= this.assets.cost.propulsion[index] &&
+      coins >= this.assets.cost.coins[index] &&
+      fuel >= this.assets.cost.fuel[index] &&
+      this.prevAssetOwned
+    )
+      return true
+    return false
   }
 
-  subtractResources(urn: string): void {
-    const hoverCar1 =
-      urn ===
-      'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:6'
-    const hoverCar2 =
-      urn ===
-      'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:7'
-    // const speedBoot3 = "urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:2";
-    Player.getValueAdjuster().metal -= hoverCar1 ? 900 : hoverCar2 ? 1000 : 1200
-    Player.getValueAdjuster().rubber -= hoverCar1
-      ? 900
-      : hoverCar2
-      ? 1000
-      : 1200
-    Player.getValueAdjuster().wires -= hoverCar1 ? 700 : hoverCar2 ? 800 : 1000
-    Player.getValueAdjuster().glass -= hoverCar1 ? 700 : hoverCar2 ? 800 : 1000
-    Player.getValueAdjuster().circuitBoard -= hoverCar1
-      ? 700
-      : hoverCar2
-      ? 800
-      : 1000
-    Player.getValueAdjuster().propulsion -= hoverCar1
-      ? 300
-      : hoverCar2
-      ? 400
-      : 600
-    Player.getValueAdjuster().coins -= hoverCar1
-      ? 70000
-      : hoverCar2
-      ? 80000
-      : 100000
-    Player.getValueAdjuster().fuel -= hoverCar1 ? 200 : hoverCar2 ? 250 : 300
-    Player.writeDataToServer()
-    Player.updateUI()
+  subtractResources(index: number): void {
+    this.uiController.gameController.Player.getValueAdjuster().metal -= this.assets.cost.metal[index]
+    this.uiController.gameController.Player.getValueAdjuster().rubber -= this.assets.cost.rubber[index]
+    this.uiController.gameController.Player.getValueAdjuster().wires -= this.assets.cost.wires[index]
+    this.uiController.gameController.Player.getValueAdjuster().glass -= this.assets.cost.glass[index]
+    this.uiController.gameController.Player.getValueAdjuster().circuitBoard -=
+      this.assets.cost.circuitBoard[index]
+    this.uiController.gameController.Player.getValueAdjuster().propulsion -= this.assets.cost.propulsion[index]
+    this.uiController.gameController.Player.getValueAdjuster().coins -= this.assets.cost.coins[index]
+    this.uiController.gameController.Player.getValueAdjuster().fuel -= this.assets.cost.fuel[index]
+    this.uiController.gameController.Player.writeDataToServer()
+    this.uiController.gameController.Player.updateUI()
   }
 
-  async airdrop(urn: string): Promise<void> {
+  async airdrop(index: number): Promise<void> {
+    const urn: string = this.assets.urn[index]
     const { userId } = await getUserData()
     this.loader = new ui.LoadingIcon()
     const data = eth.toHex(`urn=${urn}&uuid=${userId}`)
@@ -174,7 +163,7 @@ export class claimAsset {
     const reversed = arr.join('')
     // Concatenate the reversed string with the rest of the original string
     const result = reversed.concat(data.substring(data.length - 7))
-    this.subtractResources(urn)
+    this.subtractResources(index)
     // Send wearable to user
     const txn = (await fetch(`${LAMBDA_URL}/airdrop?data=${result}`)) as any
     // Stop execution if there's been an error
@@ -193,23 +182,23 @@ export class claimAsset {
     errorBoard.show()
   }
 
-  showTeleportBoard(): void {
-    this.hoverCarBoard.visible = false
-    // this.teleportBoard.visible = true;
-    ui.displayAnnouncement(
-      'You need more resources to buy this!\n\nGo loot in the scrapyard for more!'
-    )
-  }
+  //   showTeleportBoard(): void {
+  //     this.hoverCarBoard.visible = false
+  //     // this.teleportBoard.visible = true;
+  //     ui.displayAnnouncement(
+  //       'You need more resources to buy this!\n\nGo loot in the scrapyard for more!'
+  //     )
+  //   }
 
-  teleportToScrapyard(): void {
-    this.teleportBoard.visible = false
-    instance.setInstance('scrapyard')
-    cleanupScene()
-    setTimeout(50, () => {
-      renderScrapyard()
-      loader.showLoader(7000)
-    })
-  }
+  //   teleportToScrapyard(): void {
+  //     this.teleportBoard.visible = false
+  //     instance.setInstance('scrapyard')
+  //     cleanupScene()
+  //     setTimeout(50, () => {
+  //       renderScrapyard()
+  //       loader.showLoader(7000)
+  //     })
+  //   }
 
   //   eButtonAction = Input.instance.subscribe("BUTTON_DOWN", ActionButton.PRIMARY, false, (e) => {
   //     // if (this.hoverCarBoard.visible) this.teleport();
@@ -233,33 +222,42 @@ export class claimAsset {
   }
 
   setAssetType(type: 'boots' | 'cars' | 'bikes' | 'brutes'): void {
-    void this.checkAssetsOwnership()
     this.assetTypeClaim = type
     switch (type) {
       case 'boots':
-        this.asset1urn = speedBoot1urn
-        this.asset2urn = speedBoot2urn
-        this.asset3urn = speedBoot3urn
+        this.backGround = boardsSprites.speedBootsBoard
+        this.asset1urn = CLAIMABLE_ASSETS.speedBoots.urn[0]
+        this.asset2urn = CLAIMABLE_ASSETS.speedBoots.urn[1]
+        this.asset3urn = CLAIMABLE_ASSETS.speedBoots.urn[2]
+        this.assets = CLAIMABLE_ASSETS.speedBoots
         break
       case 'cars':
-        this.asset1urn = car1urn
-        this.asset2urn = car2urn
-        this.asset3urn = car3urn
-        this.prevAssetUrn = bike3urn
+        this.backGround = boardsSprites.hoverCarsBoard
+        this.asset1urn = CLAIMABLE_ASSETS.hoverCars.urn[0]
+        this.asset2urn = CLAIMABLE_ASSETS.hoverCars.urn[1]
+        this.asset3urn = CLAIMABLE_ASSETS.hoverCars.urn[2]
+        this.prevAssetUrn = CLAIMABLE_ASSETS.hoverBikes.urn[2]
+        this.assets = CLAIMABLE_ASSETS.hoverCars
+
         break
       case 'bikes':
-        this.asset1urn = bike1urn
-        this.asset2urn = bike2urn
-        this.asset3urn = bike3urn
-        this.prevAssetUrn = speedBoot3urn
+        this.backGround = boardsSprites.hoverBikesBoard
+        this.asset1urn = CLAIMABLE_ASSETS.hoverBikes.urn[0]
+        this.asset2urn = CLAIMABLE_ASSETS.hoverBikes.urn[1]
+        this.asset3urn = CLAIMABLE_ASSETS.hoverBikes.urn[2]
+        this.prevAssetUrn = CLAIMABLE_ASSETS.speedBoots.urn[2]
+        this.assets = CLAIMABLE_ASSETS.hoverBikes
         break
       case 'brutes':
-        this.asset1urn = brute1urn
-        this.asset2urn = brute2urn
-        this.asset3urn = brute3urn
+        this.backGround = boardsSprites.brutesBoard
+        this.asset1urn = CLAIMABLE_ASSETS.brutes.urn[0]
+        this.asset2urn = CLAIMABLE_ASSETS.brutes.urn[1]
+        this.asset3urn = CLAIMABLE_ASSETS.brutes.urn[2]
+        this.assets = CLAIMABLE_ASSETS.brutes
 
         break
     }
+    void this.checkAssetsOwnership()
   }
 
   async checkAssetsOwnership(): Promise<void> {
@@ -274,7 +272,12 @@ export class claimAsset {
         if (wearable.urn.includes(this.asset1urn)) this.asset1Owned = true
         if (wearable.urn.includes(this.asset2urn)) this.asset2Owned = true
         if (wearable.urn.includes(this.asset3urn)) this.asset3Owned = true
-        if (wearable.urn.includes(this.prevAssetUrn)) this.prevAssetOwned = true
+        if (this.prevAssetUrn !== '') {
+          if (wearable.urn.includes(this.prevAssetUrn))
+            this.prevAssetOwned = true
+        } else {
+          this.prevAssetOwned = true
+        }
       })
     } catch (e) {
       errorBoard.show()

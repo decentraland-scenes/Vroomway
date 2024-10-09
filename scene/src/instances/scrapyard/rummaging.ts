@@ -37,7 +37,7 @@ class BarrelSpawn {
     this.y = y
     this.z = z
   }
-} 
+}
 const BarrelSpawns: BarrelSpawn[] = [
   new BarrelSpawn(31.76, 0, 20.94),
   new BarrelSpawn(35.35, 0, 35.15),
@@ -526,12 +526,15 @@ export class BarrelHandler {
     }
 
     // push loot to lootboard
-    this.gameController.uiController.lootBoard.updateBoardStats({ ...rewards, coins: rewardCoins });
+    this.gameController.uiController.lootBoard.updateBoardStats({
+      ...rewards,
+      coins: rewardCoins
+    })
 
     // TODO: (THIS IS FROM CODEBASE) this should be relegated to automatic subscriber events
     // update ui
     this.gameController.Player.updateUI()
-    this.gameController.uiController.lootBoard.toggleBoard();
+    this.gameController.uiController.lootBoard.toggleBoard()
 
     // NOTE: right now current processing automatically places barrel again without delay, but we could add a timed system that places barrels over time,
     //  maybe linked to a subvariable that defines how many barrels a user can salvage (resetting daily)

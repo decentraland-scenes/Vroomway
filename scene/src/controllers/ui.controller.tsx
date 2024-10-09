@@ -19,8 +19,10 @@ import { type PlayerStats } from '../utils/player'
 import { Reward } from '../ui/reward'
 import { PowerUpBar } from '../ui/powerUpBar'
 import { buttonsSprites } from '../ui/atlas/buttonsSprites'
+import { LootBoard } from '../ui/loot'
 
 export class UIController {
+  public lootBoard = new LootBoard(this)
   public player: PlayerStats
   public socialsVisible: boolean = true
   public canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
@@ -91,6 +93,7 @@ export class UIController {
         <Canvas>{this.reward.isVisible && this.reward.createUi()}</Canvas>
         <Canvas>{this.loader.profileVisible && this.loader.mainUi()}</Canvas>
         <Canvas>{this.powerUpBar.visible && this.powerUpBar.createUI()}</Canvas>
+        <Canvas>{this.lootBoard.visible && this.lootBoard.createUI()}</Canvas>
       </UiEntity>
     )
   }

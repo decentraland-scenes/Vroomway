@@ -2,7 +2,7 @@ import { type Sprite } from '../utils/utils'
 
 const itemAtlas: string = 'assets/images/uiAtlas/itemsAtlas.png'
 const itemAtlasSize: { x: number; y: number } = { x: 2048, y: 2048 }
-enum items {
+export enum items {
   exp = 'exp',
   lvl = 'lvl',
   token0 = 'token0',

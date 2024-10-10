@@ -94,9 +94,13 @@ export class UIController {
         </Canvas>
         <Canvas>{this.reward.isVisible && this.reward.createUi()}</Canvas>
         <Canvas>{this.loader.profileVisible && this.loader.mainUi()}</Canvas>
-        <Canvas>{this.powerUpBar.isVisible === true && this.powerUpBar.createUi()}</Canvas>
+        <Canvas>
+          {this.powerUpBar.isVisible === true && this.powerUpBar.createUi()}
+        </Canvas>
         <Canvas>{this.lootBoard.isVisible && this.lootBoard.createUi()}</Canvas>
-        <Canvas>{this.claimAsset.isVisible && this.claimAsset.createUi()}</Canvas>
+        <Canvas>
+          {this.claimAsset.isVisible && this.claimAsset.createUi()}
+        </Canvas>
       </UiEntity>
     )
   }

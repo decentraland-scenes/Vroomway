@@ -94,7 +94,7 @@ export const CLAIMABLE_ASSETS: Record<string, Asset> = {
 
 export class ClaimAsset {
   assets: Asset = CLAIMABLE_ASSETS.speedBoots
-  isVisible: boolean = true
+  isVisible: boolean = false
   backGround: Sprite = boardsSprites.speedBootsBoard
   public asset1Owned: boolean = false
   public asset2Owned: boolean = false
@@ -114,50 +114,48 @@ export class ClaimAsset {
 
   canPurchaseAsset(index: number): boolean {
     const {
-      metal
-      //   rubber,
-      //   glass,
-      //   wires,
-      //   propulsion,
-      //   fuel,
-      //   coins,
-      //   circuitBoard
+      metal,
+      rubber,
+      glass,
+      wires,
+      propulsion,
+      fuel,
+      coins,
+      circuitBoard
     } = this.uiController.gameController.Player
 
     if (
-      //   metal >= this.assets.cost.metal[index] &&
-      //   rubber >= this.assets.cost.rubber[index] &&
-      //   wires >= this.assets.cost.wires[index] &&
-      //   glass >= this.assets.cost.glass[index] &&
-      //   circuitBoard >= this.assets.cost.circuitBoard[index] &&
-      //   propulsion >= this.assets.cost.propulsion[index] &&
-      //   coins >= this.assets.cost.coins[index] &&
-      //   fuel >= this.assets.cost.fuel[index] &&
-      //   this.prevAssetOwned
-      metal >= 0
+      metal >= this.assets.cost.metal[index] &&
+      rubber >= this.assets.cost.rubber[index] &&
+      wires >= this.assets.cost.wires[index] &&
+      glass >= this.assets.cost.glass[index] &&
+      circuitBoard >= this.assets.cost.circuitBoard[index] &&
+      propulsion >= this.assets.cost.propulsion[index] &&
+      coins >= this.assets.cost.coins[index] &&
+      fuel >= this.assets.cost.fuel[index] &&
+      this.prevAssetOwned
     )
       return true
     return false
   }
 
   subtractResources(index: number): void {
-    // this.uiController.gameController.Player.getValueAdjuster().metal -=
-    //   this.assets.cost.metal[index]
-    // this.uiController.gameController.Player.getValueAdjuster().rubber -=
-    //   this.assets.cost.rubber[index]
-    // this.uiController.gameController.Player.getValueAdjuster().wires -=
-    //   this.assets.cost.wires[index]
-    // this.uiController.gameController.Player.getValueAdjuster().glass -=
-    //   this.assets.cost.glass[index]
-    // this.uiController.gameController.Player.getValueAdjuster().circuitBoard -=
-    //   this.assets.cost.circuitBoard[index]
-    // this.uiController.gameController.Player.getValueAdjuster().propulsion -=
-    //   this.assets.cost.propulsion[index]
-    // this.uiController.gameController.Player.getValueAdjuster().coins -=
-    //   this.assets.cost.coins[index]
-    // this.uiController.gameController.Player.getValueAdjuster().fuel -=
-    //   this.assets.cost.fuel[index]
-    this.uiController.gameController.Player.getValueAdjuster().metal -= 100
+    this.uiController.gameController.Player.getValueAdjuster().metal -=
+      this.assets.cost.metal[index]
+    this.uiController.gameController.Player.getValueAdjuster().rubber -=
+      this.assets.cost.rubber[index]
+    this.uiController.gameController.Player.getValueAdjuster().wires -=
+      this.assets.cost.wires[index]
+    this.uiController.gameController.Player.getValueAdjuster().glass -=
+      this.assets.cost.glass[index]
+    this.uiController.gameController.Player.getValueAdjuster().circuitBoard -=
+      this.assets.cost.circuitBoard[index]
+    this.uiController.gameController.Player.getValueAdjuster().propulsion -=
+      this.assets.cost.propulsion[index]
+    this.uiController.gameController.Player.getValueAdjuster().coins -=
+      this.assets.cost.coins[index]
+    this.uiController.gameController.Player.getValueAdjuster().fuel -=
+      this.assets.cost.fuel[index]
     void this.uiController.gameController.Player.writeDataToServer()
     this.uiController.gameController.Player.updateUI()
   }
@@ -302,93 +300,129 @@ export class ClaimAsset {
   createUi(): ReactEcs.JSX.Element {
     const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
 
-      return (
-        <UiEntity uiTransform={{
-            flexDirection: 'column',
-            width:'100%',
-            height:'100%'
-          }}>
+    return (
       <UiEntity
         uiTransform={{
           flexDirection: 'column',
-          width:
-            ((canvasInfo.height * 0.5) / this.backGround.h) * this.backGround.w,
-          height: canvasInfo.height * 0.5
-        }}
-        uiBackground={{
-          textureMode: 'stretch',
-          uvs: getUvs(this.backGround),
-          texture: { src: this.backGround.atlasSrc }
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+          height: '100%'
         }}
       >
         <UiEntity
           uiTransform={{
-            positionType: 'absolute',
-            position: { bottom: '10%', left: '10%' },
+            flexDirection: 'column',
             width:
-              ((canvasInfo.height * 0.5 * 0.1) / buttonsSprites.claimSprite.h) *
-              buttonsSprites.claimSprite.w,
-            height: canvasInfo.height * 0.5 * 0.1
+              ((canvasInfo.height * 0.5) / this.backGround.h) *
+              this.backGround.w,
+            height: canvasInfo.height * 0.5
           }}
           uiBackground={{
             textureMode: 'stretch',
-            uvs: getUvs(buttonsSprites.claimSprite),
-            texture: { src: buttonsSprites.claimSprite.atlasSrc }
+            uvs: getUvs(this.backGround),
+            texture: { src: this.backGround.atlasSrc }
           }}
-          onMouseDown={() => {
-            if (this.canPurchaseAsset(0)) {
-              console.log('se puede comprar 0')
-            } else {
-              console.error('no se puede comprar 0')
-            }
-          }}
-        />
-        <UiEntity
-          uiTransform={{
-            positionType: 'absolute',
-            position: { bottom: '10%', right: '45%' },
-            width:
-              ((canvasInfo.height * 0.5 * 0.1) / buttonsSprites.claimSprite.h) *
-              buttonsSprites.claimSprite.w,
-            height: canvasInfo.height * 0.5 * 0.1
-          }}
-          uiBackground={{
-            textureMode: 'stretch',
-            uvs: getUvs(buttonsSprites.claimSprite),
-            texture: { src: buttonsSprites.claimSprite.atlasSrc }
-          }}
-          onMouseDown={() => {
-            if (this.canPurchaseAsset(1)) {
-              console.log('se puede comprar 1')
-            } else {
-              console.error('no se puede comprar 1')
-            }
-          }}
-        />
-        <UiEntity
-          uiTransform={{
-            positionType: 'absolute',
-            position: { bottom: '10%', right: '10%' },
-            width:
-              ((canvasInfo.height * 0.5 * 0.1) / buttonsSprites.claimSprite.h) *
-              buttonsSprites.claimSprite.w,
-            height: canvasInfo.height * 0.5 * 0.1
-          }}
-          uiBackground={{
-            textureMode: 'stretch',
-            uvs: getUvs(buttonsSprites.claimSprite),
-            texture: { src: buttonsSprites.claimSprite.atlasSrc }
-          }}
-          onMouseDown={() => {
-            if (this.canPurchaseAsset(2)) {
-              console.log('se puede comprar 2')
-            } else {
-              console.error('no se puede comprar 2')
-            }
-          }}
-        />
-              </UiEntity>
-              </UiEntity>
+        >
+          <UiEntity
+            uiTransform={{
+              positionType: 'absolute',
+              position: { top: '2%', right: '2%' },
+              width:
+                ((canvasInfo.height * 0.5 * 0.1) /
+                  buttonsSprites.closeButton.h) *
+                buttonsSprites.closeButton.w,
+              height: canvasInfo.height * 0.5 * 0.1
+            }}
+            uiBackground={{
+              textureMode: 'stretch',
+              uvs: getUvs(buttonsSprites.closeButton),
+              texture: { src: buttonsSprites.closeButton.atlasSrc }
+            }}
+            onMouseDown={() => {
+              this.cancel()
+            }}
+          />
+          <UiEntity
+            uiTransform={{
+              positionType: 'absolute',
+              position: { bottom: '10%', left: '8.25%' },
+              width:
+                ((canvasInfo.height * 0.5 * 0.1) /
+                  buttonsSprites.claimSprite.h) *
+                buttonsSprites.claimSprite.w,
+              height: canvasInfo.height * 0.5 * 0.1
+            }}
+            uiBackground={{
+              textureMode: 'stretch',
+              uvs: this.canPurchaseAsset(0)
+                ? getUvs(buttonsSprites.claimSprite)
+                : getUvs(buttonsSprites.claimSpriteDisabled),
+              texture: { src: buttonsSprites.claimSprite.atlasSrc }
+            }}
+            onMouseDown={() => {
+              if (this.canPurchaseAsset(0)) {
+                console.log('Code the airdrop logic properly')
+                void this.airdrop(0)
+              } else {
+                console.error("You don't have enough materials")
+              }
+            }}
+          />
+          <UiEntity
+            uiTransform={{
+              positionType: 'absolute',
+              position: { bottom: '10%', right: '44.5%' },
+              width:
+                ((canvasInfo.height * 0.5 * 0.1) /
+                  buttonsSprites.claimSprite.h) *
+                buttonsSprites.claimSprite.w,
+              height: canvasInfo.height * 0.5 * 0.1
+            }}
+            uiBackground={{
+              textureMode: 'stretch',
+              uvs: this.canPurchaseAsset(1)
+                ? getUvs(buttonsSprites.claimSprite)
+                : getUvs(buttonsSprites.claimSpriteDisabled),
+              texture: { src: buttonsSprites.claimSprite.atlasSrc }
+            }}
+            onMouseDown={() => {
+              if (this.canPurchaseAsset(1)) {
+                console.log('Code the airdrop logic properly')
+                this.subtractResources(1)
+                this.cancel()
+              } else {
+                console.error("You don't have enough materials")
+              }
+            }}
+          />
+          <UiEntity
+            uiTransform={{
+              positionType: 'absolute',
+              position: { bottom: '10%', right: '8.5%' },
+              width:
+                ((canvasInfo.height * 0.5 * 0.1) /
+                  buttonsSprites.claimSprite.h) *
+                buttonsSprites.claimSprite.w,
+              height: canvasInfo.height * 0.5 * 0.1
+            }}
+            uiBackground={{
+              textureMode: 'stretch',
+              uvs: this.canPurchaseAsset(2)
+                ? getUvs(buttonsSprites.claimSprite)
+                : getUvs(buttonsSprites.claimSpriteDisabled),
+              texture: { src: buttonsSprites.claimSprite.atlasSrc }
+            }}
+            onMouseDown={() => {
+              if (this.canPurchaseAsset(2)) {
+                console.log('Code the airdrop logic properly')
+              } else {
+                console.error("You don't have enough materials")
+              }
+            }}
+          />
+        </UiEntity>
+      </UiEntity>
     )
   }
 }

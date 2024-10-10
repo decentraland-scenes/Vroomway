@@ -20,6 +20,14 @@ export const buttonsSprites: Record<string, Sprite> = {
     w: 235,
     h: 100
   },
+  claimSpriteDisabled: {
+    atlasSrc: buttonAtlas,
+    atlasSize: buttonAtlasSize,
+    x: 1798,
+    y: 137.5,
+    w: 235,
+    h: 100
+  },
   modsSprite: {
     atlasSrc: 'assets/images/uiAtlas/board3Atlas.png',
     atlasSize: buttonAtlasSize,

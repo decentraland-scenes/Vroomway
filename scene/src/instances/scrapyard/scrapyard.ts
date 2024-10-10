@@ -641,6 +641,7 @@ export class Scrapyard {
         )
       ) {
         missions.checkAndUnlockCampaignMission('visitSpeedBoots')
+        this.gameController.uiController.claimAsset.show('boots')
         // speedBootClaim.show();
       }
     })
@@ -675,6 +676,8 @@ export class Scrapyard {
         )
       ) {
         missions.checkAndUnlockCampaignMission('visitHoverBike')
+        this.gameController.uiController.claimAsset.show('bikes')
+
         // hoverBikeClaim.show();
       }
     })
@@ -709,6 +712,8 @@ export class Scrapyard {
         )
       ) {
         missions.checkAndUnlockCampaignMission('visitHoverCar')
+        this.gameController.uiController.claimAsset.show('cars')
+
         // hoverCarClaim.show();
       }
     })
@@ -743,6 +748,7 @@ export class Scrapyard {
         )
       ) {
         // bruteClaim.show();
+        this.gameController.uiController.claimAsset.show('brutes')
       }
     })
     // Mythic Claim Box

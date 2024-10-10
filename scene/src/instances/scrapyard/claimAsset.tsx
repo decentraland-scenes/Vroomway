@@ -98,7 +98,6 @@ export class ClaimAsset {
   backGround: Sprite = boardsSprites.speedBootsBoard
   public asset1Owned: boolean = false
   public asset2Owned: boolean = false
-  public asset3Owned: boolean = false
   public prevAssetOwned: boolean = false
   public assetTypeClaim: 'boots' | 'cars' | 'bikes' | 'brutes' = 'boots'
   public asset1urn: string = ''
@@ -109,7 +108,6 @@ export class ClaimAsset {
   loader: any
   constructor(uiController: UIController) {
     this.uiController = uiController
-    void this.checkAssetsOwnership()
   }
 
   canPurchaseAsset(index: number): boolean {
@@ -132,11 +130,21 @@ export class ClaimAsset {
       circuitBoard >= this.assets.cost.circuitBoard[index] &&
       propulsion >= this.assets.cost.propulsion[index] &&
       coins >= this.assets.cost.coins[index] &&
-      fuel >= this.assets.cost.fuel[index] &&
-      this.prevAssetOwned
-    )
-      return true
-    return false
+      fuel >= this.assets.cost.fuel[index]
+    ) {
+      if (index === 0) {
+        return this.prevAssetOwned
+      }
+      else if (index === 1) {
+        return this.asset1Owned
+      }
+      else {
+        return this.asset2Owned
+      }
+
+    } else {
+      return false
+    }
   }
 
   subtractResources(index: number): void {
@@ -241,7 +249,9 @@ export class ClaimAsset {
         this.asset1urn = CLAIMABLE_ASSETS.speedBoots.urn[0]
         this.asset2urn = CLAIMABLE_ASSETS.speedBoots.urn[1]
         this.asset3urn = CLAIMABLE_ASSETS.speedBoots.urn[2]
+        this.prevAssetUrn = ''
         this.assets = CLAIMABLE_ASSETS.speedBoots
+        this.prevAssetUrn === '' ? this.prevAssetOwned = true : this.prevAssetOwned = false
         break
       case 'cars':
         this.backGround = boardsSprites.hoverCarsBoard
@@ -250,7 +260,7 @@ export class ClaimAsset {
         this.asset3urn = CLAIMABLE_ASSETS.hoverCars.urn[2]
         this.prevAssetUrn = CLAIMABLE_ASSETS.hoverBikes.urn[2]
         this.assets = CLAIMABLE_ASSETS.hoverCars
-
+        this.prevAssetUrn === '' ? this.prevAssetOwned = true : this.prevAssetOwned = false
         break
       case 'bikes':
         this.backGround = boardsSprites.hoverBikesBoard
@@ -259,36 +269,43 @@ export class ClaimAsset {
         this.asset3urn = CLAIMABLE_ASSETS.hoverBikes.urn[2]
         this.prevAssetUrn = CLAIMABLE_ASSETS.speedBoots.urn[2]
         this.assets = CLAIMABLE_ASSETS.hoverBikes
+        this.prevAssetUrn === '' ? this.prevAssetOwned = true : this.prevAssetOwned = false
         break
       case 'brutes':
         this.backGround = boardsSprites.brutesBoard
+        this.prevAssetUrn = ''
         this.asset1urn = CLAIMABLE_ASSETS.brutes.urn[0]
         this.asset2urn = CLAIMABLE_ASSETS.brutes.urn[1]
         this.asset3urn = CLAIMABLE_ASSETS.brutes.urn[2]
         this.assets = CLAIMABLE_ASSETS.brutes
-
+        this.prevAssetUrn === '' ? this.prevAssetOwned = true : this.prevAssetOwned = false
         break
     }
     void this.checkAssetsOwnership()
   }
 
   async checkAssetsOwnership(): Promise<void> {
+    if (this.prevAssetUrn === '') this.prevAssetOwned = true
     try {
+      console.log('getting assets ownership')
       const player = await getUserData({})
+      console.log(player)
       //   const playerRealm = await getCurrentRealm();
       const url =
         `https://peer.decentraland.org/lambdas/collections/wearables-by-owner/${player.data?.userId}`.toString()
       const response = await fetch(url)
+      console.log(response)
       const usersWearables = await response.json()
       usersWearables.forEach((wearable: { urn: string | string[] }) => {
         if (wearable.urn.includes(this.asset1urn)) this.asset1Owned = true
         if (wearable.urn.includes(this.asset2urn)) this.asset2Owned = true
-        if (wearable.urn.includes(this.asset3urn)) this.asset3Owned = true
-        if (this.prevAssetUrn !== '') {
-          if (wearable.urn.includes(this.prevAssetUrn))
-            this.prevAssetOwned = true
-        } else {
+        if (
+          this.prevAssetUrn !== '' &&
+          wearable.urn.includes(this.prevAssetUrn)
+        ) {
           this.prevAssetOwned = true
+        } else {
+          this.prevAssetOwned = false
         }
       })
     } catch (e) {

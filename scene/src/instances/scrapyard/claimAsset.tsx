@@ -19,6 +19,9 @@ type Asset = {
     propulsion: number[]
     coins: number[]
     fuel: number[]
+    token2: number[]
+    cannisters: number[]
+    antimatter: number[]
   }
 }
 export const CLAIMABLE_ASSETS: Record<string, Asset> = {
@@ -36,7 +39,10 @@ export const CLAIMABLE_ASSETS: Record<string, Asset> = {
       circuitBoard: [300, 400, 500],
       propulsion: [100, 200, 400],
       coins: [50000, 50000, 75000],
-      fuel: [100, 150, 200]
+      fuel: [100, 150, 200],
+      token2: [0, 0, 0],
+      cannisters: [0, 0, 0],
+      antimatter: [0, 0, 0]
     }
   },
   hoverBikes: {
@@ -53,7 +59,10 @@ export const CLAIMABLE_ASSETS: Record<string, Asset> = {
       circuitBoard: [500, 600, 800],
       propulsion: [200, 300, 500],
       coins: [60000, 60000, 85000],
-      fuel: [150, 200, 250]
+      fuel: [150, 200, 250],
+      token2: [0, 0, 0],
+      cannisters: [0, 0, 0],
+      antimatter: [0, 0, 0]
     }
   },
   hoverCars: {
@@ -70,7 +79,10 @@ export const CLAIMABLE_ASSETS: Record<string, Asset> = {
       circuitBoard: [700, 800, 1000],
       propulsion: [300, 500, 600],
       coins: [70000, 80000, 100000],
-      fuel: [200, 250, 300]
+      fuel: [200, 250, 300],
+      token2: [0, 0, 0],
+      cannisters: [0, 0, 0],
+      antimatter: [0, 0, 0]
     }
   },
   brutes: {
@@ -87,7 +99,28 @@ export const CLAIMABLE_ASSETS: Record<string, Asset> = {
       circuitBoard: [800, 1000, 1100],
       propulsion: [250, 300, 450],
       coins: [60000, 65000, 75000],
-      fuel: [150, 200, 300]
+      fuel: [150, 200, 300],
+      token2: [0, 0, 0],
+      cannisters: [0, 0, 0],
+      antimatter: [0, 0, 0]
+    }
+  },
+  legacy: {
+    urn: [
+      'urn:decentraland:matic:collections-v2:0xd62cb20c1fc76962aae30e7067babdf66463ffe3:0',
+    ],
+    cost: {
+      metal: [30000],
+      rubber: [40000],
+      wires: [20000],
+      glass: [20000],
+      circuitBoard: [20000],
+      cannisters: [10000],
+      antimatter: [5000],
+      propulsion: [7500],
+      coins: [200000],
+      fuel: [300],
+      token2: [1]
     }
   }
 }
@@ -99,7 +132,9 @@ export class ClaimAsset {
   public asset1Owned: boolean = false
   public asset2Owned: boolean = false
   public prevAssetOwned: boolean = false
-  public assetTypeClaim: 'boots' | 'cars' | 'bikes' | 'brutes' = 'boots'
+  public assetTypeClaim: 'boots' | 'cars' | 'bikes' | 'brutes' | 'legacy' =
+    'boots'
+  
   public asset1urn: string = ''
   public asset2urn: string = ''
   public asset3urn: string = ''
@@ -119,7 +154,10 @@ export class ClaimAsset {
       propulsion,
       fuel,
       coins,
-      circuitBoard
+      circuitBoard,
+      token2,
+      cannisters,
+      antimatter
     } = this.uiController.gameController.Player
 
     if (
@@ -130,18 +168,18 @@ export class ClaimAsset {
       circuitBoard >= this.assets.cost.circuitBoard[index] &&
       propulsion >= this.assets.cost.propulsion[index] &&
       coins >= this.assets.cost.coins[index] &&
-      fuel >= this.assets.cost.fuel[index]
+      fuel >= this.assets.cost.fuel[index] &&
+      token2 >= this.assets.cost.token2[index] &&
+      cannisters >= this.assets.cost.cannisters[index] &&
+      antimatter >= this.assets.cost.antimatter[index]
     ) {
       if (index === 0) {
         return this.prevAssetOwned
-      }
-      else if (index === 1) {
+      } else if (index === 1) {
         return this.asset1Owned
-      }
-      else {
+      } else {
         return this.asset2Owned
       }
-
     } else {
       return false
     }
@@ -228,7 +266,7 @@ export class ClaimAsset {
   //     if (this.hoverCarBoard.isVisible) this.cancel();
   //   });
 
-  show(type: 'boots' | 'cars' | 'bikes' | 'brutes'): void {
+  show(type: 'boots' | 'cars' | 'bikes' | 'brutes' | 'legacy'): void {
     // Subscribe to keys
     // if (!Input.instance) attachKeyBindings(this.eButtonAction, this.fButtonAction);
     this.setAssetType(type)
@@ -241,7 +279,7 @@ export class ClaimAsset {
     this.isVisible = false
   }
 
-  setAssetType(type: 'boots' | 'cars' | 'bikes' | 'brutes'): void {
+  setAssetType(type: 'boots' | 'cars' | 'bikes' | 'brutes' | 'legacy'): void {
     this.assetTypeClaim = type
     switch (type) {
       case 'boots':
@@ -251,7 +289,9 @@ export class ClaimAsset {
         this.asset3urn = CLAIMABLE_ASSETS.speedBoots.urn[2]
         this.prevAssetUrn = ''
         this.assets = CLAIMABLE_ASSETS.speedBoots
-        this.prevAssetUrn === '' ? this.prevAssetOwned = true : this.prevAssetOwned = false
+        this.prevAssetUrn === ''
+          ? (this.prevAssetOwned = true)
+          : (this.prevAssetOwned = false)
         break
       case 'cars':
         this.backGround = boardsSprites.hoverCarsBoard
@@ -260,7 +300,9 @@ export class ClaimAsset {
         this.asset3urn = CLAIMABLE_ASSETS.hoverCars.urn[2]
         this.prevAssetUrn = CLAIMABLE_ASSETS.hoverBikes.urn[2]
         this.assets = CLAIMABLE_ASSETS.hoverCars
-        this.prevAssetUrn === '' ? this.prevAssetOwned = true : this.prevAssetOwned = false
+        this.prevAssetUrn === ''
+          ? (this.prevAssetOwned = true)
+          : (this.prevAssetOwned = false)
         break
       case 'bikes':
         this.backGround = boardsSprites.hoverBikesBoard
@@ -269,7 +311,9 @@ export class ClaimAsset {
         this.asset3urn = CLAIMABLE_ASSETS.hoverBikes.urn[2]
         this.prevAssetUrn = CLAIMABLE_ASSETS.speedBoots.urn[2]
         this.assets = CLAIMABLE_ASSETS.hoverBikes
-        this.prevAssetUrn === '' ? this.prevAssetOwned = true : this.prevAssetOwned = false
+        this.prevAssetUrn === ''
+          ? (this.prevAssetOwned = true)
+          : (this.prevAssetOwned = false)
         break
       case 'brutes':
         this.backGround = boardsSprites.brutesBoard
@@ -278,7 +322,17 @@ export class ClaimAsset {
         this.asset2urn = CLAIMABLE_ASSETS.brutes.urn[1]
         this.asset3urn = CLAIMABLE_ASSETS.brutes.urn[2]
         this.assets = CLAIMABLE_ASSETS.brutes
-        this.prevAssetUrn === '' ? this.prevAssetOwned = true : this.prevAssetOwned = false
+        this.prevAssetUrn === ''
+          ? (this.prevAssetOwned = true)
+          : (this.prevAssetOwned = false)
+        break
+      case 'legacy':
+        this.backGround = boardsSprites.legacyCarBoard
+        this.prevAssetUrn = ''
+        this.assets = CLAIMABLE_ASSETS.legacy
+        this.prevAssetUrn === ''
+          ? (this.prevAssetOwned = true)
+          : (this.prevAssetOwned = false)
         break
     }
     void this.checkAssetsOwnership()
@@ -344,7 +398,7 @@ export class ClaimAsset {
           <UiEntity
             uiTransform={{
               positionType: 'absolute',
-              position: { top: '2%', right: '2%' },
+              position: { top: '-10%', right: '0%' },
               width:
                 ((canvasInfo.height * 0.5 * 0.1) /
                   buttonsSprites.closeButton.h) *
@@ -363,7 +417,7 @@ export class ClaimAsset {
           <UiEntity
             uiTransform={{
               positionType: 'absolute',
-              position: { bottom: '10%', left: '8.25%' },
+              position: this.assetTypeClaim !== 'legacy'?{ bottom: '10%', left: '8.25%' }:{ bottom: '2.5%', left: '30%' },
               width:
                 ((canvasInfo.height * 0.5 * 0.1) /
                   buttonsSprites.claimSprite.h) *
@@ -386,58 +440,62 @@ export class ClaimAsset {
               }
             }}
           />
-          <UiEntity
-            uiTransform={{
-              positionType: 'absolute',
-              position: { bottom: '10%', right: '44.5%' },
-              width:
-                ((canvasInfo.height * 0.5 * 0.1) /
-                  buttonsSprites.claimSprite.h) *
-                buttonsSprites.claimSprite.w,
-              height: canvasInfo.height * 0.5 * 0.1
-            }}
-            uiBackground={{
-              textureMode: 'stretch',
-              uvs: this.canPurchaseAsset(1)
-                ? getUvs(buttonsSprites.claimSprite)
-                : getUvs(buttonsSprites.claimSpriteDisabled),
-              texture: { src: buttonsSprites.claimSprite.atlasSrc }
-            }}
-            onMouseDown={() => {
-              if (this.canPurchaseAsset(1)) {
-                console.log('Code the airdrop logic properly')
-                this.subtractResources(1)
-                this.cancel()
-              } else {
-                console.error("You don't have enough materials")
-              }
-            }}
-          />
-          <UiEntity
-            uiTransform={{
-              positionType: 'absolute',
-              position: { bottom: '10%', right: '8.5%' },
-              width:
-                ((canvasInfo.height * 0.5 * 0.1) /
-                  buttonsSprites.claimSprite.h) *
-                buttonsSprites.claimSprite.w,
-              height: canvasInfo.height * 0.5 * 0.1
-            }}
-            uiBackground={{
-              textureMode: 'stretch',
-              uvs: this.canPurchaseAsset(2)
-                ? getUvs(buttonsSprites.claimSprite)
-                : getUvs(buttonsSprites.claimSpriteDisabled),
-              texture: { src: buttonsSprites.claimSprite.atlasSrc }
-            }}
-            onMouseDown={() => {
-              if (this.canPurchaseAsset(2)) {
-                console.log('Code the airdrop logic properly')
-              } else {
-                console.error("You don't have enough materials")
-              }
-            }}
-          />
+          {this.assetTypeClaim !== 'legacy' && (
+            <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                position: { bottom: '10%', right: '44.5%' },
+                width:
+                  ((canvasInfo.height * 0.5 * 0.1) /
+                    buttonsSprites.claimSprite.h) *
+                  buttonsSprites.claimSprite.w,
+                height: canvasInfo.height * 0.5 * 0.1
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs: this.canPurchaseAsset(1)
+                  ? getUvs(buttonsSprites.claimSprite)
+                  : getUvs(buttonsSprites.claimSpriteDisabled),
+                texture: { src: buttonsSprites.claimSprite.atlasSrc }
+              }}
+              onMouseDown={() => {
+                if (this.canPurchaseAsset(1)) {
+                  console.log('Code the airdrop logic properly')
+                  this.subtractResources(1)
+                  this.cancel()
+                } else {
+                  console.error("You don't have enough materials")
+                }
+              }}
+            />
+          )}
+          {this.assetTypeClaim !== 'legacy' && (
+            <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                position: { bottom: '10%', right: '8.5%' },
+                width:
+                  ((canvasInfo.height * 0.5 * 0.1) /
+                    buttonsSprites.claimSprite.h) *
+                  buttonsSprites.claimSprite.w,
+                height: canvasInfo.height * 0.5 * 0.1
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs: this.canPurchaseAsset(2)
+                  ? getUvs(buttonsSprites.claimSprite)
+                  : getUvs(buttonsSprites.claimSpriteDisabled),
+                texture: { src: buttonsSprites.claimSprite.atlasSrc }
+              }}
+              onMouseDown={() => {
+                if (this.canPurchaseAsset(2)) {
+                  console.log('Code the airdrop logic properly')
+                } else {
+                  console.error("You don't have enough materials")
+                }
+              }}
+            />
+          )}
         </UiEntity>
       </UiEntity>
     )

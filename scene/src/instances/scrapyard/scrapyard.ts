@@ -677,8 +677,6 @@ export class Scrapyard {
       ) {
         missions.checkAndUnlockCampaignMission('visitHoverBike')
         this.gameController.uiController.claimAsset.show('bikes')
-
-        // hoverBikeClaim.show();
       }
     })
     // car claim
@@ -713,8 +711,6 @@ export class Scrapyard {
       ) {
         missions.checkAndUnlockCampaignMission('visitHoverCar')
         this.gameController.uiController.claimAsset.show('cars')
-
-        // hoverCarClaim.show();
       }
     })
     // brute claim
@@ -747,7 +743,6 @@ export class Scrapyard {
           this.bruteClaimBox
         )
       ) {
-        // bruteClaim.show();
         this.gameController.uiController.claimAsset.show('brutes')
       }
     })
@@ -781,7 +776,8 @@ export class Scrapyard {
           this.mythicClaimBox
         )
       ) {
-        // mythicClaim.show();
+        this.gameController.uiController.claimAsset.show('legacy')
+
       }
     })
     // GWEI warning5

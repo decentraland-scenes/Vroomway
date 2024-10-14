@@ -43,7 +43,6 @@ export class SprintTimer {
   }
 
   resetTimer(): void {
-    console.log("TIMER IS RESETED")
     this.timerText = ''
     this.sprintOff = true
     this.sprintComplete = false

@@ -167,6 +167,7 @@ export class BarrelObject {
         }
       },
       () => {
+        console.log(this.isInteractable, 'in use')
         if (!this.inUse) return
         // do not allow multiple interactions
         if (!this.isInteractable) return
@@ -176,8 +177,8 @@ export class BarrelObject {
               'Barrel Handler: barrel interaction not processed - not enough fuel'
             )
           this.gameController.uiController.outOfFuel.show()
-          this.isInteractable = false
         }
+        this.isInteractable = false
         missions.checkAndUnlockCampaignMission('rummage')
         missions.checkAndUnlockCampaignMission('collectMaterials')
         console.log('barrels active')

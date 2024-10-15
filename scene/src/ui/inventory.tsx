@@ -1,8 +1,7 @@
 /* eslint-disable spaced-comment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { ATLAS_SHEET_VEHICLE } from '../vehicle/vehicle-data'
-import { ATLAS_SHEET_ACCESSORY } from '../vehicle/accessory-data'
+import { VehicleData, type VehicleDataObject } from '../vehicle/vehicle-data'
 import { type UIController } from '../controllers/ui.controller'
 import { Label, ReactEcs, UiEntity } from '@dcl/sdk/react-ecs'
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
@@ -18,11 +17,10 @@ import {
   PowerUpObjectData,
   type ResourceObject,
   ResourceObjectData,
-  TokenObjectData
 } from '../inventory/inventory-data'
 import { InventoryManager } from '../inventory/inventory-manager'
 import { buttonsSprites } from './atlas/buttonsSprites'
-import { VehicleEntry, VehicleManager } from '../vehicle/vehicle-manager'
+import { VehicleManager } from '../vehicle/vehicle-manager'
 
 class UIInteractable {
   /** controls whether this ui element is clickable */
@@ -46,7 +44,7 @@ class UIInteractable {
   }
 }
 
-type InventoryItem = BaseObject | ResourceObject | CargoObject | VehicleEntry
+type InventoryItem = BaseObject | ResourceObject | CargoObject | VehicleDataObject
 
 export class UIInventoryManager {
   isModsVisible: boolean = false
@@ -57,6 +55,7 @@ export class UIInventoryManager {
   uiTextExperience: string = '999999'
   uiTextLevel: string = '999'
   uiController: UIController | undefined
+  selectedTab: number = 0
   private static instance: undefined | UIInventoryManager
   public static get Instance(): UIInventoryManager {
     //ensure instance is set
@@ -86,6 +85,7 @@ export class UIInventoryManager {
   }
 
   public DisplayInventory(type: number): void {
+    this.selectedTab = type
     this.isModsVisible = false
     this.updateExpDisplay()
     this.updateLevelDisplay()
@@ -93,11 +93,11 @@ export class UIInventoryManager {
       case 0: {
         this.background = boardsSprites.inventoryVehiclesBoardSprite
         this.arrayToShow = []
-        for (let i = 0; i < VehicleManager.Instance.entryRegistry.size(); i++) {
-          this.arrayToShow.push(
-            VehicleManager.Instance.entryRegistry.getItem(i)
-          )
-        }
+        VehicleData.forEach((vehicle) => {
+          if (VehicleManager.Instance.GetEntryByID(vehicle.ID).IsOwned) {
+            this.arrayToShow.push(vehicle)
+          }
+         })
         break
       }
       case 1: {
@@ -507,7 +507,7 @@ export class UIInventoryManager {
                       texture: { src: element.Sprite.atlasSrc }
                     }}
                   >
-                    <Label
+                    {this.selectedTab !== 0 && <Label
                       uiTransform={{
                         width: '100%',
                         height: fontSizeDrop,
@@ -523,7 +523,7 @@ export class UIInventoryManager {
                       font="sans-serif"
                       color={Color4.White()}
                       textAlign="bottom-left"
-                    />
+                    />}
                   </UiEntity>
                 ))
               }

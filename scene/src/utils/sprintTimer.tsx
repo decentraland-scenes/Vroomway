@@ -15,7 +15,6 @@ export type SceneArgs = {
 export class SprintTimer {
   gameController: GameController
   sprintOff: boolean
-  time: number
   sprintComplete: boolean
   gameMode?: LevelModeType
   isVisible: boolean = true
@@ -30,7 +29,6 @@ export class SprintTimer {
     this.gameController = gameController
     this.sprintOff = true
     this.sprintComplete = false
-    this.time = 0
     engine.addSystem(this.updateTimer)
   }
 
@@ -48,7 +46,7 @@ export class SprintTimer {
     this.timerText = ''
     this.sprintOff = true
     this.sprintComplete = false
-    this.time = 0
+    this._sprintTimer = 0
   }
 
   startTimer(options: SceneArgs = this.options): void {
@@ -98,7 +96,7 @@ export class SprintTimer {
   }
 
   getTime(): number {
-    return this.time
+    return this._sprintTimer
   }
 
   updateTimer = (dt: number): void => {
@@ -122,7 +120,6 @@ export class SprintTimer {
     this._timerIteration++
     const total = (this._sprintTimer += dt)
     this._sprintTimer = total
-    this.time = total
     if (this._timerIteration === 2) {
       this.timerText = this.format(total)
       this._timerIteration = 0

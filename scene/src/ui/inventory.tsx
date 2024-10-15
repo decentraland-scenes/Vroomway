@@ -22,119 +22,7 @@ import {
 } from '../inventory/inventory-data'
 import { InventoryManager } from '../inventory/inventory-manager'
 import { buttonsSprites } from './atlas/buttonsSprites'
-
-const DEBUGGING_UI_INVENTORY: boolean = true
-const DEBUGGING_UI_INVENTORY_VERBOSE: boolean = false
-const UI_SKIP_EQUIPPED_ITEMS: boolean = true
-
-type SplicePiece = {
-  srcWidth: number
-  srcHeight: number
-  srcLeft: number
-  srcTop: number
-}
-
-/** vehicle attachment sheet pieces, these can be simplified later with better sheets */
-const INVENTORY_TEXTURE_ATTACHMENTS_MENU =
-  'assets/images/uiAtlas/board8Atlas.png'
-const ATTACHMENT_HIGHLIGHT: SplicePiece = {
-  srcWidth: 250,
-  srcHeight: 250,
-  srcLeft: 31,
-  srcTop: 20
-}
-const ATTACHMENT_LOCK: SplicePiece = {
-  srcWidth: 162,
-  srcHeight: 182,
-  srcLeft: 92,
-  srcTop: 320
-}
-const ATTACHMENT_CLOSE: SplicePiece = {
-  srcWidth: 229,
-  srcHeight: 82,
-  srcLeft: 58,
-  srcTop: 564
-}
-const ATTACHMENT_OPEN: SplicePiece = {
-  srcWidth: 260,
-  srcHeight: 92,
-  srcLeft: 891,
-  srcTop: 927
-}
-const ATTACHMENT_PANEL: SplicePiece = {
-  srcWidth: 1065,
-  srcHeight: 1964,
-  srcLeft: 488,
-  srcTop: 45
-}
-
-/** this is a transitional fix for handling UI draws, the items.ts file defs
- * currently exist across several scripts and the data claw-back is going to
- * take a while. we'll store rough data objects for any currently undefined
- * data portions here (ex: vehicles need their own data objects); resource items
- * (coins, metal, etc.) are already being handled automatically.
- */
-
-/** atlases of all possible ui elements, ideally we will split these per type:
- * 1 atlas for backgrounds, another for item icons (making things easier to manage
- * and cheaper to store)
- */
-const INVENTORY_TEXTURE_BACKGROUND = 'assets/images/uiAtlas/board3Atlas.png'
-const INVENTORY_TEXTURE_ICON = 'assets/images/uiAtlas/itemsAtlas.png'
-const INVENTORY_TEXTURE_MODS = 'assets/images/uiAtlas/vehicleModsAtlas.png'
-const INVENTORY_TEXTURE_BUTTONS = 'assets/images/uiAtlas/buttonAtlas.png'
-
-/** targeting details for inventory slot backplate */
-const INVENTORY_BACKPLATE_POS: SplicePiece = {
-  srcWidth: 128,
-  srcHeight: 128,
-  srcLeft: 0,
-  srcTop: 0
-}
-/** defines what splice sheet will be used for icons, sub arrays based on current inventory type
- */
-// const INVENTORY_TEXTURES_PER_TYPE: string[][] = [
-//   ATLAS_SHEET_VEHICLE, //vehicles
-//   ATLAS_SHEET_ACCESSORY, //accessories
-//   ATLAS_SHEET_ITEM, //resources
-//   ATLAS_SHEET_ITEM //powerups
-// ]
-
-/** if true vehicle attachment ownership is not verified */
-const ATTACHMENTS_SKIP_OWNERSHIP_CHECK: boolean = true
-/** if true resources that have a zero amount will not be shown */
-const INVENTORY_SKIP_ZERO_COUNT_RESOURCE: boolean = false
-/** if true powerups that have a zero amount will not be shown */
-const INVENTORY_SKIP_ZERO_COUNT_POWERUPS: boolean = false
-
-//fixer pieces b.c toggled-on icons are hard-baked but toggled off icons are not -.-
-//this will be redone in SDK7, so not sweating ugly solutions
-const CATAGORY_ICON_RAW_POS = [
-  [24, 1140],
-  [24, 1260],
-  [24, 900],
-  [24, 1020]
-]
-const CATAGORY_ICON_SCREEN_POS = [
-  [13, 136],
-  [114, 138],
-  [210.5, 139],
-  [306, 138]
-]
-const CATAGORY_ICON_SCREEN_SIZE = [
-  [34, 34],
-  [34, 34],
-  [34, 34],
-  [34, 34]
-]
-
-/** represents a bundled set of ui objects making up a single
- *  interactable ui object, including:
- *      parent (controls draw & size)
- *      background (ex: frame/rarity/flair)
- *      icon (ex: item img) <= the current clickable
- *      text (ex: naming/item count)
- */
+import { VehicleEntry, VehicleManager } from '../vehicle/vehicle-manager'
 
 class UIInteractable {
   /** controls whether this ui element is clickable */
@@ -158,7 +46,7 @@ class UIInteractable {
   }
 }
 
-type InventoryItem = BaseObject | ResourceObject | CargoObject
+type InventoryItem = BaseObject | ResourceObject | CargoObject | VehicleEntry
 
 export class UIInventoryManager {
   isModsVisible: boolean = false
@@ -205,6 +93,11 @@ export class UIInventoryManager {
       case 0: {
         this.background = boardsSprites.inventoryVehiclesBoardSprite
         this.arrayToShow = []
+        for (let i = 0; i < VehicleManager.Instance.entryRegistry.size(); i++) {
+          this.arrayToShow.push(
+            VehicleManager.Instance.entryRegistry.getItem(i)
+          )
+        }
         break
       }
       case 1: {

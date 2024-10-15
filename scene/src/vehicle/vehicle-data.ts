@@ -9,6 +9,8 @@
 */
 
 import { RARITY_TYPE } from '../inventory/rarity-data'
+import { vehiclesSprites } from '../ui/atlas/vehiclesSprites'
+import { type Sprite } from '../ui/utils/utils'
 
 /** defines the atlas sheets for all vehicle icons */
 export const ATLAS_SHEET_VEHICLE = [
@@ -105,13 +107,7 @@ export type VehicleDataObject = {
   // NFT (if source is empty anyone can wear it, otherwise the given urn must exist in the player's wearables)
   NFTSourceURN: string // where the collection is hosted
   // DISPLAY 2D (inventory icon details)
-  SheetIndex: number
-  IconPos: {
-    srcWidth: number
-    srcHeight: number
-    srcTop: number
-    srcLeft: number
-  }
+  sprite: Sprite
   // DISPLAY 3D
   Model: string // path to display model for vehicle
 }
@@ -132,8 +128,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:0',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 220, srcTop: 498, srcLeft: 14 },
+    sprite:vehiclesSprites.speedBoots1 ,
     // DISPLAY 3D
     Model: 'sbVehicle1.glb'
   },
@@ -151,8 +146,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:1',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 220, srcTop: 498, srcLeft: 271 },
+    sprite:vehiclesSprites.speedBoots2 ,
     // DISPLAY 3D
     Model: 'sbVehicle2.glb'
   },
@@ -170,8 +164,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:2',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 220, srcTop: 498, srcLeft: 527 },
+    sprite:vehiclesSprites.speedBoots3 ,
     // DISPLAY 3D
     Model: 'sbVehicle3.glb'
   },
@@ -192,8 +185,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:3',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 220, srcTop: 498, srcLeft: 784 },
+    sprite:vehiclesSprites.hoverBike1 ,
     // DISPLAY 3D
     Model: 'hbVehicle1.glb'
   },
@@ -212,8 +204,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:4',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 220, srcTop: 498, srcLeft: 1040 },
+    sprite:vehiclesSprites.hoverBike2 ,
     // DISPLAY 3D
     Model: 'hbVehicle2.glb'
   },
@@ -232,8 +223,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:5',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 220, srcTop: 498, srcLeft: 1297 },
+    sprite:vehiclesSprites.hoverBike3 ,
     // DISPLAY 3D
     Model: 'hbVehicle3.glb'
   },
@@ -252,8 +242,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0xc294467684315e7d28aa503ac571df08d4f829be:0',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 220, srcTop: 498, srcLeft: 1553 },
+    sprite:vehiclesSprites.brute1 ,
     // DISPLAY 3D
     Model: 'bruteVehicle1.glb'
   },
@@ -272,8 +261,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0xc294467684315e7d28aa503ac571df08d4f829be:1',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 220, srcTop: 498, srcLeft: 1810 },
+    sprite:vehiclesSprites.brute2 ,
     // DISPLAY 3D
     Model: 'bruteVehicle2.glb'
   },
@@ -292,8 +280,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0xc294467684315e7d28aa503ac571df08d4f829be:2',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 220, srcTop: 740, srcLeft: 14 },
+    sprite:vehiclesSprites.brute3 ,
     // DISPLAY 3D
     Model: 'bruteVehicle3.glb'
   },
@@ -314,8 +301,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:6',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 220, srcTop: 740, srcLeft: 527 },
+    sprite:vehiclesSprites.hoverCar1 ,
     // DISPLAY 3D
     Model: 'hcVehicle1.glb'
   },
@@ -334,8 +320,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:7',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 220, srcTop: 740, srcLeft: 783 },
+    sprite:vehiclesSprites.hoverCar2 ,
     // DISPLAY 3D
     Model: 'hcVehicle2.glb'
   },
@@ -354,8 +339,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0xed0c8eaf9d0a04a24701a90da2580da9cf46fb45:8',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 220, srcTop: 740, srcLeft: 1039 },
+    sprite:vehiclesSprites.hoverCar3 ,
     // DISPLAY 3D
     Model: 'hcVehicle3.glb'
   },
@@ -378,8 +362,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0x320a144099546e6561f4747686f79ec6a5c24e27:0',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 218, srcHeight: 218, srcTop: 743, srcLeft: 1297 },
+    sprite:vehiclesSprites.vroomVroom ,
     // DISPLAY 3D
     Model: 'vroomVehicle.glb'
   },
@@ -400,8 +383,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0x1306d694871ec48aa03dd36f384afa1605cce900:0',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 218, srcHeight: 218, srcTop: 743, srcLeft: 1553.1 },
+    sprite:vehiclesSprites.model0 ,
     // DISPLAY 3D
     Model: 'modelOVehicle.glb'
   },
@@ -421,8 +403,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0xed2692690fb36a4906ec8d04add42e2fa1510151:0',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 218, srcHeight: 218, srcTop: 743, srcLeft: 1810 },
+    sprite:vehiclesSprites.wonderVroom ,
     // DISPLAY 3D
     Model: 'wonderVroomVehicle.glb'
   },
@@ -441,8 +422,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0x40519b3aebc58a489d576962a02efca7497faf44:0',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 218, srcHeight: 218, srcTop: 1218, srcLeft: 1294 },
+    sprite:vehiclesSprites.diamondVroom ,
     // DISPLAY 3D
     Model: 'diamondVroomVehicle.glb'
   },
@@ -461,13 +441,8 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0x681a6e37e96340f21bf7401e3d770d10e3e1f1d7:0',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: {
-      srcWidth: 218,
-      srcHeight: 218,
-      srcTop: 1700,
-      srcLeft: 528 + 256 * 4
-    },
+    sprite:vehiclesSprites.buildaVroom,
+
     // DISPLAY 3D
     Model: 'buildaVroomVehicle.glb'
   },
@@ -486,8 +461,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0xfc96c422101e708da022ebe19037eac741024a0e:0',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 218, srcHeight: 218, srcTop: 1700, srcLeft: 1807 },
+    sprite:vehiclesSprites.caddyVroom ,
     // DISPLAY 3D
     Model: 'caddyVroomVehicle.glb'
   },
@@ -506,8 +480,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0xd8f18e6791dbb3468a793791e6ad9ca782643c69:3',
     // DISPLAY 2D
-    SheetIndex: 1,
-    IconPos: { srcWidth: 256, srcHeight: 256, srcTop: 512, srcLeft: 0 },
+    sprite:vehiclesSprites.broomVroom ,
     // DISPLAY 3D
     Model: 'broomVroomVehicle.glb'
   },
@@ -526,8 +499,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0xd62cb20c1fc76962aae30e7067babdf66463ffe3:0',
     // DISPLAY 2D
-    SheetIndex: 1,
-    IconPos: { srcWidth: 256, srcHeight: 256, srcTop: 512, srcLeft: 256 },
+    sprite:vehiclesSprites.kittyVroom ,
     // DISPLAY 3D
     Model: 'kittyVroomVehicle.glb'
   },
@@ -550,8 +522,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0x1628fcce52a0d2c671fe828bea0102c76d27c73e:0',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 218, srcHeight: 218, srcTop: 980, srcLeft: 527 },
+    sprite:vehiclesSprites.divinity ,
     // DISPLAY 3D
     Model: 'divinityVehicle.glb'
   },
@@ -572,8 +543,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0x3c75b3bd751eb90db5e992e0c735d8e4df386906:0',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 218, srcHeight: 218, srcTop: 980, srcLeft: 270 },
+    sprite:vehiclesSprites.pleather ,
     // DISPLAY 3D
     Model: 'pleatherVehicle.glb'
   },
@@ -594,8 +564,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0x50480f858791fbbc1149a66af7fb983f2e1114e5:0',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 218, srcHeight: 218, srcTop: 980, srcLeft: 783 },
+    sprite:vehiclesSprites.peafowl ,
     // DISPLAY 3D
     Model: 'peafowlVehicle.glb'
   },
@@ -616,8 +585,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0x2555a974177d05b50472343701e74594e14af5fc:0',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 218, srcHeight: 218, srcTop: 980, srcLeft: 14 },
+    sprite:vehiclesSprites.machina ,
     // DISPLAY 3D
     Model: 'machinaVehicle.glb'
   },
@@ -638,8 +606,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0xf907f7abe1af828ac16fd5525df019c6e44cf977:0',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 218, srcHeight: 218, srcTop: 1456, srcLeft: 1039 },
+    sprite:vehiclesSprites.junkerVan ,
     // DISPLAY 3D
     Model: 'junkerkingVanVehicle.glb'
   },
@@ -660,8 +627,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0x52f5931b5658d59ee9f740b94ebcb104ab87770e:0',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 218, srcHeight: 218, srcTop: 1700, srcLeft: 1039.8 },
+    sprite:vehiclesSprites.vroomWing ,
     // DISPLAY 3D
     Model: 'vroomWingVehicle.glb'
   },
@@ -682,8 +648,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0xbed6f4dad1326d7ad268cc1d6beab911566f0e98:0',
     // DISPLAY 2D
-    SheetIndex: 1,
-    IconPos: { srcWidth: 256, srcHeight: 256, srcTop: 256, srcLeft: 0 },
+    sprite:vehiclesSprites.rollerVroom ,
     // DISPLAY 3D
     Model: 'rollerVroomVehicle.glb'
   },
@@ -704,8 +669,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0x2d19c4f2212ec37ed48eb8134ffbc0a695612986:1',
     // DISPLAY 2D
-    SheetIndex: 1,
-    IconPos: { srcWidth: 256, srcHeight: 256, srcTop: 252, srcLeft: 252 },
+    sprite:vehiclesSprites.bosier ,
     // DISPLAY 3D
     Model: 'bosierVehicle.glb'
   },
@@ -726,8 +690,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0xf61d27b7899d2641b02c56f4617f2d01f63f7ee5:4',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 218, srcHeight: 218, srcTop: 1700, srcLeft: 1293 },
+    sprite:vehiclesSprites.rattyVroom ,
     // DISPLAY 3D
     Model: 'rattyVroomVehicle.glb'
   },
@@ -750,8 +713,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0x53d635a3732b03a2b288e7958c3478484959fb1a:2',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 219, srcTop: 978, srcLeft: 1037 },
+    sprite:vehiclesSprites.bronzeSaucer ,
     // DISPLAY 3D
     Model: 'bronzeSaucerVehicle.glb'
   },
@@ -772,8 +734,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0x53d635a3732b03a2b288e7958c3478484959fb1a:1',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 219, srcTop: 978, srcLeft: 1294 },
+    sprite:vehiclesSprites.silverSaucer ,
     // DISPLAY 3D
     Model: 'silverSaucerVehicle.glb'
   },
@@ -794,8 +755,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0x53d635a3732b03a2b288e7958c3478484959fb1a:0',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 219, srcTop: 978, srcLeft: 1550 },
+    sprite:vehiclesSprites.goldSaucer ,
     // DISPLAY 3D
     Model: 'goldSaucerVehicle.glb'
   },
@@ -816,8 +776,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0xb6342949873342512c5bd0a48ad01b80bbe35e90:2',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 219, srcTop: 1696, srcLeft: 15 },
+    sprite:vehiclesSprites.bronzeSaucer2 ,
     // DISPLAY 3D
     Model: 'bronzeSaucer2Vehicle.glb'
   },
@@ -838,8 +797,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0xb6342949873342512c5bd0a48ad01b80bbe35e90:1',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 219, srcTop: 1698, srcLeft: 271 },
+    sprite:vehiclesSprites.silverSaucer2 ,
     // DISPLAY 3D
     Model: 'silverSaucer2Vehicle.glb'
   },
@@ -860,8 +818,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0xb6342949873342512c5bd0a48ad01b80bbe35e90:0',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 219, srcTop: 1456, srcLeft: 1807 },
+    sprite:vehiclesSprites.goldSaucer2 ,
     // DISPLAY 3D
     Model: 'goldSaucer2Vehicle.glb'
   },
@@ -882,8 +839,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0xa5f2cef962d2ad81db43a673a9a2b0e34f3df497:0',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 219, srcTop: 1220, srcLeft: 784 },
+    sprite:vehiclesSprites.flamesEnd ,
     // DISPLAY 3D
     Model: 'flamesEndVehicle.glb'
   },
@@ -904,8 +860,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0x12d5b367c1d93a1920162d4fe21c1fafefcc6cc5:0',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 220, srcTop: 1450, srcLeft: 1290 },
+    sprite:vehiclesSprites.tideBreaker ,
     // DISPLAY 3D
     Model: 'tideBreakerVehicle.glb'
   },
@@ -926,8 +881,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0xdc9be77fbcee4d374cb5460bf4a71ab81bb9c6c2:0',
     // DISPLAY 2D
-    SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 219, srcTop: 1700, srcLeft: 784 },
+    sprite:vehiclesSprites.viridianQuake ,
     // DISPLAY 3D
     Model: 'viridianQuakeVehicle.glb'
   },
@@ -948,8 +902,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0x82426f63212180d16afc309f2d5dee4fc397165b:0',
     // DISPLAY 2D
-    SheetIndex: 1,
-    IconPos: { srcWidth: 256, srcHeight: 256, srcTop: 0, srcLeft: 0 },
+    sprite:vehiclesSprites.obsidianStrike ,
     // DISPLAY 3D
     Model: 'obsidianStrikeVehicle.glb'
   },
@@ -970,8 +923,7 @@ export const VehicleData: VehicleDataObject[] = [
     NFTSourceURN:
       'urn:decentraland:matic:collections-v2:0x2d19c4f2212ec37ed48eb8134ffbc0a695612986:0',
     // DISPLAY 2D
-    SheetIndex: 1,
-    IconPos: { srcWidth: 256, srcHeight: 256, srcTop: 0, srcLeft: 252 },
+    sprite:vehiclesSprites.opulent ,
     // DISPLAY 3D
     Model: 'opulentVehicle.glb'
   }

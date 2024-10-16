@@ -1812,6 +1812,9 @@ export class SoloSprint {
   removeSingleEntity(entityName: string): void {}
 
   removeAllEntities(): void {
+    // UI
+    this.gameController.uiController.powerUpBar.visible = false
+    this.gameController.sprintTimer.resetTimer()
     // triggers
     this.hexTunnelDoorBroken.removerTriggerEntity()
     this.doorSingle001Tower2.removerTriggerEntity()

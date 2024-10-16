@@ -16,47 +16,39 @@ import {
   CargoObjectData,
   PowerUpObjectData,
   type ResourceObject,
-  ResourceObjectData,
+  ResourceObjectData
 } from '../inventory/inventory-data'
 import { InventoryManager } from '../inventory/inventory-manager'
 import { buttonsSprites } from './atlas/buttonsSprites'
 import { VehicleManager } from '../vehicle/vehicle-manager'
+import { AccessoryManager } from '../vehicle/accessory-manager'
+import { type VehicleAttachmentDataObject } from '../vehicle/vehicle-attachment-data'
+import { VehicleAttachmentManager } from '../vehicle/vehicle-attachment-manager'
 
-class UIInteractable {
-  /** controls whether this ui element is clickable */
-  isInteractable: boolean = true
+const TOTAL_MODS_SLOTS = 6
 
-  /** when true text will be removed when icon is reset, set this to false if using text as slot label */
-  wipeText: boolean = true
-
-  /** indexing (we could add type here too if required) */
-  index: number
-
-  /** currently slotted item */
-  itemID: string = ''
-
-  /** click callback, called whenever the ui element is clicked */
-  uiCallbackEvent: ((value: number) => void) | undefined
-
-  /** creates a new UI interactable, with default values */
-  constructor(index: number = 0) {
-    this.index = index
-  }
-}
-
-type InventoryItem = BaseObject | ResourceObject | CargoObject | VehicleDataObject
+type InventoryItem =
+  | BaseObject
+  | ResourceObject
+  | CargoObject
+  | VehicleDataObject
 
 export class UIInventoryManager {
-  isModsVisible: boolean = false
+  isModsVisible: boolean = true
   modSlotSelected: number = 1
   arrayToShow: InventoryItem[] = [...ResourceObjectData, ...CargoObjectData]
   background: Sprite = boardsSprites.inventoryMaterialsBoardSprite
-  uiParentVisible: boolean = false
+  uiParentVisible: boolean = true
   uiTextExperience: string = '999999'
   uiTextLevel: string = '999'
   uiController: UIController | undefined
   selectedTab: number = 0
   private static instance: undefined | UIInventoryManager
+  selectedVehicleSprite: Sprite | undefined
+  selectedVehicleID: string | undefined
+  attachmentsLocked: number = 6
+  selectedAttachments: InventoryItem[] = []
+
   public static get Instance(): UIInventoryManager {
     //ensure instance is set
     if (UIInventoryManager.instance === undefined) {
@@ -97,7 +89,7 @@ export class UIInventoryManager {
           if (VehicleManager.Instance.GetEntryByID(vehicle.ID).IsOwned) {
             this.arrayToShow.push(vehicle)
           }
-         })
+        })
         break
       }
       case 1: {
@@ -121,6 +113,18 @@ export class UIInventoryManager {
         break
       }
     }
+  }
+
+  public SetAttachmentLockState(value: number): void {
+    this.attachmentsLocked = TOTAL_MODS_SLOTS - value
+    this.selectedAttachments = []
+    this.selectedAttachments.forEach((attachment) => {
+      const objectDefPrev: VehicleAttachmentDataObject | undefined =
+        VehicleAttachmentManager.Instance.GetDefByID(attachment.ID)
+      if (objectDefPrev !== undefined) {
+        VehicleAttachmentManager.Instance.RemoveAttachment(objectDefPrev.Type)
+      }
+    })
   }
 
   createUI(): ReactEcs.JSX.Element {
@@ -153,241 +157,73 @@ export class UIInventoryManager {
             <UiEntity
               uiTransform={{
                 positionType: 'absolute',
-                width: canvasInfo.height * 0.55 * 0.1,
-                height: canvasInfo.height * 0.55 * 0.1,
-                position: { top: '18%', left: '8%' }
-              }}
-              onMouseDown={() => {
-                this.modSlotSelected = 1
-              }}
-            >
-              <UiEntity
-                uiTransform={{
-                  positionType: 'absolute',
-                  width: '90%',
-                  height: '90%',
-                  position: { top: '10%', left: '10%' }
-                }}
-                uiBackground={{
-                  textureMode: 'stretch',
-                  uvs: getUvs(boardsSprites.modLockSprite),
-                  texture: { src: boardsSprites.modLockSprite.atlasSrc }
-                }}
-              />
-              <UiEntity
-                uiTransform={{
-                  display: this.modSlotSelected === 1 ? 'flex' : 'none',
-                  width: '100%',
-                  height: '100%'
-                }}
-                uiBackground={{
-                  textureMode: 'stretch',
-                  uvs: getUvs(boardsSprites.modHighlightSprite),
-                  texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
-                }}
-              />
-            </UiEntity>
-            <UiEntity
-              uiTransform={{
-                positionType: 'absolute',
-                width: canvasInfo.height * 0.55 * 0.1,
-                height: canvasInfo.height * 0.55 * 0.1,
-                position: { top: '18%', left: '41%' }
-              }}
-              onMouseDown={() => {
-                this.modSlotSelected = 2
-              }}
-            >
-              <UiEntity
-                uiTransform={{
-                  positionType: 'absolute',
-                  width: '90%',
-                  height: '90%',
-                  position: { top: '10%', left: '10%' }
-                }}
-                uiBackground={{
-                  textureMode: 'stretch',
-                  uvs: getUvs(boardsSprites.modLockSprite),
-                  texture: { src: boardsSprites.modLockSprite.atlasSrc }
-                }}
-              />
-              <UiEntity
-                uiTransform={{
-                  display: this.modSlotSelected === 2 ? 'flex' : 'none',
-                  width: '100%',
-                  height: '100%'
-                }}
-                uiBackground={{
-                  textureMode: 'stretch',
-                  uvs: getUvs(boardsSprites.modHighlightSprite),
-                  texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
-                }}
-              />
-            </UiEntity>
-            <UiEntity
-              uiTransform={{
-                positionType: 'absolute',
-                width: canvasInfo.height * 0.55 * 0.1,
-                height: canvasInfo.height * 0.55 * 0.1,
-                position: { top: '18%', left: '74%' }
-              }}
-              onMouseDown={() => {
-                this.modSlotSelected = 3
-              }}
-            >
-              <UiEntity
-                uiTransform={{
-                  positionType: 'absolute',
-                  width: '90%',
-                  height: '90%',
-                  position: { top: '10%', left: '10%' }
-                }}
-                uiBackground={{
-                  textureMode: 'stretch',
-                  uvs: getUvs(boardsSprites.modLockSprite),
-                  texture: { src: boardsSprites.modLockSprite.atlasSrc }
-                }}
-              />
-              <UiEntity
-                uiTransform={{
-                  display: this.modSlotSelected === 3 ? 'flex' : 'none',
-                  width: '100%',
-                  height: '100%'
-                }}
-                uiBackground={{
-                  textureMode: 'stretch',
-                  uvs: getUvs(boardsSprites.modHighlightSprite),
-                  texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
-                }}
-              />
-            </UiEntity>
-            <UiEntity
-              uiTransform={{
-                positionType: 'absolute',
-                width: canvasInfo.height * 0.55 * 0.1,
-                height: canvasInfo.height * 0.55 * 0.1,
-                position: { top: '31%', left: '8%' }
-              }}
-              onMouseDown={() => {
-                this.modSlotSelected = 4
-              }}
-            >
-              <UiEntity
-                uiTransform={{
-                  positionType: 'absolute',
-                  width: '90%',
-                  height: '90%',
-                  position: { top: '10%', left: '10%' }
-                }}
-                uiBackground={{
-                  textureMode: 'stretch',
-                  uvs: getUvs(boardsSprites.modLockSprite),
-                  texture: { src: boardsSprites.modLockSprite.atlasSrc }
-                }}
-              />
-              <UiEntity
-                uiTransform={{
-                  display: this.modSlotSelected === 4 ? 'flex' : 'none',
-                  width: '100%',
-                  height: '100%'
-                }}
-                uiBackground={{
-                  textureMode: 'stretch',
-                  uvs: getUvs(boardsSprites.modHighlightSprite),
-                  texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
-                }}
-              />
-            </UiEntity>
-            <UiEntity
-              uiTransform={{
-                positionType: 'absolute',
-                width: canvasInfo.height * 0.55 * 0.1,
-                height: canvasInfo.height * 0.55 * 0.1,
-                position: { top: '31%', left: '41%' }
-              }}
-              onMouseDown={() => {
-                this.modSlotSelected = 5
-              }}
-            >
-              <UiEntity
-                uiTransform={{
-                  positionType: 'absolute',
-                  width: '90%',
-                  height: '90%',
-                  position: { top: '10%', left: '10%' }
-                }}
-                uiBackground={{
-                  textureMode: 'stretch',
-                  uvs: getUvs(boardsSprites.modLockSprite),
-                  texture: { src: boardsSprites.modLockSprite.atlasSrc }
-                }}
-              />
-              <UiEntity
-                uiTransform={{
-                  display: this.modSlotSelected === 5 ? 'flex' : 'none',
-                  width: '100%',
-                  height: '100%'
-                }}
-                uiBackground={{
-                  textureMode: 'stretch',
-                  uvs: getUvs(boardsSprites.modHighlightSprite),
-                  texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
-                }}
-              />
-            </UiEntity>
-            <UiEntity
-              uiTransform={{
-                positionType: 'absolute',
-                width: canvasInfo.height * 0.55 * 0.1,
-                height: canvasInfo.height * 0.55 * 0.1,
-                position: { top: '31%', left: '74%' }
-              }}
-              onMouseDown={() => {
-                this.modSlotSelected = 6
-              }}
-            >
-              <UiEntity
-                uiTransform={{
-                  positionType: 'absolute',
-                  width: '90%',
-                  height: '90%',
-                  position: { top: '10%', left: '10%' }
-                }}
-                uiBackground={{
-                  textureMode: 'stretch',
-                  uvs: getUvs(boardsSprites.modLockSprite),
-                  texture: { src: boardsSprites.modLockSprite.atlasSrc }
-                }}
-              />
-              <UiEntity
-                uiTransform={{
-                  display: this.modSlotSelected === 6 ? 'flex' : 'none',
-                  width: '100%',
-                  height: '100%'
-                }}
-                uiBackground={{
-                  textureMode: 'stretch',
-                  uvs: getUvs(boardsSprites.modHighlightSprite),
-                  texture: { src: boardsSprites.modHighlightSprite.atlasSrc }
-                }}
-              />
-            </UiEntity>
-            <UiEntity
-              uiTransform={{
-                positionType: 'absolute',
-                width: '30%',
-                height: '7.5%',
-                position: { top: '-2.5%', right: '-5%' }
+                width: '105%',
+                height: '23%',
+                position: { top: '18%', left: '8%' },
+                flexDirection: 'row',
+                alignContent: 'flex-start',
+                flexWrap: 'wrap',
               }}
               uiBackground={{
-                textureMode: 'stretch',
-                uvs: getUvs(buttonsSprites.closeButton),
-                texture: { src: buttonsSprites.closeButton.atlasSrc }
+                color: Color4.create(1,0,0,0.1)
               }}
-              onMouseDown={() => {
-                this.isModsVisible = false
-              }}
-            />
+            >
+              {Array.from({ length: 6 }, (_, i) => (
+                <UiEntity
+                  uiTransform={{
+                    positionType: 'relative',
+                    width: canvasInfo.height * 0.55 * 0.1,
+                    height: canvasInfo.height * 0.55 * 0.1,
+                    margin:{bottom:'4%', right:'14.15%'}
+                  }}
+                  onMouseDown={() => {
+                    if (i < 6 - this.attachmentsLocked) {
+                      this.modSlotSelected = i
+                      console.log(i)
+                    }
+                  }}
+                >
+                  <UiEntity
+                    uiTransform={{
+                      positionType: 'absolute',
+                      width: '90%',
+                      height: '90%',
+                      position: { top: '10%', left: '10%' }
+                    }}
+                    uiBackground={{
+                      textureMode: 'stretch',
+                      uvs:
+                        i >= 6 - this.attachmentsLocked
+                          ? getUvs(boardsSprites.modLockSprite)
+                          : getUvs(boardsSprites.emptySlot),
+                      texture: {
+                        src: boardsSprites.modLockSprite.atlasSrc
+                      }
+                    }
+                    }
+                  />
+
+                  
+                </UiEntity>
+              ))}
+              
+            </UiEntity>
+            <UiEntity
+                    uiTransform={{
+                      positionType: 'absolute',
+                      width: '30%',
+                      height: '7.5%',
+                      position: { top: '-2.5%', right: '-5%' }
+                    }}
+                    uiBackground={{
+                      textureMode: 'stretch',
+                      uvs: getUvs(buttonsSprites.closeButton),
+                      texture: { src: buttonsSprites.closeButton.atlasSrc }
+                    }}
+                    onMouseDown={() => {
+                      this.isModsVisible = false
+                    }}
+                  />
           </UiEntity>
         )}
         {!this.isModsVisible && (
@@ -506,24 +342,29 @@ export class UIInventoryManager {
                       uvs: getUvs(element.Sprite),
                       texture: { src: element.Sprite.atlasSrc }
                     }}
+                    onMouseDown={() => {
+                      this.ClickedItemSlot(element.ID)
+                    }}
                   >
-                    {this.selectedTab !== 0 && <Label
-                      uiTransform={{
-                        width: '100%',
-                        height: fontSizeDrop,
-                        positionType: 'absolute',
-                        position: { bottom: '5%', left: '12%' }
-                      }}
-                      value={InventoryManager.Instance.GetItemCountByID(
-                        element.ID,
-                        false
-                      ).toString()}
-                      key={index}
-                      fontSize={fontSizeDrop}
-                      font="sans-serif"
-                      color={Color4.White()}
-                      textAlign="bottom-left"
-                    />}
+                    {this.selectedTab !== 0 && (
+                      <Label
+                        uiTransform={{
+                          width: '100%',
+                          height: fontSizeDrop,
+                          positionType: 'absolute',
+                          position: { bottom: '5%', left: '12%' }
+                        }}
+                        value={InventoryManager.Instance.GetItemCountByID(
+                          element.ID,
+                          false
+                        ).toString()}
+                        key={index}
+                        fontSize={fontSizeDrop}
+                        font="sans-serif"
+                        color={Color4.White()}
+                        textAlign="bottom-left"
+                      />
+                    )}
                   </UiEntity>
                 ))
               }
@@ -576,6 +417,62 @@ export class UIInventoryManager {
 
   public CallbackUpdateExpDisplay(): void {
     this.updateExpDisplay()
+  }
+
+  public ClickedItemSlot(id: string): void {
+    // const uiElement: UIInteractable = this.uiInventorySlots.getElement(value);
+
+    //ensure item exists in slot
+    if (id !== '') {
+      //process action based on current inventory display type
+      let def
+      switch (this.selectedTab) {
+        //vehicle
+        case 0:
+          //get def
+          def = VehicleManager.Instance.GetDefByID(id)
+          if (def.ID !== null) {
+            if (VehicleManager.Instance.ApplyVehicle(def.ID) !== null) {
+              //update ui slot
+              this.selectedVehicleSprite = def.Sprite
+              this.selectedVehicleID = id
+              console.log(this.selectedVehicleID)
+              //update attachment panel
+              //  apply locks based on rarity
+              this.SetAttachmentLockState(
+                VehicleManager.Instance.GetRarityIndex(def.Rarity) + 1
+              )
+
+              //  current vehicle
+              // vehicleOwnership.changeEquippedVehicle(id);
+              // this.updateDisplayBonus();
+              // this.RedrawVehicle();
+            }
+          }
+          //attempt to equip vehicle
+
+          break
+        //accessories
+        case 1:
+          //get def
+          // def = AccessoryManager.Instance.GetDefByID(uiElement.itemID);
+          // //attempt to equip accessory
+          // if (AccessoryManager.Instance.ApplyAccessory(id)) {
+          //     //update ui slot
+          //     this.uiAccessory.SetIcon(def);
+          //     this.uiAccessory.itemID = id;
+          //     //  legacy
+          //     vehicleOwnership.changeEquippedAccessory(id);
+          // }
+          break
+        //resources
+        case 2:
+          break
+        //powerups
+        case 3:
+          break
+      }
+    }
   }
 
   public updateExpDisplay(): void {

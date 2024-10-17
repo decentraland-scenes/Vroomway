@@ -1,7 +1,11 @@
 /* eslint-disable spaced-comment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { VehicleData, type VehicleDataObject } from '../vehicle/vehicle-data'
+import {
+  PLAYER_BONUS_TYPE,
+  VehicleData,
+  type VehicleDataObject
+} from '../vehicle/vehicle-data'
 import { type UIController } from '../controllers/ui.controller'
 import { Label, ReactEcs, UiEntity } from '@dcl/sdk/react-ecs'
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
@@ -24,6 +28,8 @@ import { VehicleManager } from '../vehicle/vehicle-manager'
 import { AccessoryManager } from '../vehicle/accessory-manager'
 import { type VehicleAttachmentDataObject } from '../vehicle/vehicle-attachment-data'
 import { VehicleAttachmentManager } from '../vehicle/vehicle-attachment-manager'
+import { vehiclesSprites } from './atlas/vehiclesSprites'
+import { EquippedVehicle, VehicleOwnership } from '../instances/main/vehicleOwnership'
 
 const TOTAL_MODS_SLOTS = 6
 
@@ -34,31 +40,35 @@ type InventoryItem =
   | VehicleDataObject
 
 export class UIInventoryManager {
-  isModsVisible: boolean = true
+  isModsVisible: boolean = false
   modSlotSelected: number = 1
   arrayToShow: InventoryItem[] = [...ResourceObjectData, ...CargoObjectData]
   background: Sprite = boardsSprites.inventoryMaterialsBoardSprite
   uiParentVisible: boolean = true
   uiTextExperience: string = '999999'
   uiTextLevel: string = '999'
-  uiController: UIController | undefined
+  uiController: UIController
   selectedTab: number = 0
-  private static instance: undefined | UIInventoryManager
-  selectedVehicleSprite: Sprite | undefined
-  selectedVehicleID: string | undefined
+  // private static instance: undefined | UIInventoryManager
+  selectedVehicle: VehicleDataObject | undefined
   attachmentsLocked: number = 6
   selectedAttachments: InventoryItem[] = []
+  expBonus: number = 0
+  fuelCostBonus: number = 0
+  gatheringBonus: number = 0
+  speedBonus: number = 0
+  coinBonus: number = 0
 
-  public static get Instance(): UIInventoryManager {
-    //ensure instance is set
-    if (UIInventoryManager.instance === undefined) {
-      UIInventoryManager.instance = new UIInventoryManager()
-    }
+  // public static get Instance(): UIInventoryManager {
+  //   //ensure instance is set
+  //   if (UIInventoryManager.instance === undefined) {
+  //     UIInventoryManager.instance = new UIInventoryManager(nweUIController)
+  //   }
 
-    return UIInventoryManager.instance
-  }
+  //   return UIInventoryManager.instance
+  // }
 
-  constructor(uiController?: UIController) {
+  constructor(uiController: UIController) {
     this.uiController = uiController
     LevelManager.Instance.RegisterUICallbackExperience(
       this.CallbackUpdateExpDisplay.bind(this)
@@ -75,6 +85,20 @@ export class UIInventoryManager {
       this.modSlotSelected = 1
     }
   }
+
+  public updateDisplayBonus(): void {
+    if (this.selectedVehicle !== undefined) {
+      this.uiController.gameController.vehicleOwnership.changeEquippedVehicle(this.selectedVehicle.ID as EquippedVehicle)
+    } 
+    const { speedBoost, fuelEff, exp, coin, gathering } = this.uiController.gameController.vehicleOwnership.getBonusAttributes()
+    console.log({ speedBoost, fuelEff, exp, coin, gathering })
+    //set text
+    this.expBonus = exp
+    this.fuelCostBonus = fuelEff
+    this.gatheringBonus = gathering
+    this.speedBonus = speedBoost
+    this.coinBonus = coin
+};
 
   public DisplayInventory(type: number): void {
     this.selectedTab = type
@@ -157,15 +181,41 @@ export class UIInventoryManager {
             <UiEntity
               uiTransform={{
                 positionType: 'absolute',
+                position: { top: '1.75%', left: '26%' },
+                width:
+                  this.selectedVehicle !== undefined
+                    ? ((canvasInfo.height * 0.55 * 0.12) /
+                        this.selectedVehicle?.Sprite.h) *
+                      this.selectedVehicle.Sprite.w
+                    : 0,
+                height: canvasInfo.height * 0.55 * 0.12
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs:
+                  this.selectedVehicle !== undefined
+                    ? getUvs(this.selectedVehicle.Sprite)
+                    : getUvs(boardsSprites.emptySlot),
+                texture: {
+                  src:
+                    this.selectedVehicle !== undefined
+                      ? this.selectedVehicle.Sprite.atlasSrc
+                      : boardsSprites.emptySlot.atlasSrc
+                }
+              }}
+            />
+            <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
                 width: '105%',
                 height: '23%',
                 position: { top: '18%', left: '8%' },
                 flexDirection: 'row',
                 alignContent: 'flex-start',
-                flexWrap: 'wrap',
+                flexWrap: 'wrap'
               }}
               uiBackground={{
-                color: Color4.create(1,0,0,0.1)
+                color: Color4.create(1, 0, 0, 0.1)
               }}
             >
               {Array.from({ length: 6 }, (_, i) => (
@@ -174,7 +224,7 @@ export class UIInventoryManager {
                     positionType: 'relative',
                     width: canvasInfo.height * 0.55 * 0.1,
                     height: canvasInfo.height * 0.55 * 0.1,
-                    margin:{bottom:'4%', right:'14.15%'}
+                    margin: { bottom: '4%', right: '14.15%' }
                   }}
                   onMouseDown={() => {
                     if (i < 6 - this.attachmentsLocked) {
@@ -199,31 +249,27 @@ export class UIInventoryManager {
                       texture: {
                         src: boardsSprites.modLockSprite.atlasSrc
                       }
-                    }
-                    }
+                    }}
                   />
-
-                  
                 </UiEntity>
               ))}
-              
             </UiEntity>
             <UiEntity
-                    uiTransform={{
-                      positionType: 'absolute',
-                      width: '30%',
-                      height: '7.5%',
-                      position: { top: '-2.5%', right: '-5%' }
-                    }}
-                    uiBackground={{
-                      textureMode: 'stretch',
-                      uvs: getUvs(buttonsSprites.closeButton),
-                      texture: { src: buttonsSprites.closeButton.atlasSrc }
-                    }}
-                    onMouseDown={() => {
-                      this.isModsVisible = false
-                    }}
-                  />
+              uiTransform={{
+                positionType: 'absolute',
+                width: '30%',
+                height: '7.5%',
+                position: { top: '-2.5%', right: '-5%' }
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs: getUvs(buttonsSprites.closeButton),
+                texture: { src: buttonsSprites.closeButton.atlasSrc }
+              }}
+              onMouseDown={() => {
+                this.isModsVisible = false
+              }}
+            />
           </UiEntity>
         )}
         {!this.isModsVisible && (
@@ -241,6 +287,98 @@ export class UIInventoryManager {
               texture: { src: this.background.atlasSrc }
             }}
           >
+            <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                position: { top: '16%', left: '21.5%' },
+                width:
+                  this.selectedVehicle !== undefined
+                    ? ((canvasInfo.height * 0.55 * 0.255) /
+                        this.selectedVehicle?.Sprite.h) *
+                      this.selectedVehicle.Sprite.w
+                    : 0,
+                height: canvasInfo.height * 0.55 * 0.255
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs:
+                  this.selectedVehicle !== undefined
+                    ? getUvs(this.selectedVehicle.Sprite)
+                    : getUvs(boardsSprites.emptySlot),
+                texture: {
+                  src:
+                    this.selectedVehicle !== undefined
+                      ? this.selectedVehicle.Sprite.atlasSrc
+                      : boardsSprites.emptySlot.atlasSrc
+                }
+              }}
+              onMouseDown={() => {
+                this.unselectVehicle()
+              }}
+            />
+            {/* BONUS SideBar */}
+            <UiEntity
+              uiTransform={{
+                flexDirection: 'column',
+                positionType: 'absolute',
+                justifyContent: 'flex-start',
+                position: { top: '16.2%', left: '2%' },
+                width: '13%',
+                height: '80%'
+              }}
+              uiBackground={{ color: Color4.create(1, 0, 0, 0.1) }}
+            >
+              <Label
+                uiTransform={{
+                  positionType: 'relative',
+                  width: '100%',
+                  height: '11.3%'
+                }}
+                value={Math.floor(this.expBonus) + '%'}
+                textAlign="bottom-center"
+                fontSize={fontSizeXP * 0.8}
+              />
+              <Label
+                uiTransform={{
+                  positionType: 'relative',
+                  width: '100%',
+                  height: '11.3%'
+                }}
+                value={Math.floor(this.fuelCostBonus) + '%'}
+                textAlign="bottom-center"
+                fontSize={fontSizeXP * 0.8}
+              />
+              <Label
+                uiTransform={{
+                  positionType: 'relative',
+                  width: '100%',
+                  height: '11.3%'
+                }}
+                value={this.gatheringBonus.toString()}
+                textAlign="bottom-center"
+                fontSize={fontSizeXP * 0.8}
+              />
+              <Label
+                uiTransform={{
+                  positionType: 'relative',
+                  width: '100%',
+                  height: '11.3%'
+                }}
+                value={Math.floor(this.speedBonus) + '%'}
+                textAlign="bottom-center"
+                fontSize={fontSizeXP * 0.8}
+              />
+              <Label
+                uiTransform={{
+                  positionType: 'relative',
+                  width: '100%',
+                  height: '11.3%'
+                }}
+                value={Math.floor(this.coinBonus) + '%'}
+                textAlign="bottom-center"
+                fontSize={fontSizeXP * 0.8}
+              />
+            </UiEntity>
             {/* Navbar */}
             <UiEntity
               uiTransform={{
@@ -434,9 +572,9 @@ export class UIInventoryManager {
           if (def.ID !== null) {
             if (VehicleManager.Instance.ApplyVehicle(def.ID) !== null) {
               //update ui slot
-              this.selectedVehicleSprite = def.Sprite
-              this.selectedVehicleID = id
-              console.log(this.selectedVehicleID)
+              this.selectedVehicle = def
+              this.updateDisplayBonus()
+
               //update attachment panel
               //  apply locks based on rarity
               this.SetAttachmentLockState(
@@ -475,6 +613,17 @@ export class UIInventoryManager {
     }
   }
 
+  public unselectVehicle(): void {
+    this.SetAttachmentLockState(0)
+    this.selectedVehicle = undefined
+    VehicleManager.Instance.RemoveVehicle()
+    this.expBonus = 0
+    this.fuelCostBonus = 0
+    this.gatheringBonus = 0
+    this.speedBonus = 0
+    this.coinBonus = 0
+  }
+
   public updateExpDisplay(): void {
     this.uiTextExperience =
       LevelManager.Instance.CallbackGetExperienceNext().toString() +
@@ -482,7 +631,7 @@ export class UIInventoryManager {
   }
 
   public CallbackUpdateLevelDisplay(): void {
-    UIInventoryManager.Instance.updateLevelDisplay()
+    this.updateLevelDisplay()
   }
 
   public updateLevelDisplay(): void {

@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@dcl/sdk": "7.5.6"
+    "@dcl/sdk": "7.5.6",
+    "colyseus.js": "^0.15.26"
   }
 }

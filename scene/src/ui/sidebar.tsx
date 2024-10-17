@@ -1,7 +1,7 @@
 import ReactEcs, { UiEntity } from '@dcl/sdk/react-ecs'
 import { getUvs } from './utils/utils'
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
-import * as utils from '@dcl-sdk/utils'
+// import * as utils from '@dcl-sdk/utils'
 import { movePlayerTo } from '~system/RestrictedActions'
 import { Color4, Vector3 } from '@dcl/sdk/math'
 import { type UIController } from '../controllers/ui.controller'
@@ -181,15 +181,12 @@ export class SideBar {
     // sprintTimer.resetTimer();
     instance.setInstance('main')
     // cleanupScene();}
-    utils.timers.setTimeout(() => {
-      //   renderMainInstance()
-      this.uiController.loader.showLoader()
-    }, 50)
-    utils.timers.setTimeout(() => {
-      void movePlayerTo({
-        newRelativePosition: Vector3.create(32.06, 1.0, 46.99),
-        cameraTarget: Vector3.create(31.68, 1.15, 43.41)
-      })
-    }, 3250)
+    //   renderMainInstance()
+    this.uiController.loader.showLoader()
+    this.uiController.gameController.realmController.switchRealm('mainInstance')
+    void movePlayerTo({
+      newRelativePosition: Vector3.create(32.06, 1.0, 46.99),
+      cameraTarget: Vector3.create(31.68, 1.15, 43.41)
+    })
   }
 }

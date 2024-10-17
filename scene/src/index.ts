@@ -13,15 +13,11 @@ export function main(): void {
   // attempt initialization of player vehicle ownership
   utils.timers.setTimeout(() => {
     void movePlayerTo({
-      newRelativePosition: Vector3.create(31.46, 0.88, 63.71),
-      cameraTarget: Vector3.create(31.12, 1.06, 53.56)
+      newRelativePosition: Vector3.create(47.48, 0.88, 62.38),
+      cameraTarget: Vector3.create(48.66, 0.88, 53.29)
     })
     void game.vehicleOwnership.init()
   }, 200)
-  // attempt initialization of player profile
-  utils.timers.setTimeout(() => {
-    game.uiController.profile.initialize()
-  }, 500)
 
   // initialize debugging menu
   //  NOTE: debug menus will only appear in the first render of the main scene

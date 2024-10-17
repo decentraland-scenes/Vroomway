@@ -29,7 +29,10 @@ import { AccessoryManager } from '../vehicle/accessory-manager'
 import { type VehicleAttachmentDataObject } from '../vehicle/vehicle-attachment-data'
 import { VehicleAttachmentManager } from '../vehicle/vehicle-attachment-manager'
 import { vehiclesSprites } from './atlas/vehiclesSprites'
-import { EquippedVehicle, VehicleOwnership } from '../instances/main/vehicleOwnership'
+import {
+  EquippedVehicle,
+  VehicleOwnership
+} from '../instances/main/vehicleOwnership'
 
 const TOTAL_MODS_SLOTS = 6
 
@@ -88,9 +91,12 @@ export class UIInventoryManager {
 
   public updateDisplayBonus(): void {
     if (this.selectedVehicle !== undefined) {
-      this.uiController.gameController.vehicleOwnership.changeEquippedVehicle(this.selectedVehicle.ID as EquippedVehicle)
-    } 
-    const { speedBoost, fuelEff, exp, coin, gathering } = this.uiController.gameController.vehicleOwnership.getBonusAttributes()
+      this.uiController.gameController.vehicleOwnership.changeEquippedVehicle(
+        this.selectedVehicle.ID as EquippedVehicle
+      )
+    }
+    const { speedBoost, fuelEff, exp, coin, gathering } =
+      this.uiController.gameController.vehicleOwnership.getBonusAttributes()
     console.log({ speedBoost, fuelEff, exp, coin, gathering })
     //set text
     this.expBonus = exp
@@ -98,7 +104,7 @@ export class UIInventoryManager {
     this.gatheringBonus = gathering
     this.speedBonus = speedBoost
     this.coinBonus = coin
-};
+  }
 
   public DisplayInventory(type: number): void {
     this.selectedTab = type

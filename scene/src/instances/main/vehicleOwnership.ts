@@ -3,8 +3,8 @@ import { getUserData } from '~system/UserIdentity'
 import { type GameController } from '../../controllers/game.controller'
 
 export type Attributes = {
-  speedBoost: number,
-  coin: number,
+  speedBoost: number
+  coin: number
   exp: number
   gathering: number
   fuelEff: number
@@ -734,7 +734,6 @@ export class VehicleOwnership {
       rummagingCycles,
       coinBonusPercent
     }
-
   }
 
   getCoinBonus = (coin: number): number => {

@@ -8,7 +8,7 @@ import {
 } from '@dcl/sdk/ecs'
 
 export class Arissa {
-  entity:Entity
+  entity: Entity
 
   constructor(model: string, transform: TransformType) {
     // omitCleanupEntities.push(this.uuid);
@@ -16,7 +16,7 @@ export class Arissa {
     Transform.createOrReplace(this.entity, transform)
 
     GltfContainer.create(this.entity, {
-      src: model,
+      src: model
     })
 
     Animator.createOrReplace(this.entity, {
@@ -38,7 +38,7 @@ export class Arissa {
   }
 
   updateModel(model: string): void {
-    GltfContainer.createOrReplace(this.entity, {src:model})
+    GltfContainer.createOrReplace(this.entity, { src: model })
   }
 
   // Remove entity
@@ -47,14 +47,14 @@ export class Arissa {
   }
 
   // Play running animation
-  playRunning():void {
-    const runningAnim = Animator.getClip(this.entity, "go")
+  playRunning(): void {
+    const runningAnim = Animator.getClip(this.entity, 'go')
     runningAnim.playing = true
   }
 
   // Play idle animation
-  playIdle():void {
-    const idleAnim = Animator.getClip(this.entity, "idle")
+  playIdle(): void {
+    const idleAnim = Animator.getClip(this.entity, 'idle')
     idleAnim.playing = true
   }
 }

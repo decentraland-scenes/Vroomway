@@ -87,13 +87,23 @@ export class UIController {
         </Canvas>
         <Canvas>
           {this.powerUpShop.isVisible && this.powerUpShop.createUI()}
-          {this.gameController.sprintTimer.isVisible &&
-            this.gameController.sprintTimer.mainUI()}
         </Canvas>
         <Canvas>{this.reward.isVisible && this.reward.createUi()}</Canvas>
         <Canvas>{this.loader.profileVisible && this.loader.mainUi()}</Canvas>
-        <Canvas>{this.powerUpBar.visible && this.powerUpBar.createUI()}</Canvas>
+        <Canvas>
+          {this.powerUpBar.visible && this.powerUpBar.createUI()}
+          {this.gameController.sprintTimer.isVisible &&
+            this.gameController.sprintTimer.mainUI()}
+        </Canvas>
         <Canvas>{this.lootBoard.visible && this.lootBoard.createUI()}</Canvas>
+        <Canvas>
+          {this.powerUpShop.confirm_visible &&
+            this.powerUpShop.createConfirmationUI()}
+        </Canvas>
+        <Canvas>
+          {this.powerUpShop.powerupShopLackOfFunds_visible &&
+            this.powerUpShop.createLackOfFundsUI()}
+        </Canvas>
       </UiEntity>
     )
   }

@@ -1,4 +1,4 @@
-import ReactEcs, { UiEntity } from '@dcl/sdk/react-ecs'
+import ReactEcs, { Label, UiEntity } from '@dcl/sdk/react-ecs'
 import { type UIController } from '../controllers/ui.controller'
 import {
   PowerUpCatalog,
@@ -9,6 +9,7 @@ import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
 import Canvas from './canvas/Canvas'
 import { type PlayerStats } from '../utils/player'
 import { buttonsSprites } from './atlas/buttonsSprites'
+import { Color4 } from '@dcl/sdk/math'
 
 const background: Sprite = {
   atlasSize: { x: 2048, y: 2048 },
@@ -17,6 +18,32 @@ const background: Sprite = {
   y: 15,
   w: 949,
   h: 1688
+}
+const customAtlasTexture: Sprite = {
+  atlasSize: { x: 1024, y: 1024 },
+  atlasSrc: 'assets/images/ui/vw-atlas.png',
+  x: 490,
+  y: 3,
+  w: 450,
+  h: 380
+}
+
+const powerupShopEButton: Sprite = {
+  atlasSize: { x: 1024, y: 1024 },
+  atlasSrc: 'assets/images/ui/vw-atlas.png',
+  x: 514,
+  y: 660,
+  w: 172,
+  h: 47
+}
+
+const powerupShopFButton: Sprite = {
+  atlasSize: { x: 1024, y: 1024 },
+  atlasSrc: 'assets/images/ui/vw-atlas.png',
+  x: 514,
+  y: 610,
+  w: 172,
+  h: 47
 }
 
 class PowerUpShopItem {
@@ -132,15 +159,21 @@ export class PowerUpShop {
   items: PowerUpShopItem[] = []
   powerupToBuyIndex: number = 0
   closeBtn: Sprite
-  isVisible: boolean
+  isVisible: boolean = false
+  confirm_visible: boolean = false
+  powerupShopConfirmTitle: string = '<b>Confirm Purchase</b>'
+  powerupShopConfirmMsg: string = ''
+  powerupShopConfirm: string = 'OK'
+  powerupShopLackOfFundsTitle: string = '<b>Insufficient Funds</b>'
+  powerupShopLackOfFundsMsg: string = 'Not Enough?'
+  powerupShopLackOfFunds_visible: boolean = false
   uiController: UIController
   player: PlayerStats
   constructor(uiController: UIController) {
     this.isVisible = false
     this.uiController = uiController
     this.closeBtn = buttonsSprites.closeButton
-    this.player = uiController.player
-
+    this.player = this.uiController.player
     this.items.push(
       new PowerUpShopItem(
         0,
@@ -205,10 +238,7 @@ export class PowerUpShop {
   }
 
   confirmBuyPu(index: number): void {
-    let coins: number = 0
-    if (this.player !== undefined) {
-      coins = this.player.coins
-    }
+    const coins = this.uiController.gameController.Player?.getCoins()
     const powerupToBuyId = this.items[index].powerupId
     const powerup = PowerUpCatalog.get(powerupToBuyId)
 
@@ -219,17 +249,48 @@ export class PowerUpShop {
     const canBuy = cost <= coins
 
     console.log({ index, coins, canBuy })
-    // if (canBuy) {
-    //   powerupShopConfirmTitle.text.value = "Confirm Purchase";
-    //   //ui.displayAnnouncement("coins:"+coins +"\nbuy:"+powerupToBuyId +"\ncost:"+cost)
-    //   powerupShopConfirmMsg.text.value = "Buy " + powerup.name + "\nPrice: " + cost;
+    if (canBuy) {
+      this.powerupShopConfirmTitle = '<b>Confirm Purchase</b>'
+      // ui.displayAnnouncement("coins:"+coins +"\nbuy:"+powerupToBuyId +"\ncost:"+cost)
+      this.powerupShopConfirmMsg =
+        '<b>Buy ' + powerup.name + '<br>Price: ' + cost + '</b>'
+      this.confirm_visible = true
+    } else {
+      this.powerupShopLackOfFundsMsg =
+        '<b>You do not have enough<br>to Buy ' +
+        powerup.name +
+        '<br>Price: ' +
+        cost +
+        '</b>'
 
-    //   powerupShopConfirm.show();
-    // } else {
-    //   powerupShopLackOfFundsMsg.text.value = "You do not have enough\n to Buy " + powerup.name + "\nPrice: " + cost;
+      this.powerupShopLackOfFunds_visible = true
+    }
+  }
 
-    //   powerupShopLackOfFunds.show();
-    // }
+  doBuyPowerupAction(): void {
+    const coins = this.uiController.gameController.Player?.getCoins()
+    const powerupToBuyId = this.items[this.powerupToBuyIndex].powerupId
+    const powerup = PowerUpCatalog.get(powerupToBuyId)
+    const cost = powerup.cost[0].amount
+
+    const canBuy = cost <= coins
+    console.log(coins, 'coins')
+    if (canBuy) {
+      this.uiController.gameController.Player.getValueAdjuster().coins -= cost
+      this.uiController.gameController.PowerUpsInv.getValueAdjuster().adjustFromId(
+        powerup.id,
+        1
+      )
+
+      void this.uiController.gameController.Player.writeDataToServer({
+        onFinish: { updateUI: true }
+      })
+      void this.uiController.gameController.PowerUpsInv.writeDataToServer()
+    } else {
+      this.powerupShopLackOfFundsMsg =
+        'You do not have enough\n to Buy ' + powerup.name + '\nPrice: ' + cost
+      this.powerupShopLackOfFunds_visible = true
+    }
   }
 
   show(): void {
@@ -295,6 +356,204 @@ export class PowerUpShop {
                 this.hide()
               }}
             />
+          </UiEntity>
+        </UiEntity>
+      </Canvas>
+    )
+  }
+
+  createConfirmationUI(): ReactEcs.JSX.Element {
+    const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
+    return (
+      <Canvas>
+        <UiEntity
+          uiTransform={{
+            flexDirection: 'column',
+            width: canvasInfo.width,
+            height: canvasInfo.height,
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          <UiEntity
+            uiTransform={{
+              positionType: 'absolute',
+              width:
+                (canvasInfo.height * 0.4 * customAtlasTexture.w) /
+                customAtlasTexture.h,
+              height: canvasInfo.height * 0.3
+            }}
+            uiBackground={{
+              textureMode: 'stretch',
+              uvs: getUvs(customAtlasTexture),
+              texture: { src: customAtlasTexture.atlasSrc }
+            }}
+          >
+            <Label
+              uiTransform={{
+                positionType: 'absolute',
+                position: { left: '25.5%', top: '15%' }
+              }}
+              value={this.powerupShopConfirmTitle}
+              fontSize={20}
+              font="sans-serif"
+              color={Color4.White()}
+              textAlign="middle-center"
+            />
+            <Label
+              uiTransform={{
+                positionType: 'absolute',
+                position: { left: '27%', top: '30%' }
+              }}
+              value={this.powerupShopConfirmMsg}
+              fontSize={20}
+              font="sans-serif"
+              color={Color4.White()}
+              textAlign="middle-center"
+            />
+            <UiEntity
+              uiTransform={{
+                position: { right: '15%', bottom: '15%' },
+                positionType: 'absolute',
+                justifyContent: 'center',
+                width: '30%',
+                height: '20%'
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs: getUvs(powerupShopEButton),
+                texture: { src: powerupShopEButton.atlasSrc }
+              }}
+              onMouseDown={() => {
+                this.doBuyPowerupAction()
+                this.confirm_visible = false
+              }}
+            >
+              <Label
+                uiTransform={{
+                  positionType: 'absolute',
+                  position: { left: '30%', top: '5%' }
+                }}
+                value={'OK'}
+                fontSize={30}
+                font="sans-serif"
+                color={Color4.White()}
+                textAlign="middle-left"
+              />
+            </UiEntity>
+            <UiEntity
+              uiTransform={{
+                position: { left: '15%', bottom: '15%' },
+                positionType: 'absolute',
+                justifyContent: 'center',
+                width: '30%',
+                height: '20%'
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs: getUvs(powerupShopFButton),
+                texture: { src: powerupShopFButton.atlasSrc }
+              }}
+              onMouseDown={() => {
+                this.confirm_visible = false
+              }}
+            >
+              <Label
+                uiTransform={{
+                  positionType: 'absolute',
+                  position: { left: '10%', top: '5%' }
+                }}
+                value={'Cancel'}
+                fontSize={30}
+                font="sans-serif"
+                color={Color4.White()}
+                textAlign="middle-left"
+              />
+            </UiEntity>
+          </UiEntity>
+        </UiEntity>
+      </Canvas>
+    )
+  }
+
+  createLackOfFundsUI(): ReactEcs.JSX.Element {
+    const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
+    return (
+      <Canvas>
+        <UiEntity
+          uiTransform={{
+            flexDirection: 'column',
+            width: canvasInfo.width,
+            height: canvasInfo.height,
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          <UiEntity
+            uiTransform={{
+              positionType: 'absolute',
+              width:
+                (canvasInfo.height * 0.4 * customAtlasTexture.w) /
+                customAtlasTexture.h,
+              height: canvasInfo.height * 0.3
+            }}
+            uiBackground={{
+              textureMode: 'stretch',
+              uvs: getUvs(customAtlasTexture),
+              texture: { src: customAtlasTexture.atlasSrc }
+            }}
+          >
+            <Label
+              uiTransform={{
+                positionType: 'absolute',
+                position: { left: '26%', top: '15%' }
+              }}
+              value={this.powerupShopLackOfFundsTitle}
+              fontSize={20}
+              font="sans-serif"
+              color={Color4.White()}
+              textAlign="middle-center"
+            />
+            <Label
+              uiTransform={{
+                positionType: 'absolute',
+                position: { left: '20%', top: '28%' }
+              }}
+              value={this.powerupShopLackOfFundsMsg}
+              fontSize={20}
+              font="sans-serif"
+              color={Color4.White()}
+              textAlign="middle-center"
+            />
+            <UiEntity
+              uiTransform={{
+                position: { left: '35%', bottom: '15%' },
+                positionType: 'absolute',
+                justifyContent: 'center',
+                width: '30%',
+                height: '20%'
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs: getUvs(powerupShopFButton),
+                texture: { src: powerupShopFButton.atlasSrc }
+              }}
+              onMouseDown={() => {
+                this.powerupShopLackOfFunds_visible = false
+              }}
+            >
+              <Label
+                uiTransform={{
+                  positionType: 'absolute',
+                  position: { left: '10%', top: '5%' }
+                }}
+                value={'Cancel'}
+                fontSize={30}
+                font="sans-serif"
+                color={Color4.White()}
+                textAlign="middle-center"
+              />
+            </UiEntity>
           </UiEntity>
         </UiEntity>
       </Canvas>

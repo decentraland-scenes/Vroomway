@@ -1,6 +1,6 @@
 export type ColyseusListenCallback<V> = (
   currentValue: V,
-  previousValue: V
+  previousValue: V,
 ) => void;
 
 export type ColyseusCallbacks<V> = {

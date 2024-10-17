@@ -166,7 +166,7 @@ export class PowerUpCatalog {
     filter: {
       mode?: serverStateSpec.PowerUpLevelModeType;
       level?: serverStateSpec.PowerUpLevelType;
-    }
+    },
   ) {
     log("isValidFor", "ENTRY", [itm.id, filter]);
 
@@ -307,7 +307,7 @@ export class PowerUpItemUtils {
 
   static use(
     powerUpItm: serverStateSpec.PowerUpsItemPoolState,
-    now: number
+    now: number,
   ): serverStateSpec.PowerUpItemUseResult {
     //const usedVal = this.available.splice(0,1)[0]
     // this.activated.push(usedVal)
@@ -328,7 +328,7 @@ export class PowerUpItemUtils {
   static useThis(
     powerUpItm: serverStateSpec.PowerUpsItemPoolState,
     itm: serverStateSpec.PowerUpItemState,
-    now: number
+    now: number,
   ): serverStateSpec.PowerUpItemUseResult {
     //const usedVal = this.available.splice(0,1)[0]
     // this.activated.push(usedVal)
@@ -365,7 +365,7 @@ export class PowerUpItemUtils {
         "XXX",
         powerUpItm.id,
         "invalid state. must be 'available'",
-        itm.status
+        itm.status,
       );
       result.msg =
         powerUpItm.id +
@@ -381,7 +381,7 @@ export class PowerUpItemUtils {
   static activateItem(
     powerUpItm: serverStateSpec.PowerUpsItemPoolState,
     itm: serverStateSpec.PowerUpItemState,
-    now: number
+    now: number,
   ) {
     itm.activateTime = now;
 
@@ -394,7 +394,7 @@ export class PowerUpItemUtils {
 
   static updateStatuses(
     powerUpItm: serverStateSpec.PowerUpsItemPoolState,
-    now: number
+    now: number,
   ): serverStateSpec.PowerUpsStatusUpdateResult {
     //const now = Date.now(); //FIXME need game clock!!!
 
@@ -434,7 +434,7 @@ export class PowerUpItemUtils {
           p.status,
           p.activateTime,
           p.expireTime,
-          powerUpDef.duration
+          powerUpDef.duration,
         );
         //expired
         hasChanges = true;
@@ -463,7 +463,7 @@ export class PowerUpItemUtils {
 
   static getStatusCnt(
     powerUpItm: serverStateSpec.PowerUpsItemPoolState,
-    status: serverStateSpec.PowerUpItemStateStatus
+    status: serverStateSpec.PowerUpItemStateStatus,
   ): number {
     let canUse = 0;
     if (!powerUpItm || !powerUpItm.items) return canUse;
@@ -478,12 +478,12 @@ export class PowerUpItemUtils {
   }
 
   static getAvailableCnt(
-    powerUpItm: serverStateSpec.PowerUpsItemPoolState
+    powerUpItm: serverStateSpec.PowerUpsItemPoolState,
   ): number {
     return PowerUpItemUtils.getStatusCnt(powerUpItm, "available");
   }
   static getActiveCnt(
-    powerUpItm: serverStateSpec.PowerUpsItemPoolState
+    powerUpItm: serverStateSpec.PowerUpsItemPoolState,
   ): number {
     return PowerUpItemUtils.getStatusCnt(powerUpItm, "activated");
   }
@@ -504,7 +504,7 @@ export abstract class PowerUpItemBase
   }
   useThis(
     itm: serverStateSpec.PowerUpItemState,
-    now: number
+    now: number,
   ): serverStateSpec.PowerUpItemUseResult {
     return PowerUpItemUtils.useThis(this, itm, now);
   }
@@ -532,7 +532,7 @@ export abstract class PowerUpManagerBase {
   //abstract getPowerUpPoolMap():Map<string,serverStateSpec.PowerUpsItemPoolState>
   //getPowerUp:(id:serverStateSpec.PowerUpId)=>serverStateSpec.PowerUpsItemPoolState
   abstract createFromPowerUpGameSettingItm(
-    setting: serverStateSpec.PowerUpsGameSettingsItm
+    setting: serverStateSpec.PowerUpsGameSettingsItm,
   ): serverStateSpec.PowerUpsItemPoolState;
   //getActivePowerUps:()=>serverStateSpec.PowerUpsItemPoolState[]
 
@@ -563,7 +563,7 @@ export abstract class PowerUpManagerBase {
   }
 
   updateStatuses(
-    now: number
+    now: number,
   ): Map<
     serverStateSpec.PowerUpId,
     serverStateSpec.PowerUpsStatusUpdateResult
@@ -580,7 +580,7 @@ export abstract class PowerUpManagerBase {
         const r = PowerUpItemUtils.updateStatuses(p, now);
         //log("updateStatuses","p",p.id,r)
         results.set(p.id, r);
-      }
+      },
     );
     //log("updateStatuses","results",JSON.stringify(results),results.size)
 
@@ -652,7 +652,7 @@ export abstract class PowerUpManagerBase {
 
   usePowerUp(
     id: serverStateSpec.PowerUpId,
-    now: number
+    now: number,
   ): serverStateSpec.PowerUpItemUseResult {
     const powerUpId: serverStateSpec.PowerUpId = id;
     const powerPool = this.getPowerUp(powerUpId);
@@ -780,7 +780,7 @@ export class PowerUpManager
   powerUps: Map<string, serverStateSpec.PowerUpsItemPoolState>; //dead to make interface happy = new Map()
 
   createFromPowerUpGameSettingItm(
-    setting: serverStateSpec.PowerUpsGameSettingsItm
+    setting: serverStateSpec.PowerUpsGameSettingsItm,
   ): serverStateSpec.PowerUpsItemPoolState {
     throw new Error("Method not implemented.");
   }

@@ -176,7 +176,7 @@ export type TrackFeaturePositionConstructorArgs = {
 };
 
 export function createTrackFeaturePositionConstructorArgs(
-  position: ITrackFeaturePosition
+  position: ITrackFeaturePosition,
 ) {
   return {
     startSegment: position.startSegment,

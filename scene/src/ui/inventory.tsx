@@ -1,11 +1,7 @@
 /* eslint-disable spaced-comment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import {
-  PLAYER_BONUS_TYPE,
-  VehicleData,
-  type VehicleDataObject
-} from '../vehicle/vehicle-data'
+import { VehicleData, type VehicleDataObject } from '../vehicle/vehicle-data'
 import { type UIController } from '../controllers/ui.controller'
 import { Label, ReactEcs, UiEntity } from '@dcl/sdk/react-ecs'
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
@@ -28,11 +24,7 @@ import { VehicleManager } from '../vehicle/vehicle-manager'
 import { AccessoryManager } from '../vehicle/accessory-manager'
 import { type VehicleAttachmentDataObject } from '../vehicle/vehicle-attachment-data'
 import { VehicleAttachmentManager } from '../vehicle/vehicle-attachment-manager'
-import { vehiclesSprites } from './atlas/vehiclesSprites'
-import {
-  EquippedVehicle,
-  VehicleOwnership
-} from '../instances/main/vehicleOwnership'
+import { type EquippedVehicle } from '../instances/main/vehicleOwnership'
 
 const TOTAL_MODS_SLOTS = 6
 

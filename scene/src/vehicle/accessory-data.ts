@@ -9,12 +9,14 @@
 */
 
 import { RARITY_TYPE } from '../inventory/rarity-data'
+import { accesoriesSprites } from '../ui/atlas/accesoriesSprites'
+import { type Sprite } from '../ui/utils/utils'
 import { PLAYER_BONUS_TYPE, type PlayerBonusDataObject } from './vehicle-data'
 
 /** defines the atlas sheets for all accessory icons */
 export const ATLAS_SHEET_ACCESSORY = [
   'images/uiAtlas/itemsAtlas.png', // atlas sheet 0
-  'images/uiAtlas/itemsAtlas.png' // atlas sheet 1
+  'images/uiAtlas/itemsAtlas2.png' // atlas sheet 1
 ]
 
 /** ensure standardization between all data objects
@@ -49,12 +51,7 @@ export type AccessoryDataObject = {
   NFTSourceURN: string // where the collection is hosted
   // DISPLAY 2D (inventory icon details)
   SheetIndex: number
-  IconPos: {
-    srcWidth: number
-    srcHeight: number
-    srcTop: number
-    srcLeft: number
-  }
+  Sprite: Sprite
   // DISPLAY 3D
   Model: string // path to display model for accessory
 }
@@ -72,7 +69,7 @@ export const AccessoryData: AccessoryDataObject[] = [
       'urn:decentraland:matic:collections-v2:0x8803d94e27b3844dd191fe354ec5d88b49c66f5d:0',
     // DISPLAY 2D
     SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 220, srcTop: 740, srcLeft: 270 },
+    Sprite: accesoriesSprites[ACCESSORY_ID.WINGS_BETA],
     // DISPLAY 3D
     Model: ''
   },
@@ -91,7 +88,7 @@ export const AccessoryData: AccessoryDataObject[] = [
       'urn:decentraland:matic:collections-v2:0xff6d2c1544e4af0796879d37f36af60973b4be2d:0',
     // DISPLAY 2D
     SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 220, srcTop: 740, srcLeft: 270 },
+    Sprite: accesoriesSprites[ACCESSORY_ID.WINGS_MASTER],
     // DISPLAY 3D
     Model: ''
   },
@@ -106,7 +103,7 @@ export const AccessoryData: AccessoryDataObject[] = [
       'urn:decentraland:matic:collections-v2:0x9d82a09b425e90e0b6dc7cdf34d5bf6db37362c4:0',
     // DISPLAY 2D
     SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 220, srcTop: 975, srcLeft: 1805 },
+    Sprite: accesoriesSprites[ACCESSORY_ID.AURA_VROOMWAY],
     // DISPLAY 3D
     Model: ''
   },
@@ -127,7 +124,7 @@ export const AccessoryData: AccessoryDataObject[] = [
       'urn:decentraland:matic:collections-v2:0xc0b2ab864ca328c94b04bdaa03b413b503331e7f:0',
     // DISPLAY 2D
     SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 220, srcTop: 1455, srcLeft: 1553 },
+    Sprite: accesoriesSprites[ACCESSORY_ID.TROPHY_1],
     // DISPLAY 3D
     Model: ''
   },
@@ -146,7 +143,7 @@ export const AccessoryData: AccessoryDataObject[] = [
       'urn:decentraland:matic:collections-v2:0x219d62f29682bbfd5379a08943f60738c8b2f0c3:0',
     // DISPLAY 2D
     SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 220, srcTop: 1216, srcLeft: 1040 },
+    Sprite: accesoriesSprites[ACCESSORY_ID.TROPHY_2],
     // DISPLAY 3D
     Model: ''
   },
@@ -165,7 +162,7 @@ export const AccessoryData: AccessoryDataObject[] = [
       'urn:decentraland:matic:collections-v2:0xae4addb9783658c6ac331e13820a8d4d330e2606:0',
     // DISPLAY 2D
     SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 220, srcTop: 258, srcLeft: 527 },
+    Sprite: accesoriesSprites[ACCESSORY_ID.LEVEL_CROWN],
     // DISPLAY 3D
     Model: ''
   },
@@ -187,7 +184,7 @@ export const AccessoryData: AccessoryDataObject[] = [
       'urn:decentraland:matic:collections-v2:0x92e99608d311842eafad39b7e974ac4e108307c9:0',
     // DISPLAY 2D
     SheetIndex: 0,
-    IconPos: { srcWidth: 220, srcHeight: 220, srcTop: 1697, srcLeft: 528 },
+    Sprite: accesoriesSprites[ACCESSORY_ID.RACER_JACKET],
     // DISPLAY 3D
     Model: ''
   }

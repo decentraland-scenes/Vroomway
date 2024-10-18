@@ -47,7 +47,7 @@ export class UIInventoryManager {
   modSlotSelected: number = 1
   arrayToShow: InventoryItem[] = [...ResourceObjectData, ...CargoObjectData]
   background: Sprite = boardsSprites.inventoryMaterialsBoardSprite
-  uiParentVisible: boolean = true
+  uiParentVisible: boolean = false
   uiTextExperience: string = '999999'
   uiTextLevel: string = '999'
   uiController: UIController
@@ -140,11 +140,17 @@ export class UIInventoryManager {
       case 1: {
         this.background = boardsSprites.inventoryAccessoriesBoardSprite
         this.arrayToShow = []
-        VehicleData.forEach((accessory) => {
-          if (AccessoryManager.Instance.GetEntryByID(accessory.ID).IsOwned) {
-            this.arrayToShow.push(accessory)
-          }
-        })
+
+        // Owned accessories
+        // AccessoryData.forEach((accessory) => {
+        //   if (AccessoryManager.Instance.GetEntryByID(accessory.ID).IsOwned) {
+        //     this.arrayToShow.push(accessory)
+        //   }
+        // })
+
+        // To test accessories bonuses
+        this.arrayToShow = AccessoryData
+
         break
       }
       case 2: {

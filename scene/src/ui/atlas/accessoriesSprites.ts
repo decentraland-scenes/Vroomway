@@ -1,15 +1,15 @@
 import { ACCESSORY_ID } from '../../vehicle/accessory-data'
 import { type Sprite } from '../utils/utils'
 
-const atlasSrc: string = 'images/uiAtlas/itemsAtlas.png'
+const atlasSrc: string = 'assets/images/uiAtlas/itemsAtlas.png'
 const atlasSize: { x: number; y: number } = { x: 2048, y: 2048 }
 
-export const accesoriesSprites: Record<ACCESSORY_ID, Sprite> = {
+export const accessoriesSprites: Record<ACCESSORY_ID, Sprite> = {
   [ACCESSORY_ID.NONE]: {
-    w: 220,
-    h: 220,
-    y: 2047,
-    x: 2047,
+    w: 1,
+    h: 1,
+    y: 2048,
+    x: 2048,
     atlasSrc,
     atlasSize
   },

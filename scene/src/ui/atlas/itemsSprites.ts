@@ -29,7 +29,7 @@ export enum items {
   circuitBoard = 'circuitBoard'
 }
 export const itemsSprites: Record<items, Sprite> = {
-  smCargo: {
+  [items.smCargo]: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 0,
@@ -37,7 +37,7 @@ export const itemsSprites: Record<items, Sprite> = {
     w: 256,
     h: 240
   },
-  mdCargo: {
+  [items.mdCargo]: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 256,
@@ -45,7 +45,7 @@ export const itemsSprites: Record<items, Sprite> = {
     w: 256,
     h: 240
   },
-  lgCargo: {
+  [items.lgCargo]: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 512,
@@ -53,7 +53,7 @@ export const itemsSprites: Record<items, Sprite> = {
     w: 256,
     h: 240
   },
-  coins: {
+  [items.coins]: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 270,
@@ -61,7 +61,7 @@ export const itemsSprites: Record<items, Sprite> = {
     w: 240,
     h: 240
   },
-  exp: {
+  [items.exp]: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 270,
@@ -69,7 +69,7 @@ export const itemsSprites: Record<items, Sprite> = {
     w: 240,
     h: 240
   },
-  lvl: {
+  [items.lvl]: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 270,
@@ -77,7 +77,7 @@ export const itemsSprites: Record<items, Sprite> = {
     w: 240,
     h: 240
   },
-  fuel: {
+  [items.fuel]: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 14.2,
@@ -85,7 +85,7 @@ export const itemsSprites: Record<items, Sprite> = {
     w: 240,
     h: 240
   },
-  metal: {
+  [items.metal]: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 784.9,
@@ -93,7 +93,7 @@ export const itemsSprites: Record<items, Sprite> = {
     w: 240,
     h: 240
   },
-  rubber: {
+  [items.rubber]: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 528,
@@ -101,7 +101,7 @@ export const itemsSprites: Record<items, Sprite> = {
     w: 240,
     h: 240
   },
-  glass: {
+  [items.glass]: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 1294.8,
@@ -109,7 +109,7 @@ export const itemsSprites: Record<items, Sprite> = {
     w: 240,
     h: 240
   },
-  wires: {
+  [items.wires]: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 1808,
@@ -117,7 +117,7 @@ export const itemsSprites: Record<items, Sprite> = {
     w: 240,
     h: 240
   },
-  cannisters: {
+  [items.cannisters]: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 14.2,
@@ -125,7 +125,7 @@ export const itemsSprites: Record<items, Sprite> = {
     w: 240,
     h: 240
   },
-  circuitBoard: {
+  [items.circuitBoard]: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 1039.8,
@@ -133,7 +133,7 @@ export const itemsSprites: Record<items, Sprite> = {
     w: 240,
     h: 240
   },
-  propulsion: {
+  [items.propulsion]: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 1553.1,
@@ -141,7 +141,7 @@ export const itemsSprites: Record<items, Sprite> = {
     w: 240,
     h: 240
   },
-  antimatter: {
+  [items.antimatter]: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 270,
@@ -150,7 +150,7 @@ export const itemsSprites: Record<items, Sprite> = {
     h: 240
   },
 
-  healthinvincible15s: {
+  [items.PlayerInvincible]: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 782.2,
@@ -158,7 +158,7 @@ export const itemsSprites: Record<items, Sprite> = {
     w: 240,
     h: 240
   },
-  healthPlus50: {
+  [items.PlayerHeal]: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 270.2,
@@ -166,7 +166,7 @@ export const itemsSprites: Record<items, Sprite> = {
     w: 240,
     h: 240
   },
-  multipleCoins2x: {
+  [items.BonusCoins]: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 1552,
@@ -174,7 +174,7 @@ export const itemsSprites: Record<items, Sprite> = {
     w: 240,
     h: 240
   },
-  multipleXp2x: {
+  [items.BonusExp]: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 1808,
@@ -182,7 +182,7 @@ export const itemsSprites: Record<items, Sprite> = {
     w: 240,
     h: 240
   },
-  projectileDamagePlus5: {
+  [items.WeaponBoost]: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 14.2,
@@ -190,7 +190,7 @@ export const itemsSprites: Record<items, Sprite> = {
     w: 240,
     h: 240
   },
-  projectileTrap: {
+  [items.WeaponTrap]: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 526.2,
@@ -198,7 +198,7 @@ export const itemsSprites: Record<items, Sprite> = {
     w: 240,
     h: 240
   },
-  token0: {
+  [items.token0]: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 14.2,
@@ -206,7 +206,7 @@ export const itemsSprites: Record<items, Sprite> = {
     w: 240,
     h: 240
   },
-  token1: {
+  [items.token1]: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 270,
@@ -214,7 +214,7 @@ export const itemsSprites: Record<items, Sprite> = {
     w: 240,
     h: 240
   },
-  token2: {
+  [items.token2]: {
     atlasSrc: itemAtlas,
     atlasSize: itemAtlasSize,
     x: 528,

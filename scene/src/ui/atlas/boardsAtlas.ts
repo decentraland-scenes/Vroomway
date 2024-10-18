@@ -24,7 +24,7 @@ export const boardsSprites: Record<string, Sprite> = {
     w: 718,
     h: 665
   },
-  inventoryAccesoriesBoardSprite: {
+  inventoryAccessoriesBoardSprite: {
     atlasSrc: board3Atlas,
     atlasSize: board3AtlasSize,
     x: 18,

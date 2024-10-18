@@ -24,7 +24,11 @@ import { VehicleManager } from '../vehicle/vehicle-manager'
 import { AccessoryManager } from '../vehicle/accessory-manager'
 import { type VehicleAttachmentDataObject } from '../vehicle/vehicle-attachment-data'
 import { VehicleAttachmentManager } from '../vehicle/vehicle-attachment-manager'
-import { type EquippedVehicle } from '../instances/main/vehicleOwnership'
+import {
+  type EquippedAccessory,
+  type EquippedVehicle
+} from '../instances/main/vehicleOwnership'
+import { AccessoryData, type AccessoryDataObject } from '../vehicle/accessory-data'
 
 const TOTAL_MODS_SLOTS = 6
 
@@ -33,6 +37,7 @@ type InventoryItem =
   | ResourceObject
   | CargoObject
   | VehicleDataObject
+  | AccessoryDataObject
 
 export class UIInventoryManager {
   isModsVisible: boolean = false
@@ -46,6 +51,7 @@ export class UIInventoryManager {
   selectedTab: number = 0
   // private static instance: undefined | UIInventoryManager
   selectedVehicle: VehicleDataObject | undefined
+  selectedAccesory: AccessoryDataObject | undefined
   attachmentsLocked: number = 6
   selectedAttachments: InventoryItem[] = []
   expBonus: number = 0
@@ -86,10 +92,20 @@ export class UIInventoryManager {
       this.uiController.gameController.vehicleOwnership.changeEquippedVehicle(
         this.selectedVehicle.ID as EquippedVehicle
       )
-    }
+    } else { this.uiController.gameController.vehicleOwnership.changeEquippedVehicle(
+      'none'
+    )}
+    if (this.selectedAccesory !== undefined) {
+      this.uiController.gameController.vehicleOwnership.changeEquippedAccessory(
+        this.selectedAccesory.ID as EquippedAccessory
+      )
+    } else { this.uiController.gameController.vehicleOwnership.changeEquippedAccessory(
+      'none'
+    )}
+
     const { speedBoost, fuelEff, exp, coin, gathering } =
       this.uiController.gameController.vehicleOwnership.getBonusAttributes()
-    console.log({ speedBoost, fuelEff, exp, coin, gathering })
+    // console.log({ speedBoost, fuelEff, exp, coin, gathering })
     //set text
     this.expBonus = exp
     this.fuelCostBonus = fuelEff
@@ -115,8 +131,13 @@ export class UIInventoryManager {
         break
       }
       case 1: {
-        this.background = boardsSprites.inventoryAccesoriesBoardSprite
+        this.background = boardsSprites.inventoryAccessoriesBoardSprite
         this.arrayToShow = []
+        VehicleData.forEach((accessory) => {
+          if (AccessoryManager.Instance.GetEntryByID(accessory.ID).IsOwned) {
+            this.arrayToShow.push(accessory)
+          }
+        })
         break
       }
       case 2: {
@@ -151,7 +172,6 @@ export class UIInventoryManager {
 
   createUI(): ReactEcs.JSX.Element {
     const canvasInfo = UiCanvasInformation.get(engine.RootEntity)
-    const fontSizeTimer = canvasInfo.height * 0.035
     const fontSizeXP = canvasInfo.height * 0.02
     const fontSizeDrop = canvasInfo.height * 0.02
     return (
@@ -212,9 +232,7 @@ export class UIInventoryManager {
                 alignContent: 'flex-start',
                 flexWrap: 'wrap'
               }}
-              uiBackground={{
-                color: Color4.create(1, 0, 0, 0.1)
-              }}
+
             >
               {Array.from({ length: 6 }, (_, i) => (
                 <UiEntity
@@ -314,6 +332,35 @@ export class UIInventoryManager {
                 this.unselectVehicle()
               }}
             />
+            <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
+                position: { bottom: '14.5%', left: '31%' },
+                width:
+                  this.selectedAccesory !== undefined
+                    ? ((canvasInfo.height * 0.55 * 0.145) /
+                      this.selectedAccesory?.Sprite.h) *
+                    this.selectedAccesory.Sprite.w
+                    : 0,
+                height: canvasInfo.height * 0.55 * 0.145
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                uvs:
+                  this.selectedAccesory !== undefined
+                    ? getUvs(this.selectedAccesory.Sprite)
+                    : getUvs(boardsSprites.emptySlot),
+                texture: {
+                  src:
+                    this.selectedAccesory !== undefined
+                      ? this.selectedAccesory.Sprite.atlasSrc
+                      : boardsSprites.emptySlot.atlasSrc
+                }
+              }}
+              onMouseDown={() => {
+                this.unselectAccesory()
+              }}
+            />
             {/* BONUS SideBar */}
             <UiEntity
               uiTransform={{
@@ -324,7 +371,6 @@ export class UIInventoryManager {
                 width: '13%',
                 height: '80%'
               }}
-              uiBackground={{ color: Color4.create(1, 0, 0, 0.1) }}
             >
               <Label
                 uiTransform={{
@@ -482,20 +528,20 @@ export class UIInventoryManager {
                       this.ClickedItemSlot(element.ID)
                     }}
                   >
-                    {this.selectedTab !== 0 && (
+                    {(this.selectedTab !== 0 && this.selectedTab !== 1) && (
                       <Label
                         uiTransform={{
                           width: '100%',
                           height: fontSizeDrop,
                           positionType: 'absolute',
-                          position: { bottom: '5%', left: '12%' }
+                          position: { bottom: '5%', left: '5%' }
                         }}
                         value={InventoryManager.Instance.GetItemCountByID(
                           element.ID,
                           false
                         ).toString()}
                         key={index}
-                        fontSize={fontSizeDrop}
+                        fontSize={fontSizeXP * 0.8}
                         font="sans-serif"
                         color={Color4.White()}
                         textAlign="bottom-left"
@@ -558,12 +604,12 @@ export class UIInventoryManager {
   public ClickedItemSlot(id: string): void {
     // const uiElement: UIInteractable = this.uiInventorySlots.getElement(value);
 
-    //ensure item exists in slot
+    // ensure item exists in slot
     if (id !== '') {
-      //process action based on current inventory display type
+      // process action based on current inventory display type
       let def
       switch (this.selectedTab) {
-        //vehicle
+        // vehicle
         case 0:
           //get def
           def = VehicleManager.Instance.GetDefByID(id)
@@ -580,26 +626,29 @@ export class UIInventoryManager {
               )
 
               //  current vehicle
-              // vehicleOwnership.changeEquippedVehicle(id);
-              // this.updateDisplayBonus();
-              // this.RedrawVehicle();
+              // VehicleOwnership.changeEquippedVehicle(id);
+
             }
           }
           //attempt to equip vehicle
 
           break
-        //accessories
+        // accessories
         case 1:
-          //get def
-          // def = AccessoryManager.Instance.GetDefByID(uiElement.itemID);
-          // //attempt to equip accessory
-          // if (AccessoryManager.Instance.ApplyAccessory(id)) {
-          //     //update ui slot
-          //     this.uiAccessory.SetIcon(def);
-          //     this.uiAccessory.itemID = id;
-          //     //  legacy
-          //     vehicleOwnership.changeEquippedAccessory(id);
-          // }
+          // get def
+          def = AccessoryManager.Instance.GetDefByID(id)
+          // def = AccessoryManager.Instance.GetDefByID('levelCrown')
+          console.log({def})
+          if (def.ID !== null) {
+            if (AccessoryManager.Instance.ApplyAccessory(def.ID) !== null) {
+              //update ui slot
+              this.selectedAccesory = def
+              this.updateDisplayBonus()
+              // legacy
+              // vehicleOwnership.changeEquippedAccessory(id);
+            }
+          }
+
           break
         //resources
         case 2:
@@ -615,11 +664,13 @@ export class UIInventoryManager {
     this.SetAttachmentLockState(0)
     this.selectedVehicle = undefined
     VehicleManager.Instance.RemoveVehicle()
-    this.expBonus = 0
-    this.fuelCostBonus = 0
-    this.gatheringBonus = 0
-    this.speedBonus = 0
-    this.coinBonus = 0
+    this.updateDisplayBonus()
+  }
+
+  public unselectAccesory(): void {
+    this.selectedAccesory = undefined
+    AccessoryManager.Instance.RemoveAccessory()
+    this.updateDisplayBonus()
   }
 
   public updateExpDisplay(): void {

@@ -28,7 +28,10 @@ import {
   type EquippedAccessory,
   type EquippedVehicle
 } from '../instances/main/vehicleOwnership'
-import { AccessoryData, type AccessoryDataObject } from '../vehicle/accessory-data'
+import {
+  AccessoryData,
+  type AccessoryDataObject
+} from '../vehicle/accessory-data'
 
 const TOTAL_MODS_SLOTS = 6
 
@@ -92,16 +95,20 @@ export class UIInventoryManager {
       this.uiController.gameController.vehicleOwnership.changeEquippedVehicle(
         this.selectedVehicle.ID as EquippedVehicle
       )
-    } else { this.uiController.gameController.vehicleOwnership.changeEquippedVehicle(
-      'none'
-    )}
+    } else {
+      this.uiController.gameController.vehicleOwnership.changeEquippedVehicle(
+        'none'
+      )
+    }
     if (this.selectedAccesory !== undefined) {
       this.uiController.gameController.vehicleOwnership.changeEquippedAccessory(
         this.selectedAccesory.ID as EquippedAccessory
       )
-    } else { this.uiController.gameController.vehicleOwnership.changeEquippedAccessory(
-      'none'
-    )}
+    } else {
+      this.uiController.gameController.vehicleOwnership.changeEquippedAccessory(
+        'none'
+      )
+    }
 
     const { speedBoost, fuelEff, exp, coin, gathering } =
       this.uiController.gameController.vehicleOwnership.getBonusAttributes()
@@ -232,7 +239,6 @@ export class UIInventoryManager {
                 alignContent: 'flex-start',
                 flexWrap: 'wrap'
               }}
-
             >
               {Array.from({ length: 6 }, (_, i) => (
                 <UiEntity
@@ -339,8 +345,8 @@ export class UIInventoryManager {
                 width:
                   this.selectedAccesory !== undefined
                     ? ((canvasInfo.height * 0.55 * 0.145) /
-                      this.selectedAccesory?.Sprite.h) *
-                    this.selectedAccesory.Sprite.w
+                        this.selectedAccesory?.Sprite.h) *
+                      this.selectedAccesory.Sprite.w
                     : 0,
                 height: canvasInfo.height * 0.55 * 0.145
               }}
@@ -528,7 +534,7 @@ export class UIInventoryManager {
                       this.ClickedItemSlot(element.ID)
                     }}
                   >
-                    {(this.selectedTab !== 0 && this.selectedTab !== 1) && (
+                    {this.selectedTab !== 0 && this.selectedTab !== 1 && (
                       <Label
                         uiTransform={{
                           width: '100%',
@@ -627,7 +633,6 @@ export class UIInventoryManager {
 
               //  current vehicle
               // VehicleOwnership.changeEquippedVehicle(id);
-
             }
           }
           //attempt to equip vehicle
@@ -638,7 +643,7 @@ export class UIInventoryManager {
           // get def
           def = AccessoryManager.Instance.GetDefByID(id)
           // def = AccessoryManager.Instance.GetDefByID('levelCrown')
-          console.log({def})
+          console.log({ def })
           if (def.ID !== null) {
             if (AccessoryManager.Instance.ApplyAccessory(def.ID) !== null) {
               //update ui slot

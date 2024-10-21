@@ -22,8 +22,12 @@ import { InventoryManager } from '../inventory/inventory-manager'
 import { buttonsSprites } from './atlas/buttonsSprites'
 import { VehicleManager } from '../vehicle/vehicle-manager'
 import { AccessoryManager } from '../vehicle/accessory-manager'
-import { type VehicleAttachmentDataObject } from '../vehicle/vehicle-attachment-data'
-import { VehicleAttachmentManager } from '../vehicle/vehicle-attachment-manager'
+import {
+  VEHICLE_ATTACHMENT_TYPE,
+  VehicleAttachmentData,
+  type VehicleAttachmentDataObject
+} from '../vehicle/vehicle-attachment-data'
+import { VehicleAttachmentManager, VehicleAttachmentObject } from '../vehicle/vehicle-attachment-manager'
 import {
   type EquippedAccessory,
   type EquippedVehicle
@@ -32,6 +36,7 @@ import {
   AccessoryData,
   type AccessoryDataObject
 } from '../vehicle/accessory-data'
+import { attachmentsSprites } from './atlas/attachmentsSprites'
 
 const TOTAL_MODS_SLOTS = 6
 
@@ -43,11 +48,12 @@ type InventoryItem =
   | AccessoryDataObject
 
 export class UIInventoryManager {
-  isModsVisible: boolean = false
-  modSlotSelected: number = 1
+  isModsVisible: boolean = true
+  modSlotSelected: number = -1
   arrayToShow: InventoryItem[] = [...ResourceObjectData, ...CargoObjectData]
+  modsToShow: VehicleAttachmentDataObject[] = []
   background: Sprite = boardsSprites.inventoryMaterialsBoardSprite
-  uiParentVisible: boolean = false
+  uiParentVisible: boolean = true
   uiTextExperience: string = '999999'
   uiTextLevel: string = '999'
   uiController: UIController
@@ -62,6 +68,14 @@ export class UIInventoryManager {
   gatheringBonus: number = 0
   speedBonus: number = 0
   coinBonus: number = 0
+  equippedVehicleAtachments: Array<VehicleAttachmentDataObject | undefined> = [
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined
+  ]
 
   // public static get Instance(): UIInventoryManager {
   //   //ensure instance is set
@@ -83,10 +97,12 @@ export class UIInventoryManager {
   }
 
   public selectModSlot(value: number): void {
-    if (value > 0 && value < 7) {
+    if (value >= 0 && value < 7) {
       this.modSlotSelected = value
+      this.DisplayMods(value)
     } else {
-      this.modSlotSelected = 1
+      this.modSlotSelected = 0
+      this.DisplayMods(0)
     }
   }
 
@@ -171,6 +187,59 @@ export class UIInventoryManager {
     }
   }
 
+  public DisplayMods(type: number): void {
+    this.modSlotSelected = type
+    switch (type) {
+      case 0: {
+        this.modsToShow = []
+        VehicleAttachmentData.filter(
+          (attachment) => attachment.Type === VEHICLE_ATTACHMENT_TYPE.TRAILS
+        ).forEach((attachment) => {
+          if (
+            VehicleAttachmentManager.Instance.GetEntryByID(attachment.ID)
+              .IsOwned
+          ) {
+            this.modsToShow.push(attachment)
+          }
+        })
+        break
+      }
+      case 1: {
+        this.modsToShow = []
+        VehicleAttachmentData.filter(
+          (attachment) => attachment.Type === VEHICLE_ATTACHMENT_TYPE.HORN
+        ).forEach((attachment) => {
+          if (
+            VehicleAttachmentManager.Instance.GetEntryByID(attachment.ID)
+              .IsOwned
+          ) {
+            this.modsToShow.push(attachment)
+          }
+        })
+        break
+      }
+      case 2: {
+        this.modsToShow = []
+        VehicleAttachmentData.filter(
+          (attachment) => attachment.Type === VEHICLE_ATTACHMENT_TYPE.UNDERGLOW
+        ).forEach((attachment) => {
+          if (
+            VehicleAttachmentManager.Instance.GetEntryByID(attachment.ID)
+              .IsOwned
+          ) {
+            this.modsToShow.push(attachment)
+          }
+        })
+        break
+      }
+
+      default: {
+        this.modsToShow = []
+        break
+      }
+    }
+  }
+
   public SetAttachmentLockState(value: number): void {
     this.attachmentsLocked = TOTAL_MODS_SLOTS - value
     this.selectedAttachments = []
@@ -238,6 +307,39 @@ export class UIInventoryManager {
             <UiEntity
               uiTransform={{
                 positionType: 'absolute',
+                position: { top: '51.5%', left: '2%' },
+                width: '100%',
+                height: '50%'
+              }}
+              uiBackground={{ color: Color4.create(1, 0, 0, 0.1) }}
+            >
+              {
+                /* Items grid */
+                this.modsToShow.map((element, index) => (
+                  <UiEntity
+                    uiTransform={{
+                      positionType: 'relative',
+                      width:
+                        ((canvasInfo.height * 0.55 * 0.1) / element.Sprite.h) *
+                        element.Sprite.w,
+                      height: canvasInfo.height * 0.55 * 0.1,
+                      margin: { right: '0.7%', bottom: '0.6%' }
+                    }}
+                    uiBackground={{
+                      textureMode: 'stretch',
+                      uvs: getUvs(element.Sprite),
+                      texture: { src: element.Sprite.atlasSrc }
+                    }}
+                    onMouseDown={() => {
+                      this.ClickedModSlot(element.ID)
+                    }}
+                  />
+                ))
+              }
+            </UiEntity>
+            <UiEntity
+              uiTransform={{
+                positionType: 'absolute',
                 width: '105%',
                 height: '23%',
                 position: { top: '18%', left: '8%' },
@@ -256,7 +358,7 @@ export class UIInventoryManager {
                   }}
                   onMouseDown={() => {
                     if (i < 6 - this.attachmentsLocked) {
-                      this.modSlotSelected = i
+                      this.selectModSlot(i)
                       console.log(i)
                     }
                   }}
@@ -278,7 +380,76 @@ export class UIInventoryManager {
                         src: boardsSprites.modLockSprite.atlasSrc
                       }
                     }}
-                  />
+                  >
+                    <UiEntity
+                      uiTransform={{
+                        positionType: 'absolute',
+                        width: '110%',
+                        height: '110%',
+                        position: { top: '-15%', left: '-15%' }
+                      }}
+                      uiBackground={{
+                        textureMode: 'stretch',
+                        uvs:
+                          this.equippedVehicleAtachments[i] !== undefined
+                            ? getUvs(this.equippedVehicleAtachments[i].Sprite)
+                            : getUvs(boardsSprites.emptySlot),
+
+                        texture: {
+                          src:
+                            this.equippedVehicleAtachments[i] !== undefined
+                              ? this.equippedVehicleAtachments[i].Sprite
+                                  .atlasSrc
+                              : boardsSprites.emptySlot.atlasSrc
+                        }
+                      }}
+                    />
+                    <UiEntity
+                      uiTransform={{
+                        positionType: 'absolute',
+                        width: '30%',
+                        height: '30%',
+                        position: { top: '30%', right: '-40%' }
+                      }}
+                      uiBackground={{
+                        textureMode: 'stretch',
+                        uvs:
+                          this.equippedVehicleAtachments[i] !== undefined
+                            ? getUvs(buttonsSprites.removeAttachment)
+                            : getUvs(boardsSprites.emptySlot),
+
+                        texture: {
+                          src:
+                            this.equippedVehicleAtachments[i] !== undefined
+                              ? buttonsSprites.removeAttachment.atlasSrc
+                              : boardsSprites.emptySlot.atlasSrc
+                        }
+                      }}
+                      onMouseDown={() => {
+                        if (i < 6 - this.attachmentsLocked) {
+                          this.unselectVehicleAttachment(i)
+                        }
+                      }}
+                    />
+                    <UiEntity
+                      uiTransform={{
+                        positionType: 'absolute',
+                        width: '110%',
+                        height: '110%',
+                        position: { top: '-15%', left: '-15%' }
+                      }}
+                      uiBackground={{
+                        textureMode: 'stretch',
+                        uvs:
+                          this.modSlotSelected === i
+                            ? getUvs(boardsSprites.modHighlightSprite)
+                            : getUvs(boardsSprites.emptySlot),
+                        texture: {
+                          src: boardsSprites.modHighlightSprite.atlasSrc
+                        }
+                      }}
+                    />
+                  </UiEntity>
                 </UiEntity>
               ))}
             </UiEntity>
@@ -671,11 +842,70 @@ export class UIInventoryManager {
     }
   }
 
+  public ClickedModSlot(id: string): void {
+    if (id !== '') {
+      // process action based on current inventory display type
+      let def
+      switch (this.modSlotSelected) {
+        // TRAIL
+        case 0:
+          //get def
+          def = VehicleAttachmentManager.Instance.GetDefByID(id)
+          if (def !== undefined) {
+            if (
+              def.ID !== null &&
+              def.Type === VEHICLE_ATTACHMENT_TYPE.TRAILS
+            ) {
+              this.equippedVehicleAtachments[this.modSlotSelected] = def
+              // Attach TRAIL to avatar
+            }
+          }
+          break
+        // HORN
+        case 1:
+          //get def
+          def = VehicleAttachmentManager.Instance.GetDefByID(id)
+          if (def !== undefined) {
+            if (def.ID !== null && def.Type === VEHICLE_ATTACHMENT_TYPE.HORN) {
+              this.equippedVehicleAtachments[this.modSlotSelected] = def
+              // Attach TRAIL to avatar
+            }
+          }
+          break
+        //resources
+        case 2:
+          //get def
+          def = VehicleAttachmentManager.Instance.GetDefByID(id)
+          if (def !== undefined) {
+            if (
+              def.ID !== null &&
+              def.Type === VEHICLE_ATTACHMENT_TYPE.UNDERGLOW
+            ) {
+              this.equippedVehicleAtachments[this.modSlotSelected] = def
+              // Attach TRAIL to avatar
+            }
+          }
+          break
+        case 3:
+          break
+        case 4:
+          break
+        case 5:
+          break
+      }
+    }
+  }
+
   public unselectVehicle(): void {
     this.SetAttachmentLockState(0)
     this.selectedVehicle = undefined
     VehicleManager.Instance.RemoveVehicle()
     this.updateDisplayBonus()
+  }
+
+  public unselectVehicleAttachment(index: number): void {
+    // unequip attachment
+    this.equippedVehicleAtachments[index] = undefined
   }
 
   public unselectAccesory(): void {

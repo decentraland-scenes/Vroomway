@@ -27,7 +27,10 @@ import {
   VehicleAttachmentData,
   type VehicleAttachmentDataObject
 } from '../vehicle/vehicle-attachment-data'
-import { VehicleAttachmentManager, VehicleAttachmentObject } from '../vehicle/vehicle-attachment-manager'
+import {
+  VehicleAttachmentManager,
+  VehicleAttachmentObject
+} from '../vehicle/vehicle-attachment-manager'
 import {
   type EquippedAccessory,
   type EquippedVehicle
@@ -354,7 +357,7 @@ export class UIInventoryManager {
                     positionType: 'relative',
                     width: canvasInfo.height * 0.55 * 0.1,
                     height: canvasInfo.height * 0.55 * 0.1,
-                    margin: { bottom: '4%', right: '14.15%' }
+                    margin: { bottom: '5.5%', right: '14.15%' }
                   }}
                   onMouseDown={() => {
                     if (i < 6 - this.attachmentsLocked) {
@@ -384,9 +387,9 @@ export class UIInventoryManager {
                     <UiEntity
                       uiTransform={{
                         positionType: 'absolute',
-                        width: '110%',
-                        height: '110%',
-                        position: { top: '-15%', left: '-15%' }
+                        width: '100%',
+                        height: '100%',
+                        position: { top: '-10.75%', left: '-9%' }
                       }}
                       uiBackground={{
                         textureMode: 'stretch',
@@ -409,7 +412,7 @@ export class UIInventoryManager {
                         positionType: 'absolute',
                         width: '30%',
                         height: '30%',
-                        position: { top: '30%', right: '-40%' }
+                        position: { top: '30%', right: '-35%' }
                       }}
                       uiBackground={{
                         textureMode: 'stretch',

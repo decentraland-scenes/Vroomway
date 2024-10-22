@@ -122,7 +122,7 @@ export class VehicleOwnership {
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     if (this.gameController.Player.equippedVehicle as EquippedAccessory) {
       this.equippedVehicle = this.gameController.Player.equippedVehicle
-      // avatarSwap()
+      void this.gameController.avatarSwap.avatarSwap()
     }
     if (
       (this.gameController.Player.equippedAccessory as EquippedAccessory)
@@ -169,10 +169,10 @@ export class VehicleOwnership {
     onInit?: boolean
   ): void => {
     this.equippedVehicle = vehicle
-    // avatarSwap()
+    void this.gameController.avatarSwap.avatarSwap()
     // Dont update DB again if we're just initing
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-    if (onInit) return
+    if (onInit) return 
     this.gameController.Player.equippedVehicle = vehicle
     void this.gameController.Player.writeDataToServer()
   }

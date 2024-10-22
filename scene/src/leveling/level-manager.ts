@@ -18,7 +18,7 @@ type LevelingCallbackFunction = () => void
 // object that represents an enemy in scene
 export class LevelManager {
   // if true, all debugging logs will be visible (ensure is false when deploying to remove overhead)
-  private static readonly IsDebugging: boolean = true
+  private static readonly IsDebugging: boolean = false
 
   // access pocketing
   private static instance: undefined | LevelManager

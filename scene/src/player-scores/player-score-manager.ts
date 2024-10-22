@@ -59,7 +59,7 @@ export class PlayerScoreEntry {
 /** manages the state of all player's scores in the game */
 export class PlayerScoreManager {
   /** when true debugging logs will be generated (ensure is false when deploying to remove overhead) */
-  private readonly IsDebugging: boolean = true
+  private readonly IsDebugging: boolean = false
 
   // access pocketing
   private static instance: undefined | PlayerScoreManager

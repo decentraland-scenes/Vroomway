@@ -2,6 +2,16 @@
 import { getUserData } from '~system/UserIdentity'
 import { type GameController } from '../../controllers/game.controller'
 
+export type Attributes = {
+  speedBoost: number
+  coin: number
+  exp: number
+  gathering: number
+  fuelEff: number
+  rummagingCycles: number
+  coinBonusPercent: number
+}
+
 export type EquippedAccessory =
   | 'none'
   | 'betaWings'
@@ -482,8 +492,7 @@ export class VehicleOwnership {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  getBonusAttributes = () => {
+  getBonusAttributes(): Attributes {
     const equippedVehicle = this.equippedVehicle
     const equippedAccessory = this.equippedAccessory
     const modelO = equippedVehicle === 'modelO'

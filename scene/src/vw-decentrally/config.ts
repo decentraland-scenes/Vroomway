@@ -380,12 +380,16 @@ export const CONFIG = new Config()
 CONFIG.initForEnv()
 
 // set in preview mode from env, local == preview
-const { realmInfo } = await getRealm({})
+async function checkPreview():Promise<void>{
+  const { realmInfo } = await getRealm({})
 if (realmInfo === null) {
   setInPreview(true)
 } else {
   setInPreview(false)
 }
+}
+void checkPreview()
+
 
 export function setInPreview(val: boolean): void {
   console.log('setInPreview ' + val)
@@ -402,3 +406,4 @@ export function setInPreview(val: boolean): void {
 
   // var console: any
 }
+

@@ -14,6 +14,8 @@
 */
 
 import { RARITY_TYPE } from '../inventory/rarity-data'
+import { attachmentsSprites } from '../ui/atlas/attachmentsSprites'
+import { type Sprite } from '../ui/utils/utils'
 
 /** offsets per scene */
 export const ATTACHMENT_SCENE_OFFSETS = [
@@ -60,7 +62,7 @@ export enum VEHICLE_ATTACHMENT {
   // ###   THRUSTERS (BOOSTER)
   THRUSTER_RED = '300',
   THRUSTER_GREEN = '301',
-  THRUSTER_BLUE = '301',
+  THRUSTER_BLUE = '302',
 
   // ###   AURA
   AURA_RED = '400',
@@ -87,12 +89,7 @@ export type VehicleAttachmentDataObject = {
   // NFT (if source is empty anyone can wear it, otherwise the given urn must exist in the player's wearables)
   NFTSourceURN: string // where the collection is hosted
   // DISPLAY 2D (inventory icon details)
-  IconPos: {
-    srcWidth: number
-    srcHeight: number
-    srcTop: number
-    srcLeft: number
-  }
+  Sprite: Sprite
   // DISPLAY 3D
   Offset: {
     // offsets applied to the attachable's parent object
@@ -112,32 +109,32 @@ export const VehicleAttachmentData: VehicleAttachmentDataObject[] = [
     Rarity: RARITY_TYPE.RARE,
     ID: VEHICLE_ATTACHMENT.TRAIL_RED,
     NFTSourceURN: '',
-    IconPos: { srcWidth: 118, srcHeight: 118, srcTop: 0, srcLeft: 0 },
+    Sprite: attachmentsSprites[VEHICLE_ATTACHMENT.TRAIL_RED],
     Offset: {
       position: { x: 0, y: -1, z: 0 },
       scale: { x: 0.1, y: 0.1, z: 0.1 },
       rotation: { x: 0, y: 0, z: 0, w: 0 }
     },
     Content: 'models/vehicles/vehicle-attachments/trails/s1t1.1.glb'
-  } /*
-    {
-        Type: VEHICLE_ATTACHMENT_TYPE.TRAIL,
-        Rarity: RARITY_TYPE.RARE,
-        ID: VEHICLE_ATTACHMENT.TRAIL_GREEN,
-        NFTSourceURN: "",
-        IconPos: { srcWidth: 118, srcHeight: 118, srcTop: 0, srcLeft: 0 },
-        Offset: { position: { x: 0, y: -0.55, z: 0 }, scale: { x: 0.5, y: 0.5, z: 0.5 }, rotation: { x: 0, y: 0, z: 0, w: 0 } },
-        Content: "models/vehicles/vehicle-attachments/trails/trail-dust.glb"
-    },
-    {
-        Type: VEHICLE_ATTACHMENT_TYPE.TRAIL,
-        Rarity: RARITY_TYPE.RARE,
-        ID: VEHICLE_ATTACHMENT.TRAIL_BLUE,
-        NFTSourceURN: "",
-        IconPos: { srcWidth: 118, srcHeight: 118, srcTop: 0, srcLeft: 0 },
-        Offset: { position: { x: 0, y: -0.55, z: 0 }, scale: { x: 0.5, y: 0.5, z: 0.5 }, rotation: { x: 0, y: 0, z: 0, w: 0 } },
-        Content: "models/vehicles/vehicle-attachments/trails/trail-bubbles.glb"
-    }, */,
+  },
+  // {
+  //     Type: VEHICLE_ATTACHMENT_TYPE.TRAILS,
+  //     Rarity: RARITY_TYPE.RARE,
+  //     ID: VEHICLE_ATTACHMENT.TRAIL_GREEN,
+  //     NFTSourceURN: "",
+  //     Sprite: attachmentsSprites[VEHICLE_ATTACHMENT.TRAIL_GREEN],
+  //     Offset: { position: { x: 0, y: -0.55, z: 0 }, scale: { x: 0.5, y: 0.5, z: 0.5 }, rotation: { x: 0, y: 0, z: 0, w: 0 } },
+  //     Content: "models/vehicles/vehicle-attachments/trails/trail-dust.glb"
+  // },
+  // {
+  //     Type: VEHICLE_ATTACHMENT_TYPE.TRAILS,
+  //     Rarity: RARITY_TYPE.RARE,
+  //     ID: VEHICLE_ATTACHMENT.TRAIL_BLUE,
+  //     NFTSourceURN: "",
+  //     Sprite: attachmentsSprites[VEHICLE_ATTACHMENT.TRAIL_BLUE],
+  //     Offset: { position: { x: 0, y: -0.55, z: 0 }, scale: { x: 0.5, y: 0.5, z: 0.5 }, rotation: { x: 0, y: 0, z: 0, w: 0 } },
+  //     Content: "models/vehicles/vehicle-attachments/trails/trail-bubbles.glb"
+  // },
 
   // ###   HORN
   {
@@ -145,7 +142,7 @@ export const VehicleAttachmentData: VehicleAttachmentDataObject[] = [
     Rarity: RARITY_TYPE.RARE,
     ID: VEHICLE_ATTACHMENT.HORN_00,
     NFTSourceURN: '',
-    IconPos: { srcWidth: 118, srcHeight: 118, srcTop: 118, srcLeft: 0 },
+    Sprite: attachmentsSprites[VEHICLE_ATTACHMENT.HORN_00],
     Offset: {
       position: { x: 0, y: 0, z: 0 },
       scale: { x: 1, y: 1, z: 1 },
@@ -158,7 +155,7 @@ export const VehicleAttachmentData: VehicleAttachmentDataObject[] = [
         Rarity: RARITY_TYPE.RARE,
         ID: VEHICLE_ATTACHMENT.HORN_01,
         NFTSourceURN: "",
-        IconPos: { srcWidth: 118, srcHeight: 118, srcTop: 118, srcLeft: 0 },
+        Sprite: { srcWidth: 118, srcHeight: 118, srcTop: 118, srcLeft: 0 },
         Offset: { position: { x: 0, y: 0, z: 0 }, scale: { x: 1, y: 1, z: 1 }, rotation: { x: 0, y: 0, z: 0, w: 0 } },
         Content: "sounds/vehicles/vehicle-attachments/s2t1.1.mp3",
     },
@@ -167,7 +164,7 @@ export const VehicleAttachmentData: VehicleAttachmentDataObject[] = [
         Rarity: RARITY_TYPE.RARE,
         ID: VEHICLE_ATTACHMENT.HORN_02,
         NFTSourceURN: "",
-        IconPos: { srcWidth: 118, srcHeight: 118, srcTop: 118, srcLeft: 0 },
+        Sprite: { srcWidth: 118, srcHeight: 118, srcTop: 118, srcLeft: 0 },
         Offset: { position: { x: 0, y: 0, z: 0 }, scale: { x: 1, y: 1, z: 1 }, rotation: { x: 0, y: 0, z: 0, w: 0 } },
         Content: "sounds/vehicles/vehicle-attachments/s2t1.1.mp3",
     }, */,
@@ -178,7 +175,7 @@ export const VehicleAttachmentData: VehicleAttachmentDataObject[] = [
     Rarity: RARITY_TYPE.RARE,
     ID: VEHICLE_ATTACHMENT.UNDERGLOW_GREEN,
     NFTSourceURN: '',
-    IconPos: { srcWidth: 118, srcHeight: 118, srcTop: 236, srcLeft: 0 },
+    Sprite: attachmentsSprites[VEHICLE_ATTACHMENT.UNDERGLOW_GREEN],
     Offset: {
       position: { x: 0, y: -2.25, z: 0 },
       scale: { x: 5, y: 5, z: 5 },
@@ -191,7 +188,7 @@ export const VehicleAttachmentData: VehicleAttachmentDataObject[] = [
         Rarity: RARITY_TYPE.RARE,
         ID: VEHICLE_ATTACHMENT.UNDERGLOW_RED,
         NFTSourceURN: "",
-        IconPos: { srcWidth: 118, srcHeight: 118, srcTop: 236, srcLeft: 0 },
+        Sprite: { srcWidth: 118, srcHeight: 118, srcTop: 236, srcLeft: 0 },
         Offset: { position: { x: 0, y: -2.05, z: 0 }, scale: { x: 5, y: 5, z: 5 }, rotation: { x: 90, y: 0, z: 0, w: 0 } },
         Content: "images/vehicles/vehicle-attachments/s3t1.1.png"
     },
@@ -200,7 +197,7 @@ export const VehicleAttachmentData: VehicleAttachmentDataObject[] = [
         Rarity: RARITY_TYPE.RARE,
         ID: VEHICLE_ATTACHMENT.UNDERGLOW_BLUE,
         NFTSourceURN: "",
-        IconPos: { srcWidth: 118, srcHeight: 118, srcTop: 236, srcLeft: 0 },
+        Sprite: { srcWidth: 118, srcHeight: 118, srcTop: 236, srcLeft: 0 },
         Offset: { position: { x: 0, y: -2.05, z: 0 }, scale: { x: 5, y: 5, z: 5 }, rotation: { x: 90, y: 0, z: 0, w: 0 } },
         Content: "images/vehicles/vehicle-attachments/s3t1.1.png"
     }, */
@@ -211,7 +208,7 @@ export const VehicleAttachmentData: VehicleAttachmentDataObject[] = [
         Rarity: RARITY_TYPE.EXOTIC,
         ID: VEHICLE_ATTACHMENT.THRUSTER_RED,
         NFTSourceURN: "",
-        IconPos: { srcWidth: 118, srcHeight: 118, srcTop: 0, srcLeft: 0 },
+        Sprite: { srcWidth: 118, srcHeight: 118, srcTop: 0, srcLeft: 0 },
         Offset: { position: { x: 0, y: -0.25, z: 2 }, scale: { x: 1, y: 1, z: 1 }, rotation: { x: 0, y: 0, z: 0, w: 0 } },
         Content: "models/vehicles/vehicle-attachments/primitive-square-green.glb"
     },
@@ -220,7 +217,7 @@ export const VehicleAttachmentData: VehicleAttachmentDataObject[] = [
         Rarity: RARITY_TYPE.LEGENDARY,
         ID: VEHICLE_ATTACHMENT.THRUSTER_GREEN,
         NFTSourceURN: "",
-        IconPos: { srcWidth: 118, srcHeight: 118, srcTop: 0, srcLeft: 0 },
+        Sprite: { srcWidth: 118, srcHeight: 118, srcTop: 0, srcLeft: 0 },
         Offset: { position: { x: 0, y: 0.0, z: 2 }, scale: { x: 1, y: 1, z: 1 }, rotation: { x: 0, y: 0, z: 0, w: 0 } },
         Content: "models/vehicles/vehicle-attachments/primitive-square-red.glb"
     },
@@ -229,7 +226,7 @@ export const VehicleAttachmentData: VehicleAttachmentDataObject[] = [
         Rarity: RARITY_TYPE.LEGENDARY,
         ID: VEHICLE_ATTACHMENT.THRUSTER_BLUE,
         NFTSourceURN: "",
-        IconPos: { srcWidth: 118, srcHeight: 118, srcTop: 0, srcLeft: 0 },
+        Sprite: { srcWidth: 118, srcHeight: 118, srcTop: 0, srcLeft: 0 },
         Offset: { position: { x: 0, y: 0.25, z: 2 }, scale: { x: 1, y: 1, z: 1 }, rotation: { x: 0, y: 0, z: 0, w: 0 } },
         Content: "models/vehicles/vehicle-attachments/primitive-square-green.glb"
     }, */
@@ -239,7 +236,7 @@ export const VehicleAttachmentData: VehicleAttachmentDataObject[] = [
         Rarity: RARITY_TYPE.RARE,
         ID: VEHICLE_ATTACHMENT.AURA_RED,
         NFTSourceURN: "",
-        IconPos: { srcWidth: 118, srcHeight: 118, srcTop: 0, srcLeft: 0 },
+        Sprite: { srcWidth: 118, srcHeight: 118, srcTop: 0, srcLeft: 0 },
         Offset: { position: { x: 1, y: -0.25, z: 2 }, scale: { x: 1, y: 1, z: 1 }, rotation: { x: 0, y: 0, z: 0, w: 0 } },
         Content: "models/vehicles/vehicle-attachments/primitive-square-green.glb"
     },
@@ -248,7 +245,7 @@ export const VehicleAttachmentData: VehicleAttachmentDataObject[] = [
         Rarity: RARITY_TYPE.LEGENDARY,
         ID: VEHICLE_ATTACHMENT.AURA_GREEN,
         NFTSourceURN: "",
-        IconPos: { srcWidth: 118, srcHeight: 118, srcTop: 0, srcLeft: 0 },
+        Sprite: { srcWidth: 118, srcHeight: 118, srcTop: 0, srcLeft: 0 },
         Offset: { position: { x: 1, y: 0.0, z: 2 }, scale: { x: 1, y: 1, z: 1 }, rotation: { x: 0, y: 0, z: 0, w: 0 } },
         Content: "models/vehicles/vehicle-attachments/primitive-square-red.glb"
     },
@@ -257,7 +254,7 @@ export const VehicleAttachmentData: VehicleAttachmentDataObject[] = [
         Rarity: RARITY_TYPE.LEGENDARY,
         ID: VEHICLE_ATTACHMENT.AURA_BLUE,
         NFTSourceURN: "",
-        IconPos: { srcWidth: 118, srcHeight: 118, srcTop: 0, srcLeft: 0 },
+        Sprite: { srcWidth: 118, srcHeight: 118, srcTop: 0, srcLeft: 0 },
         Offset: { position: { x: 1, y: 0.25, z: 2 }, scale: { x: 1, y: 1, z: 1 }, rotation: { x: 0, y: 0, z: 0, w: 0 } },
         Content: "models/vehicles/vehicle-attachments/primitive-square-green.glb"
     }, */
@@ -267,7 +264,7 @@ export const VehicleAttachmentData: VehicleAttachmentDataObject[] = [
         Rarity: RARITY_TYPE.RARE,
         ID: VEHICLE_ATTACHMENT.BODYKIT_00,
         NFTSourceURN: "",
-        IconPos: { srcWidth: 118, srcHeight: 118, srcTop: 0, srcLeft: 0 },
+        Sprite: { srcWidth: 118, srcHeight: 118, srcTop: 0, srcLeft: 0 },
         Offset: { position: { x: 2, y: -0.25, z: 2 }, scale: { x: 1, y: 1, z: 1 }, rotation: { x: 0, y: 0, z: 0, w: 0 } },
         Content: "models/vehicles/vehicle-attachments/primitive-square-green.glb"
     },
@@ -276,7 +273,7 @@ export const VehicleAttachmentData: VehicleAttachmentDataObject[] = [
         Rarity: RARITY_TYPE.LEGENDARY,
         ID: VEHICLE_ATTACHMENT.BODYKIT_01,
         NFTSourceURN: "",
-        IconPos: { srcWidth: 118, srcHeight: 118, srcTop: 0, srcLeft: 0 },
+        Sprite: { srcWidth: 118, srcHeight: 118, srcTop: 0, srcLeft: 0 },
         Offset: { position: { x: 2, y: 0.0, z: 2 }, scale: { x: 1, y: 1, z: 1 }, rotation: { x: 0, y: 0, z: 0, w: 0 } },
         Content: "models/vehicles/vehicle-attachments/primitive-square-red.glb"
     },
@@ -285,7 +282,7 @@ export const VehicleAttachmentData: VehicleAttachmentDataObject[] = [
         Rarity: RARITY_TYPE.LEGENDARY,
         ID: VEHICLE_ATTACHMENT.BODYKIT_02,
         NFTSourceURN: "",
-        IconPos: { srcWidth: 118, srcHeight: 118, srcTop: 0, srcLeft: 0 },
+        Sprite: { srcWidth: 118, srcHeight: 118, srcTop: 0, srcLeft: 0 },
         Offset: { position: { x: 2, y: 0.25, z: 2 }, scale: { x: 1, y: 1, z: 1 }, rotation: { x: 0, y: 0, z: 0, w: 0 } },
         Content: "models/vehicles/vehicle-attachments/primitive-square-green.glb"
     }, */

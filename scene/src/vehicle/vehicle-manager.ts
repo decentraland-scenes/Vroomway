@@ -51,7 +51,7 @@ export class VehicleEntry {
 /** manages the state of all vehicles in the game */
 export class VehicleManager {
   /** when true debugging logs will be generated (ensure is false when deploying to remove overhead) */
-  private static readonly IsDebugging: boolean = true
+  private static readonly IsDebugging: boolean = false
   /** when true vehicles will only be visible in the inventory if the player owns them (set to false to test) */
   private static readonly EnforceOwnership: boolean = true
 
@@ -85,7 +85,7 @@ export class VehicleManager {
   private readonly indexRarityRegistry: Dictionary<number>
   // vehicle registries, providing access to entry
   //  ALL registered data
-  private readonly entryRegistry: List<VehicleEntry>
+  public readonly entryRegistry: List<VehicleEntry>
   //  id as key
   private readonly entryRegistryViaID: Dictionary<VehicleEntry>
   //  data split via rarity

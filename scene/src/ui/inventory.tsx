@@ -314,7 +314,6 @@ export class UIInventoryManager {
                 width: '100%',
                 height: '50%'
               }}
-              uiBackground={{ color: Color4.create(1, 0, 0, 0.1) }}
             >
               {
                 /* Items grid */

@@ -196,7 +196,7 @@ export class AvatarSwapManager {
     // hacky assumes glb == carid
     // FIXME BRITTLE, id is matching glb name.  must match avatarswap.ts + carData.ts
     player.avatarSwapCarModelId = vehicleModel
-      .replace('models/racing-models/circuitVehicles/', '')
+      .replace('scene/assets/models/racing-models/circuitVehicles/', '')
       .replace('CIRCUITS.glb', '')
       .replace('models/', '')
       .replace('.glb', '') // TODO clean this up better

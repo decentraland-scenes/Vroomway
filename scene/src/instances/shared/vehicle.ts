@@ -34,12 +34,13 @@ export class Arissa {
           clip: 'go',
           loop: true
         },
-        {
+        { 
           clip: 'idle',
           loop: true
         }
       ]
     })
+    console.log('model updated')
   }
   // Remove entity
 

@@ -578,7 +578,7 @@ export class UIInventoryManager {
                 fontSize={fontSizeXP * 0.8}
               />
               <Label
-                uiTransform={{
+                uiTransform={{ 
                   positionType: 'relative',
                   width: '100%',
                   height: '11.3%'
@@ -811,7 +811,7 @@ export class UIInventoryManager {
               )
 
               //  current vehicle
-              // VehicleOwnership.changeEquippedVehicle(id);
+              this.uiController.gameController.vehicleOwnership.changeEquippedVehicle(id);
             }
           }
           //attempt to equip vehicle
@@ -829,7 +829,7 @@ export class UIInventoryManager {
               this.selectedAccesory = def
               this.updateDisplayBonus()
               // legacy
-              // vehicleOwnership.changeEquippedAccessory(id);
+              this.uiController.gameController.vehicleOwnership.changeEquippedVehicle(id);
             }
           }
 

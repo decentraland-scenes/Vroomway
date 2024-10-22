@@ -24,7 +24,7 @@ export class MovingAverage {
     this.numberCnt = 0
   }
 
-  add(val: number):void {
+  add(val: number): void {
     let prevSum = this.sum // this.numberCnt*this.average;
 
     if (this.numberCnt === this.size) {

@@ -172,7 +172,7 @@ export class VehicleOwnership {
     void this.gameController.avatarSwap.avatarSwap()
     // Dont update DB again if we're just initing
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-    if (onInit) return 
+    if (onInit) return
     this.gameController.Player.equippedVehicle = vehicle
     void this.gameController.Player.writeDataToServer()
   }

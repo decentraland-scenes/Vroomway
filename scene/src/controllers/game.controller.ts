@@ -9,6 +9,7 @@ import { DanceAreaUI } from '../ui/danceArea'
 import { SuperChargeTimer } from '../instances/recharge/timer'
 import { SprintTimer } from '../utils/sprintTimer'
 import { PlayerPowerUps } from '../utils/powerUps'
+import { AvatarSwapManager } from '../utils/avatarSwap'
 
 export class GameController {
   public Player: PlayerStats
@@ -22,6 +23,7 @@ export class GameController {
   public superChargeTimer: SuperChargeTimer
   public sprintTimer: SprintTimer
   public PowerUpsInv: PlayerPowerUps
+  public avatarSwap: AvatarSwapManager
   constructor() {
     this.uiController = new UIController(this)
     this.realmController = new RealmController(this)
@@ -34,5 +36,6 @@ export class GameController {
     this.superChargeTimer = new SuperChargeTimer(this)
     this.sprintTimer = new SprintTimer(this)
     this.PowerUpsInv = new PlayerPowerUps(this)
+    this.avatarSwap = new AvatarSwapManager(this)
   }
 }

@@ -51,12 +51,12 @@ type InventoryItem =
   | AccessoryDataObject
 
 export class UIInventoryManager {
-  isModsVisible: boolean = true
+  isModsVisible: boolean = false
   modSlotSelected: number = -1
   arrayToShow: InventoryItem[] = [...ResourceObjectData, ...CargoObjectData]
   modsToShow: VehicleAttachmentDataObject[] = []
   background: Sprite = boardsSprites.inventoryMaterialsBoardSprite
-  uiParentVisible: boolean = true
+  uiParentVisible: boolean = false
   uiTextExperience: string = '999999'
   uiTextLevel: string = '999'
   uiController: UIController

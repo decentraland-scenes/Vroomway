@@ -1,0 +1,212 @@
+{
+  "asset": {
+    "generator": "Khronos glTF Blender I/O v3.2.43",
+    "version": "2.0"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [0, 1, 2]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "origin"
+    },
+    {
+      "mesh": 0,
+      "name": "Plane"
+    },
+    {
+      "mesh": 1,
+      "name": "plane_collider"
+    }
+  ],
+  "materials": [
+    {
+      "name": "glTF",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicFactor": 0,
+        "roughnessFactor": 0.5
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Plane",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3
+          },
+          "indices": 4,
+          "material": 0
+        }
+      ]
+    },
+    {
+      "name": "Plane.001",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 5,
+            "NORMAL": 6,
+            "TANGENT": 7,
+            "TEXCOORD_0": 8
+          },
+          "indices": 9
+        }
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    }
+  ],
+  "images": [
+    {
+      "mimeType": "image/png",
+      "name": "test-signs",
+      "uri": "tex/test-signs.png"
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 16,
+      "max": [4, 5, 0.010000043548643589],
+      "min": [-4, 3, 0.009999956004321575],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 16,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 16,
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 16,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5123,
+      "count": 24,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5126,
+      "count": 12,
+      "max": [4.25, 6, 1.0000001192092896],
+      "min": [-4.25, 0, -1.3113415775478643e-7],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 6,
+      "componentType": 5126,
+      "count": 12,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 7,
+      "componentType": 5126,
+      "count": 12,
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 8,
+      "componentType": 5126,
+      "count": 12,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 9,
+      "componentType": 5123,
+      "count": 18,
+      "type": "SCALAR"
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 192,
+      "byteOffset": 0
+    },
+    {
+      "buffer": 0,
+      "byteLength": 192,
+      "byteOffset": 192
+    },
+    {
+      "buffer": 0,
+      "byteLength": 256,
+      "byteOffset": 384
+    },
+    {
+      "buffer": 0,
+      "byteLength": 128,
+      "byteOffset": 640
+    },
+    {
+      "buffer": 0,
+      "byteLength": 48,
+      "byteOffset": 768
+    },
+    {
+      "buffer": 0,
+      "byteLength": 144,
+      "byteOffset": 816
+    },
+    {
+      "buffer": 0,
+      "byteLength": 144,
+      "byteOffset": 960
+    },
+    {
+      "buffer": 0,
+      "byteLength": 192,
+      "byteOffset": 1104
+    },
+    {
+      "buffer": 0,
+      "byteLength": 96,
+      "byteOffset": 1296
+    },
+    {
+      "buffer": 0,
+      "byteLength": 36,
+      "byteOffset": 1392
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 1428,
+      "uri": "test-signs.bin"
+    }
+  ]
+}

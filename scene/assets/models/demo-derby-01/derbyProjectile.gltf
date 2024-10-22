@@ -1,0 +1,351 @@
+{
+  "asset": {
+    "generator": "Khronos glTF Blender I/O v1.7.33",
+    "version": "2.0"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [3]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "Bone",
+      "rotation": [0.7071068286895752, 5.338508302088485e-8, 5.338507946817117e-8, 0.7071068286895752],
+      "translation": [1.0045637210964742e-8, -1.3411121327074817e-22, -0.22981742024421692]
+    },
+    {
+      "name": "Bone.001",
+      "rotation": [-0.7071068286895752, 3.7682221539880444e-15, -3.0908616110991716e-8, 0.7071068286895752],
+      "translation": [1.16712124409446e-8, 0.006067952141165733, -0.2670062184333801]
+    },
+    {
+      "mesh": 0,
+      "name": "Projectile",
+      "skin": 0
+    },
+    {
+      "children": [2, 0, 1],
+      "name": "Projectile Arm"
+    }
+  ],
+  "animations": [
+    {
+      "channels": [
+        {
+          "sampler": 0,
+          "target": {
+            "node": 0,
+            "path": "rotation"
+          }
+        },
+        {
+          "sampler": 1,
+          "target": {
+            "node": 1,
+            "path": "scale"
+          }
+        }
+      ],
+      "name": "ArmatureAction",
+      "samplers": [
+        {
+          "input": 13,
+          "interpolation": "LINEAR",
+          "output": 14
+        },
+        {
+          "input": 13,
+          "interpolation": "LINEAR",
+          "output": 15
+        }
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "emissiveFactor": [0, 1, 1],
+      "name": "Teal Light",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [0, 0.7564014792442322, 0.8000000715255737, 1],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.5
+      }
+    },
+    {
+      "doubleSided": true,
+      "emissiveFactor": [9.10571325221099e-5, 0.0002124683087458834, 0.001298302784562111],
+      "name": "glTF_black",
+      "normalTexture": {
+        "index": 0,
+        "scale": 0.33000001311302185
+      },
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [0.0009105713106691837, 0.0021246830001473427, 0.012983027845621109, 1],
+        "metallicFactor": 0,
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Cylinder.003",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TEXCOORD_0": 2,
+            "JOINTS_0": 3,
+            "WEIGHTS_0": 4
+          },
+          "indices": 5,
+          "material": 0
+        },
+        {
+          "attributes": {
+            "POSITION": 6,
+            "NORMAL": 7,
+            "TEXCOORD_0": 8,
+            "JOINTS_0": 9,
+            "WEIGHTS_0": 10
+          },
+          "indices": 11,
+          "material": 1
+        }
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    }
+  ],
+  "images": [
+    {
+      "mimeType": "image/jpeg",
+      "name": "GrungeWall002_NRM_6K",
+      "uri": "tex/GrungeWall002_NRM_6K.jpg"
+    },
+    {
+      "mimeType": "image/jpeg",
+      "name": "GrungeWall002_GLOSS_1K",
+      "uri": "tex/GrungeWall002_GLOSS_1K.jpg"
+    }
+  ],
+  "skins": [
+    {
+      "inverseBindMatrices": 12,
+      "joints": [0, 1],
+      "name": "Projectile Arm"
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 281,
+      "max": [0.31077244877815247, 0.3039921522140503, 0.26211249828338623],
+      "min": [-0.31077244877815247, -0.2871321439743042, -0.4364165663719177],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 281,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 281,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5121,
+      "count": 281,
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5126,
+      "count": 281,
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5123,
+      "count": 348,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 6,
+      "componentType": 5126,
+      "count": 87,
+      "max": [0.37195831537246704, 0.3995290994644165, 0.3877429664134979],
+      "min": [-0.37195825576782227, -0.38266921043395996, -0.3208909332752228],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 7,
+      "componentType": 5126,
+      "count": 87,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 8,
+      "componentType": 5126,
+      "count": 87,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 9,
+      "componentType": 5121,
+      "count": 87,
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 10,
+      "componentType": 5126,
+      "count": 87,
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 11,
+      "componentType": 5123,
+      "count": 294,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 12,
+      "componentType": 5126,
+      "count": 2,
+      "type": "MAT4"
+    },
+    {
+      "bufferView": 13,
+      "componentType": 5126,
+      "count": 61,
+      "max": [2],
+      "min": [0],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 14,
+      "componentType": 5126,
+      "count": 61,
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 15,
+      "componentType": 5126,
+      "count": 61,
+      "type": "VEC3"
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 3372,
+      "byteOffset": 0
+    },
+    {
+      "buffer": 0,
+      "byteLength": 3372,
+      "byteOffset": 3372
+    },
+    {
+      "buffer": 0,
+      "byteLength": 2248,
+      "byteOffset": 6744
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1124,
+      "byteOffset": 8992
+    },
+    {
+      "buffer": 0,
+      "byteLength": 4496,
+      "byteOffset": 10116
+    },
+    {
+      "buffer": 0,
+      "byteLength": 696,
+      "byteOffset": 14612
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1044,
+      "byteOffset": 15308
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1044,
+      "byteOffset": 16352
+    },
+    {
+      "buffer": 0,
+      "byteLength": 696,
+      "byteOffset": 17396
+    },
+    {
+      "buffer": 0,
+      "byteLength": 348,
+      "byteOffset": 18092
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1392,
+      "byteOffset": 18440
+    },
+    {
+      "buffer": 0,
+      "byteLength": 588,
+      "byteOffset": 19832
+    },
+    {
+      "buffer": 0,
+      "byteLength": 128,
+      "byteOffset": 20420
+    },
+    {
+      "buffer": 0,
+      "byteLength": 244,
+      "byteOffset": 20548
+    },
+    {
+      "buffer": 0,
+      "byteLength": 976,
+      "byteOffset": 20792
+    },
+    {
+      "buffer": 0,
+      "byteLength": 732,
+      "byteOffset": 21768
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 22500,
+      "uri": "derbyProjectile.bin"
+    }
+  ]
+}

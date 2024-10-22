@@ -1,0 +1,135 @@
+{
+  "asset": {
+    "generator": "Khronos glTF Blender I/O v3.2.43",
+    "version": "2.0"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [0]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "Plane"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "name": "gltf-sign",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicFactor": 0,
+        "roughnessFactor": 0.5
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Plane",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3
+          },
+          "indices": 4,
+          "material": 0
+        }
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    }
+  ],
+  "images": [
+    {
+      "mimeType": "image/png",
+      "name": "teleporter-color",
+      "uri": "tex/teleporter-color.png"
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 1875,
+      "max": [8.899999618530273, 1.899999976158142, -0.003817874938249588],
+      "min": [-8.899999618530273, 0.10000002384185791, -1],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 1875,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 1875,
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 1875,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5123,
+      "count": 5076,
+      "type": "SCALAR"
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 22500,
+      "byteOffset": 0
+    },
+    {
+      "buffer": 0,
+      "byteLength": 22500,
+      "byteOffset": 22500
+    },
+    {
+      "buffer": 0,
+      "byteLength": 30000,
+      "byteOffset": 45000
+    },
+    {
+      "buffer": 0,
+      "byteLength": 15000,
+      "byteOffset": 75000
+    },
+    {
+      "buffer": 0,
+      "byteLength": 10152,
+      "byteOffset": 90000
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 100152,
+      "uri": "teleporter-sign.bin"
+    }
+  ]
+}

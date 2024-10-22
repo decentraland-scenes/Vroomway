@@ -1,0 +1,228 @@
+{
+  "asset": {
+    "generator": "Khronos glTF Blender I/O v3.2.43",
+    "version": "2.0"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [0, 1, 2]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "origin"
+    },
+    {
+      "mesh": 0,
+      "name": "wall_exterior",
+      "translation": [32, 0, -32]
+    },
+    {
+      "mesh": 1,
+      "name": "wall_exterior_collider",
+      "translation": [32, 0, -32]
+    }
+  ],
+  "materials": [
+    {
+      "emissiveFactor": [9.105713242377536e-5, 0.00021246830318075866, 0.00129830280390833],
+      "name": "glTF_black",
+      "normalTexture": {
+        "index": 0,
+        "scale": 0.33000001311302185
+      },
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [0.0009105713106691837, 0.0021246830001473427, 0.012983027845621109, 1],
+        "metallicFactor": 0,
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Cube.001",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3
+          },
+          "indices": 4,
+          "material": 0
+        }
+      ]
+    },
+    {
+      "name": "Cube.002",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 5,
+            "NORMAL": 6,
+            "TANGENT": 7,
+            "TEXCOORD_0": 8
+          },
+          "indices": 9
+        }
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    }
+  ],
+  "images": [
+    {
+      "mimeType": "image/jpeg",
+      "name": "GrungeWall002_NRM_6K",
+      "uri": "tex/GrungeWall002_NRM_6K.jpg"
+    },
+    {
+      "mimeType": "image/png",
+      "name": "GrungeWall002_GLOSS_1K",
+      "uri": "tex/GrungeWall002_GLOSS_1K.png"
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 1125,
+      "max": [32, 43.25151062011719, 32],
+      "min": [-32, 0, -32],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 1125,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 1125,
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 1125,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5123,
+      "count": 2226,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5126,
+      "count": 318,
+      "max": [32, 43.25151062011719, 32],
+      "min": [-32, 0, -32],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 6,
+      "componentType": 5126,
+      "count": 318,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 7,
+      "componentType": 5126,
+      "count": 318,
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 8,
+      "componentType": 5126,
+      "count": 318,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 9,
+      "componentType": 5123,
+      "count": 354,
+      "type": "SCALAR"
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 13500,
+      "byteOffset": 0
+    },
+    {
+      "buffer": 0,
+      "byteLength": 13500,
+      "byteOffset": 13500
+    },
+    {
+      "buffer": 0,
+      "byteLength": 18000,
+      "byteOffset": 27000
+    },
+    {
+      "buffer": 0,
+      "byteLength": 9000,
+      "byteOffset": 45000
+    },
+    {
+      "buffer": 0,
+      "byteLength": 4452,
+      "byteOffset": 54000
+    },
+    {
+      "buffer": 0,
+      "byteLength": 3816,
+      "byteOffset": 58452
+    },
+    {
+      "buffer": 0,
+      "byteLength": 3816,
+      "byteOffset": 62268
+    },
+    {
+      "buffer": 0,
+      "byteLength": 5088,
+      "byteOffset": 66084
+    },
+    {
+      "buffer": 0,
+      "byteLength": 2544,
+      "byteOffset": 71172
+    },
+    {
+      "buffer": 0,
+      "byteLength": 708,
+      "byteOffset": 73716
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 74424,
+      "uri": "outer-box.bin"
+    }
+  ]
+}

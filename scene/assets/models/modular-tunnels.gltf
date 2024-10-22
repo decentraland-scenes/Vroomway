@@ -1,0 +1,230 @@
+{
+  "asset": {
+    "generator": "Khronos glTF Blender I/O v1.8.19",
+    "version": "2.0"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [1]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "hextunnel.beam.0.4u.000",
+      "scale": [0.25, 0.25, 0.25],
+      "translation": [0, 0.6495192646980286, 0]
+    },
+    {
+      "children": [0],
+      "name": "hextunnel.beam.0.4u.pivot.000",
+      "scale": [4, 4, 4]
+    }
+  ],
+  "materials": [
+    {
+      "emissiveFactor": [0.014412856316758038, 0.0001214071311452557, 0.0004776957050367549],
+      "name": "glTF_red_c",
+      "normalTexture": {
+        "index": 0
+      },
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [0.14412856101989746, 0.001214071293361485, 0.004776956979185343, 1],
+        "metallicFactor": 0,
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      }
+    },
+    {
+      "emissiveFactor": [1, 0, 0],
+      "name": "glTF_red_emit",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [0, 0, 0, 1],
+        "metallicFactor": 0,
+        "roughnessFactor": 0
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "BezierCurve.001",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3
+          },
+          "indices": 4,
+          "material": 0
+        },
+        {
+          "attributes": {
+            "POSITION": 5,
+            "NORMAL": 6,
+            "TANGENT": 7,
+            "TEXCOORD_0": 8
+          },
+          "indices": 9,
+          "material": 1
+        }
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    }
+  ],
+  "images": [
+    {
+      "mimeType": "image/jpeg",
+      "name": "GrungeWall002_NRM_6K",
+      "uri": "tex/GrungeWall002_NRM_6K.jpg"
+    },
+    {
+      "mimeType": "image/png",
+      "name": "GrungeWall002_GLOSS_1K",
+      "uri": "tex/GrungeWall002_GLOSS_1K.png"
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 118,
+      "max": [3.0999982357025146, 2.684678792953491, 0.4000031054019928],
+      "min": [-3.1000020503997803, -2.6846790313720703, -1.8874017087000539e-6],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 118,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 118,
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 118,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5123,
+      "count": 180,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5126,
+      "count": 24,
+      "max": [2.5999984741210938, 2.2516660690307617, 0.24000246822834015],
+      "min": [-2.6000022888183594, -2.25166654586792, 0.1600000560283661],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 6,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 7,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 8,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 9,
+      "componentType": 5123,
+      "count": 36,
+      "type": "SCALAR"
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 1416,
+      "byteOffset": 0
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1416,
+      "byteOffset": 1416
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1888,
+      "byteOffset": 2832
+    },
+    {
+      "buffer": 0,
+      "byteLength": 944,
+      "byteOffset": 4720
+    },
+    {
+      "buffer": 0,
+      "byteLength": 360,
+      "byteOffset": 5664
+    },
+    {
+      "buffer": 0,
+      "byteLength": 288,
+      "byteOffset": 6024
+    },
+    {
+      "buffer": 0,
+      "byteLength": 288,
+      "byteOffset": 6312
+    },
+    {
+      "buffer": 0,
+      "byteLength": 384,
+      "byteOffset": 6600
+    },
+    {
+      "buffer": 0,
+      "byteLength": 192,
+      "byteOffset": 6984
+    },
+    {
+      "buffer": 0,
+      "byteLength": 72,
+      "byteOffset": 7176
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 7248,
+      "uri": "modular-tunnels.bin"
+    }
+  ]
+}

@@ -42,6 +42,7 @@ export class Arissa {
     })
   }
   // Remove entity
+
   remove(): void {
     engine.removeEntity(this.entity)
   }

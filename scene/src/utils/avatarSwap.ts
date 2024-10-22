@@ -15,6 +15,7 @@ import { getUserData } from '~system/UserIdentity'
 import * as utils from '@dcl-sdk/utils'
 import { type UserData } from '~system/Players'
 import { instance } from './currentInstance'
+import { player, scene } from '../vw-decentrally/modules/scene'
 
 export class AvatarSwapManager {
   avatarSwapUuid = ''
@@ -194,19 +195,19 @@ export class AvatarSwapManager {
     // WAC-INJECTED so can track what the player is wearing
     // hacky assumes glb == carid
     // FIXME BRITTLE, id is matching glb name.  must match avatarswap.ts + carData.ts
-    // player.avatarSwapCarModelId = vehicleModel
-    //   .replace('models/racing-models/circuitVehicles/', '')
-    //   .replace('CIRCUITS.glb', '')
-    //   .replace('models/', '')
-    //   .replace('.glb', '') // TODO clean this up better
-    // player.carModelId = player.avatarSwapCarModelId
-    // console.log(
-    //   METHOD_NAME,
-    //   'carModelId.avatarswap',
-    //   'PLAYER CAR MODEL',
-    //   player.carModelId,
-    //   player.avatarSwapCarModelId
-    // )
+    player.avatarSwapCarModelId = vehicleModel
+      .replace('models/racing-models/circuitVehicles/', '')
+      .replace('CIRCUITS.glb', '')
+      .replace('models/', '')
+      .replace('.glb', '') // TODO clean this up better
+    player.carModelId = player.avatarSwapCarModelId
+    console.log(
+      METHOD_NAME,
+      'carModelId.avatarswap',
+      'PLAYER CAR MODEL',
+      player.carModelId,
+      player.avatarSwapCarModelId
+    )
 
     if (this.vehicle !== undefined) {
       console.log(
@@ -241,7 +242,7 @@ export class AvatarSwapManager {
       this.hideAvatarsEntity = engine.addEntity()
     } else {
       // Hide avatars
-      // Transform.getMutable(this.hideAvatarsEntity).position = scene.center.clone()
+      Transform.getMutable(this.hideAvatarsEntity).position = scene.center
       // omitCleanupEntities.push(this.hideAvatarsEntity.uuid)
       utils.triggers.addTrigger(
         this.hideAvatarsEntity,

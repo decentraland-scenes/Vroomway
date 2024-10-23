@@ -855,7 +855,7 @@ export class UIInventoryManager {
           def = VehicleAttachmentManager.Instance.GetDefByID(id)
           if (def !== undefined) {
             if (
-              def.ID !== null &&
+              def.ID !== null && 
               def.Type === VEHICLE_ATTACHMENT_TYPE.TRAILS
             ) {
               this.equippedVehicleAtachments[this.modSlotSelected] = def

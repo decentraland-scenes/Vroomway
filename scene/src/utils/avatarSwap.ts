@@ -1,56 +1,47 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import {
-  AvatarModifierArea,
-  AvatarModifierType,
+  // AvatarModifierArea,
+  // AvatarModifierType,
   engine,
   type Entity,
   GltfContainer,
-  PlayerIdentityData,
   Transform
 } from '@dcl/sdk/ecs'
 import { type GameController } from '../controllers/game.controller'
 import { Quaternion, Vector3 } from '@dcl/sdk/math'
 import { Arissa } from '../instances/shared/vehicle'
-import { getUserData } from '~system/UserIdentity'
+// import { getUserData } from '~system/UserIdentity'
 import * as utils from '@dcl-sdk/utils'
-import { type UserData } from '~system/Players'
-import { instance } from './currentInstance'
 import { player, scene } from '../vw-decentrally/modules/scene'
 
 export class AvatarSwapManager {
   avatarSwapUuid = ''
   vehicle: Arissa
   gameController: GameController
-  currentPosition: Vector3 = Vector3.create()
+  lastPosition: Vector3 = Vector3.create(0, 0, 0)
+  cameraPosition: Vector3 = Transform.get(engine.CameraEntity).position
   hideAvatarsEntity: Entity = engine.addEntity()
   constructor(gameController: GameController) {
     this.gameController = gameController
     this.vehicle = new Arissa('', {
-      position: Vector3.create(0, -0.85, -0.1),
+      position: Vector3.create(0, 0, 0),
       scale: Vector3.create(0, 0, 0),
       rotation: Quaternion.create(0, 0, 0, 0)
     })
-    engine.addSystem(this.update)
+    this.update()
   }
 
   update(): void {
-    if (this.vehicle === undefined) {
-      // remove system? engine.removeSystem(this)
-      // console.console.log("CheckPlayerIsMovingSystem", "vehicle not active, skipping");
-      return
-    }
-    // player position pings only once every 100ms, should we throttle the loop?
-    if (
-      equals(this.currentPosition, Transform.get(engine.CameraEntity).position)
-    ) {
-      this.vehicle.playIdle()
-    } else {
-      copyFrom(
-        this.currentPosition,
-        Transform.get(engine.CameraEntity).position
-      )
-      this.vehicle.playRunning()
-    }
+    engine.addSystem(() => {
+      const currentPosition = Transform.get(engine.PlayerEntity).position
+
+      if (!equals(this.lastPosition, currentPosition)) {
+        this.vehicle.playRunning() 
+      } else {
+        this.vehicle.playIdle()
+      }
+      this.lastPosition = currentPosition
+    })
   }
 
   avatarSwap = async (uuid?: string): Promise<void> => {
@@ -58,7 +49,7 @@ export class AvatarSwapManager {
     // Cleanup old avatar if user switched
     // if (uuid) cleanupScene(uuid)
 
-    const userData = await getUserData({})
+    // const userData = await getUserData({})
     let vehicleModel = ''
     const currentWearable =
       this.gameController.vehicleOwnership.getEquippedVehicle()
@@ -187,7 +178,7 @@ export class AvatarSwapManager {
     if (notWearingVehicle) {
       // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
       if (this.hideAvatarsEntity) engine.removeEntity(this.hideAvatarsEntity)
-      if (this.hideAvatarsEntity) this.vehicle.remove()
+      // if (this.hideAvatarsEntity) this.vehicle.remove()
       // player.carModelId = undefined
       return
     }
@@ -196,10 +187,13 @@ export class AvatarSwapManager {
     // hacky assumes glb == carid
     // FIXME BRITTLE, id is matching glb name.  must match avatarswap.ts + carData.ts
     player.avatarSwapCarModelId = vehicleModel
-      .replace('scene/assets/models/racing-models/circuitVehicles/', '')
-      .replace('CIRCUITS.glb', '')
-      .replace('models/', '')
-      .replace('.glb', '') // TODO clean this up better
+      .replace('assets/models/racing-models/circuitVehicles/', '')
+      .replace('assets/models/', '') // nuevo replace para la carpeta assets
+      .replace('models/racing-models/circuitVehicles/', '') // para eliminar rutas específicas si corresponde
+      .replace('models/', '') // este lo mantienes si aún usas modelos desde "models/"
+      .replace('CIRCUITS.glb', '') // este lo mantienes si sigue aplicando
+      .replace('.glb', '') // elimina la extensión del archivo
+
     player.carModelId = player.avatarSwapCarModelId
     console.log(
       METHOD_NAME,
@@ -209,33 +203,27 @@ export class AvatarSwapManager {
       player.avatarSwapCarModelId
     )
 
-    if (this.vehicle !== undefined) {
-      console.log(
-        METHOD_NAME,
-        'vehical already exists, just update/make visible',
-        vehicleModel
-      )
-      // destroy current one and make another, OR do we just update the existing one?
-      this.vehicle.updateModel(vehicleModel)
-    } else {
-      console.log(METHOD_NAME, 'vehical new, make fresh visible', vehicleModel)
-      // Vehicle
-      Transform.getMutable(this.vehicle).position = Vector3.create(
-        0,
-        -0.85,
-        -0.1
-      )
-      Transform.getMutable(this.vehicle).scale = Vector3.create(0, 0, 0)
-      GltfContainer.createOrReplace(this.vehicle, { src: vehicleModel })
-      Transform.getMutable(this.vehicle).parent = engine.PlayerEntity
-      // set entity id so we can remove later if they switch avatars
-      // this.avatarSwapUuid = this.vehicle.uuid
-    }
-    AvatarModifierArea.createOrReplace(this.hideAvatarsEntity, {
-      area: Vector3.create(150, 200, 150),
-      modifiers: [AvatarModifierType.AMT_HIDE_AVATARS],
-      excludeIds: await getExcludeIds(userData.data)
-    })
+    console.log(
+      METHOD_NAME,
+      'vehical already exists, just update/make visible',
+      vehicleModel,
+      this.vehicle.model
+    )
+    Transform.getMutable(this.vehicle.entity).position = Vector3.create(
+      0,
+      0,
+      -0.1
+    )
+    Transform.getMutable(this.vehicle.entity).scale = Vector3.create(1, 1, 1)
+    GltfContainer.createOrReplace(this.vehicle.entity, { src: vehicleModel })
+    Transform.getMutable(this.vehicle.entity).parent = engine.PlayerEntity
+    // destroy current one and make another, OR do we just update the existing one?
+    this.vehicle.updateModel(vehicleModel)
+    // AvatarModifierArea.createOrReplace(this.hideAvatarsEntity, {
+    //   area: Vector3.create(150, 200, 150),
+    //   modifiers: [AvatarModifierType.AMT_HIDE_AVATARS],
+    //   excludeIds: await getExcludeIds(userData.data)
+    // })
 
     // handle mod area
     if (this.hideAvatarsEntity !== undefined) {
@@ -261,44 +249,38 @@ export class AvatarSwapManager {
   }
 }
 
-async function getExcludeIds(
-  userData: UserData | undefined
-): Promise<string[]> {
-  const playerList: string[] = []
+// async function getExcludeIds(
+//   userData: UserData | undefined
+// ): Promise<string[]> {
+//   const playerList: string[] = []
 
-  // Iterate through the entities with PlayerIdentityData and Transform components
-  for (const [entity, data, transform] of engine.getEntitiesWith(
-    PlayerIdentityData,
-    Transform
-  )) {
-    playerList.push(data.address)
-    console.log('Player data: ', { entity, data, transform })
-  }
+//   // Iterate through the entities with PlayerIdentityData and Transform components
+//   for (const [entity, data, transform] of engine.getEntitiesWith(
+//     PlayerIdentityData,
+//     Transform
+//   )) {
+//     playerList.push(data.address)
+//     console.log('Player data: ', { entity, data, transform })
+//   }
 
-  // Get the current instance outside the filter function
-  const instances = instance.getInstance() // Ensure instance is defined and scoped correctly
+//   // Get the current instance outside the filter function
+//   const instances = instance.getInstance() // Ensure instance is defined and scoped correctly
 
-  // Filter the playerList to exclude certain players (e.g., fuegoCircuit and dragRace)
-  return playerList.filter((addy) => {
-    // Exclude based on instance logic
-    if (instances === 'fuegoCircuit' || instances === 'dragRace') {
-      return false
-    }
+//   // Filter the playerList to exclude certain players (e.g., fuegoCircuit and dragRace)
+//   return playerList.filter((addy) => {
+//     // Exclude based on instance logic
+//     if (instances === 'fuegoCircuit' || instances === 'dragRace') {
+//       return false
+//     }
 
-    // Exclude the user's own ID from the list
-    return addy.toLocaleLowerCase() !== userData?.userId?.toLocaleLowerCase()
-  })
-}
-
-export type EcsMathReadOnlyVector3 = {
-  x: number
-  y: number
-  z: number
-}
+//     // Exclude the user's own ID from the list
+//     return addy.toLocaleLowerCase() !== userData?.userId?.toLocaleLowerCase()
+//   })
+// }
 
 export function equals(
-  vectorA: EcsMathReadOnlyVector3,
-  vectorB: EcsMathReadOnlyVector3,
+  vectorA: Vector3,
+  vectorB: Vector3,
   epsilon: number = 0.0001
 ): boolean {
   const diffX = Math.abs(vectorA.x - vectorB.x)

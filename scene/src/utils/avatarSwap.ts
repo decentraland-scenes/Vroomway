@@ -1,13 +1,25 @@
-import { engine, Transform, type Entity } from '@dcl/sdk/ecs'
+import {
+  AvatarModifierArea,
+  AvatarModifierType,
+  engine,
+  Transform,
+  type Entity
+} from '@dcl/sdk/ecs'
 import { type GameController } from '../controllers/game.controller'
 import { Arissa } from '../instances/shared/vehicle'
 import { Quaternion, Vector3 } from '@dcl/sdk/math'
-import { player } from '../vw-decentrally/modules/scene'
+import { player, scene } from '../vw-decentrally/modules/scene'
+import { PlayerIdentityData } from '@dcl/sdk/ecs'
+import { type UserData } from '~system/Players'
+import { instance } from './currentInstance'
+import { getUserData } from '~system/UserIdentity'
+import * as utils from '@dcl-sdk/utils'
 
 export class AvatarSwapManager {
   gameController: GameController
   avatarSwapUuid = ''
   hideAvatarsEntity: Entity = engine.addEntity()
+  hideAvatarsEntity_defined: boolean = false
   vehicle: Arissa
   lastPosition: Vector3 = Vector3.create(0, 0, 0)
   cameraPosition: Vector3 = Transform.get(engine.CameraEntity).position
@@ -34,6 +46,10 @@ export class AvatarSwapManager {
   }
 
   async avatarSwap(): Promise<void> {
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    const userData = getUserData({})
+    const excludeIds = await getExcludeIds((await userData).data)
+    console.log('Exclude IDs:', excludeIds)
     const METHOD_NAME = 'avatarSwap'
     let vehicleModel = ''
     const currentWearable =
@@ -164,6 +180,7 @@ export class AvatarSwapManager {
       engine.removeEntity(this.hideAvatarsEntity)
       this.vehicle.remove()
       player.carModelId = undefined
+      console.log('remove vehicle')
     }
     player.avatarSwapCarModelId = vehicleModel
       .replace('assets/models/racing-models/circuitVehicles/', '')
@@ -206,39 +223,71 @@ export class AvatarSwapManager {
       Transform.getMutable(this.vehicle.entity).scale = Vector3.create(1, 1, 1)
       Transform.getMutable(this.vehicle.entity).parent = engine.PlayerEntity
       this.vehicle.updateModel(vehicleModel)
-
+    }
+    // handle mod area
+    if (!this.hideAvatarsEntity_defined) {
+      this.hideAvatarsEntity = engine.addEntity()
+      AvatarModifierArea.createOrReplace(this.hideAvatarsEntity, {
+        area: Vector3.create(150, 200, 120),
+        modifiers: [AvatarModifierType.AMT_HIDE_AVATARS],
+        excludeIds
+      })
+      Transform.create(this.hideAvatarsEntity, { position: scene.center })
+      utils.triggers.addTrigger(
+        this.hideAvatarsEntity,
+        1,
+        1,
+        [
+          {
+            type: 'box',
+            scale: Vector3.create(96, 200, 80),
+            position: Vector3.create(20, 0, 35)
+          }
+        ],
+        () => {
+          console.log('triggeeeredd')
+          Transform.getMutable(this.vehicle.entity).scale = Vector3.create(
+            1,
+            1,
+            1
+          )
+        }
+      )
+      this.hideAvatarsEntity_defined = true
+    } else {
+      if (AvatarModifierArea.getOrNull(this.hideAvatarsEntity) === null) {
+        return
+      }
+      AvatarModifierArea.getMutable(this.hideAvatarsEntity).excludeIds =
+        excludeIds
     }
   }
 }
 
-// async function getExcludeIds(
-//   userData: UserData | undefined
-// ): Promise<string[]> {
-//   const playerList: string[] = []
+async function getExcludeIds(
+  userData: UserData | undefined
+): Promise<string[]> {
+  const playerList: string[] = []
 
-//   // Iterate through the entities with PlayerIdentityData and Transform components
-//   for (const [entity, data, transform] of engine.getEntitiesWith(
-//     PlayerIdentityData,
-//     Transform
-//   )) {
-//     playerList.push(data.address)
-//     console.log('Player data: ', { entity, data, transform })
-//   }
+  // Itera sobre las entidades que tienen PlayerIdentityData y Transform
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  for (const [entity, data, transform] of engine.getEntitiesWith(
+    PlayerIdentityData,
+    Transform
+  )) {
+    // Extrae el address de cada entidad y agrégalo a la lista de jugadores
+    playerList.push(data.address)
+  }
 
-//   // Get the current instance outside the filter function
-//   const instances = instance.getInstance() // Ensure instance is defined and scoped correctly
-
-//   // Filter the playerList to exclude certain players (e.g., fuegoCircuit and dragRace)
-//   return playerList.filter((addy) => {
-//     // Exclude based on instance logic
-//     if (instances === 'fuegoCircuit' || instances === 'dragRace') {
-//       return false
-//     }
-
-//     // Exclude the user's own ID from the list
-//     return addy.toLocaleLowerCase() !== userData?.userId?.toLocaleLowerCase()
-//   })
-// }
+  // Filtra la lista de IDs de jugadores
+  return playerList.filter((addy) => {
+    // eslint-disable-next-line array-callback-return
+    if (instance.getInstance() === 'fuegoCircuit') return
+    // eslint-disable-next-line array-callback-return
+    if (instance.getInstance() === 'dragRace') return
+    return addy.toLocaleLowerCase() !== userData?.userId?.toLowerCase()
+  })
+}
 
 export function equals(
   vectorA: Vector3,

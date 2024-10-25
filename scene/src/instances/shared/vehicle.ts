@@ -10,7 +10,7 @@ import {
 export class Arissa {
   entity: Entity
   model: string = ''
-  constructor(model: string, transform: TransformType) {
+  constructor(model: string, transform: TransformType) { 
     this.model = model
     this.entity = engine.addEntity()
     // omitCleanupEntities.push(this.uuid);
@@ -18,7 +18,8 @@ export class Arissa {
       position: transform.position,
       scale: transform.scale,
       rotation: transform.rotation
-    }) 
+    })
+    GltfContainer.create(this.entity, { src: model })
     this.updateModel(this.model)
   }
 
@@ -27,7 +28,7 @@ export class Arissa {
     // is not updating the entity animator, add remove from engine solved this
     // alternative is to remove animator first, then add back
     this.model= 'assets/'+model
-    if (Animator.getMutableOrNull(this.entity) != null) {
+    if (Animator.getMutableOrNull(this.entity) != null) { 
       Animator.deleteFrom(this.entity)
     }
     GltfContainer.createOrReplace(this.entity, { src: this.model })
@@ -43,12 +44,11 @@ export class Arissa {
         }
       ]
     })
-    console.log('model updated', this.model)
   }
   // Remove entity
 
   remove(): void {
-    engine.removeEntity(this.entity)
+    GltfContainer.getMutable(this.entity).src = ''
   } 
 
   // Play running animation

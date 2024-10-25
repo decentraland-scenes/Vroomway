@@ -260,7 +260,7 @@ export class PlayerBase {
   cameraDirection: Quaternion = Quaternion.create()
   carRotation: Quaternion = Quaternion.create()
   shootDirection: Quaternion = Quaternion.create()
-  carModelId: string = '' // MOVE ME SOMEWHERE BETTER!! make car state???
+  carModelId: string|undefined = '' // MOVE ME SOMEWHERE BETTER!! make car state???
   // FIXME for now purposely not resetting this guy, letting avatarswap manage it
   avatarSwapCarModelId: string = '' // MOVE ME SOMEWHERE BETTER!! make car state???
 

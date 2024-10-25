@@ -1,31 +1,21 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import {
-  // AvatarModifierArea,
-  // AvatarModifierType,
-  engine,
-  type Entity,
-  GltfContainer,
-  Transform
-} from '@dcl/sdk/ecs'
+import { engine, Transform, type Entity } from '@dcl/sdk/ecs'
 import { type GameController } from '../controllers/game.controller'
-import { Quaternion, Vector3 } from '@dcl/sdk/math'
 import { Arissa } from '../instances/shared/vehicle'
-// import { getUserData } from '~system/UserIdentity'
-import * as utils from '@dcl-sdk/utils'
-import { player, scene } from '../vw-decentrally/modules/scene'
+import { Quaternion, Vector3 } from '@dcl/sdk/math'
+import { player } from '../vw-decentrally/modules/scene'
 
 export class AvatarSwapManager {
-  avatarSwapUuid = ''
-  vehicle: Arissa
   gameController: GameController
+  avatarSwapUuid = ''
+  hideAvatarsEntity: Entity = engine.addEntity()
+  vehicle: Arissa
   lastPosition: Vector3 = Vector3.create(0, 0, 0)
   cameraPosition: Vector3 = Transform.get(engine.CameraEntity).position
-  hideAvatarsEntity: Entity = engine.addEntity()
   constructor(gameController: GameController) {
     this.gameController = gameController
     this.vehicle = new Arissa('', {
       position: Vector3.create(0, 0, 0),
-      scale: Vector3.create(0, 0, 0),
+      scale: Vector3.create(1, 1, 1),
       rotation: Quaternion.create(0, 0, 0, 0)
     })
     this.update()
@@ -34,9 +24,8 @@ export class AvatarSwapManager {
   update(): void {
     engine.addSystem(() => {
       const currentPosition = Transform.get(engine.PlayerEntity).position
-
       if (!equals(this.lastPosition, currentPosition)) {
-        this.vehicle.playRunning() 
+        this.vehicle.playRunning()
       } else {
         this.vehicle.playIdle()
       }
@@ -44,12 +33,8 @@ export class AvatarSwapManager {
     })
   }
 
-  avatarSwap = async (uuid?: string): Promise<void> => {
+  async avatarSwap(): Promise<void> {
     const METHOD_NAME = 'avatarSwap'
-    // Cleanup old avatar if user switched
-    // if (uuid) cleanupScene(uuid)
-
-    // const userData = await getUserData({})
     let vehicleModel = ''
     const currentWearable =
       this.gameController.vehicleOwnership.getEquippedVehicle()
@@ -176,16 +161,10 @@ export class AvatarSwapManager {
       !wearingHoverCar2 &&
       !wearingHoverCar3
     if (notWearingVehicle) {
-      // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-      if (this.hideAvatarsEntity) engine.removeEntity(this.hideAvatarsEntity)
-      // if (this.hideAvatarsEntity) this.vehicle.remove()
-      // player.carModelId = undefined
-      return
+      engine.removeEntity(this.hideAvatarsEntity)
+      this.vehicle.remove()
+      player.carModelId = undefined
     }
-    // INJECTING TO TRACK WHAT THEY HAVE ON TO SHARE
-    // WAC-INJECTED so can track what the player is wearing
-    // hacky assumes glb == carid
-    // FIXME BRITTLE, id is matching glb name.  must match avatarswap.ts + carData.ts
     player.avatarSwapCarModelId = vehicleModel
       .replace('assets/models/racing-models/circuitVehicles/', '')
       .replace('assets/models/', '') // nuevo replace para la carpeta assets
@@ -202,49 +181,32 @@ export class AvatarSwapManager {
       player.carModelId,
       player.avatarSwapCarModelId
     )
-
-    console.log(
-      METHOD_NAME,
-      'vehical already exists, just update/make visible',
-      vehicleModel,
-      this.vehicle.model
-    )
-    Transform.getMutable(this.vehicle.entity).position = Vector3.create(
-      0,
-      0,
-      -0.1
-    )
-    Transform.getMutable(this.vehicle.entity).scale = Vector3.create(1, 1, 1)
-    GltfContainer.createOrReplace(this.vehicle.entity, { src: vehicleModel })
-    Transform.getMutable(this.vehicle.entity).parent = engine.PlayerEntity
-    // destroy current one and make another, OR do we just update the existing one?
-    this.vehicle.updateModel(vehicleModel)
-    // AvatarModifierArea.createOrReplace(this.hideAvatarsEntity, {
-    //   area: Vector3.create(150, 200, 150),
-    //   modifiers: [AvatarModifierType.AMT_HIDE_AVATARS],
-    //   excludeIds: await getExcludeIds(userData.data)
-    // })
-
-    // handle mod area
-    if (this.hideAvatarsEntity !== undefined) {
-      this.hideAvatarsEntity = engine.addEntity()
-    } else {
-      // Hide avatars
-      Transform.getMutable(this.hideAvatarsEntity).position = scene.center
-      // omitCleanupEntities.push(this.hideAvatarsEntity.uuid)
-      utils.triggers.addTrigger(
-        this.hideAvatarsEntity,
-        1,
-        1,
-        [{ type: 'box', scale: Vector3.create(20, 0, 35) }],
-        () => {
-          Transform.getMutable(this.vehicle.entity).scale = Vector3.create(
-            1,
-            1,
-            1
-          )
-        }
+    if (this.vehicle.model !== 'assets/') {
+      console.log(
+        METHOD_NAME,
+        'vehical already exists, just update/make visible',
+        vehicleModel,
+        this.vehicle.model
       )
+      // destroy current one and make another, OR do we just update the existing one?
+      this.vehicle.updateModel(vehicleModel)
+    } else {
+      console.log(
+        METHOD_NAME,
+        'vehical new, make fresh visible',
+        vehicleModel,
+        this.vehicle.model
+      )
+      // Vehicle
+      Transform.getMutable(this.vehicle.entity).position = Vector3.create(
+        0,
+        0,
+        -0.1
+      )
+      Transform.getMutable(this.vehicle.entity).scale = Vector3.create(1, 1, 1)
+      Transform.getMutable(this.vehicle.entity).parent = engine.PlayerEntity
+      this.vehicle.updateModel(vehicleModel)
+
     }
   }
 }

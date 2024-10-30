@@ -36,7 +36,7 @@ export class AvatarSwapManager {
     })
 
     AvatarModifierArea.create(this.hideAvatarsEntity, {
-      area: Vector3.create(96, 1, 64),
+      area: Vector3.create(96, 100, 64),
       modifiers: [AvatarModifierType.AMT_HIDE_AVATARS],
       excludeIds: []
     })

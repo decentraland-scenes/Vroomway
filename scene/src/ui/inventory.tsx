@@ -578,7 +578,7 @@ export class UIInventoryManager {
                 fontSize={fontSizeXP * 0.8}
               />
               <Label
-                uiTransform={{ 
+                uiTransform={{
                   positionType: 'relative',
                   width: '100%',
                   height: '11.3%'
@@ -811,7 +811,7 @@ export class UIInventoryManager {
               )
 
               //  current vehicle
-              this.uiController.gameController.vehicleOwnership.changeEquippedVehicle(id);
+              // this.uiController.gameController.vehicleOwnership.changeEquippedVehicle(id);
             }
           }
           //attempt to equip vehicle
@@ -829,7 +829,9 @@ export class UIInventoryManager {
               this.selectedAccesory = def
               this.updateDisplayBonus()
               // legacy
-              this.uiController.gameController.vehicleOwnership.changeEquippedVehicle(id);
+              this.uiController.gameController.vehicleOwnership.changeEquippedVehicle(
+                id
+              )
             }
           }
 
@@ -855,7 +857,7 @@ export class UIInventoryManager {
           def = VehicleAttachmentManager.Instance.GetDefByID(id)
           if (def !== undefined) {
             if (
-              def.ID !== null && 
+              def.ID !== null &&
               def.Type === VEHICLE_ATTACHMENT_TYPE.TRAILS
             ) {
               this.equippedVehicleAtachments[this.modSlotSelected] = def

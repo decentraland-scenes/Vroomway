@@ -811,7 +811,7 @@ export class UIInventoryManager {
               )
 
               //  current vehicle
-              // VehicleOwnership.changeEquippedVehicle(id);
+              // this.uiController.gameController.vehicleOwnership.changeEquippedVehicle(id);
             }
           }
           //attempt to equip vehicle
@@ -829,7 +829,9 @@ export class UIInventoryManager {
               this.selectedAccesory = def
               this.updateDisplayBonus()
               // legacy
-              // vehicleOwnership.changeEquippedAccessory(id);
+              this.uiController.gameController.vehicleOwnership.changeEquippedVehicle(
+                id
+              )
             }
           }
 

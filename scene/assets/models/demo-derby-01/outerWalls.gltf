@@ -1,0 +1,362 @@
+{
+  "asset": {
+    "generator": "Khronos glTF Blender I/O v3.2.43",
+    "version": "2.0"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [0, 1]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "Outer Walls",
+      "scale": [31.999998092651367, 1, 31.999998092651367],
+      "translation": [-31.999998092651367, 0, 31.999998092651367]
+    },
+    {
+      "mesh": 1,
+      "name": "Outer Walls_collider",
+      "scale": [31.999998092651367, 1, 31.999998092651367],
+      "translation": [-31.999998092651367, 0, 31.999998092651367]
+    }
+  ],
+  "materials": [
+    {
+      "name": "Floor1Base",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicFactor": 0
+      }
+    },
+    {
+      "name": "Floor1Decals.001",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 1
+        },
+        "metallicFactor": 0
+      }
+    },
+    {
+      "emissiveFactor": [1, 0.48451059736451896, 0],
+      "name": "Glow",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [0.8000000715255737, 0.13721336424350739, 0, 1],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.5
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Cube",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3
+          },
+          "indices": 4,
+          "material": 0
+        },
+        {
+          "attributes": {
+            "POSITION": 5,
+            "NORMAL": 6,
+            "TANGENT": 7,
+            "TEXCOORD_0": 8
+          },
+          "indices": 9,
+          "material": 1
+        },
+        {
+          "attributes": {
+            "POSITION": 10,
+            "NORMAL": 11,
+            "TANGENT": 12,
+            "TEXCOORD_0": 13
+          },
+          "indices": 14,
+          "material": 2
+        }
+      ]
+    },
+    {
+      "name": "Cube.076",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 15,
+            "NORMAL": 16,
+            "TANGENT": 17,
+            "TEXCOORD_0": 18
+          },
+          "indices": 4
+        }
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    }
+  ],
+  "images": [
+    {
+      "mimeType": "image/png",
+      "name": "Floor1Base_2D_View",
+      "uri": "tex/Floor1Base_2D_View.png"
+    },
+    {
+      "mimeType": "image/png",
+      "name": "Floor1Decals_2D_View",
+      "uri": "tex/Floor1Decals_2D_View.png"
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 20,
+      "max": [1, 75.81832885742188, 1],
+      "min": [-1, -1, -1],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 20,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 20,
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 20,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5123,
+      "count": 30,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5126,
+      "count": 766,
+      "max": [0.9522737860679626, 33.65113830566406, 0.9816465377807617],
+      "min": [-0.9522737860679626, 10.702150344848633, -0.9808851480484009],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 6,
+      "componentType": 5126,
+      "count": 766,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 7,
+      "componentType": 5126,
+      "count": 766,
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 8,
+      "componentType": 5126,
+      "count": 766,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 9,
+      "componentType": 5123,
+      "count": 2796,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 10,
+      "componentType": 5126,
+      "count": 276,
+      "max": [0.9028114080429077, 33.65113830566406, 0.9028114080429077],
+      "min": [-0.9028114080429077, 10.702150344848633, -0.9028114080429077],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 11,
+      "componentType": 5126,
+      "count": 276,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 12,
+      "componentType": 5126,
+      "count": 276,
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 13,
+      "componentType": 5126,
+      "count": 276,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 14,
+      "componentType": 5123,
+      "count": 708,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 15,
+      "componentType": 5126,
+      "count": 20,
+      "max": [1, 75.81832885742188, 1],
+      "min": [-1, -1, -1],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 16,
+      "componentType": 5126,
+      "count": 20,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 17,
+      "componentType": 5126,
+      "count": 20,
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 18,
+      "componentType": 5126,
+      "count": 20,
+      "type": "VEC2"
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 240,
+      "byteOffset": 0
+    },
+    {
+      "buffer": 0,
+      "byteLength": 240,
+      "byteOffset": 240
+    },
+    {
+      "buffer": 0,
+      "byteLength": 320,
+      "byteOffset": 480
+    },
+    {
+      "buffer": 0,
+      "byteLength": 160,
+      "byteOffset": 800
+    },
+    {
+      "buffer": 0,
+      "byteLength": 60,
+      "byteOffset": 960
+    },
+    {
+      "buffer": 0,
+      "byteLength": 9192,
+      "byteOffset": 1020
+    },
+    {
+      "buffer": 0,
+      "byteLength": 9192,
+      "byteOffset": 10212
+    },
+    {
+      "buffer": 0,
+      "byteLength": 12256,
+      "byteOffset": 19404
+    },
+    {
+      "buffer": 0,
+      "byteLength": 6128,
+      "byteOffset": 31660
+    },
+    {
+      "buffer": 0,
+      "byteLength": 5592,
+      "byteOffset": 37788
+    },
+    {
+      "buffer": 0,
+      "byteLength": 3312,
+      "byteOffset": 43380
+    },
+    {
+      "buffer": 0,
+      "byteLength": 3312,
+      "byteOffset": 46692
+    },
+    {
+      "buffer": 0,
+      "byteLength": 4416,
+      "byteOffset": 50004
+    },
+    {
+      "buffer": 0,
+      "byteLength": 2208,
+      "byteOffset": 54420
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1416,
+      "byteOffset": 56628
+    },
+    {
+      "buffer": 0,
+      "byteLength": 240,
+      "byteOffset": 58044
+    },
+    {
+      "buffer": 0,
+      "byteLength": 240,
+      "byteOffset": 58284
+    },
+    {
+      "buffer": 0,
+      "byteLength": 320,
+      "byteOffset": 58524
+    },
+    {
+      "buffer": 0,
+      "byteLength": 160,
+      "byteOffset": 58844
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 59004,
+      "uri": "outerWalls.bin"
+    }
+  ]
+}

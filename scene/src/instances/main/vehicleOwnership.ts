@@ -175,7 +175,7 @@ export class VehicleOwnership {
   }
 
   changeEquippedVehicle = (
-    vehicle: EquippedVehicle,
+    vehicle: EquippedVehicle | string,
     onInit?: boolean
   ): void => {
     this.equippedVehicle = vehicle

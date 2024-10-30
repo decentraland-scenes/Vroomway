@@ -56,9 +56,9 @@ export enum VEHICLE_ID {
   HOVER_BIKE_L1 = 'hoverBike1',
   HOVER_BIKE_L2 = 'hoverBike2',
   HOVER_BIKE_L3 = 'hoverBike3',
-  BRUTE_L1 = 'brute1',
-  BRUTE_L2 = 'brute2',
-  BRUTE_L3 = 'brute3',
+  BRUTE_L1 = 'brutes1',
+  BRUTE_L2 = 'brutes2',
+  BRUTE_L3 = 'brutes3',
   // ###   TIER 3
   HOVER_CAR_L1 = 'hoverCar1',
   HOVER_CAR_L2 = 'hoverCar2',

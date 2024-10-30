@@ -24,4 +24,3 @@ export function main(): void {
   // DebugMenuController.Instance.InitDebugMenuInventory();
   // DebugMenuController.Instance.InitDebugMenuLeveling();
 }
-

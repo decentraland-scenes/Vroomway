@@ -10,7 +10,7 @@ import {
 export class Arissa {
   entity: Entity
   model: string = ''
-  constructor(model: string, transform: TransformType) { 
+  constructor(model: string, transform: TransformType) {
     this.model = model
     this.entity = engine.addEntity()
     // omitCleanupEntities.push(this.uuid);
@@ -27,8 +27,8 @@ export class Arissa {
     // workaround.  for some reason addComponentOrReplace
     // is not updating the entity animator, add remove from engine solved this
     // alternative is to remove animator first, then add back
-    this.model= 'assets/'+model
-    if (Animator.getMutableOrNull(this.entity) != null) { 
+    this.model = 'assets/' + model
+    if (Animator.getMutableOrNull(this.entity) != null) {
       Animator.deleteFrom(this.entity)
     }
     GltfContainer.createOrReplace(this.entity, { src: this.model })
@@ -38,7 +38,7 @@ export class Arissa {
           clip: 'go',
           loop: true
         },
-        { 
+        {
           clip: 'idle',
           loop: true
         }
@@ -49,7 +49,7 @@ export class Arissa {
 
   remove(): void {
     GltfContainer.getMutable(this.entity).src = ''
-  } 
+  }
 
   // Play running animation
   playRunning(): void {

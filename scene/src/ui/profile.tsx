@@ -222,11 +222,21 @@ export class Profile {
     this.coins = InventoryManager.Instance.GetItemCountByID(
       ItemNameResource.coins
     )
+    console.log(
+      this.lvl + '  level',
+      this.coins + '  coins',
+      this.fuel + '  fuel'
+    )
   }
 
   updateFuel(): void {
     this.fuel = InventoryManager.Instance.GetItemCountByID(
       ItemNameResource.fuel
+    )
+    console.log(
+      this.lvl + '  level',
+      this.coins + '  coins',
+      this.fuel + '  fuel'
     )
   }
 

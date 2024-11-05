@@ -219,13 +219,10 @@ export class Profile {
   }
 
   updateCoins(): void {
-    this.coins = InventoryManager.Instance.GetItemCountByID(
+    const coinCount = InventoryManager.Instance.GetItemCountByID(
       ItemNameResource.coins
     )
-    const coinsCount = InventoryManager.Instance.GetItemCountByID(
-      ItemNameResource.coins
-    )
-    this.coins = Math.min(coinsCount, 9999)
+    this.coins = Math.min(coinCount, 9999)
   }
 
   updateFuel(): void {

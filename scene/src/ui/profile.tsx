@@ -222,12 +222,17 @@ export class Profile {
     this.coins = InventoryManager.Instance.GetItemCountByID(
       ItemNameResource.coins
     )
+    const coinsCount = InventoryManager.Instance.GetItemCountByID(
+      ItemNameResource.coins
+    )
+    this.coins = Math.min(coinsCount, 9999)
   }
 
   updateFuel(): void {
-    this.fuel = InventoryManager.Instance.GetItemCountByID(
+    const fuelCount = InventoryManager.Instance.GetItemCountByID(
       ItemNameResource.fuel
     )
+    this.fuel = Math.min(fuelCount, 999)
   }
 
   updateCompPoints(): void {

@@ -27,14 +27,18 @@
   ],
   "materials": [
     {
-      "emissiveFactor": [9.105713242377536e-5, 0.00021246830318075866, 0.00129830280390833],
+      "emissiveFactor": [
+        9.105713242377536e-5, 0.00021246830318075866, 0.00129830280390833
+      ],
       "name": "glTF_black",
       "normalTexture": {
         "index": 0,
         "scale": 0.33000001311302185
       },
       "pbrMetallicRoughness": {
-        "baseColorFactor": [0.0009105713106691837, 0.0021246830001473427, 0.012983027845621109, 1],
+        "baseColorFactor": [
+          0.0009105713106691837, 0.0021246830001473427, 0.012983027845621109, 1
+        ],
         "metallicFactor": 0,
         "metallicRoughnessTexture": {
           "index": 1

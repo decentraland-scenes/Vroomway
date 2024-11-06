@@ -1646,7 +1646,7 @@ export class SoloSprint {
     // start timer
     // if connected to lobby, lobby will overwrite, but still want this here to enforce expectation
     // Constants.SCENE_MGR.lastRaceType = 'solosprint'
-    this.gameController.uiController.powerUpBar.show()
+    this.gameController.uiController.powerUpBar.showSoloSprintMode()
     // GAME_STATE.setGameTimeFromServerClock({ serverTime: -2 }) // using local game time since not connected
     // this.gameController.PowerUpsInv.powerUpMgr.reset()
     // this.gameController.PowerUpsInv.powerUpMgr.initPowerUps(options.powerUps)

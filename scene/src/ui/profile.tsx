@@ -219,25 +219,17 @@ export class Profile {
   }
 
   updateCoins(): void {
-    this.coins = InventoryManager.Instance.GetItemCountByID(
+    const coinCount = InventoryManager.Instance.GetItemCountByID(
       ItemNameResource.coins
     )
-    console.log(
-      this.lvl + '  level',
-      this.coins + '  coins',
-      this.fuel + '  fuel'
-    )
+    this.coins = Math.min(coinCount, 9999)
   }
 
   updateFuel(): void {
-    this.fuel = InventoryManager.Instance.GetItemCountByID(
+    const fuelCount = InventoryManager.Instance.GetItemCountByID(
       ItemNameResource.fuel
     )
-    console.log(
-      this.lvl + '  level',
-      this.coins + '  coins',
-      this.fuel + '  fuel'
-    )
+    this.fuel = Math.min(fuelCount, 999)
   }
 
   updateCompPoints(): void {

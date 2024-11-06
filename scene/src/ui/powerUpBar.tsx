@@ -199,6 +199,8 @@ export class PowerUpBar {
   powerupBoard: Sprite
   visible: boolean = false
   items: PowerUpBarItem[] = []
+  barWidth: string = '100%'
+  originalItems: PowerUpBarItem[] = []
   uiController: UIController
   constructor(uiController: UIController) {
     this.powerupBoard = background
@@ -272,6 +274,7 @@ export class PowerUpBar {
     this.items.push(item4)
     this.items.push(item5)
     this.items.push(item6)
+    this.originalItems = [...this.items]
   }
 
   createUI(): ReactEcs.JSX.Element {
@@ -304,7 +307,7 @@ export class PowerUpBar {
             <UiEntity
               uiTransform={{
                 positionType: 'relative',
-                width: '100%',
+                width: '30%',
                 height: '100%',
                 flexDirection: 'row',
                 justifyContent: 'space-around',
@@ -448,6 +451,23 @@ export class PowerUpBar {
     //     this.k2ButtonAction,
     //     this.k3ButtonAction
     //   )
+    this.items = [...this.originalItems]
+    this.visible = true
+  }
+
+  showSoloSprintMode(): void {
+    console.log('PowerUpsBar SoloSprint Mode')
+    // this.item3.setVisible(false)
+    // this.items[3].setActive(false)
+    // this.items[3].setVisible(false)
+    // this.items[4].setActive(false)
+    // this.items[4].setVisible(false)
+    // this.items[5].setActive(false)
+    // this.items[5].setVisible(false)
+    // this.item3.visible = false
+    // this.updateUI()
+    this.items = this.originalItems.slice(0, 2)
+    this.barWidth = '30%'
     this.visible = true
   }
 

@@ -183,7 +183,9 @@
     {
       "name": "glTF_grey_metallic",
       "pbrMetallicRoughness": {
-        "baseColorFactor": [0.21448764204978943, 0.21448764204978943, 0.2144877165555954, 1],
+        "baseColorFactor": [
+          0.21448764204978943, 0.21448764204978943, 0.2144877165555954, 1
+        ],
         "roughnessFactor": 0.8554179668426514
       }
     },
@@ -196,7 +198,9 @@
         "scale": 0.5
       },
       "pbrMetallicRoughness": {
-        "baseColorFactor": [0.1232767328619957, 0.1232767328619957, 0.1232767328619957, 1],
+        "baseColorFactor": [
+          0.1232767328619957, 0.1232767328619957, 0.1232767328619957, 1
+        ],
         "baseColorTexture": {
           "index": 1
         },

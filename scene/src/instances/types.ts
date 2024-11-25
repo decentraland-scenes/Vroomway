@@ -1,6 +1,12 @@
 import { type Vector3 } from '@dcl/sdk/math'
 
-export type RealmType = 'mainInstance' | 'recharge' | 'scrapyard' | 'soloSprint'
+export type RealmType =
+  | 'mainInstance'
+  | 'recharge'
+  | 'scrapyard'
+  | 'soloSprint'
+  | 'dragRace'
+  | 'fuegoCircuits'
 
 export type Realm = {
   getId: () => RealmType

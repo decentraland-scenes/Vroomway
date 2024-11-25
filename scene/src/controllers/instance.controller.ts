@@ -1,3 +1,5 @@
+import { DragRaceInstance } from '../instances/dragrace/dragrace'
+import { FuegoCircuitsInstance } from '../instances/fuegoCircuits/fuegoCircuits'
 import { MainInstance } from '../instances/main/mainInstance'
 import { RechargeInstance } from '../instances/recharge/recharge'
 import { Scrapyard } from '../instances/scrapyard/scrapyard'
@@ -32,6 +34,12 @@ export class RealmController {
         break
       case 'soloSprint':
         this.currentRealm = new SoloSprint(this.gameController)
+        break
+      case 'dragRace':
+        this.currentRealm = new DragRaceInstance(this.gameController)
+        break
+      case 'fuegoCircuits':
+        this.currentRealm = new FuegoCircuitsInstance(this.gameController)
         break
     }
   }

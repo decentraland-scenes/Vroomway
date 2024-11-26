@@ -38,7 +38,7 @@ export class RealmController {
       case 'dragRace':
         this.currentRealm = new DragRaceInstance(this.gameController)
         break
-      case 'fuegoCircuits':
+      case 'fuegoCircuit':
         this.currentRealm = new FuegoCircuitsInstance(this.gameController)
         break
     }

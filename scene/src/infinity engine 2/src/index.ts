@@ -25,6 +25,7 @@ export function infinityEngineMain(): void {
     if (!initMyFirstScene()) {
       // start with race trace as default it no other scene
       REGISTRY.SCENE_MGR.goRaceTrack()
+      REGISTRY.SCENE_MGR.destroyActiveScene()
     }
   })
 }

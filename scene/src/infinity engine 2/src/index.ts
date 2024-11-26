@@ -7,7 +7,7 @@ import { initSceneMgr } from './scenes/mySceneManager'
 // export all the functions required to make the scene work
 export * from '@dcl/sdk'
 
-export function main(): void {
+export function infinityEngineMain(): void {
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   initConfig().then((config) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

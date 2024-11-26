@@ -78,7 +78,9 @@ export function engineTweenStartScaling(
     }),
     duration,
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions, no-unneeded-ternary
-    easingFunction: interpolationType ? interpolationType : EasingFunction.EF_LINEAR,
+    easingFunction: interpolationType
+      ? interpolationType
+      : EasingFunction.EF_LINEAR
   })
 
   // clear out any previous timer

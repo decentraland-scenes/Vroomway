@@ -91,7 +91,7 @@ export class WorldState {
     }
   }
 
-  updateWithSceneConf(sceneConf: SceneConfig):void {
+  updateWithSceneConf(sceneConf: SceneConfig): void {
     const gridData = getGridDims(sceneConf.grid.tileSetConf)
     const tiledata = sceneConf.grid.tileSetConf.data
 
@@ -111,7 +111,7 @@ export class WorldState {
     }
   }
 
-  destroy():void {
+  destroy(): void {
     if (this.debugEntity) engine.removeEntity(this.debugEntity)
     if (this.debugPoint) engine.removeEntity(this.debugPoint)
   }

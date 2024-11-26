@@ -24,5 +24,4 @@ export function main(): void {
   //  NOTE: debug menus will only appear in the first render of the main scene
   // DebugMenuController.Instance.InitDebugMenuInventory();
   // DebugMenuController.Instance.InitDebugMenuLeveling();
-  
 }

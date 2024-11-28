@@ -91,7 +91,7 @@ function createSceneConfig(): SceneConfig {
           scale: Vector3.create(0.5, 0.5, 0.5)
         },
         mesh: {
-          src: 'assets/demo/skater.glb', // <<=== define what your avatar swap looks like
+          src: 'assets/demo/car.glb', // <<=== define what your avatar swap looks like
           invisibleMeshesCollisionMask: ColliderLayer.CL_NONE,
           visibleMeshesCollisionMask: ColliderLayer.CL_NONE
         }

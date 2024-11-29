@@ -205,8 +205,6 @@ export class MainInstance {
               }
             }
             if (entity.includes('FC')) {
-              this.gameController.realmController.switchRealm('fuegoCircuit')
-              instance.setInstance('fuegoCircuit')
               if (instance.getInstance() !== 'main') return
               if (this.gameController.Player.getFuel() >= FUEGO_CIRCUIT_COST) {
                 this.gameController.decentrallyBoard.show()

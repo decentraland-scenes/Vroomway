@@ -1,4 +1,4 @@
-import { type Entity, GltfContainer, Transform, engine } from '@dcl/sdk/ecs'
+import { type Entity, Transform, engine } from '@dcl/sdk/ecs'
 import { Quaternion, Vector3 } from '@dcl/sdk/math'
 import { MovesWithWorld } from '../world/worldMoveComponent'
 
@@ -15,7 +15,6 @@ export class DebugSpherePool {
         // position: Vector3.create(10,-3, 10),
         scale: Vector3.create(8.25, 8.25, 8.25)
       })
-      GltfContainer.create(sphere, { src: 'assets/axis.glb' })
       MovesWithWorld.create(sphere)
 
       this.spheres.push(sphere)

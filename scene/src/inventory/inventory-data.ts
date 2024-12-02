@@ -13,7 +13,7 @@
 import { itemsSprites } from '../ui/atlas/itemsSprites'
 import { type Sprite } from '../ui/utils/utils'
 
-// interfaces 
+// interfaces
 export type BaseObject = {
   ID: string // unique index, this is the value sent to the server
   Name: string // display name

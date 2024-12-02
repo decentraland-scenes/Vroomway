@@ -1,6 +1,6 @@
 import { Vector3 } from '@dcl/sdk/math'
-import colliderJSON from '../../../../assets/demo/vw-racetrack-8x8x32/colliders.json'
-import tilesetJSON_8x8_30 from '../../../../assets/demo/vw-racetrack-8x8x32/tileset.json'
+import colliderJSON from '../../../../../../assets/demo/vw-racetrack-8x8x32/colliders.json'
+import tilesetJSON_8x8_30 from '../../../../../../assets/demo/vw-racetrack-8x8x32/tileset.json'
 import { CONFIG } from '../../../config'
 import { type SceneConfig } from '../../../sceneConfigType'
 import { ColliderLayer } from '@dcl/sdk/ecs'

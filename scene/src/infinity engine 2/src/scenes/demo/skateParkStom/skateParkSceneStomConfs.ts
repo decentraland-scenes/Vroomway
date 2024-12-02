@@ -1,6 +1,6 @@
 import { Vector3 } from '@dcl/sdk/math'
-import colliderJSON from '../../../../assets/demo/stom-skatepark-8x8x30/colliders.json'
-import tilesetJSON_8x8_30 from '../../../../assets/demo/stom-skatepark-8x8x30/tileset.json'
+import colliderJSON from '../../../../../../assets/demo/stom-skatepark-8x8x30/colliders.json'
+import tilesetJSON_8x8_30 from '../../../../../../assets/demo/stom-skatepark-8x8x30/tileset.json'
 import { CONFIG } from '../../../config'
 import { type SceneConfig } from '../../../sceneConfigType'
 import { ColliderLayer } from '@dcl/sdk/ecs'

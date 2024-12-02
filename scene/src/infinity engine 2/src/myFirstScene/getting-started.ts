@@ -30,7 +30,7 @@ import {
   MeshRenderer
 } from '@dcl/sdk/ecs'
 import { Vector3, Color4 } from '@dcl/sdk/math'
-import colliderJSON from '../../assets/demo/stom-skatepark-8x8x30/colliders.json'
+import colliderJSON from '../../../../assets/demo/stom-skatepark-8x8x30/colliders.json'
 
 // ██╗███╗   ███╗██████╗  ██████╗ ██████╗ ████████╗    ███████╗██╗     ██╗ ██████╗███████╗██████╗
 // ██║████╗ ████║██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝    ██╔════╝██║     ██║██╔════╝██╔════╝██╔══██╗
@@ -43,7 +43,7 @@ import colliderJSON from '../../assets/demo/stom-skatepark-8x8x30/colliders.json
 // https://github.com/stom66/blender-dcltk-scene-slicer
 //
 // CORRECT THE PATH TO MATCH WHERE YOU EXPORTED THE TILESET
-import tilesetJSON from '../../assets/demo/stom-skatepark-8x8x30/tileset.json'
+import tilesetJSON from '../../../../assets/demo/stom-skatepark-8x8x30/tileset.json'
 import { CONFIG } from '../config'
 import { REGISTRY } from '../registry'
 import { type SceneConfig } from '../sceneConfigType'

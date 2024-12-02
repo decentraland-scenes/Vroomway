@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import { type Vector3 } from '~system/EngineApi'
 import { type GameController } from '../../controllers/game.controller'
 import { type RealmType } from '../types'
 import { initRegistry, REGISTRY } from '../../infinity engine 2/src/registry'
 import { initSceneMgr } from '../../infinity engine 2/src/scenes/mySceneManager'
 import { setupDemo } from '../../infinity engine 2/src/demo/setupDemo'
 import { initMyFirstScene } from '../../infinity engine 2/src/myFirstScene/getting-started'
-import { initConfig } from '../../infinity engine 2/src/config'
+import { CONFIG, initConfig } from '../../infinity engine 2/src/config'
+import * as utils from '@dcl-sdk/utils'
+import { Vector3 } from '@dcl/sdk/math'
+import { movePlayerTo } from '~system/RestrictedActions'
+import { initAvatarTrap } from '../../infinity engine 2/src/modules/avatarTrap/avatarTrap'
 
 export class FuegoCircuitsInstance {
   gameController: GameController
@@ -28,6 +31,21 @@ export class FuegoCircuitsInstance {
       if (!initMyFirstScene()) {
         // start with race trace as default it no other scene
         REGISTRY.SCENE_MGR.goRaceTrack()
+        utils.timers.setTimeout(() => {
+          initAvatarTrap()
+          movePlayerTo({
+            newRelativePosition: Vector3.create(
+              CONFIG.infinEngineCenter.x,
+              CONFIG.infinEngineCenter.y + 0.5,
+              CONFIG.infinEngineCenter.z
+            ),
+            cameraTarget: Vector3.create(
+              CONFIG.infinEngineCenter.x,
+              CONFIG.infinEngineCenter.y + 0.5,
+              CONFIG.infinEngineCenter.z + 2
+            )
+          })
+        }, 1000)
       }
     })
   }

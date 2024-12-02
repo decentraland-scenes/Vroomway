@@ -2,6 +2,7 @@ import * as utils from '@dcl-sdk/utils'
 import { GameController } from './controllers/game.controller'
 import { Vector3 } from '@dcl/sdk/math'
 import { movePlayerTo } from '~system/RestrictedActions'
+// import { infinityEngineMain } from './infinity engine 2/src'
 
 export function main(): void {
   // prepare entry scene
@@ -18,7 +19,7 @@ export function main(): void {
     })
     void game.vehicleOwnership.init()
   }, 200)
-
+  // infinityEngineMain()
   // initialize debugging menu
   //  NOTE: debug menus will only appear in the first render of the main scene
   // DebugMenuController.Instance.InitDebugMenuInventory();

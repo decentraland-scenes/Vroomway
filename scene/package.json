@@ -30,5 +30,10 @@
   "engines": {
     "node": ">=16.0.0",
     "npm": ">=6.0.0"
+  },
+  "dependencies": {
+    "@types/cannon": "latest",
+    "cannon": "latest",
+    "dcl-ui-toolkit": "^0.10.0"
   }
 }

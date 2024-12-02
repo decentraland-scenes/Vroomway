@@ -123,6 +123,7 @@ export class SideBar {
                 Color4.Yellow(),
                 3000
               )
+              this.teleport()
               return
             }
             if (instance.getInstance() === 'dragRace') {

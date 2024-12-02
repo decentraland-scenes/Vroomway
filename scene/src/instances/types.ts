@@ -6,7 +6,7 @@ export type RealmType =
   | 'scrapyard'
   | 'soloSprint'
   | 'dragRace'
-  | 'fuegoCircuits'
+  | 'fuegoCircuit'
 
 export type Realm = {
   getId: () => RealmType

@@ -45,7 +45,7 @@ const CLASSNAME = 'BaseScene'
 export class BaseScene extends BaseSubScene {
   skybox!: Skybox
   avatar!: PlayerAvatar
-  sceneConfig!: SceneConfig 
+  sceneConfig!: SceneConfig
 
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(id: number, name: string) {

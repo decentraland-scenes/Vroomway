@@ -84,8 +84,9 @@ export class DecentrallyBoard {
               uvs: getUvs(buttonsSprites.startCapitalButton),
               texture: { src: buttonsSprites.startCapitalButton.atlasSrc }
             }}
-            onMouseDown={() => {this.startDecentrally()}}
-            
+            onMouseDown={() => {
+              this.startDecentrally()
+            }}
           />
           {/* START BUTTON #2 */}
           <UiEntity
@@ -100,7 +101,9 @@ export class DecentrallyBoard {
               uvs: getUvs(buttonsSprites.startCloudlandsButton),
               texture: { src: buttonsSprites.startCloudlandsButton.atlasSrc }
             }}
-            onMouseDown={() => {this.startDecentrally()}}
+            onMouseDown={() => {
+              this.startDecentrally()
+            }}
           />
           {/* START BUTTON #3 */}
           <UiEntity
@@ -115,7 +118,9 @@ export class DecentrallyBoard {
               uvs: getUvs(buttonsSprites.startObelisqueButton),
               texture: { src: buttonsSprites.startObelisqueButton.atlasSrc }
             }}
-            onMouseDown={() => {this.startDecentrally()}}
+            onMouseDown={() => {
+              this.startDecentrally()
+            }}
           />
           {/* START BUTTON #4 */}
           <UiEntity
@@ -130,7 +135,9 @@ export class DecentrallyBoard {
               uvs: getUvs(buttonsSprites.startFungalButton),
               texture: { src: buttonsSprites.startFungalButton.atlasSrc }
             }}
-            onMouseDown={() => {this.startDecentrally()}}
+            onMouseDown={() => {
+              this.startDecentrally()
+            }}
           />
           {/* START BUTTON #5 */}
           <UiEntity
@@ -145,7 +152,9 @@ export class DecentrallyBoard {
               uvs: getUvs(buttonsSprites.startWinterButton),
               texture: { src: buttonsSprites.startWinterButton.atlasSrc }
             }}
-            onMouseDown={() => {this.startDecentrally()}}
+            onMouseDown={() => {
+              this.startDecentrally()
+            }}
           />
           {/* START BUTTON #6 */}
           <UiEntity
@@ -160,7 +169,9 @@ export class DecentrallyBoard {
               uvs: getUvs(buttonsSprites.startWAGMIButton),
               texture: { src: buttonsSprites.startWAGMIButton.atlasSrc }
             }}
-            onMouseDown={() => {this.startDecentrally()}}
+            onMouseDown={() => {
+              this.startDecentrally()
+            }}
           />
           {/* START BUTTON #7 */}
           <UiEntity
@@ -175,7 +186,9 @@ export class DecentrallyBoard {
               uvs: getUvs(buttonsSprites.startAtlantisButton),
               texture: { src: buttonsSprites.startAtlantisButton.atlasSrc }
             }}
-            onMouseDown={() => {this.startDecentrally()}}
+            onMouseDown={() => {
+              this.startDecentrally()
+            }}
           />
         </UiEntity>
       </UiEntity>
@@ -194,16 +207,16 @@ export class DecentrallyBoard {
     this.boardVisible = true
   }
 
-  startDecentrally():void {
+  startDecentrally(): void {
     this.gameController.realmController.switchRealm('fuegoCircuit')
-    this.hide();
-    instance.setInstance("fuegoCircuit");
+    this.hide()
+    instance.setInstance('fuegoCircuit')
     // levelManager.setCurrentLevel("vw_track_1");
     // if (vehicle) vehicle.remove();
     // setTimeout(300, () => {
     //   Constants.SCENE_MGR.goRace({ mode: { type: "normal" } });
     // });
-    missions.checkAndUnlockCampaignMission("visitRacehub");
-    this.gameController.uiController.loader.showLoader(SHOW_LOAD_TIME);
+    missions.checkAndUnlockCampaignMission('visitRacehub')
+    this.gameController.uiController.loader.showLoader(SHOW_LOAD_TIME)
   }
 }

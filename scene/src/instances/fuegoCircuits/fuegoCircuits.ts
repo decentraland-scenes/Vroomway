@@ -14,7 +14,7 @@ export class FuegoCircuitsInstance {
     this.gameController = gameController
     initConfig().then((config) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const registry = initRegistry() 
+      const registry = initRegistry()
       initSceneMgr()
       // setup demo call
       // safe to remove if you write your own code

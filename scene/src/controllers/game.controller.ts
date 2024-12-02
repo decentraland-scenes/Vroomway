@@ -9,11 +9,11 @@ import { DanceAreaUI } from '../ui/danceArea'
 import { SuperChargeTimer } from '../instances/recharge/timer'
 import { SprintTimer } from '../utils/sprintTimer'
 import { PlayerPowerUps } from '../utils/powerUps'
-import { AvatarSwapManager } from '../utils/avatarSwap' 
+import { AvatarSwapManager } from '../utils/avatarSwap'
 
 export class GameController {
   public Player: PlayerStats
-  public uiController: UIController 
+  public uiController: UIController
   public vehicleOwnership: VehicleOwnership
   public soloSprint: SoloSprintBoard
   public dragRaceBoard: DragRaceBoard
@@ -21,7 +21,7 @@ export class GameController {
   public realmController: RealmController
   public danceAreaUI: DanceAreaUI
   public superChargeTimer: SuperChargeTimer
-  public sprintTimer: SprintTimer 
+  public sprintTimer: SprintTimer
   public PowerUpsInv: PlayerPowerUps
   public avatarSwap: AvatarSwapManager
   constructor() {

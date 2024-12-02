@@ -86,7 +86,7 @@ export class Config {
         position: Vector3.create(0, -0.15, 0),
         scale: Vector3.create(0.5, 0.5, 0.5)
       },
-      mesh: { 
+      mesh: {
         src: 'assets/demo/car.glb',
         invisibleMeshesCollisionMask: ColliderLayer.CL_NONE,
         visibleMeshesCollisionMask: ColliderLayer.CL_NONE

@@ -87,7 +87,7 @@ export class Config {
         scale: Vector3.create(0.5, 0.5, 0.5)
       },
       mesh: {
-        src: 'assets/demo/car.glb',
+        src: 'assets/models/defaultVehicle1.glb',
         invisibleMeshesCollisionMask: ColliderLayer.CL_NONE,
         visibleMeshesCollisionMask: ColliderLayer.CL_NONE
       }
@@ -103,7 +103,7 @@ export class Config {
         scale: Vector3.create(0.5, 0.5, 0.5)
       },
       mesh: {
-        src: 'assets/demo/car.glb',
+        src: 'assets/models/defaultVehicle1.glb',
         invisibleMeshesCollisionMask: ColliderLayer.CL_NONE,
         visibleMeshesCollisionMask: ColliderLayer.CL_NONE
       }

@@ -25,9 +25,9 @@ export function initRaceTrackSceneConf(): void {
         // override as needed
         transform: {
           position: Vector3.create(0, -0.15, 0),
-          scale: Vector3.create(0.5, 0.5, 0.5)
+          scale: Vector3.create(0.3, 0.3, 0.3)
         },
-        mesh: {
+        mesh: { 
           src: 'assets/models/defaultVehicle1.glb',
           // src: 'assets/models/defaultVehicle1.glb' ,
           invisibleMeshesCollisionMask: ColliderLayer.CL_NONE,

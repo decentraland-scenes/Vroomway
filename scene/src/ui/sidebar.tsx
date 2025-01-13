@@ -52,7 +52,7 @@ export class SideBar {
             texture: { src: buttonsSprites.inventoryInactive.atlasSrc }
           }}
           onMouseDown={() => {
-            this.switchButtonState('Inventory')
+
             const gameMode = instance.getInstance()
             console.log(gameMode, 'MODE')
             // Disable button in game modes
@@ -70,6 +70,7 @@ export class SideBar {
               )
               return
             }
+            this.switchButtonState('Inventory')
             //   UIInventoryManager.Instance.init()
             this.hideMissionBoard()
           }}
